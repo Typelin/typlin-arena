@@ -1,0 +1,545 @@
+/* === 暗流 Current — Master Stylesheet V3 · ZH-TW === */
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* === Color System === */
+  --color-bg: #F5F2ED;
+  --color-ink: #1A1A1A;
+  --color-ink-soft: rgba(26, 26, 26, 0.58);
+  --color-ink-faint: rgba(26, 26, 26, 0.24);
+  --color-accent: #C47D3B;
+  --color-accent-soft: rgba(196, 125, 59, 0.5);
+
+  /* === Font Stacks ===
+     Hero / 主標: Noto Serif TC — 明體，字重600-700，用於大標題
+     Body / 正文: Noto Sans TC — 黑體，字重300-400，用於段落正文
+     Code / 標記: JetBrains Mono — 等寬，字重300-400，章節標記與技術語
+  */
+  --font-display: 'Noto Serif TC', '源樣明體', 'Source Han Serif TC', '新細明體', serif;
+  --font-body: 'Noto Sans TC', '微軟正黑體', 'Microsoft JhengHei', '蘋方-繁', 'PingFang TC', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+
+  /* === Layout === */
+  --content-max: 640px;
+  --content-padding: clamp(28px, 7vw, 88px);
+
+  /* === Easing === */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* === Base Typography (CJK optimized) ===
+     中文需要更大的行距、字距與字級基準 */
+  font-size: 17px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  font-family: var(--font-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'palt' 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* === Responsive font base === */
+@media (max-width: 640px) {
+  :root {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
+/* === Content Layer === */
+.content-layer {
+  position: relative;
+  z-index: 1;
+}
+
+/* === Sections === */
+.section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 50vh;
+  padding-left: var(--content-padding);
+  padding-right: var(--content-padding);
+}
+
+/* === Text Block === */
+.text-block {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* === Section Label — 章節標記 ===
+   使用 JetBrains Mono，CJK 章節名不需 uppercase */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: var(--color-ink-faint);
+  margin-bottom: 2.8rem;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.9s var(--ease-out-expo) 0.1s;
+}
+
+.section--visible .section-label {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ==========================================================
+   REVEAL WIPE SYSTEM
+   clip-path 對角線掃入，呼應流場方向
+   ========================================================== */
+
+.reveal-wipe {
+  clip-path: polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%);
+  transition: clip-path 1.2s var(--ease-out-expo);
+  will-change: clip-path;
+}
+
+.section--visible .reveal-wipe {
+  clip-path: polygon(
+    -5% -5%,
+    105% -5%,
+    105% 105%,
+    -5% 105%
+  );
+}
+
+/* 逐段遞延 */
+.section--visible .reveal-wipe:nth-child(1) { transition-delay: 0.05s; }
+.section--visible .reveal-wipe:nth-child(2) { transition-delay: 0.2s; }
+.section--visible .reveal-wipe:nth-child(3) { transition-delay: 0.4s; }
+.section--visible .reveal-wipe:nth-child(4) { transition-delay: 0.6s; }
+.section--visible .reveal-wipe:nth-child(5) { transition-delay: 0.8s; }
+
+/* === Body Text — 正文 === */
+.text-block__body {
+  margin-bottom: 2rem;
+  color: var(--color-ink-soft);
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+/* === Large Lead — 引言大字 ===
+   使用明體 display，營造書法般的莊重感 */
+.text-block__body--large {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  color: var(--color-ink);
+  margin-bottom: 2.8rem;
+}
+
+.text-block__body--accent {
+  color: var(--color-accent);
+}
+
+/* === Aside — 旁註 ===
+   JetBrains Mono + 左邊框，輕柔語氣 */
+.text-block__aside {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-faint);
+  margin-top: 2.2rem;
+  padding-left: 1.4rem;
+  border-left: 1px solid var(--color-ink-faint);
+}
+
+/* ==========================================================
+   HERO — 首屏
+   ========================================================== */
+
+.hero {
+  height: 100vh;
+  min-height: 100svh;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__inner {
+  text-align: center;
+  max-width: 800px;
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  margin-bottom: 3rem;
+}
+
+/* 主標題 — Noto Serif TC 700
+   中文大標需要更寬的字距來呼吸 */
+.hero__line {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+  clip-path: inset(0 50% 0 50%);
+  transition: clip-path 1.4s var(--ease-out-expo),
+              letter-spacing 8s ease-in-out;
+}
+
+.hero__line--2 {
+  transition-delay: 0.35s;
+}
+
+.hero__line em {
+  font-style: normal;    /* 中文無 italic，改用色彩強調 */
+  color: var(--color-accent);
+}
+
+.section--visible .hero__line {
+  clip-path: inset(0 0% 0 0%);
+  animation: hero-breathe 8s ease-in-out 2s infinite alternate;
+}
+
+@keyframes hero-breathe {
+  0% { letter-spacing: 0.08em; }
+  100% { letter-spacing: 0.14em; }
+}
+
+/* 副標 — JetBrains Mono，提示操作 */
+.hero__sub {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 2;
+  color: var(--color-ink-faint);
+  letter-spacing: 0.06em;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.2s var(--ease-out-expo) 0.9s;
+}
+
+.section--visible .hero__sub {
+  clip-path: inset(0 0% 0 0);
+}
+
+.hero__hint {
+  color: var(--color-accent-soft);
+}
+
+/* Scroll cue */
+.hero__scroll-cue {
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: cue-appear 1s var(--ease-out-expo) 2.5s forwards;
+}
+
+@keyframes cue-appear {
+  to { opacity: 0.4; }
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 48px;
+  background: var(--color-ink);
+  opacity: 0.3;
+  animation: scroll-pulse 2.5s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.1; }
+  50% { transform: scaleY(1); opacity: 0.35; }
+}
+
+/* ==========================================================
+   FLOW DIVIDER — 流線分隔符
+   ========================================================== */
+
+.flow-divider {
+  display: flex;
+  justify-content: center;
+  padding: 2vh 0;
+  pointer-events: none;
+}
+
+.flow-divider canvas {
+  display: block;
+}
+
+/* ==========================================================
+   CODA — 終章
+   ========================================================== */
+
+.coda {
+  text-align: center;
+}
+
+.text-block--coda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coda__contact {
+  margin-top: 3rem;
+}
+
+.coda__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-ink-faint);
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.coda__link {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  letter-spacing: 0.05em;
+  transition: border-color 0.4s ease;
+}
+
+.coda__link:hover,
+.coda__link:focus-visible {
+  border-bottom-color: var(--color-accent);
+}
+
+.coda__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.coda__footnote {
+  margin-top: 4rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  line-height: 2;
+  letter-spacing: 0.03em;
+  color: var(--color-ink-faint);
+  opacity: 0.4;
+}
+
+/* ==========================================================
+   SCROLL INDICATOR — 左側細線
+   ========================================================== */
+
+.scroll-indicator {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.scroll-indicator__fill {
+  width: 100%;
+  background: var(--color-accent);
+  opacity: 0.45;
+  transition: height 0.15s linear;
+}
+
+/* ==========================================================
+   STILLNESS REVEAL — 靜止彩蛋
+   ========================================================== */
+
+.stillness {
+  position: fixed;
+  bottom: 6vh;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 3s var(--ease-out-expo),
+              transform 3s var(--ease-out-expo);
+}
+
+.stillness--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.stillness__text {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+}
+
+/* ==========================================================
+   PULSE INDICATOR — 點擊漣漪
+   ========================================================== */
+
+.pulse-indicator {
+  position: fixed;
+  z-index: 15;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.pulse-indicator__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.5;
+  animation: pulse-ring 1.2s var(--ease-out-expo) forwards;
+}
+
+.pulse-indicator__ring--delayed {
+  animation-delay: 0.12s;
+  border-color: var(--color-ink-faint);
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(10);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================
+   REDUCED MOTION — 減弱動效
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero__line,
+  .hero__sub,
+  .reveal-wipe,
+  .section-label,
+  .coda__contact {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero__scroll-cue {
+    opacity: 0.4 !important;
+  }
+}
+
+/* ==========================================================
+   MOBILE — 行動裝置
+   ========================================================== */
+
+@media (max-width: 480px) {
+  .hero__title {
+    gap: 0.05em;
+  }
+
+  .hero__line {
+    font-size: clamp(2rem, 10vw, 3rem);
+    letter-spacing: 0.06em;
+  }
+
+  .section {
+    padding-left: clamp(20px, 5vw, 36px);
+    padding-right: clamp(20px, 5vw, 36px);
+  }
+
+  .text-block__body--large {
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+  }
+
+  .hero__sub br {
+    display: none;
+  }
+
+  .coda__footnote br {
+    display: none;
+  }
+
+  .flow-divider {
+    padding: 1vh 0;
+  }
+}
+
+/* === Selection — 選取色 === */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* === Keyboard Focus === */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* === Scrollbar (minimal) === */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-faint);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-soft);
+}
