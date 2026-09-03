@@ -11,6 +11,11 @@ const SHOTS = [
   ['gemini', '/works/gemini/'],
   ['qwen', '/works/qwen/'],
   ['glm', '/works/glm/'],
+  ['opus-logo', '/logo/opus/'],
+  ['spark-logo', '/logo/spark/'],
+  ['gemini-logo', '/logo/gemini/'],
+  ['qwen-logo', '/logo/qwen/'],
+  ['glm-logo', '/logo/glm/'],
 ];
 
 mkdirSync('public/shots', { recursive: true });

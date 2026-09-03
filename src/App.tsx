@@ -35,7 +35,12 @@ function Visual({ kind, failed }: { kind: Plate['visual']; failed?: boolean }) {
 export default function App() {
   const progress = useProgress();
   const [open, setOpen] = useState<Plate | null>(null);
+  const [itemSel, setItemSel] = useState<'self' | 'logo'>('self');
   const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setItemSel('self');
+  }, [open?.id]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -185,6 +190,7 @@ export default function App() {
                       <i style={{ width: `${pl.score}%` }} />
                     </div>
                   )}
+                  <span className="mono">LOGO落地 · {pl.score2 ?? '—'}</span>
                   <button type="button" className="btn btn--small" onClick={() => setOpen(pl)}>點開 →</button>
                 </div>
               </article>
@@ -263,25 +269,45 @@ export default function App() {
               </div>
               <div className="overlay__stage">
                 <div className="overlay__art">
-                  {open.src ? (
-                    <iframe className="frame" src={open.src} title={open.title} allow="autoplay; fullscreen" />
-                  ) : (
-                    <Visual kind={open.visual} />
-                  )}
+                  <iframe
+                    className="frame"
+                    key={`${open.id}-${itemSel}`}
+                    src={itemSel === 'logo' ? open.logoSrc : open.src}
+                    title={itemSel === 'logo' ? `${open.title} · LOGO落地` : open.title}
+                    allow="autoplay; fullscreen"
+                  />
                 </div>
                 <aside className="overlay__side">
                   <h3 className="spread__name">{open.title}</h3>
                   <p className="spread__prompt">{open.prompt}</p>
+                  <div className="seg" role="tablist" aria-label="切換子項">
+                    <button
+                      type="button" role="tab" aria-selected={itemSel === 'self'}
+                      className={`segbtn${itemSel === 'self' ? ' active' : ''}`}
+                      onClick={() => setItemSel('self')}
+                    >
+                      自我介紹 · {open.score ?? '—'}
+                    </button>
+                    <button
+                      type="button" role="tab" aria-selected={itemSel === 'logo'}
+                      className={`segbtn${itemSel === 'logo' ? ' active' : ''}`}
+                      onClick={() => setItemSel('logo')}
+                    >
+                      LOGO落地 · {open.score2 ?? '—'}
+                    </button>
+                  </div>
                   <ul className="spec">{open.spec.map((s) => <li key={s}>{s}</li>)}</ul>
                   <p className="verdict">{open.verdict}</p>
-                  {open.src ? (
-                    <>
-                      <a className="btn" href={open.src} target="_blank" rel="noreferrer">另開分頁 ↗</a>
-                      <p className="mono" style={{ marginTop: 12 }}>站內分頁：{open.src}</p>
-                    </>
-                  ) : (
-                    <p className="mono">OC 製作中：成品落地即填入此槽。</p>
-                  )}
+                  <a
+                    className="btn"
+                    href={itemSel === 'logo' ? open.logoSrc : open.src}
+                    target="_blank" rel="noreferrer"
+                  >
+                    另開分頁 ↗
+                  </a>
+                  <p className="mono" style={{ marginTop: 12 }}>
+                    站內分頁：{itemSel === 'logo' ? open.logoSrc : open.src}
+                  </p>
                 </aside>
               </div>
               <div className="overlay__foot">

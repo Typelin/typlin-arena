@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #faf8f9;
+    color: #1a1e32;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Japanese modern ink & blossom glass accents */
+.sakura-blur {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.gradient-text-sakura {
+  background: linear-gradient(135deg, #e8648c 0%, #3e4c84 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-indigo {
+  background: linear-gradient(135deg, #2d3864 0%, #506194 60%, #99a3d2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ink-border {
+  border-color: rgba(62, 76, 132, 0.12);
+}
+
+.ink-shadow {
+  box-shadow: 0 10px 30px -10px rgba(62, 76, 132, 0.08), 0 20px 40px -20px rgba(232, 100, 140, 0.05);
+}
+
+.ink-shadow-hover:hover {
+  box-shadow: 0 20px 40px -12px rgba(62, 76, 132, 0.16), 0 25px 50px -25px rgba(232, 100, 140, 0.15);
+}

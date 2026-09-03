@@ -12,6 +12,10 @@ export type Plate = {
   short: string;
   /** 真實縮圖（站內截取，非示意） */
   thumb: string;
+  /** 第二測 LOGO 落地 */
+  logoSrc: string;
+  logoThumb: string;
+  score2: number | null;
   /** 評審親打的真實分數；null = 尚未評分 */
   score: number | null;
 };
@@ -32,6 +36,9 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/opus/',
     thumb: '/shots/opus.png',
+    logoSrc: '/logo/opus/',
+    logoThumb: '/shots/opus-logo.png',
+    score2: 75,
     score: 88,
   },
   {
@@ -46,6 +53,9 @@ export const PLATES: Plate[] = [
     visual: 'tracing',
     src: '/works/spark/',
     thumb: '/shots/spark.png',
+    logoSrc: '/logo/spark/',
+    logoThumb: '/shots/spark-logo.png',
+    score2: 86,
     score: 75,
   },
   {
@@ -60,6 +70,9 @@ export const PLATES: Plate[] = [
     visual: 'prism',
     src: '/works/gemini/',
     thumb: '/shots/gemini.png',
+    logoSrc: '/logo/gemini/',
+    logoThumb: '/shots/gemini-logo.png',
+    score2: 70,
     score: 61,
   },
   {
@@ -74,6 +87,9 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/qwen/',
     thumb: '/shots/qwen.png',
+    logoSrc: '/logo/qwen/',
+    logoThumb: '/shots/qwen-logo.png',
+    score2: 72,
     score: 81,
   },
   {
@@ -88,6 +104,9 @@ export const PLATES: Plate[] = [
     visual: 'prism',
     src: '/works/glm/',
     thumb: '/shots/glm.png',
+    logoSrc: '/logo/glm/',
+    logoThumb: '/shots/glm-logo.png',
+    score2: 74,
     score: 69,
   },
 ];
