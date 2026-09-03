@@ -11,6 +11,7 @@ const SHOTS = [
   ['gemini', '/works/gemini/'],
   ['qwen', '/works/qwen/'],
   ['glm', '/works/glm/'],
+  ['qw27', '/works/qw27/'],
   ['opus-logo', '/logo/opus/'],
   ['spark-logo', '/logo/spark/'],
   ['gemini-logo', '/logo/gemini/'],

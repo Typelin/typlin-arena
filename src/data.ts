@@ -12,10 +12,10 @@ export type Plate = {
   short: string;
   /** 真實縮圖（站內截取，非示意） */
   thumb: string;
-  /** 第二測 LOGO 落地 */
-  logoSrc: string;
-  logoThumb: string;
-  score2: number | null;
+  /** 第二測 LOGO 落地（僅部分作品有） */
+  logoSrc?: string;
+  logoThumb?: string;
+  score2?: number | null;
   /** 評審親打的真實分數；null = 尚未評分 */
   score: number | null;
 };
@@ -108,6 +108,20 @@ export const PLATES: Plate[] = [
     logoThumb: '/shots/glm-logo.png',
     score2: 74,
     score: 69,
+  },
+  {
+    id: 'qw27',
+    no: '06',
+    short: 'Q27B',
+    model: 'QWEN 3.8-27B（本地）',
+    title: '自畫像 № 27B',
+    prompt: SHARED_PROMPT,
+    spec: ['REACT 18', '思源宋自託管', 'CANVAS 字場'],
+    verdict: PENDING,
+    visual: 'current',
+    src: '/works/qw27/',
+    thumb: '/shots/qw27.png',
+    score: 85,
   },
 ];
 

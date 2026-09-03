@@ -119,9 +119,9 @@ export default function App() {
                 這裡只收能動手的東西——評分標準只有一個：能不能被手改變。
               </p>
               <div className="hero__stats">
-                <div><b>5<i>.</i></b><span>參賽作品</span></div>
-                <div><b>5<i>.</i></b><span>可點開</span></div>
-                <div><b>5<i>.</i></b><span>已評分</span></div>
+                <div><b>6<i>.</i></b><span>參賽作品</span></div>
+                <div><b>6<i>.</i></b><span>可點開</span></div>
+                <div><b>6<i>.</i></b><span>已評分</span></div>
               </div>
               <div className="hero__cta">
                 <button type="button" className="btn" onClick={() => go('works')}>↓ 看作品排名</button>
@@ -163,7 +163,7 @@ export default function App() {
             <div>
               <div className="secnum" aria-hidden="true">01</div>
               <p className="eyebrow">RANK · 作品排名（按評分排序）</p>
-              <h2 id="works-title">五件作品，<em>首批分數。</em></h2>
+              <h2 id="works-title">六件作品，<em>首批分數。</em></h2>
               <p className="section__desc">首批分數已公布，評語待補。按「點開」全幅開啟，站內直接動手。</p>
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function App() {
                       <i style={{ width: `${pl.score}%` }} />
                     </div>
                   )}
-                  <span className="mono">LOGO落地 · {pl.score2 ?? '—'}</span>
+                  {pl.logoSrc && <span className="mono">LOGO落地 · {pl.score2 ?? '—'}</span>}
                   <button type="button" className="btn btn--small" onClick={() => setOpen(pl)}>點開 →</button>
                 </div>
               </article>
@@ -272,41 +272,43 @@ export default function App() {
                   <iframe
                     className="frame"
                     key={`${open.id}-${itemSel}`}
-                    src={itemSel === 'logo' ? open.logoSrc : open.src}
-                    title={itemSel === 'logo' ? `${open.title} · LOGO落地` : open.title}
+                    src={itemSel === 'logo' && open.logoSrc ? open.logoSrc : open.src}
+                    title={itemSel === 'logo' && open.logoSrc ? `${open.title} · LOGO落地` : open.title}
                     allow="autoplay; fullscreen"
                   />
                 </div>
                 <aside className="overlay__side">
                   <h3 className="spread__name">{open.title}</h3>
                   <p className="spread__prompt">{open.prompt}</p>
-                  <div className="seg" role="tablist" aria-label="切換子項">
-                    <button
-                      type="button" role="tab" aria-selected={itemSel === 'self'}
-                      className={`segbtn${itemSel === 'self' ? ' active' : ''}`}
-                      onClick={() => setItemSel('self')}
-                    >
-                      自我介紹 · {open.score ?? '—'}
-                    </button>
-                    <button
-                      type="button" role="tab" aria-selected={itemSel === 'logo'}
-                      className={`segbtn${itemSel === 'logo' ? ' active' : ''}`}
-                      onClick={() => setItemSel('logo')}
-                    >
-                      LOGO落地 · {open.score2 ?? '—'}
-                    </button>
-                  </div>
+                  {open.logoSrc && (
+                    <div className="seg" role="tablist" aria-label="切換子項">
+                      <button
+                        type="button" role="tab" aria-selected={itemSel === 'self'}
+                        className={`segbtn${itemSel === 'self' ? ' active' : ''}`}
+                        onClick={() => setItemSel('self')}
+                      >
+                        自我介紹 · {open.score ?? '—'}
+                      </button>
+                      <button
+                        type="button" role="tab" aria-selected={itemSel === 'logo'}
+                        className={`segbtn${itemSel === 'logo' ? ' active' : ''}`}
+                        onClick={() => setItemSel('logo')}
+                      >
+                        LOGO落地 · {open.score2 ?? '—'}
+                      </button>
+                    </div>
+                  )}
                   <ul className="spec">{open.spec.map((s) => <li key={s}>{s}</li>)}</ul>
                   <p className="verdict">{open.verdict}</p>
                   <a
                     className="btn"
-                    href={itemSel === 'logo' ? open.logoSrc : open.src}
+                    href={itemSel === 'logo' && open.logoSrc ? open.logoSrc : open.src}
                     target="_blank" rel="noreferrer"
                   >
                     另開分頁 ↗
                   </a>
                   <p className="mono" style={{ marginTop: 12 }}>
-                    站內分頁：{itemSel === 'logo' ? open.logoSrc : open.src}
+                    站內分頁：{itemSel === 'logo' && open.logoSrc ? open.logoSrc : open.src}
                   </p>
                 </aside>
               </div>
@@ -321,7 +323,7 @@ export default function App() {
 
       <footer className="colophon">
         <div className="wrap colophon__grid">
-          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。五件參賽，五件已評分，評語待補。</p></div>
+          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。六件參賽，六件已評分，評語待補。</p></div>
           <div><h4>規格</h4><p>React + Vite + 零依賴。淺色紙面，全系統字體，無外部請求。</p></div>
           <div><h4>標準</h4><p>能不能動手。不能被手改變的，不裝幀。</p></div>
         </div>
