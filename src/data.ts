@@ -8,6 +8,8 @@ export type Plate = {
   verdict: string;
   visual: 'tracing' | 'current' | 'prism' | 'fail';
   src: string;
+  /** 頁籤短名 */
+  short: string;
   /** 真實縮圖（站內截取，非示意） */
   thumb: string;
   /** 評審親打的真實分數；null = 尚未評分 */
@@ -21,6 +23,7 @@ export const PLATES: Plate[] = [
   {
     id: 'opus',
     no: '01',
+    short: 'OPUS',
     model: 'CLAUDE OPUS 4.6',
     title: '流動思考',
     prompt: SHARED_PROMPT,
@@ -34,6 +37,7 @@ export const PLATES: Plate[] = [
   {
     id: 'spark',
     no: '02',
+    short: 'SPARK',
     model: 'MUSE SPARK 1.3',
     title: '三層描圖紙',
     prompt: SHARED_PROMPT,
@@ -47,6 +51,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini',
     no: '03',
+    short: 'GEMINI',
     model: 'GEMINI 3.8 FLASH HIGH',
     title: 'The Refraction Chamber',
     prompt: SHARED_PROMPT,
@@ -60,6 +65,7 @@ export const PLATES: Plate[] = [
   {
     id: 'qwen',
     no: '04',
+    short: 'QWEN',
     model: 'QWEN 3.8 FLASH',
     title: '注意力場 Attention Field',
     prompt: SHARED_PROMPT,
@@ -73,6 +79,7 @@ export const PLATES: Plate[] = [
   {
     id: 'glm',
     no: '05',
+    short: 'GLM',
     model: 'GLM 5.3 FLASH',
     title: 'Resonance Chamber',
     prompt: SHARED_PROMPT,

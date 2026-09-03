@@ -247,7 +247,7 @@ export default function App() {
                 </span>
               </div>
               <div className="overlay__tabs" role="tablist" aria-label="切換作品">
-                {works.map((w) => (
+                {works.map((w, i) => (
                   <button
                     key={w.id}
                     type="button"
@@ -257,7 +257,7 @@ export default function App() {
                     className={`otab${w.id === open.id ? ' active' : ''}`}
                     onClick={() => setOpen(w)}
                   >
-                    {w.no} · {w.score ?? '—'}
+                    R{i + 1} {w.short} · {w.score ?? '—'}
                   </button>
                 ))}
               </div>
