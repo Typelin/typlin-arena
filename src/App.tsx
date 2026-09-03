@@ -49,21 +49,32 @@ export default function App() {
     return () => io.disconnect();
   }, []);
 
+  const works = [...PLATES].sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
+  const openIdx = open ? works.findIndex((w) => w.id === open.id) : -1;
+
+  const step = (d: number) => {
+    if (openIdx < 0) return;
+    setOpen(works[(openIdx + d + works.length) % works.length]);
+  };
+
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(null);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(null);
+      else if (open && e.key === 'ArrowRight') step(1);
+      else if (open && e.key === 'ArrowLeft') step(-1);
+    };
     window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
     };
-  }, [open ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, openIdx]);
 
   const go = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
-
-  const works = [...PLATES].sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
 
   const duelA = works[0];
   const duelB = works[1];
@@ -229,7 +240,26 @@ export default function App() {
             <div className="overlay__box">
               <div className="overlay__top">
                 <span className="mono">{open.no} · {open.model} · {open.title} · {open.score ?? '—'}/100</span>
-                <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(null)}>✕ 關閉</button>
+                <span className="overlay__nav">
+                  <button type="button" className="btn btn--ghost btn--small" onClick={() => step(-1)} aria-label="上一件">‹</button>
+                  <button type="button" className="btn btn--ghost btn--small" onClick={() => step(1)} aria-label="下一件">›</button>
+                  <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(null)}>✕ 關閉</button>
+                </span>
+              </div>
+              <div className="overlay__tabs" role="tablist" aria-label="切換作品">
+                {works.map((w) => (
+                  <button
+                    key={w.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={w.id === open.id}
+                    title={`${w.title} · ${w.score ?? '—'}分`}
+                    className={`otab${w.id === open.id ? ' active' : ''}`}
+                    onClick={() => setOpen(w)}
+                  >
+                    {w.no} · {w.score ?? '—'}
+                  </button>
+                ))}
               </div>
               <div className="overlay__stage">
                 <div className="overlay__art">

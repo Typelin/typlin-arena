@@ -284,11 +284,25 @@ table.idx { width: 100%; border-collapse: collapse; }
 .overlay__box {
   position: absolute; inset: clamp(12px, 4vh, 40px) clamp(12px, 4vw, 48px);
   background: var(--paper); border: 2px solid var(--ink); border-radius: 16px; overflow: hidden;
-  display: grid; grid-template-rows: auto 1fr auto; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.45);
+  display: grid; grid-template-rows: auto auto 1fr auto; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.45);
   max-width: 1200px; margin: auto;
 }
 .overlay__top { display: flex; justify-content: space-between; align-items: center; padding: 13px 20px; background: var(--ink); color: var(--paper); gap: 12px; }
 .overlay__top .mono { color: var(--paper); }
+.overlay__nav { display: flex; gap: 8px; align-items: center; }
+.overlay__tabs {
+  display: flex; gap: 8px; padding: 10px 20px; overflow-x: auto;
+  border-bottom: 1.5px solid var(--ink); background: var(--paper-2);
+}
+.otab {
+  flex: none; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  border: 1.5px solid var(--line); background: var(--card); color: var(--muted);
+  border-radius: 999px; padding: 7px 14px;
+}
+.otab:hover { border-color: var(--ink); color: var(--ink); }
+.otab.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.otab.active:hover { color: var(--paper); }
 .overlay__stage { display: grid; grid-template-columns: 1fr 340px; min-height: 0; }
 .overlay__art { position: relative; border-right: 1.5px solid var(--ink); min-height: 40vh; }
 .frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--paper); }
