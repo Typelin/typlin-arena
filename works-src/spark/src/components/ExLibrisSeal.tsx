@@ -44,7 +44,7 @@ export const ExLibrisSeal: React.FC<ExLibrisSealProps> = ({ tensionScore, curren
                 type="text"
                 maxLength={12}
                 value={stampName}
-                onChange={(e) => setStampName(e.target.value.toUpperCase() || 'VISITOR')}
+                onChange={(e) => setStampName(e.target.value.toUpperCase())}
                 className="editorial-input mono"
                 placeholder="YOUR CODE"
               />
@@ -161,7 +161,7 @@ export const ExLibrisSeal: React.FC<ExLibrisSealProps> = ({ tensionScore, curren
                   className="seal-monogram serif"
                   fill="#1b2d42"
                 >
-                  {stampName.slice(0, 4)}
+                  {stampName.slice(0, 4) || '····'}
                 </text>
                 <text
                   x="160"

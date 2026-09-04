@@ -287,7 +287,9 @@ const Dome = forwardRef<DomeApi, DomeProps>(function Dome(
       }
       ctx.restore();
 
-      // 中心膜
+      // 中心膜：靜止時墨色；振動越強，越泛起該調式的共振色
+      // （呼應 Laws：共振青只屬於「正在振動的東西」）
+      const heat = clamp(s.energy * 0.55 + s.pressure * 0.75, 0, 1);
       const memR = R * 0.13 * (1 + breathe * 0.045 + s.energy * 0.1 + s.pressure * 0.08);
       ctx.save();
       ctx.translate(cx, cy);
@@ -297,7 +299,7 @@ const Dome = forwardRef<DomeApi, DomeProps>(function Dome(
       ctx.fill();
       ctx.beginPath();
       ctx.arc(0, 0, memR, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(20,19,16,${0.82 * poweredMix + 0.1})`;
+      ctx.fillStyle = `rgba(${Math.round(lerp(20, cr, heat))},${Math.round(lerp(19, cg, heat))},${Math.round(lerp(16, cb, heat))},${0.82 * poweredMix + 0.1})`;
       ctx.fill();
       ctx.beginPath();
       ctx.arc(0, 0, memR + 3.5, 0, Math.PI * 2);
