@@ -115,7 +115,7 @@ export default function App() {
                 同一道題，<em>看看誰在裸泳。</em>
               </h1>
               <p className="hero__sub">
-                同一個 prompt，丟給四個模型：有人交方程，有人交紙張，有人交整片黑夜。
+                同一個 prompt，六個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
                 這裡只收能動手的東西——評分標準只有一個：能不能被手改變。
               </p>
               <div className="hero__stats">

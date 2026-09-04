@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 同一個題目，四個模型，拒絕牆紙。
+> 同一道題，各家靈魂。—— 同一個題目，六個模型橫評，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
 所有參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），
@@ -18,10 +18,11 @@
 | 名次 | 作品 | 模型 | 分數 | 站內分頁 |
 | --- | --- | --- | --- | --- |
 | 1 | 流動思考 | Claude Opus 4.6 | **88** | [/works/opus/](https://arena.typelin.me/works/opus/) |
-| 2 | 注意力場 Attention Field | Qwen 3.8 Flash | **81** | [/works/qwen/](https://arena.typelin.me/works/qwen/) |
-| 3 | 三層描圖紙 | Muse Spark 1.3 | **75** | [/works/spark/](https://arena.typelin.me/works/spark/) |
-| 4 | The Refraction Chamber | Gemini 3.8 Flash High | **61** | [/works/gemini/](https://arena.typelin.me/works/gemini/) |
+| 2 | 自畫像 № 27B | Qwen 3.8-27B（本地） | **85** | [/works/qw27/](https://arena.typelin.me/works/qw27/) |
+| 3 | 注意力場 Attention Field | Qwen 3.8 Flash | **81** | [/works/qwen/](https://arena.typelin.me/works/qwen/) |
+| 4 | 三層描圖紙 | Muse Spark 1.3 | **75** | [/works/spark/](https://arena.typelin.me/works/spark/) |
 | 5 | Resonance Chamber | GLM 5.3 Flash | **69** | [/works/glm/](https://arena.typelin.me/works/glm/) |
+| 6 | The Refraction Chamber | Gemini 3.8 Flash High | **61** | [/works/gemini/](https://arena.typelin.me/works/gemini/) |
 
 毒舌評語待補——先評分，後動刀。
 
