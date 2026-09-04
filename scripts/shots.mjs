@@ -5,7 +5,8 @@ import puppeteer from 'puppeteer-core';
 import { mkdirSync } from 'node:fs';
 
 const BASE = process.env.SHOTS_BASE || 'http://localhost:5176';
-const SHOTS = [
+// SHOTS_IDS=gemini,spark-logo 只截指定 id；SHOTS_W/H 改視窗（例：1920x1080 給 16:9 首屏）
+const ALL = [
   ['opus', '/works/opus/'],
   ['spark', '/works/spark/'],
   ['gemini', '/works/gemini/'],
@@ -18,6 +19,10 @@ const SHOTS = [
   ['qwen-logo', '/logo/qwen/'],
   ['glm-logo', '/logo/glm/'],
 ];
+const only = (process.env.SHOTS_IDS || '').split(',').map((s) => s.trim()).filter(Boolean);
+const SHOTS = only.length ? ALL.filter(([id]) => only.includes(id)) : ALL;
+const VW = Number(process.env.SHOTS_W || 960);
+const VH = Number(process.env.SHOTS_H || 600);
 
 mkdirSync('public/shots', { recursive: true });
 
@@ -26,7 +31,7 @@ const browser = await puppeteer.launch({
   args: ['--no-sandbox', '--disable-dev-shm-usage'],
 });
 const page = await browser.newPage();
-await page.setViewport({ width: 960, height: 600, deviceScaleFactor: 1 });
+await page.setViewport({ width: VW, height: VH, deviceScaleFactor: 1 });
 for (const [id, path] of SHOTS) {
   await page.goto(BASE + path, { waitUntil: 'networkidle2', timeout: 45000 });
   await new Promise((r) => setTimeout(r, 2800));
