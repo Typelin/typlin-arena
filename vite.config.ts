@@ -29,4 +29,5 @@ function worksIndex(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), worksIndex()],
+  server: { port: 5178, strictPort: true, host: '127.0.0.1' },
 })

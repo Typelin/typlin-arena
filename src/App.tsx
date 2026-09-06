@@ -100,9 +100,9 @@ export default function App() {
             <button type="button" onClick={() => go('index')}>尺規</button>
             <button type="button" onClick={() => go('dossier')}>相關文章</button>
           </nav>
-          <span className="topbar__right mono pct">{pct}%</span>
+          <span className="topbar__right mono pct">{pct >= 2 ? `${pct}%` : 'VOL.01'}</span>
         </div>
-        <div className="progress" style={{ width: `${pct}%` }} />
+        <div className="progress" style={{ width: `${pct >= 2 ? pct : 0}%` }} />
       </header>
 
       <main>
@@ -112,16 +112,18 @@ export default function App() {
             <div>
               <p className="eyebrow">AI 實測展廳 · SAME PROMPT, DIFFERENT SOULS</p>
               <h1 id="hero-title">
-                同一道題，<em>看看誰在裸泳。</em>
+                <span className="hero__line">同一道題，</span>
+                <span className="hero__line">看看誰在</span>
+                <em>裸泳。</em>
               </h1>
               <p className="hero__sub">
                 同一個 prompt，六個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
                 這裡只收能動手的東西——評分標準只有一個：能不能被手改變。
               </p>
               <div className="hero__stats">
-                <div><b>6<i>.</i></b><span>參賽作品</span></div>
-                <div><b>6<i>.</i></b><span>可點開</span></div>
-                <div><b>6<i>.</i></b><span>已評分</span></div>
+                <div><b>{works.length}<i>.</i></b><span>參賽作品</span></div>
+                <div><b>{duelA.score}<i>.</i></b><span>本期最高</span></div>
+                <div><b>{(duelA.score ?? 0) - (duelB.score ?? 0)}<i>.</i></b><span>冠亞分差</span></div>
               </div>
               <div className="hero__cta">
                 <button type="button" className="btn" onClick={() => go('works')}>↓ 看作品排名</button>
@@ -140,10 +142,12 @@ export default function App() {
                       <Visual kind={d.visual} />
                       <img src={d.thumb} alt={`${d.title}實機畫面`} loading="lazy" />
                     </div>
-                    <p className="duel__name">{d.title}</p>
-                    <p className="duel__meta">{d.model}</p>
-                    <div className="duel__row">
+                    <div className="duel__id">
+                      <p className="duel__name">{d.title}</p>
                       <span className="duel__score">{d.score ?? '—'}</span>
+                      <p className="duel__meta">{d.model}</p>
+                    </div>
+                    <div className="duel__row">
                       <button type="button" className="btn btn--small" onClick={() => setOpen(d)}>點開 →</button>
                     </div>
                   </div>

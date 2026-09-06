@@ -10,7 +10,7 @@
   --red: #c8402a;
   --gold: #8a6d3b;
   --green: #177a46;
-  --r: 14px;
+  --r: 2px;
   --shadow: 0 1px 2px rgba(22, 21, 15, 0.06), 0 16px 38px -20px rgba(22, 21, 15, 0.28);
   --serif: "Noto Serif TC", "Songti TC", "SimSun", Georgia, serif;
   --sans: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -55,7 +55,7 @@ body::before {
 .nav button {
   background: none; border: 0; cursor: pointer; color: var(--muted);
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 10px 14px; border-radius: 8px; font-weight: 500;
+  padding: 10px 14px; border-radius: 1px; font-weight: 500;
 }
 .nav button:hover { color: var(--red); background: var(--paper-2); }
 .topbar__right { margin-left: auto; color: var(--faint); }
@@ -65,7 +65,7 @@ body::before {
 .btn {
   appearance: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 15px 26px; border-radius: 999px; border: 1.5px solid var(--ink);
+  padding: 15px 26px; border-radius: 1px; border: 1.5px solid var(--ink);
   background: var(--ink); color: var(--paper); transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
 }
 .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); background: var(--red); border-color: var(--red); }
@@ -88,11 +88,17 @@ body::before {
 .hero { padding: 118px 0 30px; border-bottom: 3px double var(--ink); }
 .hero__grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px, 4vw, 60px); align-items: start; }
 .hero h1 {
-  font-family: var(--serif); font-weight: 900; text-wrap: balance;
-  font-size: clamp(58px, 7vw, 104px); line-height: 1.14; letter-spacing: 0;
-  margin: 0 0 18px; max-width: 12ch;
+  font-family: var(--serif); font-weight: 700; text-wrap: unset;
+  font-size: clamp(44px, 5.6vw, 78px); line-height: 1.12; letter-spacing: 0;
+  margin: 0 0 18px; max-width: none;
+  display: flex; flex-direction: column; align-items: flex-start;
 }
-.hero h1 em { font-style: italic; color: var(--red); }
+.hero h1 .hero__line { display: block; }
+.hero h1 em {
+  font-style: italic; font-weight: 900; color: var(--red);
+  font-size: 1.22em; line-height: 1.02; letter-spacing: -0.02em;
+  margin-top: 0.02em;
+}
 .hero__sub { font-size: 19px; line-height: 1.9; color: #3a352a; max-width: 44ch; margin: 0 0 6px; }
 .hero__stats {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -106,7 +112,7 @@ body::before {
 
 /* 主打對決：反白頭 + 紅 VS */
 .duel {
-  background: var(--card); border: 1.5px solid var(--ink); border-radius: var(--r);
+  background: var(--card); border: 1.5px solid var(--ink); border-radius: 2px;
   box-shadow: var(--shadow); overflow: hidden; margin-top: 6px;
 }
 .duel__head {
@@ -118,18 +124,21 @@ body::before {
 .duel__grid { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
 .duel__cell { padding: 18px 20px 20px; }
 .duel__cell + .duel__cell { border-left: 1px solid var(--line); }
-.duel__thumb { height: 196px; border-radius: 10px; border: 1px solid var(--line); position: relative; overflow: hidden; margin-bottom: 14px; }
+.duel__thumb { height: 228px; border-radius: 0; border: 1px solid var(--line); position: relative; overflow: hidden; margin-bottom: 16px; }
 .duel__vs {
-  position: absolute; left: 50%; top: 108px; transform: translate(-50%, -50%); z-index: 2;
-  width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: #fff;
+  position: absolute; left: 50%; top: 122px; transform: translate(-50%, -50%); z-index: 2;
+  background: var(--card); color: var(--red); padding: 0 10px;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif); font-weight: 900; font-size: 17px; font-style: italic;
-  border: 4px solid var(--card); box-shadow: var(--shadow);
+  font-family: var(--serif); font-weight: 900; font-size: 20px; font-style: italic;
+  letter-spacing: 0.04em; line-height: 1;
 }
-.duel__name { font-family: var(--serif); font-weight: 900; font-size: 23px; margin: 0; }
-.duel__meta { color: var(--ink); font-weight: 700; font-size: 15px; margin: 4px 0 12px; font-family: var(--mono); letter-spacing: 0.06em; }
-.duel__row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.duel__score { font-family: var(--serif); font-size: 52px; font-weight: 900; line-height: 1; }
+.duel__id {
+  display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; align-items: end;
+}
+.duel__name { font-family: var(--serif); font-weight: 700; font-size: 23px; margin: 0; line-height: 1.15; }
+.duel__meta { color: var(--ink); font-weight: 700; font-size: 13px; margin: 0; font-family: var(--mono); letter-spacing: 0.06em; grid-column: 1; }
+.duel__row { display: flex; justify-content: flex-end; margin-top: 12px; }
+.duel__score { font-family: var(--serif); font-size: 44px; font-weight: 900; line-height: 0.9; grid-row: 1 / span 2; grid-column: 2; }
 .duel__foot { padding: 12px 20px; border-top: 1px solid var(--line); background: var(--paper-2); color: var(--muted); }
 
 /* 區塊 */
@@ -142,7 +151,7 @@ body::before {
 /* 篩選 */
 .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
 .tab {
-  border: 1.5px solid var(--line); background: var(--card); border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--line); background: var(--card); border-radius: 1px; cursor: pointer;
   font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 10px 18px; color: var(--muted); transition: all 0.2s;
 }
@@ -163,7 +172,7 @@ body::before {
   color: transparent; -webkit-text-stroke: 1.8px var(--ink);
 }
 .work--first .work__ranknum { color: var(--red); -webkit-text-stroke: 0; }
-.thumb { position: relative; height: 176px; border-radius: 10px; border: 1px solid var(--line); overflow: hidden; }
+.thumb { position: relative; height: 176px; border-radius: 1px; border: 1px solid var(--line); overflow: hidden; }
 .thumb img, .duel__thumb img {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: top center; display: block;
@@ -188,7 +197,7 @@ body::before {
 .bar--low i { background: var(--red); }
 .pill {
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  border: 1.5px solid var(--ink); border-radius: 999px; padding: 6px 13px;
+  border: 1.5px solid var(--ink); border-radius: 1px; padding: 6px 13px;
 }
 .pill--ink { background: var(--ink); color: var(--paper); }
 .pill--red { background: var(--red); border-color: var(--red); color: #fff; }
@@ -298,7 +307,7 @@ table.idx { width: 100%; border-collapse: collapse; }
   flex: none; cursor: pointer;
   font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
   border: 1.5px solid var(--line); background: var(--card); color: var(--muted);
-  border-radius: 999px; padding: 7px 14px;
+  border-radius: 1px; padding: 7px 14px;
 }
 .otab:hover { border-color: var(--ink); color: var(--ink); }
 .otab.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
