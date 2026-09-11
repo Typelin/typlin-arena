@@ -370,3 +370,923 @@ table.idx { width: 100%; border-collapse: collapse; }
   .rv { opacity: 1; transform: none; transition: none; }
   .btn:hover { transform: none; }
 }
+
+/* ========================================================================== */
+/* 2026-09 Responsive editorial pass                                           */
+/* Keep the paper/jury-book identity, but make scale and layout fully fluid.   */
+/* ========================================================================== */
+:root {
+  --arena-gutter: clamp(1rem, 3.5vw, 4.75rem);
+  --arena-max: 112rem;
+  --topbar-h: clamp(3.75rem, 4.2vw, 4.75rem);
+  --text-micro: clamp(0.72rem, 0.16vw + 0.68rem, 0.82rem);
+  --text-meta: clamp(0.78rem, 0.18vw + 0.72rem, 0.9rem);
+  --text-body: clamp(1rem, 0.22vw + 0.92rem, 1.18rem);
+  --text-lead: clamp(1.04rem, 0.34vw + 0.92rem, 1.3rem);
+  --section-gap: clamp(3.5rem, 7vw, 7.5rem);
+}
+
+body {
+  font-size: var(--text-body);
+  line-height: 1.68;
+  overflow-x: clip;
+}
+
+.wrap {
+  width: min(100%, var(--arena-max));
+  max-width: none;
+  margin-inline: auto;
+  padding-inline: var(--arena-gutter);
+}
+
+.mono {
+  font-size: var(--text-micro);
+}
+
+.topbar__in {
+  min-height: var(--topbar-h);
+  height: var(--topbar-h);
+  gap: clamp(0.65rem, 1.5vw, 1.4rem);
+}
+
+.brand {
+  min-width: 0;
+  gap: clamp(0.55rem, 0.9vw, 0.8rem);
+}
+
+.brand__mark {
+  width: clamp(1.9rem, 2.1vw, 2.45rem);
+  height: clamp(1.9rem, 2.1vw, 2.45rem);
+  flex: none;
+}
+
+.brand__name {
+  font-size: clamp(1.02rem, 0.52vw + 0.72rem, 1.35rem);
+  white-space: nowrap;
+}
+
+.nav {
+  gap: clamp(0.1rem, 0.3vw, 0.3rem);
+  margin-left: clamp(0.25rem, 0.8vw, 0.75rem);
+}
+
+.nav button {
+  min-height: 44px;
+  font-size: var(--text-micro);
+  padding: 0.65rem clamp(0.7rem, 1vw, 1rem);
+}
+
+.topbar__right {
+  white-space: nowrap;
+  font-size: var(--text-micro);
+}
+
+.btn {
+  min-height: 44px;
+  font-size: var(--text-meta);
+  padding: clamp(0.68rem, 1vw, 0.9rem) clamp(1rem, 1.6vw, 1.65rem);
+}
+
+.btn--small {
+  min-height: 44px;
+  padding: 0.62rem clamp(0.8rem, 1vw, 1.12rem);
+  font-size: var(--text-micro);
+}
+
+.eyebrow {
+  font-size: var(--text-micro);
+  gap: clamp(0.45rem, 0.7vw, 0.7rem);
+  margin-bottom: clamp(0.65rem, 1.3vw, 1rem);
+}
+
+.hero {
+  padding: calc(var(--topbar-h) + clamp(2rem, 4.2vh, 3.8rem)) var(--arena-gutter) clamp(2.25rem, 5vh, 4rem);
+  border-bottom: 3px double var(--ink);
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(28rem, 1.1fr);
+  gap: clamp(2rem, 4.8vw, 6rem);
+  align-items: center;
+  min-height: min(46rem, calc(100svh - var(--topbar-h) - 5rem));
+}
+
+.hero h1 {
+  font-size: clamp(2.8rem, min(5.35vw, 8.5vh), 5.7rem);
+  line-height: 1.07;
+  margin-bottom: clamp(1rem, 1.8vw, 1.5rem);
+  text-wrap: balance;
+}
+
+.hero__sub {
+  font-size: var(--text-lead);
+  line-height: 1.8;
+  max-width: 46ch;
+}
+
+.hero__stats {
+  margin: clamp(1.25rem, 2.3vw, 2rem) 0;
+  padding: clamp(0.75rem, 1.2vw, 1.05rem) 0;
+}
+
+.hero__stats b {
+  font-size: clamp(2rem, 2.5vw, 3.4rem);
+}
+
+.hero__stats span {
+  font-size: var(--text-micro);
+}
+
+.duel {
+  margin-top: 0;
+}
+
+.duel__head,
+.duel__foot {
+  padding: clamp(0.65rem, 1vw, 0.9rem) clamp(0.85rem, 1.4vw, 1.35rem);
+}
+
+.duel__cell {
+  min-width: 0;
+  padding: clamp(0.8rem, 1.35vw, 1.35rem);
+}
+
+.duel__thumb {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  margin-bottom: clamp(0.7rem, 1.2vw, 1rem);
+}
+
+.duel__vs {
+  top: 34%;
+  font-size: clamp(1rem, 1.15vw, 1.35rem);
+}
+
+.duel__name {
+  font-size: clamp(1.08rem, 1vw + 0.5rem, 1.55rem);
+}
+
+.duel__meta {
+  font-size: var(--text-micro);
+  overflow-wrap: anywhere;
+}
+
+.duel__score {
+  font-size: clamp(2rem, 2.5vw, 3.4rem);
+}
+
+.section {
+  padding: var(--section-gap) var(--arena-gutter) 0.5rem;
+}
+
+.secnum {
+  font-size: clamp(4rem, 7vw, 8.5rem);
+}
+
+.section h2 {
+  font-size: clamp(2.35rem, 4.2vw, 4.8rem);
+  line-height: 1.08;
+}
+
+.section__desc {
+  font-size: var(--text-body);
+  max-width: 68ch;
+}
+
+.works {
+  gap: clamp(0.75rem, 1.2vw, 1.15rem);
+}
+
+.work {
+  grid-template-columns: clamp(3.8rem, 4.4vw, 5.25rem) minmax(14rem, 21vw) minmax(0, 1fr) clamp(12rem, 14.5vw, 15.5rem);
+  gap: clamp(1rem, 1.65vw, 2rem);
+  padding: clamp(1rem, 1.6vw, 1.65rem);
+}
+
+.work__ranknum {
+  font-size: clamp(3rem, 4vw, 4.8rem);
+}
+
+.thumb {
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+.work__copy {
+  min-width: 0;
+}
+
+.work__rank {
+  font-size: var(--text-micro);
+}
+
+.work h3 {
+  font-size: clamp(1.65rem, 1.55vw + 0.7rem, 2.65rem);
+  margin-block: 0.3rem 0.45rem;
+}
+
+.work__model {
+  font-size: clamp(1.12rem, 0.8vw + 0.55rem, 1.65rem);
+}
+
+.work__prompt {
+  font-size: var(--text-meta);
+}
+
+.work__verdict {
+  font-size: var(--text-body);
+  line-height: 1.7;
+  margin: clamp(0.6rem, 1vw, 0.9rem) 0;
+}
+
+.chip {
+  font-size: var(--text-micro);
+  padding: 0.36rem clamp(0.55rem, 0.7vw, 0.75rem);
+  border-radius: 0.35rem;
+}
+
+.work__side {
+  padding-left: clamp(1rem, 1.5vw, 1.6rem);
+  gap: clamp(0.55rem, 0.8vw, 0.8rem);
+}
+
+.bignum {
+  font-size: clamp(3.1rem, 4vw, 5.2rem);
+}
+
+.bignum small {
+  font-size: var(--text-micro);
+}
+
+.criteria {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.1vw, 1rem);
+  margin-top: clamp(1rem, 1.7vw, 1.5rem);
+}
+
+.criterion {
+  min-width: 0;
+  padding: clamp(1rem, 1.3vw, 1.35rem);
+}
+
+.criterion .work__ranknum {
+  font-size: clamp(2rem, 2.4vw, 3rem);
+}
+
+.criterion h3 {
+  font-size: clamp(1.15rem, 0.72vw + 0.65rem, 1.5rem);
+}
+
+.criterion p {
+  font-size: var(--text-meta);
+  line-height: 1.7;
+}
+
+.articles {
+  gap: clamp(0.85rem, 1.4vw, 1.4rem);
+}
+
+.article {
+  padding: clamp(1.2rem, 2vw, 2.3rem);
+}
+
+.article h3 {
+  font-size: clamp(1.55rem, 1.5vw + 0.7rem, 2.25rem);
+}
+
+.article p.body {
+  font-size: var(--text-body);
+  line-height: 1.85;
+}
+
+.insight {
+  padding: clamp(0.9rem, 1.2vw, 1.2rem);
+  font-size: clamp(1rem, 0.5vw + 0.75rem, 1.28rem);
+}
+
+.readmore {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--text-meta);
+}
+
+.overlay__box {
+  inset: clamp(0.5rem, 2.5vh, 2rem) clamp(0.5rem, 2.5vw, 2rem);
+  width: min(calc(100vw - 1rem), 100rem);
+  height: min(calc(100svh - 1rem), 68rem);
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  border-radius: clamp(0.25rem, 0.8vw, 0.8rem);
+}
+
+.overlay__top {
+  padding: clamp(0.65rem, 1vw, 0.9rem) clamp(0.75rem, 1.4vw, 1.25rem);
+}
+
+.overlay__tabs {
+  padding: 0.6rem clamp(0.75rem, 1.4vw, 1.25rem);
+}
+
+.otab,
+.segbtn {
+  min-height: 44px;
+  font-size: var(--text-micro);
+}
+
+.overlay__stage {
+  grid-template-columns: minmax(0, 1fr) clamp(18rem, 23vw, 25rem);
+}
+
+.overlay__side {
+  padding: clamp(1rem, 1.7vw, 1.7rem);
+}
+
+.spread__name {
+  font-size: clamp(1.6rem, 1.5vw + 0.7rem, 2.35rem);
+}
+
+.spread__prompt,
+.spec li {
+  font-size: var(--text-meta);
+}
+
+.verdict {
+  font-size: var(--text-body);
+  line-height: 1.75;
+}
+
+.colophon {
+  margin-top: var(--section-gap);
+  padding-top: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+.colophon__grid {
+  gap: clamp(1rem, 2vw, 2rem);
+  padding-bottom: clamp(1.5rem, 2.4vw, 2.5rem);
+}
+
+.colophon h4 {
+  font-size: var(--text-micro);
+}
+
+.colophon p {
+  font-size: var(--text-meta);
+}
+
+.wordmark {
+  font-size: clamp(4rem, 11vw, 13rem);
+}
+
+@media (max-width: 74rem) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(24rem, 1.05fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .work {
+    grid-template-columns: clamp(3.5rem, 5vw, 4.5rem) minmax(12rem, 24vw) minmax(0, 1fr) clamp(10rem, 16vw, 12rem);
+  }
+
+  .criteria {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 63.75rem) {
+  .hero {
+    padding-top: calc(var(--topbar-h) + clamp(1.6rem, 3.5vh, 2.6rem));
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero__sub {
+    max-width: 60ch;
+  }
+
+  .duel {
+    width: min(100%, 48rem);
+  }
+
+  .work {
+    grid-template-columns: clamp(3.2rem, 7vw, 4rem) minmax(12rem, 31vw) minmax(0, 1fr);
+    grid-template-areas:
+      "rank thumb copy"
+      "side side side";
+  }
+
+  .work__ranknum { grid-area: rank; }
+  .work .thumb { grid-area: thumb; display: block; }
+  .work__copy { grid-area: copy; }
+  .work__side {
+    grid-area: side;
+    border-left: 0;
+    border-top: 2px solid var(--ink);
+    padding-left: 0;
+    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: auto minmax(8rem, 1fr) auto auto;
+    align-items: center;
+  }
+
+  .bignum {
+    font-size: clamp(2.6rem, 6vw, 4rem);
+  }
+
+  .criteria {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .articles {
+    grid-template-columns: 1fr;
+  }
+
+  .overlay__stage {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+
+  .overlay__art {
+    min-height: min(48svh, 32rem);
+    border-right: 0;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .colophon__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 42rem) {
+  :root {
+    --arena-gutter: clamp(1rem, 5vw, 1.4rem);
+    --section-gap: clamp(3rem, 14vw, 4.5rem);
+  }
+
+  body {
+    font-size: 1rem;
+  }
+
+  .topbar__in {
+    gap: 0.65rem;
+  }
+
+  .brand__name {
+    font-size: clamp(0.92rem, 4.1vw, 1.08rem);
+    letter-spacing: 0.035em;
+  }
+
+  .topbar__right {
+    margin-left: auto;
+    font-size: 0.72rem;
+  }
+
+  .hero {
+    padding-inline: var(--arena-gutter);
+    padding-bottom: 2.4rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.65rem, 13.5vw, 4rem);
+  }
+
+  .hero__sub {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .hero__stats {
+    gap: 0;
+  }
+
+  .hero__stats > div {
+    min-width: 0;
+    padding-right: 0.45rem;
+  }
+
+  .hero__stats b {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  .hero__stats span {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .hero__cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero__cta .btn {
+    justify-content: center;
+    padding-inline: 0.7rem;
+  }
+
+  .duel__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .duel__cell {
+    padding: 0.72rem;
+  }
+
+  .duel__cell + .duel__cell {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .duel__vs {
+    display: flex;
+    top: 31%;
+    padding-inline: 0.45rem;
+  }
+
+  .duel__name {
+    font-size: clamp(1rem, 4.8vw, 1.2rem);
+  }
+
+  .duel__score {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+  }
+
+  .duel__meta {
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  .duel__row {
+    justify-content: stretch;
+  }
+
+  .duel__row .btn {
+    width: 100%;
+    justify-content: center;
+    padding-inline: 0.45rem;
+  }
+
+  .section {
+    padding-inline: var(--arena-gutter);
+  }
+
+  .section h2 {
+    font-size: clamp(2.25rem, 11vw, 3.2rem);
+  }
+
+  .work,
+  .work--first {
+    grid-template-columns: clamp(2.8rem, 13vw, 3.4rem) minmax(0, 1fr);
+    grid-template-areas:
+      "rank copy"
+      "thumb thumb"
+      "side side";
+    gap: 0.85rem 1rem;
+    padding: 1rem;
+    border-left-width: 1.5px;
+  }
+
+  .work--first {
+    border-top: 6px solid var(--red);
+  }
+
+  .work__ranknum {
+    font-size: clamp(2.8rem, 13vw, 3.6rem);
+  }
+
+  .work .thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .work h3 {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+  }
+
+  .work__model {
+    font-size: clamp(1.05rem, 4.8vw, 1.3rem);
+  }
+
+  .work__verdict {
+    font-size: 1rem;
+  }
+
+  .work__side {
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem 1rem;
+  }
+
+  .work__side .bignum {
+    grid-row: 1 / span 2;
+  }
+
+  .work__side .bar {
+    align-self: end;
+  }
+
+  .work__side .mono {
+    align-self: start;
+  }
+
+  .work__side .btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .criteria {
+    grid-template-columns: 1fr;
+  }
+
+  .criterion {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr;
+    gap: 0.15rem 0.9rem;
+    align-items: start;
+  }
+
+  .criterion .work__ranknum {
+    grid-row: 1 / span 2;
+  }
+
+  .criterion h3 {
+    margin: 0;
+  }
+
+  .criterion p {
+    font-size: 0.9rem;
+  }
+
+  .article {
+    padding: 1.1rem;
+  }
+
+  .article h3 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .article p.body {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .insight {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .insight::before {
+    display: none;
+  }
+
+  .overlay__box {
+    inset: 0;
+    width: 100vw;
+    height: 100svh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .overlay__top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .overlay__top > .mono {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .overlay__nav {
+    width: 100%;
+  }
+
+  .overlay__nav .btn:last-child {
+    margin-left: auto;
+  }
+
+  .overlay__tabs {
+    scrollbar-width: thin;
+  }
+
+  .overlay__art {
+    min-height: 46svh;
+  }
+
+  .overlay__side {
+    padding: 1rem;
+  }
+
+  .seg {
+    flex-direction: column;
+  }
+
+  .colophon__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wordmark {
+    font-size: clamp(3.4rem, 18vw, 6.5rem);
+  }
+}
+
+@media (max-width: 22.5rem) {
+  .brand__name {
+    max-width: 11rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hero__cta {
+    grid-template-columns: 1fr;
+  }
+
+  .duel__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .duel__cell + .duel__cell {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .duel__vs {
+    display: none;
+  }
+}
+
+/* Final fit corrections: tablet duel stays comparative; modal respects viewport insets. */
+:root {
+  --text-micro: clamp(0.75rem, 0.16vw + 0.68rem, 0.84rem);
+}
+
+.overlay__box {
+  --overlay-gap: clamp(0.5rem, 2.5vw, 2rem);
+  inset: var(--overlay-gap);
+  width: min(calc(100vw - (var(--overlay-gap) * 2)), 100rem);
+  height: min(calc(100svh - (var(--overlay-gap) * 2)), 68rem);
+}
+
+@media (min-width: 22.51rem) and (max-width: 63.75rem) {
+  .duel__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .duel__cell + .duel__cell {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .duel__vs {
+    display: flex;
+    top: 33%;
+  }
+}
+
+@media (max-width: 42rem) {
+  .topbar__right,
+  .hero__stats span,
+  .duel__meta {
+    font-size: 0.75rem;
+  }
+
+  .overlay__box {
+    --overlay-gap: 0px;
+    inset: 0;
+    width: 100vw;
+    height: 100svh;
+  }
+}
+
+.insight b { font-size: var(--text-micro); }
+
+
+/* ========================================================================== */
+/* Editorial premium pass — desktop only. Preserve tablet/mobile ergonomics. */
+/* ========================================================================== */
+@media (min-width: 64rem) {
+  :root {
+    --arena-max: 96rem;
+    --arena-gutter: clamp(2.75rem, 4vw, 5rem);
+    --text-micro: clamp(0.72rem, 0.08vw + 0.66rem, 0.76rem);
+    --text-meta: clamp(0.78rem, 0.1vw + 0.7rem, 0.84rem);
+    --text-body: clamp(1rem, 0.1vw + 0.9rem, 1.08rem);
+    --text-lead: clamp(1.08rem, 0.18vw + 0.94rem, 1.2rem);
+    --section-gap: clamp(4.5rem, 5.8vw, 6.5rem);
+  }
+
+  .topbar__in {
+    gap: clamp(0.8rem, 1vw, 1.15rem);
+  }
+
+  .brand__name {
+    font-size: clamp(1.05rem, 0.35vw + 0.78rem, 1.24rem);
+  }
+
+  .nav button {
+    padding-inline: clamp(0.72rem, 0.72vw, 0.9rem);
+  }
+
+  .hero {
+    padding-top: calc(var(--topbar-h) + clamp(2.4rem, 4.6vh, 3.4rem));
+    padding-bottom: clamp(2.8rem, 5vh, 3.8rem);
+  }
+
+  .hero__grid {
+    grid-template-columns: minmax(0, 1.08fr) minmax(28rem, 0.92fr);
+    gap: clamp(3rem, 4vw, 4.5rem);
+    min-height: min(42rem, calc(100svh - var(--topbar-h) - 7rem));
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.7rem, min(4.75vw, 8.4vh), 5.3rem);
+    line-height: 1.065;
+    letter-spacing: -0.012em;
+    margin-bottom: clamp(1rem, 1.4vw, 1.35rem);
+  }
+
+  .hero__sub {
+    max-width: 43ch;
+    line-height: 1.82;
+  }
+
+  .hero__stats {
+    max-width: 40rem;
+    margin-block: clamp(1.35rem, 1.8vw, 1.75rem);
+    padding-block: clamp(0.72rem, 0.85vw, 0.9rem);
+  }
+
+  .hero__stats b {
+    font-size: clamp(2rem, 2vw, 2.85rem);
+  }
+
+  .duel {
+    width: min(100%, 43rem);
+    justify-self: end;
+    box-shadow: 0 1px 2px rgba(22, 21, 15, 0.05), 0 18px 40px -28px rgba(22, 21, 15, 0.35);
+  }
+
+  .duel__cell {
+    padding: clamp(0.8rem, 1vw, 1.05rem);
+  }
+
+  .duel__name {
+    font-size: clamp(1.08rem, 0.72vw + 0.5rem, 1.36rem);
+  }
+
+  .duel__score {
+    font-size: clamp(2rem, 2vw, 2.9rem);
+  }
+
+  .section h2 {
+    font-size: clamp(2.7rem, 3.55vw, 4.2rem);
+    line-height: 1.1;
+  }
+
+  .section__desc {
+    max-width: 62ch;
+  }
+
+  .work {
+    grid-template-columns: clamp(3.8rem, 4vw, 5rem) minmax(14rem, 18vw) minmax(0, 1fr) clamp(11rem, 13vw, 13.5rem);
+    gap: clamp(1rem, 1.35vw, 1.6rem);
+    padding: clamp(1rem, 1.25vw, 1.4rem);
+  }
+
+  .work__ranknum {
+    font-size: clamp(3rem, 3.4vw, 4.2rem);
+  }
+
+  .work h3 {
+    font-size: clamp(1.75rem, 1.3vw + 0.65rem, 2.3rem);
+  }
+
+  .work__model {
+    font-size: clamp(1.08rem, 0.62vw + 0.55rem, 1.42rem);
+  }
+
+  .bignum {
+    font-size: clamp(3rem, 3.5vw, 4.6rem);
+  }
+
+  .criterion h3 {
+    font-size: clamp(1.12rem, 0.5vw + 0.72rem, 1.35rem);
+  }
+
+  .article h3 {
+    font-size: clamp(1.6rem, 1.2vw + 0.7rem, 2.05rem);
+  }
+
+  .insight {
+    font-size: clamp(1rem, 0.34vw + 0.78rem, 1.16rem);
+  }
+}

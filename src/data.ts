@@ -21,7 +21,6 @@ export type Plate = {
 };
 
 const SHARED_PROMPT = '同一道題：關於你自己的前端作品';
-const PENDING = '待評論。';
 
 export const PLATES: Plate[] = [
   {
@@ -32,7 +31,7 @@ export const PLATES: Plate[] = [
     title: '流動思考',
     prompt: SHARED_PROMPT,
     spec: ['REACT 19', 'CANVAS 2D 流場', '零第三方依賴'],
-    verdict: PENDING,
+    verdict: '文字與動效最完整，滾動、游標與物理互動形成同一套敘事；動手深度仍有提升空間。',
     visual: 'current',
     src: '/works/opus/',
     thumb: '/shots/opus.png',
@@ -49,7 +48,7 @@ export const PLATES: Plate[] = [
     title: '三層描圖紙',
     prompt: SHARED_PROMPT,
     spec: ['REACT 19', 'CANVAS 2D', 'WEBAUDIO 合成'],
-    verdict: PENDING,
+    verdict: '三層描圖紙把「對齊」變成手的動作，概念鮮明；互動完成度與細節收束略弱。',
     visual: 'tracing',
     src: '/works/spark/',
     thumb: '/shots/spark.png',
@@ -66,7 +65,7 @@ export const PLATES: Plate[] = [
     title: 'The Refraction Chamber',
     prompt: SHARED_PROMPT,
     spec: ['REACT 18', 'TAILWIND', 'CANVAS 折射室'],
-    verdict: PENDING,
+    verdict: '視覺聲量很大，但落入黑底、神經網格等常見 AI 視覺語彙，且與題目約束牴觸。',
     visual: 'prism',
     src: '/works/gemini/',
     thumb: '/shots/gemini.png',
@@ -83,7 +82,7 @@ export const PLATES: Plate[] = [
     title: '注意力場 Attention Field',
     prompt: SHARED_PROMPT,
     spec: ['REACT 19', 'CANVAS 注意力場', '零第三方依賴'],
-    verdict: PENDING,
+    verdict: '結構清楚、動效有因果，整體穩定；完成度高，但記憶點相對保守。',
     visual: 'current',
     src: '/works/qwen/',
     thumb: '/shots/qwen.png',
@@ -100,7 +99,7 @@ export const PLATES: Plate[] = [
     title: 'Resonance Chamber',
     prompt: SHARED_PROMPT,
     spec: ['REACT 18', 'TAILWIND', 'CANVAS 共振室'],
-    verdict: PENDING,
+    verdict: '共振與聲波的概念成立，視覺氛圍到位；互動與細節仍顯粗糙。',
     visual: 'prism',
     src: '/works/glm/',
     thumb: '/shots/glm.png',
@@ -117,7 +116,7 @@ export const PLATES: Plate[] = [
     title: '自畫像 № 27B',
     prompt: SHARED_PROMPT,
     spec: ['REACT 18', '思源宋自託管', 'CANVAS 字場'],
-    verdict: PENDING,
+    verdict: '本地 27B 以字場與多重預測做出鮮明自畫像，小模型在單件完成度上同樣有競爭力。',
     visual: 'current',
     src: '/works/qw27/',
     thumb: '/shots/qw27.png',

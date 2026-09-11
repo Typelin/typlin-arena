@@ -148,7 +148,7 @@ export default function App() {
                       <p className="duel__meta">{d.model}</p>
                     </div>
                     <div className="duel__row">
-                      <button type="button" className="btn btn--small" onClick={() => setOpen(d)}>點開 →</button>
+                      <button type="button" className="btn btn--small" onClick={() => setOpen(d)}>開啟 →</button>
                     </div>
                   </div>
                 ))}
@@ -167,8 +167,8 @@ export default function App() {
             <div>
               <div className="secnum" aria-hidden="true">01</div>
               <p className="eyebrow">RANK · 作品排名（按評分排序）</p>
-              <h2 id="works-title">六件作品，<em>首批分數。</em></h2>
-              <p className="section__desc">首批分數已公布，評語待補。按「點開」全幅開啟，站內直接動手。</p>
+              <h2 id="works-title">六件作品，<em>完整排名。</em></h2>
+              <p className="section__desc">分數與短評已整理完成。選擇「開啟」即可在站內全幅操作作品。</p>
             </div>
           </div>
           <div className="works">
@@ -179,7 +179,7 @@ export default function App() {
                   <Visual kind={pl.visual} />
                   <img src={pl.thumb} alt={`${pl.title}實機畫面`} loading="lazy" />
                 </div>
-                <div>
+                <div className="work__copy">
                   <span className="work__rank">RANK {i + 1} · {pl.no} / PLATE</span>
                   <h3>{pl.title}</h3>
                   <p className="work__model">{pl.model}</p>
@@ -195,7 +195,7 @@ export default function App() {
                     </div>
                   )}
                   {pl.logoSrc && <span className="mono">LOGO落地 · {pl.score2 ?? '—'}</span>}
-                  <button type="button" className="btn btn--small" onClick={() => setOpen(pl)}>點開 →</button>
+                  <button type="button" className="btn btn--small" onClick={() => setOpen(pl)}>開啟 →</button>
                 </div>
               </article>
             ))}
@@ -207,8 +207,8 @@ export default function App() {
           <div className="rv">
             <div className="secnum" aria-hidden="true">02</div>
             <p className="eyebrow">CRITERIA · 評分尺規</p>
-            <h2 id="index-title">五維尺規，<em>首批已出。</em></h2>
-            <p className="section__desc">尺在這裡，首批分數已經打在作品上。評論待補。</p>
+            <h2 id="index-title">五維尺規，<em>逐件衡量。</em></h2>
+            <p className="section__desc">五個維度共用同一把尺，分數直接回到作品本身。</p>
           </div>
           <div className="criteria">
             {CRITERIA.map((c, ci) => (
@@ -243,7 +243,7 @@ export default function App() {
       </main>
 
       {/* 點開彈窗 */}
-      <div className={`overlay${open ? ' open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!open} aria-label={open ? `點開 ${open.title}` : '點開'}>
+      <div className={`overlay${open ? ' open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!open} aria-label={open ? `作品預覽：${open.title}` : '作品預覽'}>
         {open && (
           <>
             <div className="overlay__bg" onClick={() => setOpen(null)} />
@@ -327,9 +327,9 @@ export default function App() {
 
       <footer className="colophon">
         <div className="wrap colophon__grid">
-          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。六件參賽，六件已評分，評語待補。</p></div>
-          <div><h4>規格</h4><p>React + Vite + 零依賴。淺色紙面，全系統字體，無外部請求。</p></div>
-          <div><h4>標準</h4><p>能不能動手。不能被手改變的，不裝幀。</p></div>
+          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。六件參賽，分數、短評與作品皆可直接查看。</p></div>
+          <div><h4>規格</h4><p>React + Vite · 靜態部署 · 淺色紙面，作品可在站內直接開啟。</p></div>
+          <div><h4>標準</h4><p>能不能動手。能被操作、能留下回饋，才進展廳。</p></div>
         </div>
         <p className="wordmark" aria-hidden="true">TYPELIN <b>ARENA</b></p>
       </footer>
