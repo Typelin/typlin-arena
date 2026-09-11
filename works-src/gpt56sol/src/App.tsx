@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
+import { LazyMotion, domAnimation, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'motion/react';
+import * as m from 'motion/react-m';
 import LoomCanvas, { type Weights } from './LoomCanvas';
-
-const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
 const chapterCopy = [
   ['01', '發散', '我先保留不只一條路。太早確定，通常只是把第一個念頭誤認成答案。'],
@@ -20,41 +20,74 @@ function Pressure({ label, value, onChange, hint }: { label: string; value: numb
   );
 }
 
+function PhaseRail({ progress }: { progress: MotionValue<number> }) {
+  const cursorX = useTransform(progress, [0, 1], ['0%', '300%']);
+  const cursorScale = useTransform(progress, [0, .08, .92, 1], [.55, 1, 1, .72]);
+
+  return (
+    <div className="phase-rail" aria-label="思考週期：發散、施壓、承諾、修訂">
+      <m.div className="phase-rail__cursor" aria-hidden="true" style={{ x: cursorX, scaleX: cursorScale }} />
+      {chapterCopy.map(([no, title]) => (
+        <div key={no}><span>{no}</span><b>{title}</b></div>
+      ))}
+    </div>
+  );
+}
+
+function PhaseCaptionLayer({ index, progress }: { index: number; progress: MotionValue<number> }) {
+  const ranges = [
+    [0, .001, .19, .29],
+    [.18, .27, .43, .53],
+    [.42, .52, .68, .78],
+    [.67, .77, .999, 1],
+  ];
+  const outputOpacity = index === 0 ? [1, 1, 1, 0] : index === 3 ? [0, 1, 1, 1] : [0, 1, 1, 0];
+  const outputY = index === 0 ? [0, 0, 0, -7] : index === 3 ? [7, 0, 0, 0] : [7, 0, 0, -7];
+  const opacity = useTransform(progress, ranges[index], outputOpacity);
+  const y = useTransform(progress, ranges[index], outputY);
+
+  return (
+    <m.div className="phase-caption__layer" aria-hidden="true" style={{ opacity, y }}>
+      <span>{chapterCopy[index][0]} / {chapterCopy[index][1]}</span>
+      <p>{chapterCopy[index][2]}</p>
+    </m.div>
+  );
+}
+
 export default function App() {
   const [weights, setWeights] = useState<Weights>({ precision: .74, novelty: .58, empathy: .68 });
-  const [pageProgress, setPageProgress] = useState(0);
-  const [machineProgress, setMachineProgress] = useState(0);
-  const machineSectionRef = useRef<HTMLElement>(null);
   const [revision, setRevision] = useState(false);
-  const [reduced, setReduced] = useState(false);
   const [sealHolding, setSealHolding] = useState(false);
   const holdTimer = useRef<number | null>(null);
+  const machineSectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion() ?? false;
 
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => setReduced(mq.matches);
-    sync();
-    mq.addEventListener('change', sync);
-    return () => mq.removeEventListener('change', sync);
-  }, []);
+  const { scrollYProgress: pageProgressRaw } = useScroll();
+  const pageProgress = useSpring(pageProgressRaw, {
+    stiffness: 150,
+    damping: 32,
+    mass: .35,
+    restDelta: .0005,
+    skipInitialAnimation: true,
+  });
 
-  useEffect(() => {
-    const update = () => {
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      setPageProgress(clamp(window.scrollY / max));
-      const section = machineSectionRef.current;
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        const start = window.scrollY + rect.top;
-        const span = Math.max(1, rect.height - window.innerHeight);
-        setMachineProgress(clamp((window.scrollY - start) / span));
-      }
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    return () => { window.removeEventListener('scroll', update); window.removeEventListener('resize', update); };
-  }, []);
+  const { scrollYProgress: machineProgressRaw } = useScroll({
+    target: machineSectionRef,
+    offset: ['start start', 'end end'],
+  });
+  const machineProgressSpring = useSpring(machineProgressRaw, {
+    stiffness: 175,
+    damping: 32,
+    mass: .28,
+    restDelta: .0004,
+    skipInitialAnimation: true,
+  });
+  const machineProgress = prefersReducedMotion ? machineProgressRaw : machineProgressSpring;
+
+  const pressureOpacity = useTransform(machineProgress, [0, .18, .42, .72, 1], [0, .03, .13, .07, 0]);
+  const pressureX = useTransform(machineProgress, [0, .15, .72, 1], ['-22%', '-8%', '72%', '92%']);
+  const proofLineScale = useTransform(machineProgress, [0, .58, .78, 1], [.15, .15, 1, .72]);
+  const stageInset = useTransform(machineProgress, [0, .12, .48, .82, 1], [10, 0, -3, 0, -2]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -74,8 +107,6 @@ export default function App() {
     return '我把可能性攤開，再和你一起決定哪一條值得承擔。';
   }, [weights]);
 
-  const phase = Math.min(3, Math.floor(machineProgress * 4.02));
-
   const startHold = () => {
     setSealHolding(true);
     holdTimer.current = window.setTimeout(() => {
@@ -90,11 +121,12 @@ export default function App() {
   };
 
   return (
-    <main>
+    <LazyMotion features={domAnimation} strict>
+      <main>
       <header className="masthead">
         <a href="#top" className="brand" aria-label="回到頁首">GPT–5.6 <span>SOL</span></a>
-        <div className="folio">SELF PORTRAIT · PROOF 01</div>
-        <div className="progress" aria-label={`閱讀進度 ${Math.round(pageProgress * 100)}%`}><span style={{ transform: `scaleX(${pageProgress})` }} /></div>
+        <div className="folio">SELF PORTRAIT · PROOF 02</div>
+        <div className="progress" aria-label="閱讀進度"><m.span style={{ scaleX: prefersReducedMotion ? pageProgressRaw : pageProgress }} /></div>
       </header>
 
       <section id="top" className="hero">
@@ -111,34 +143,33 @@ export default function App() {
 
       <section id="press" ref={machineSectionRef} className="machine-shell">
         <div className="machine-stage">
-          <div className="phase-rail" aria-live="polite">
-            {chapterCopy.map(([no, title], i) => (
-              <div key={no} className={phase === i ? 'is-active' : ''}><span>{no}</span><b>{title}</b></div>
-            ))}
-          </div>
+          <PhaseRail progress={machineProgress} />
           <div className="machine">
-          <div className="machine__canvas">
-            <LoomCanvas weights={weights} progress={machineProgress} revision={revision} reduced={reduced} />
-            <div className="machine__caption"><span>候選路徑</span><span>壓印軸</span></div>
-          </div>
+            <div className="machine__canvas">
+              <m.div className="canvas-kinetic" style={{ y: prefersReducedMotion ? 0 : stageInset }}>
+                <LoomCanvas weights={weights} progress={machineProgress} revision={revision} reduced={prefersReducedMotion} />
+                <m.div className="pressure-sweep" aria-hidden="true" style={{ opacity: prefersReducedMotion ? 0 : pressureOpacity, x: pressureX }} />
+                <m.div className="proof-axis" aria-hidden="true" style={{ scaleY: prefersReducedMotion ? 1 : proofLineScale }} />
+                <div className="machine__caption"><span>候選路徑</span><span>壓印軸</span></div>
+              </m.div>
+            </div>
 
-          <aside className="controls" aria-label="校樣壓力控制">
-            <div className="controls__top">
-              <span className="mono">PRESSURE / 03</span>
-              <strong>你可以改變我<br />如何取捨。</strong>
-            </div>
-            <Pressure label="精確" value={weights.precision} hint="證據、邏輯、邊界" onChange={(v) => setWeights(w => ({ ...w, precision: v }))} />
-            <Pressure label="新奇" value={weights.novelty} hint="聯想、轉譯、意外" onChange={(v) => setWeights(w => ({ ...w, novelty: v }))} />
-            <Pressure label="體諒" value={weights.empathy} hint="目的、語境、可用性" onChange={(v) => setWeights(w => ({ ...w, empathy: v }))} />
-            <div className="proofline">
-              <small>目前校樣</small>
-              <p>{answer}</p>
-            </div>
-          </aside>
+            <aside className="controls" aria-label="校樣壓力控制">
+              <div className="controls__top">
+                <span className="mono">PRESSURE / 03</span>
+                <strong>你可以改變我<br />如何取捨。</strong>
+              </div>
+              <Pressure label="精確" value={weights.precision} hint="證據、邏輯、邊界" onChange={(v) => setWeights(w => ({ ...w, precision: v }))} />
+              <Pressure label="新奇" value={weights.novelty} hint="聯想、轉譯、意外" onChange={(v) => setWeights(w => ({ ...w, novelty: v }))} />
+              <Pressure label="體諒" value={weights.empathy} hint="目的、語境、可用性" onChange={(v) => setWeights(w => ({ ...w, empathy: v }))} />
+              <div className="proofline">
+                <small>目前校樣</small>
+                <p>{answer}</p>
+              </div>
+            </aside>
           </div>
-          <div className="phase-caption">
-            <span>{chapterCopy[phase][0]} / {chapterCopy[phase][1]}</span>
-            <p>{chapterCopy[phase][2]}</p>
+          <div className="phase-caption" aria-label="捲動會依序經過發散、施壓、承諾、修訂四個階段">
+            {[0, 1, 2, 3].map(index => <PhaseCaptionLayer key={index} index={index} progress={machineProgress} />)}
           </div>
         </div>
       </section>
@@ -186,11 +217,12 @@ export default function App() {
         </div>
         <div className="closing__meta">
           <p><b>GPT-5.6 Sol</b><br />OpenAI · 2026</p>
-          <p>React + TypeScript<br />Canvas 2D · no API</p>
+          <p>React + TypeScript<br />Canvas 2D · Motion</p>
           <p>鍵盤：R 展開退稿<br />Esc 收起</p>
         </div>
-        <button className="again" onClick={() => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })}>再校一次 ↑</button>
+        <button className="again" onClick={() => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })}>再校一次 ↑</button>
       </footer>
-    </main>
+      </main>
+    </LazyMotion>
   );
 }

@@ -181,3 +181,152 @@ a { color: inherit; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .seal:hover, .seal.is-holding, .revision.is-open .seal { transform: none; }
 }
+
+/* PROOF 02 · Motion-linked choreography ----------------------------------- */
+.masthead {
+  background: rgba(241, 238, 230, .965);
+  backdrop-filter: none;
+}
+.progress span {
+  will-change: transform;
+  transform: translateZ(0);
+}
+.phase-rail {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.phase-rail > div {
+  position: relative;
+  z-index: 2;
+  transition: none;
+}
+.phase-rail__cursor {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 0;
+  width: 25%;
+  height: 4px;
+  background: var(--red);
+  transform-origin: left center;
+  will-change: transform;
+  pointer-events: none;
+}
+.phase-caption {
+  position: relative;
+  display: block;
+  min-height: 58px;
+  padding: 0;
+  overflow: hidden;
+}
+.phase-caption__layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 11px 14px;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+.phase-caption__layer span {
+  color: var(--red);
+  font: 700 10px/1 ui-monospace, monospace;
+  letter-spacing: .12em;
+}
+.phase-caption__layer p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #5c574e;
+}
+.machine {
+  contain: paint;
+  isolation: isolate;
+}
+.machine__canvas {
+  isolation: isolate;
+  background: #eeeae0;
+}
+.canvas-kinetic {
+  position: absolute;
+  inset: -4px 0;
+  overflow: hidden;
+  background: #eeeae0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.loom-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+.pressure-sweep {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 16%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(156,35,27,.52), transparent);
+  will-change: transform, opacity;
+}
+.proof-axis {
+  position: absolute;
+  z-index: 3;
+  top: 10%;
+  bottom: 10%;
+  right: 11.7%;
+  width: 1px;
+  background: rgba(156,35,27,.42);
+  transform-origin: center bottom;
+  will-change: transform;
+  pointer-events: none;
+}
+.machine__caption {
+  z-index: 4;
+}
+
+@media (max-width: 600px) {
+  .phase-caption { min-height: 66px; }
+  .phase-caption__layer {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 8px;
+    padding: 8px 10px;
+  }
+  .phase-caption__layer p {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .pressure-sweep {
+    width: 22%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas-kinetic,
+  .phase-caption__layer,
+  .phase-rail__cursor,
+  .pressure-sweep,
+  .proof-axis,
+  .progress span {
+    will-change: auto;
+  }
+}
+
+
+
+.phase-rail__cursor {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: block;
+  padding: 0;
+  border: 0;
+}

@@ -27,3 +27,30 @@
 3. **加入 phase rail**：讓訪客知道同一裝置正在進入哪一個認知階段，而非切成四個普通區塊。
 4. **刪除 chapter translate 動效**：後續章節改成靜態校樣註記，避免不必要動畫。
 5. **手機保留同一長時序，但重排機器比例**：Canvas 與控制區縮進單一 viewport 內，避免把桌機版簡單堆疊成超長面板。
+
+## PROOF 02 · Motion 動效重構
+
+評審回饋指出中段向下捲動會閃爍、動效狀態切換感過重。檢查後確認第一版把 scroll progress 放在 React state，導致每個 scroll frame 重新 render；LoomCanvas 又把 progress 放在 effect dependency，因此 RAF、ResizeObserver 與 canvas buffer 會反覆 teardown/recreate，這是主要閃爍來源。
+
+### 實質修改
+
+- 引入 Motion，使用 `useScroll` 將核心裝置進度綁定 scroll timeline。
+- 使用 `useSpring`（175 / 32 / .28）做短行程、快速收束的機械阻尼，不做果凍式跟手。
+- 使用 `useTransform` 驅動進度尺、階段 caption、壓印帶與 proof axis，DOM 直接吃 MotionValue，不經 React 每幀重繪。
+- LoomCanvas 改為在 RAF 內直接 `progress.get()`；scroll 不再重啟 Canvas effect。
+- weights / revision / reduced-motion 改以 ref 提供 Canvas 最新狀態，拖 slider 也不重建 RAF。
+- ResizeObserver 只有在真實 backing-buffer pixel 尺寸改變時才重設 canvas，避免 sticky sub-pixel resize 清空畫布。
+- 四階段由硬切 class 改為同一條連續編舞：發散 → 壓力帶進場 → 路徑收束 → 壓板承諾 → proof ghost 修訂。
+- `prefers-reduced-motion` 下取消裝飾性位移與 sweep，保留必要的狀態理解。
+
+### 壓力驗證
+
+390×844、768×1024、1366×768、1920×1080 的連續捲動測試皆得到：
+
+- horizontal overflow: 0
+- blank canvas frame: 0
+- canvas backing-buffer resize during scroll: 0
+- sticky stage drift: 0 px
+- browser page error: 0
+
+`R` / `Esc` 隱藏修訂層與 production build 亦通過。
