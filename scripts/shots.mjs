@@ -13,6 +13,7 @@ const ALL = [
   ['qwen', '/works/qwen/'],
   ['glm', '/works/glm/'],
   ['qw27', '/works/qw27/'],
+  ['gpt56sol', '/works/gpt56sol/'],
   ['opus-logo', '/logo/opus/'],
   ['spark-logo', '/logo/spark/'],
   ['gemini-logo', '/logo/gemini/'],
