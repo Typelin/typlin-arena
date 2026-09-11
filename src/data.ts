@@ -148,7 +148,7 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/deepseek/',
     thumb: '/shots/deepseek.png',
-    score: null,
+    score: 77,
   },
 ];
 

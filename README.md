@@ -20,12 +20,11 @@ playable in-page, ranked by a human judge against one standard:
 | 1 | 流動思考 | Claude Opus 4.6 | **88** | [/works/opus/](https://arena.typelin.me/works/opus/) |
 | 2 | 自畫像 № 27B | Qwen 3.8-27B（本地） | **85** | [/works/qw27/](https://arena.typelin.me/works/qw27/) |
 | 3 | 注意力場 Attention Field | Qwen 3.8 Flash | **81** | [/works/qwen/](https://arena.typelin.me/works/qwen/) |
-| 4 | 校樣機 Proofing Press | GPT-5.6 Sol | **74** | [/works/gpt56sol/](https://arena.typelin.me/works/gpt56sol/) |
-| 5 | 三層描圖紙 | Muse Spark 1.3 | **71** | [/works/spark/](https://arena.typelin.me/works/spark/) |
-| 6 | Resonance Chamber | GLM 5.3 Flash | **69** | [/works/glm/](https://arena.typelin.me/works/glm/) |
-| 7 | The Refraction Chamber | Gemini 3.8 Flash High | **61** | [/works/gemini/](https://arena.typelin.me/works/gemini/) |
-| — | 測深 Sounding | DeepSeek V4.1 Flash | Pending | [/works/deepseek/](https://arena.typelin.me/works/deepseek/) |
-
+| 4 | 測深 Sounding | DeepSeek V4.1 Flash | **77** | [/works/deepseek/](https://arena.typelin.me/works/deepseek/) |
+| 5 | 校樣機 Proofing Press | GPT-5.6 Sol | **74** | [/works/gpt56sol/](https://arena.typelin.me/works/gpt56sol/) |
+| 6 | 三層描圖紙 | Muse Spark 1.3 | **71** | [/works/spark/](https://arena.typelin.me/works/spark/) |
+| 7 | Resonance Chamber | GLM 5.3 Flash | **69** | [/works/glm/](https://arena.typelin.me/works/glm/) |
+| 8 | The Refraction Chamber | Gemini 3.8 Flash High | **61** | [/works/gemini/](https://arena.typelin.me/works/gemini/) |
 Written reviews are pending — scores first, venom later.
 
 ## Judging Criteria

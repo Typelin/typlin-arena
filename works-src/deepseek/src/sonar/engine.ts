@@ -34,7 +34,7 @@ export const DEFAULT_CONFIG: SonarConfig = { viewRadius: 0.42 };
 
 /**
  * 聲納核心：把「深度、波束方向、脈衝、物件」四個量編成一場連續的舞。
- * 不碰 DOM；由外部餵入 dt、指標、深度與 viewport。
+ * 新增：波束自動掃描、當前層索引。
  */
 export class Sonar {
   fish: Fish[];
@@ -43,17 +43,23 @@ export class Sonar {
 
   /** 波束方向（弧度） */
   beam = 0;
-  /** 平滑後的波束（避免抖動） */
+  /** 平滑後的波束 */
   beamSmooth = 0;
+  /** 自動掃描相位：即使沒有滑鼠，波束也會慢慢繞圈 */
+  autoSweep = 0;
+  /** 使用者最近是否動過滑鼠（1 秒內）— 決定是否用自動掃描 */
+  pointerHold = 0;
 
   /** 深度 0..1（由滾動驅動） */
   depth = 0;
   /** 平滑深度 */
   depthSmooth = 0;
+  /** 當前層 0..3 */
+  layer = 0;
 
   /** 全域時間（秒） */
   t = 0;
-  /** 最近一次脈衝後經過的時間；>3s 視為 idle */
+  /** 最近一次脈衝後經過的時間 */
   sincePing = 99;
 
   constructor(specimens: Specimen[]) {
@@ -79,18 +85,29 @@ export class Sonar {
    * 每幀推進。
    * viewport 提供畫布邏輯寬高；pointer 為波束目標角度。
    */
-  update(dt: number, beamTarget: number, depthTarget: number) {
+  update(dt: number, beamTarget: number, depthTarget: number, pointerActive: boolean) {
     this.t += dt;
     this.sincePing += dt;
+    this.pointerHold = Math.max(0, this.pointerHold - dt);
+    if (pointerActive) this.pointerHold = 1.2;
+
+    // 自動掃描：沒有滑鼠時，波束慢慢繞圈（約 40 秒一圈）
+    this.autoSweep += dt * 0.16;
 
     // 平滑
     const k = 1 - Math.pow(0.001, dt);
-    this.beamSmooth += ((((beamTarget - this.beamSmooth) % (Math.PI * 2)) + Math.PI * 3) % (Math.PI * 2) - Math.PI) * k;
+    const target = this.pointerHold > 0
+      ? beamTarget
+      : beamTarget * 0.15 + this.autoSweep * 0.85;
+    this.beamSmooth += ((((target - this.beamSmooth) % (Math.PI * 2)) + Math.PI * 3) % (Math.PI * 2) - Math.PI) * k;
     this.depthSmooth += (depthTarget - this.depthSmooth) * k;
+
+    // 層索引：0..3
+    this.layer = Math.min(3, Math.max(0, Math.floor(this.depthSmooth * 4 - 0.0001)));
 
     // 狀態機
     if (this.pings.length === 0) {
-      this.state = this.sincePing < 4 ? 'scanning' : 'idle';
+      this.state = this.pointerHold > 0 ? 'scanning' : 'idle';
     } else {
       this.state = this.pings.some((p) => p.life < 0.5) ? 'pulse' : 'echo';
     }

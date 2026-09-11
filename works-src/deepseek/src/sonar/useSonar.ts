@@ -13,6 +13,12 @@ export type UseSonar = {
   toggleMute: () => void;
   /** 手動脈衝 */
   pulse: () => void;
+  /** 當前層 0..3（平滑） */
+  layer: number;
+  /** 當前深度 0..1（平滑） */
+  depth: number;
+  /** 聲納狀態機名稱 */
+  state: string;
 };
 
 export function useSonar(): UseSonar {
@@ -21,6 +27,9 @@ export function useSonar(): UseSonar {
   const audioRef = useRef<PingAudio | null>(null);
   const [foundSigils, setFoundSigils] = useState<string[]>([]);
   const [muted, setMuted] = useState(true);
+  const [layer, setLayer] = useState(0);
+  const [depth, setDepth] = useState(0);
+  const [state, setState] = useState<string>('idle');
   const mutedRef = useRef(true);
 
   useEffect(() => {
@@ -33,8 +42,6 @@ export function useSonar(): UseSonar {
     sonarRef.current = sonar;
     const audio = new PingAudio();
     audioRef.current = audio;
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // DPR 自適應
     const resize = () => {
@@ -51,11 +58,16 @@ export function useSonar(): UseSonar {
 
     // 指標 → 波束角度（先宣告，後掛監聽）
     let beamTarget = 0;
+    let pointerActive = false;
+    let pointerTimer = 0;
     const onMove = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
       const dx = e.clientX - r.left - r.width / 2;
       const dy = (e.clientY - r.top - r.height / 2) / 0.82;
       beamTarget = Math.atan2(dy, dx);
+      pointerActive = true;
+      window.clearTimeout(pointerTimer);
+      pointerTimer = window.setTimeout(() => { pointerActive = false; }, 1400);
     };
     canvas.addEventListener('pointermove', onMove);
 
@@ -93,12 +105,30 @@ export function useSonar(): UseSonar {
     let last = performance.now();
     const foundRef = new Set<string>();
     let pushedCount = -1;
+    const layerRef = { current: -1 };
+    const depthRef = { current: -1 };
+    const stateRef = { current: '' };
 
     const loop = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
 
-      sonar.update(dt, beamTarget, depthTarget);
+      sonar.update(dt, beamTarget, depthTarget, pointerActive);
+
+      // 同步 React 狀態（只在變化時 setState）
+      if (sonar.layer !== layerRef.current) {
+        layerRef.current = sonar.layer;
+        setLayer(sonar.layer);
+      }
+      const d = Math.round(sonar.depthSmooth * 1000) / 1000;
+      if (Math.abs(d - depthRef.current) > 0.005) {
+        depthRef.current = d;
+        setDepth(d);
+      }
+      if (sonar.state !== stateRef.current) {
+        stateRef.current = sonar.state;
+        setState(sonar.state);
+      }
 
       // 推進脈衝
       const rView = Math.min(canvas.clientWidth, canvas.clientHeight) * 0.42;
@@ -133,13 +163,14 @@ export function useSonar(): UseSonar {
       }
 
       sonar.layout(canvas.clientWidth, canvas.clientHeight);
-      draw(ctx, sonar, canvas.clientWidth, canvas.clientHeight, reduced);
+      draw(ctx, sonar, canvas.clientWidth, canvas.clientHeight);
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
 
     return () => {
       window.clearTimeout(introTimer);
+      window.clearTimeout(pointerTimer);
       cancelAnimationFrame(raf);
       ro.disconnect();
       canvas.removeEventListener('pointermove', onMove);
@@ -165,5 +196,5 @@ export function useSonar(): UseSonar {
   }, []);
 
   void mutedRef;
-  return { canvasRef, foundSigils, muted, toggleMute, pulse };
+  return { canvasRef, foundSigils, muted, toggleMute, pulse, layer, depth, state };
 }
