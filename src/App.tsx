@@ -117,7 +117,7 @@ export default function App() {
                 <em>裸泳。</em>
               </h1>
               <p className="hero__sub">
-                同一個 prompt，六個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
+                同一個 prompt，八個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
                 這裡只收能動手的東西——評分標準只有一個：能不能被手改變。
               </p>
               <div className="hero__stats">
@@ -167,7 +167,7 @@ export default function App() {
             <div>
               <div className="secnum" aria-hidden="true">01</div>
               <p className="eyebrow">RANK · 作品排名（按評分排序）</p>
-              <h2 id="works-title">六件作品，<em>完整排名。</em></h2>
+              <h2 id="works-title">八件作品，<em>完整排名。</em></h2>
               <p className="section__desc">分數與短評已整理完成。選擇「開啟」即可在站內全幅操作作品。</p>
             </div>
           </div>
@@ -327,7 +327,7 @@ export default function App() {
 
       <footer className="colophon">
         <div className="wrap colophon__grid">
-          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。六件參賽，分數、短評與作品皆可直接查看。</p></div>
+          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。八件參賽，分數、短評與作品皆可直接查看。</p></div>
           <div><h4>規格</h4><p>React + Vite · 靜態部署 · 淺色紙面，作品可在站內直接開啟。</p></div>
           <div><h4>標準</h4><p>能不能動手。能被操作、能留下回饋，才進展廳。</p></div>
         </div>
