@@ -46,6 +46,23 @@ function Visual({ kind, failed }: { kind: Plate['visual']; failed?: boolean }) {
   );
 }
 
+function WorkVerdict({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div className={`work__verdictbox${expanded ? ' is-expanded' : ''}`}>
+      <p className="work__verdict">{text}</p>
+      <button
+        type="button"
+        className="work__verdict-toggle"
+        aria-expanded={expanded}
+        onClick={() => setExpanded((value) => !value)}
+      >
+        {expanded ? '收起評語 ↑' : '展開完整評語 ↓'}
+      </button>
+    </div>
+  );
+}
+
 export default function App() {
   const progress = useProgress();
   const [open, setOpen] = useState<Plate | null>(null);
@@ -204,7 +221,7 @@ export default function App() {
                   <h3><a className="work__titlelink" href={pl.src} target="_blank" rel="noreferrer">{pl.title} ↗</a></h3>
                   <p className="work__model"><a className="work__modellink" href={pl.src} target="_blank" rel="noreferrer">{pl.model} · 直達作品頁 ↗</a></p>
                   <p className="work__prompt">{pl.prompt}</p>
-                  <p className="work__verdict">{pl.verdict}</p>
+                  <WorkVerdict text={pl.verdict} />
                   <div className="work__spec">{pl.spec.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
                 </div>
                 <div className="work__side">
