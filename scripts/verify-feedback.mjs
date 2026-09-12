@@ -3,7 +3,6 @@
 import puppeteer from 'puppeteer-core';
 
 const BASE = process.env.SHOTS_BASE || 'http://localhost:5176';
-const SHOT_DIR = 'C:\\Users\\TYPELI~1\\AppData\\Local\\Temp\\opencode';
 let failures = 0;
 const ok = (name, cond, extra = '') => {
   console.log(`${cond ? 'PASS' : 'FAIL'}  ${name}${extra ? `  (${extra})` : ''}`);
