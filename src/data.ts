@@ -122,7 +122,7 @@ export const PLATES: Plate[] = [
     thumb: '/shots/qwen-3-8-27b-local.png',
     logoSrc: '/logo/qwen-3-8-27b-local/',
     logoThumb: '/shots/qwen-3-8-27b-local-logo.png',
-    score2: null,
+    score2: 65,
     score: 80,
   },
   {
