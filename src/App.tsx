@@ -97,6 +97,7 @@ export default function App() {
 
   const duelA = works[0];
   const duelB = works[1];
+  const logoWorks = works.filter((w) => w.logoSrc).length;
   const pct = Math.round(progress * 100);
 
   return (
@@ -110,7 +111,7 @@ export default function App() {
             <span className="brand__name">TYPELIN ARENA<span className="rdot">.</span></span>
           </span>
           <nav className="nav" aria-label="主導航">
-            <button type="button" onClick={() => go('works')}>作品</button>
+            <button type="button" onClick={() => go('works')}>雙測作品</button>
             <button type="button" onClick={() => go('index')}>尺規</button>
             <button type="button" onClick={() => go('dossier')}>相關文章</button>
           </nav>
@@ -124,20 +125,20 @@ export default function App() {
         <section className="wrap hero" aria-labelledby="hero-title">
           <div className="hero__grid">
             <div>
-              <p className="eyebrow">AI 實測展廳 · SAME PROMPT, DIFFERENT SOULS</p>
+              <p className="eyebrow">AI FRONTEND BENCHMARK · SELF INTRO × LOGO LANDING</p>
               <h1 id="hero-title">
-                <span className="hero__line">同一道題，</span>
-                <span className="hero__line">看看誰在</span>
-                <em>裸泳。</em>
+                <span className="hero__line">兩道前端題，</span>
+                <span className="hero__line">直接看模型</span>
+                <em>怎麼做。</em>
               </h1>
               <p className="hero__sub">
-                同一個 prompt，{works.length} 個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
-                這裡只收能動手的東西——評分標準只有一個：能不能被手改變。
+                我們用兩種同題實作測 AI：第一題讓模型用前端作品介紹自己；第二題給所有模型同一張 LOGO，做完整品牌落地站。
+                每件作品都能直接進獨立分頁實際操作，也可以留在 Arena 展開站內預覽。
               </p>
               <div className="hero__stats">
-                <div><b>{works.length}<i>.</i></b><span>參賽作品</span></div>
-                <div><b>{duelA.score}<i>.</i></b><span>本期最高</span></div>
-                <div><b>{(duelA.score ?? 0) - (duelB.score ?? 0)}<i>.</i></b><span>冠亞分差</span></div>
+                <div><b>{works.length}<i>.</i></b><span>參賽模型</span></div>
+                <div><b>2<i>.</i></b><span>實作題型</span></div>
+                <div><b>{logoWorks}<i>.</i></b><span>LOGO 落地</span></div>
               </div>
               <div className="hero__cta">
                 <button type="button" className="btn" onClick={() => go('works')}>↓ 看作品排名</button>
@@ -152,24 +153,26 @@ export default function App() {
               <div className="duel__grid">
                 {[duelA, duelB].map((d) => (
                   <div className="duel__cell" key={d.id}>
-                    <div className="duel__thumb">
+                    <a className="duel__thumb duel__thumb--link" href={d.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${d.title} 完整作品`}>
                       <Visual kind={d.visual} />
                       <img src={d.thumb} alt={`${d.title}實機畫面`} loading="lazy" />
-                    </div>
+                      <span className="thumb__direct">完整作品 ↗</span>
+                    </a>
                     <div className="duel__id">
-                      <p className="duel__name">{d.title}</p>
+                      <p className="duel__name"><a className="duel__titlelink" href={d.src} target="_blank" rel="noreferrer">{d.title} ↗</a></p>
                       <span className="duel__score">{d.score ?? '—'}</span>
                       <p className="duel__meta">{d.model}</p>
                     </div>
                     <div className="duel__row">
-                      <button type="button" className="btn btn--small" onClick={() => setOpen(d)}>開啟 →</button>
+                      <a className="btn btn--small" href={d.src} target="_blank" rel="noreferrer">完整作品 ↗</a>
+                      <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(d)}>▣ 站內預覽</button>
                     </div>
                   </div>
                 ))}
                 <div className="duel__vs" aria-hidden="true">VS</div>
               </div>
               <div className="duel__foot">
-                <span className="mono">同題：關於你自己的前端作品</span>
+                <span className="mono">雙題實測：自我介紹 × LOGO 落地 · 「完整作品」直達獨立分頁</span>
               </div>
             </div>
           </div>
@@ -184,21 +187,22 @@ export default function App() {
               <h2 id="works-title">
                 {cnNum(works.length)}件作品，<em>完整排名。</em>
               </h2>
-              <p className="section__desc">分數與短評已整理完成。選擇「開啟」即可在站內全幅操作作品。</p>
+              <p className="section__desc">點作品名稱或「自我介紹／LOGO 落地」可直接進獨立分頁實際操作；「站內預覽」才會留在 Arena 內展開互動視窗。</p>
             </div>
           </div>
           <div className="works">
             {works.map((pl, i) => (
               <article className={`work rv${i === 0 ? ' work--first' : ''}`} key={pl.id} aria-label={`第${i + 1}名 ${pl.title}`}>
                 <span className="work__ranknum" aria-hidden="true">{i + 1}</span>
-                <div className="thumb">
+                <a className="thumb thumb--link" href={pl.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${pl.title} 完整作品`}>
                   <Visual kind={pl.visual} />
                   <img src={pl.thumb} alt={`${pl.title}實機畫面`} loading="lazy" />
-                </div>
+                  <span className="thumb__direct">完整作品 ↗</span>
+                </a>
                 <div className="work__copy">
                   <span className="work__rank">RANK {i + 1} · {pl.no} / PLATE</span>
-                  <h3>{pl.title}</h3>
-                  <p className="work__model">{pl.model}</p>
+                  <h3><a className="work__titlelink" href={pl.src} target="_blank" rel="noreferrer">{pl.title} ↗</a></h3>
+                  <p className="work__model"><a className="work__modellink" href={pl.src} target="_blank" rel="noreferrer">{pl.model} · 直達作品頁 ↗</a></p>
                   <p className="work__prompt">{pl.prompt}</p>
                   <p className="work__verdict">{pl.verdict}</p>
                   <div className="work__spec">{pl.spec.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
@@ -211,7 +215,11 @@ export default function App() {
                     </div>
                   )}
                   {pl.logoSrc && <span className="mono">LOGO落地 · {pl.score2 ?? '—'}</span>}
-                  <button type="button" className="btn btn--small" onClick={() => setOpen(pl)}>開啟 →</button>
+                  <div className="work__actions">
+                    <a className="btn btn--small" href={pl.src} target="_blank" rel="noreferrer">自我介紹 ↗</a>
+                    {pl.logoSrc && <a className="btn btn--ghost btn--small" href={pl.logoSrc} target="_blank" rel="noreferrer">LOGO 落地 ↗</a>}
+                    <button type="button" className="btn btn--preview btn--small" onClick={() => setOpen(pl)}>▣ 站內預覽</button>
+                  </div>
                 </div>
               </article>
             ))}
@@ -265,7 +273,7 @@ export default function App() {
             <div className="overlay__bg" onClick={() => setOpen(null)} />
             <div className="overlay__box">
               <div className="overlay__top">
-                <span className="mono">{open.no} · {open.model} · {open.title} · {open.score ?? '—'}/100</span>
+                <span className="mono">站內預覽 · {open.no} · {open.model} · {open.title} · {open.score ?? '—'}/100</span>
                 <span className="overlay__nav">
                   <button type="button" className="btn btn--ghost btn--small" onClick={() => step(-1)} aria-label="上一件">‹</button>
                   <button type="button" className="btn btn--ghost btn--small" onClick={() => step(1)} aria-label="下一件">›</button>
@@ -325,7 +333,7 @@ export default function App() {
                     href={itemSel === 'logo' && open.logoSrc ? open.logoSrc : open.src}
                     target="_blank" rel="noreferrer"
                   >
-                    另開分頁 ↗
+                    直達目前作品分頁 ↗
                   </a>
                   <p className="mono" style={{ marginTop: 12 }}>
                     站內分頁：{itemSel === 'logo' && open.logoSrc ? open.logoSrc : open.src}
@@ -343,9 +351,9 @@ export default function App() {
 
       <footer className="colophon">
         <div className="wrap colophon__grid">
-          <div><h4>關於</h4><p>TYPELIN ARENA · 同題實測展廳。八件參賽，分數、短評與作品皆可直接查看。</p></div>
-          <div><h4>規格</h4><p>React + Vite · 靜態部署 · 淺色紙面，作品可在站內直接開啟。</p></div>
-          <div><h4>標準</h4><p>能不能動手。能被操作、能留下回饋，才進展廳。</p></div>
+          <div><h4>關於</h4><p>TYPELIN ARENA · 用「自我介紹」與「LOGO 落地」兩道前端實作題，直接比較 AI 的設計、工程與互動完成度。</p></div>
+          <div><h4>觀看方式</h4><p>作品名稱與題型按鈕皆直達獨立分頁；「站內預覽」則在 Arena 內展開 iframe 實際操作。</p></div>
+          <div><h4>標準</h4><p>分數只是索引。真正的比較方式，是把每一件作品打開、操作、看它能不能站得住。</p></div>
         </div>
         <p className="wordmark" aria-hidden="true">TYPELIN <b>ARENA</b></p>
       </footer>

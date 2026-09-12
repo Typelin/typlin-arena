@@ -20,6 +20,7 @@ const ALL = [
   ['muse-spark-1-3-logo', '/logo/muse-spark-1-3/'],
   ['gemini-3-8-flash-high-logo', '/logo/gemini-3-8-flash-high/'],
   ['qwen-3-8-flash-logo', '/logo/qwen-3-8-flash/'],
+  ['qwen-3-8-27b-local-logo', '/logo/qwen-3-8-27b-local/'],
   ['glm-5-3-flash-logo', '/logo/glm-5-3-flash/'],
   ['gpt-5-6-sol-logo', '/logo/gpt-5-6-sol/'],
   ['deepseek-v4-1-flash-logo', '/logo/deepseek-v4-1-flash/'],

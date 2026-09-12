@@ -73,6 +73,7 @@ $logos = @(
   @{ Source = 'muse-spark-1-3-logo';        Slug = 'muse-spark-1-3';        Legacy = 'spark' },
   @{ Source = 'gemini-3-8-flash-high-logo'; Slug = 'gemini-3-8-flash-high'; Legacy = 'gemini' },
   @{ Source = 'qwen-3-8-flash-logo';        Slug = 'qwen-3-8-flash';        Legacy = 'qwen' },
+  @{ Source = 'qwen-3-8-27b-local-logo';    Slug = 'qwen-3-8-27b-local';    Legacy = 'qwen-3-8-27b-local' },
   @{ Source = 'glm-5-3-flash-logo';         Slug = 'glm-5-3-flash';         Legacy = 'glm' },
   @{ Source = 'gpt-5-6-sol-logo';           Slug = 'gpt-5-6-sol';           Legacy = 'gpt-5-6-sol' },
   @{ Source = 'deepseek-v4-1-flash-logo';   Slug = 'deepseek-v4-1-flash';   Legacy = 'deepseek-v4-1-flash' },
