@@ -11,7 +11,7 @@ const SHOTS = [
   ['qwen', '/works/qwen-3-8-flash/'],
   ['glm', '/works/glm-5-3-flash/'],
   ['qw27', '/works/qwen-3-8-27b-local/'],
-  ['sakimu', '/logo/spark/'],
+  ['sakimu', '/logo/muse-spark-1-3/'],
 ];
 
 mkdirSync('public/shots-full', { recursive: true });

@@ -6,6 +6,8 @@ import { hashString } from '../engine/rng';
 import { inkBlob, inkDot, inkStroke, setStroke } from './ink';
 
 const INK = '#1B1815';
+/** 我自己抽的那幾段——墨比較淡。訪客的手是外力，留下最濃的墨。 */
+const INK_MINE = 'rgba(27,24,21,0.42)';
 /** 當前岔路的候選枝——看得見，但還沒被墨認領。 */
 const ROAD_OPEN = 'rgba(27,24,21,0.30)';
 /** 已經放棄的旁枝——留在紙上，越久越淡。 */
@@ -121,10 +123,15 @@ export function drawTree(ctx: CanvasRenderingContext2D, s: Scene): void {
   }
 
   // ── 4. 主線（墨認領的路） ────────────────────────────────────
-  setStroke(ctx, INK, 2.4 * comp);
+  // 手會換：訪客走過的段落是濃墨，我自己按機率抽的段落比較淡。
+  // 所以訪客越參與，這棵樹越黑——這是這一節唯一想講的事。
+  // 拉遠看總覽時不分色，否則一條細線變成兩種色階會像壞掉。
+  const twoTone = s.zoom >= 0.6;
   for (let i = 0; i < total; i += 1) {
     const p = i < reveal ? 1 : i === reveal ? s.growProgress : 0;
     if (p <= 0) continue;
+    const mine = twoTone && s.choices[i].by === 'me';
+    setStroke(ctx, mine ? INK_MINE : INK, (mine ? 2.1 : 2.4) * comp);
     const a = nodeAt(s.choices, i);
     const b = nodeAt(s.choices, i + 1);
     inkStroke(ctx, a.x, a.y, b.x, b.y, hashString(`main:${i}`), 2.5, p);
@@ -134,6 +141,8 @@ export function drawTree(ctx: CanvasRenderingContext2D, s: Scene): void {
   for (let i = 0; i <= reveal; i += 1) {
     const n = nodeAt(s.choices, i);
     const pending = i === total && s.growProgress < 1;
+    // 節點 i 掛在第 i-1 次選擇上（0 是根）
+    const mine = twoTone && i > 0 && s.choices[i - 1]?.by === 'me';
     ctx.globalAlpha = pending ? s.growProgress : 1;
     // 起點：墨滴落紙的暈染
     if (i === 0) {
@@ -145,7 +154,14 @@ export function drawTree(ctx: CanvasRenderingContext2D, s: Scene): void {
       ctx.arc(n.x, n.y, 52 * comp, 0, Math.PI * 2);
       ctx.fill();
     }
-    inkBlob(ctx, n.x, n.y, (i === 0 ? 7.2 : 5) * comp, INK, hashString(`node:${i}`));
+    inkBlob(
+      ctx,
+      n.x,
+      n.y,
+      (i === 0 ? 7.2 : mine ? 4.2 : 5) * comp,
+      mine ? INK_MINE : INK,
+      hashString(`node:${i}`)
+    );
     if (i === 0) inkDot(ctx, n.x, n.y, 2.6 * comp, PAPER);
     ctx.globalAlpha = 1;
   }

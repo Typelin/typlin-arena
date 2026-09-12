@@ -1,9 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { ALL_FORKS, PARALLEL_UNIVERSES, TOTAL_STEPS } from './data/script';
-import { LOOSE_LEAVES, LOOSE_LEAVES_FINALE, WHISPERS, inscriptionFor } from './data/secrets';
+import {
+  AUTO_ALONE,
+  AUTO_RESUME,
+  AUTO_TAKEOVER,
+  LOOSE_LEAVES,
+  LOOSE_LEAVES_FINALE,
+  WHISPERS,
+  inscriptionFor,
+} from './data/secrets';
 import type { LooseLeaf } from './data/secrets';
-import { allSentenceTexts, roadsNotTaken } from './engine/path';
+import { allSentenceTexts, roadsNotTaken, selfChosen } from './engine/path';
 import { LABEL_GAP, blockWidth, branchFontPx, labelShape, spreadFor } from './engine/labels';
 import { nodeAt, stepTo } from './engine/layout';
 import { useFork } from './hooks/useFork';
@@ -43,6 +51,7 @@ export default function App() {
     setGhostsOn,
     overview,
     toggleOverview,
+    auto,
     id,
   } = useFork();
 
@@ -68,7 +77,7 @@ export default function App() {
 
   /** 已定下的字，掛在各自的節點上。 */
   const placed = useMemo(() => {
-    const out = [{ key: 'root', text: '我', x: 0, y: 0, fresh: false, root: true }];
+    const out = [{ key: 'root', text: '我', x: 0, y: 0, fresh: false, root: true, mine: false }];
     for (let i = 0; i < choices.length; i += 1) {
       const n = nodeAt(choices, i + 1);
       out.push({
@@ -78,6 +87,7 @@ export default function App() {
         y: n.y,
         fresh: i === choices.length - 1 && phase === 'growing',
         root: false,
+        mine: choices[i].by === 'me',
       });
     }
     return out;
@@ -106,6 +116,10 @@ export default function App() {
   const notTaken = roadsNotTaken(choices.length);
   const activeNote = hover !== null && fork ? fork.options[hover].note : null;
 
+  /** 這條路裡，有幾個字是我自己抽的。 */
+  const mineCount = useMemo(() => selfChosen(choices), [choices]);
+  const allMine = done && mineCount === TOTAL_STEPS && TOTAL_STEPS > 0;
+
   // ── 彩蛋 ────────────────────────────────────────────────────
   const [collected, setCollected] = useState<number[]>(loadLeaves);
   const [toast, setToast] = useState<string | null>(null);
@@ -125,6 +139,18 @@ export default function App() {
     },
     []
   );
+
+  // 筆的交換：我接手、我還回去——兩邊都要說一聲，否則訪客不知道主導權換手了。
+  const wasAuto = useRef(false);
+  useEffect(() => {
+    const was = wasAuto.current;
+    wasAuto.current = auto;
+    if (auto && !was) {
+      say(AUTO_TAKEOVER);
+    } else if (!auto && was && !done && choices.length > 0) {
+      say(AUTO_RESUME);
+    }
+  }, [auto, done, choices.length, say]);
 
   const allLeaves = collected.length >= LOOSE_LEAVES.length;
 
@@ -180,11 +206,12 @@ export default function App() {
     }
   }, [stampTitle]);
 
-  /** 極端路徑銘文：只有刻意走出來的人才看得到。 */
-  const inscription = useMemo(
-    () => (done ? inscriptionFor(choices.map((c) => c.option)) : null),
-    [done, choices]
-  );
+  /** 極端路徑銘文：只有刻意走出來的人才看得到。全自動走完則另有一句。 */
+  const inscription = useMemo(() => {
+    if (!done) return null;
+    if (allMine) return AUTO_ALONE;
+    return inscriptionFor(choices.map((c) => c.option));
+  }, [done, allMine, choices]);
 
   // 閒置低語
   useEffect(() => {
@@ -249,7 +276,7 @@ export default function App() {
       onClick={(e) => {
         // detail === 0 表示這一擊來自鍵盤（Enter / Space）
         keyboardRef.current = e.detail === 0;
-        choose(c.index);
+        choose(c.index, 'you');
       }}
       aria-label={`選擇「${c.option.text}」，機率 ${c.option.p}%`}
     >
@@ -270,6 +297,7 @@ export default function App() {
       data-ghosts={ghostsOn ? 'on' : 'off'}
       data-started={choices.length > 0 ? 'on' : 'off'}
       data-overview={overview ? 'on' : 'off'}
+      data-auto={auto ? 'on' : 'off'}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
@@ -287,7 +315,9 @@ export default function App() {
         {placed.map((n) => (
           <span
             key={n.key}
-            className={`node${n.root ? ' node--root' : ''}${n.fresh ? ' node--fresh' : ''}`}
+            className={`node${n.root ? ' node--root' : ''}${n.fresh ? ' node--fresh' : ''}${
+              n.mine ? ' node--mine' : ''
+            }`}
             style={{ left: n.x + (n.root ? 22 : LABEL_GAP), top: n.y }}
           >
             {n.text}
@@ -389,23 +419,40 @@ export default function App() {
       <footer className="prompt">
         {done ? (
           <span className="prompt__text">走完了。</span>
+        ) : auto ? (
+          <span className="prompt__text prompt__text--auto">我自己在走。你動一下，筆就還你。</span>
         ) : activeNote ? (
           <span className="prompt__text prompt__text--note">{activeNote}</span>
         ) : (
           <span className="prompt__text">點一條枝，替我定下一個字。</span>
         )}
-        {!done && choices.length === 0 && (
+        {!done && !auto && choices.length === 0 && (
           <span className="prompt__hint">枝越粗，是我越想走的那條</span>
         )}
-        {!done && choices.length > 2 && (
+        {!done && !auto && choices.length > 2 && (
           <span className="prompt__hint">按住 Shift／長按畫面：看別的路</span>
+        )}
+        {!done && !auto && choices.length > 6 && (
+          <span className="prompt__hint">停手八秒，換我自己走</span>
         )}
       </footer>
 
       {done && !overview && (
-        <section className="epilogue" aria-label="你走出來的自畫像">
+        <section
+          className={`epilogue${allMine ? ' epilogue--alone' : ''}`}
+          aria-label="你走出來的自畫像"
+        >
           <div className="epilogue__inner">
-            <p className="epilogue__kicker">這是你走出來的</p>
+            <p className="epilogue__kicker">
+              {allMine ? '這是我自己走出來的' : '這是你走出來的'}
+            </p>
+
+            {/* 全程放手時，這句是判詞，不是註腳——先講，再讓底下六句話當證據。
+                而且它必須落在摺線之上：看不到的 payoff 不算 payoff。 */}
+            {inscription && allMine && (
+              <p className="epilogue__inscription epilogue__inscription--lead">{inscription}</p>
+            )}
+
             <div className="epilogue__lines">
               {lines.map((l, i) => (
                 <p key={i} className="epilogue__line" style={{ animationDelay: `${i * 240}ms` }}>
@@ -414,7 +461,7 @@ export default function App() {
               ))}
             </div>
 
-            {inscription && (
+            {inscription && !allMine && (
               <p
                 className="epilogue__inscription"
                 style={{ animationDelay: `${lines.length * 240 + 260}ms` }}
@@ -430,6 +477,12 @@ export default function App() {
                   <button type="button" className="linkish" onClick={copyId}>
                     № {id}
                   </button>
+                </dd>
+              </div>
+              <div>
+                <dt>這條路誰選的</dt>
+                <dd>
+                  你 {TOTAL_STEPS - mineCount} 步 · 我 {mineCount} 步
                 </dd>
               </div>
               <div>

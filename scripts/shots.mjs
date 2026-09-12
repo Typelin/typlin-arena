@@ -16,11 +16,15 @@ const ALL = [
   ['deepseek-v4-1-flash', '/works/deepseek-v4-1-flash/'],
   ['grok-4-6', '/works/grok-4-6/'],
   ['glm-5-3', '/works/glm-5-3/'],
-  ['opus-logo', '/logo/opus/'],
-  ['spark-logo', '/logo/spark/'],
-  ['gemini-logo', '/logo/gemini/'],
-  ['qwen-logo', '/logo/qwen/'],
-  ['glm-logo', '/logo/glm/'],
+  ['claude-opus-4-6-logo', '/logo/claude-opus-4-6/'],
+  ['muse-spark-1-3-logo', '/logo/muse-spark-1-3/'],
+  ['gemini-3-8-flash-high-logo', '/logo/gemini-3-8-flash-high/'],
+  ['qwen-3-8-flash-logo', '/logo/qwen-3-8-flash/'],
+  ['glm-5-3-flash-logo', '/logo/glm-5-3-flash/'],
+  ['gpt-5-6-sol-logo', '/logo/gpt-5-6-sol/'],
+  ['deepseek-v4-1-flash-logo', '/logo/deepseek-v4-1-flash/'],
+  ['grok-4-6-logo', '/logo/grok-4-6/'],
+  ['glm-5-3-logo', '/logo/glm-5-3/'],
 ];
 const only = (process.env.SHOTS_IDS || '').split(',').map((s) => s.trim()).filter(Boolean);
 const SHOTS = only.length ? ALL.filter(([id]) => only.includes(id)) : ALL;

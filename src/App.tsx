@@ -1,6 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PLATES, CRITERIA, DOSSIER, type Plate } from './data';
 
+/**
+ * 標題用中文數字，但件數會變——寫死會在增減作品時說謊。
+ * 只支援兩位數，這個榜單不會更多了。
+ */
+const CN_DIGITS = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+function cnNum(n: number): string {
+  if (n < 10) return CN_DIGITS[n];
+  if (n === 10) return '十';
+  const tens = Math.floor(n / 10);
+  const ones = n % 10;
+  if (tens === 1) return `十${ones ? CN_DIGITS[ones] : ''}`;
+  return `${CN_DIGITS[tens]}十${ones ? CN_DIGITS[ones] : ''}`;
+}
+
 function useProgress() {
   const [p, setP] = useState(0);
   useEffect(() => {
@@ -167,7 +181,9 @@ export default function App() {
             <div>
               <div className="secnum" aria-hidden="true">01</div>
               <p className="eyebrow">RANK · 作品排名（按評分排序）</p>
-              <h2 id="works-title">十一件作品，<em>完整排名。</em></h2>
+              <h2 id="works-title">
+                {cnNum(works.length)}件作品，<em>完整排名。</em>
+              </h2>
               <p className="section__desc">分數與短評已整理完成。選擇「開啟」即可在站內全幅操作作品。</p>
             </div>
           </div>

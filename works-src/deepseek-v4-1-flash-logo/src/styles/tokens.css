@@ -1,0 +1,63 @@
+/* ============================================================
+   Design tokens — sampled directly from the original logo asset
+   ink   #304080  (咲夢 wordmark / ring core)
+   iris  #5070B0 → #9090C0  (ring gradient)
+   sakura #F0A0B0 / #E080A0 (cherry blossom)
+   ============================================================ */
+
+:root {
+  /* --- paper --- */
+  --paper: #fbf7f5;
+  --paper-warm: #fdf2f4;
+  --paper-deep: #f4eeec;
+  --paper-card: #fffdfc;
+
+  /* --- ink --- */
+  --ink: #2b3a6b;
+  --ink-deep: #1d2750;
+  --ink-soft: rgba(43, 58, 107, 0.68);
+  --ink-faint: rgba(43, 58, 107, 0.42);
+
+  /* --- iris / periwinkle --- */
+  --iris: #4c5da8;
+  --periwinkle: #7e8fcb;
+  --mist: #c2cbe8;
+  --mist-soft: #e3e8f6;
+
+  /* --- sakura --- */
+  --sakura: #f0a0b6;
+  --sakura-deep: #e07c9e;
+  --sakura-soft: #f8d3de;
+  --sakura-wash: #fdeef2;
+
+  /* --- lines & shadow --- */
+  --line: rgba(43, 58, 107, 0.13);
+  --line-strong: rgba(43, 58, 107, 0.24);
+  --shadow-sm: 0 1px 2px rgba(29, 39, 80, 0.05), 0 4px 14px rgba(29, 39, 80, 0.05);
+  --shadow-md: 0 2px 6px rgba(29, 39, 80, 0.06), 0 18px 40px -18px rgba(29, 39, 80, 0.22);
+  --shadow-lg: 0 30px 70px -30px rgba(29, 39, 80, 0.34);
+
+  /* --- type --- */
+  --font-serif: "Noto Serif TC", "Songti TC", "Source Han Serif TC", "PMingLiU", "MingLiU",
+    "Microsoft JhengHei", serif;
+  --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Segoe UI", system-ui,
+    -apple-system, sans-serif;
+  --font-latin: "Cormorant Garamond", "Noto Serif TC", "Times New Roman", serif;
+
+  /* --- rhythm --- */
+  --shell: 1180px;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --section-y: clamp(5rem, 11vw, 9.5rem);
+  --radius: 4px;
+  --radius-lg: 10px;
+
+  /* --- motion --- */
+  --ease-out: cubic-bezier(0.22, 0.68, 0.24, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --section-y: clamp(4rem, 8vw, 7rem);
+  }
+}

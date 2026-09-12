@@ -5,7 +5,20 @@ import type { Sentence } from '../data/script';
 export type Choice = {
   fork: number;
   option: number;
+  /**
+   * 這個字是誰選的。
+   * 'you' = 訪客的手（預設）；'me' = 訪客停手，我自己按機率抽的。
+   * 同一條路可能一半是你、一半是我——收束頁會把這個比例攤開。
+   */
+  by?: 'you' | 'me';
 };
+
+/** 這條路裡，有幾個字是我自己抽的。 */
+export function selfChosen(choices: Choice[]): number {
+  let n = 0;
+  for (const c of choices) if (c.by === 'me') n += 1;
+  return n;
+}
 
 /** 三進位編碼：30 步的選擇序列壓成 12 碼十六進位路徑編號。 */
 export function pathId(choices: Choice[]): string {

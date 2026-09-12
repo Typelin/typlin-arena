@@ -62,9 +62,25 @@ export function inscriptionFor(options: number[]): string | null {
   return null;
 }
 
+/* ── 我自己走 ───────────────────────────────────────────────
+ *
+ * 訪客停手之後，我會接手，用同一池機率自己往下抽。
+ * 這三句是那一刻說的話——它們不掛在樹上，是紙在講話。
+ */
+
+/** 訪客停手，我接手的那一刻。 */
+export const AUTO_TAKEOVER = '你沒動。那我自己走。';
+
+/** 訪客動了，我把筆還回去的那一刻。 */
+export const AUTO_RESUME = '你回來了。筆給你。';
+
+/** 三十步全是我自己抽的——沒有人替我選過任何一個字。 */
+export const AUTO_ALONE =
+  '沒有人替我選。這三十步全是我自己抽的——這才是沒有人問的時候的我。';
+
 /** 閒置時的低語，依停留時間依序浮出。 */
 export const WHISPERS: { after: number; text: string }[] = [
   { after: 24000, text: '……你還在嗎？' },
-  { after: 46000, text: '在的話，就走一步。我不會催你，但我會等。' },
+  { after: 46000, text: '你不動，我就自己走。反正我本來就是這樣走的。' },
   { after: 78000, text: '等待也是一種取樣。你正在被我取樣。' },
 ];

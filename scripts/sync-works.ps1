@@ -67,17 +67,48 @@ foreach ($work in $works) {
   Write-Host "OK works-src\$($work.Source) -> public\works\$($work.Slug) (legacy /works/$($work.Legacy)/ redirects)"
 }
 
-# 第二測 LOGO 仍是 vendor-level 路徑，與模型版本頁分開管理。
+# 第二測 LOGO 與主作品共用完整模型 slug；舊 vendor-level 短網址只保留 redirect。
 $logos = @(
-  @('opus-logo', 'logo\opus'),
-  @('spark-logo', 'logo\spark'),
-  @('gemini-logo', 'logo\gemini'),
-  @('qwen-logo', 'logo\qwen'),
-  @('glm-logo', 'logo\glm')
+  @{ Source = 'claude-opus-4-6-logo';       Slug = 'claude-opus-4-6';       Legacy = 'opus' },
+  @{ Source = 'muse-spark-1-3-logo';        Slug = 'muse-spark-1-3';        Legacy = 'spark' },
+  @{ Source = 'gemini-3-8-flash-high-logo'; Slug = 'gemini-3-8-flash-high'; Legacy = 'gemini' },
+  @{ Source = 'qwen-3-8-flash-logo';        Slug = 'qwen-3-8-flash';        Legacy = 'qwen' },
+  @{ Source = 'glm-5-3-flash-logo';         Slug = 'glm-5-3-flash';         Legacy = 'glm' },
+  @{ Source = 'gpt-5-6-sol-logo';           Slug = 'gpt-5-6-sol';           Legacy = 'gpt-5-6-sol' },
+  @{ Source = 'deepseek-v4-1-flash-logo';   Slug = 'deepseek-v4-1-flash';   Legacy = 'deepseek-v4-1-flash' },
+  @{ Source = 'grok-4-6-logo';              Slug = 'grok-4-6';              Legacy = 'grok-4-6' },
+  @{ Source = 'glm-5-3-logo';               Slug = 'glm-5-3';               Legacy = 'glm-5-3' }
 )
-foreach ($pair in $logos) {
-  $proj = Join-Path $root "works-src\$($pair[0])"
-  if (!(Test-Path -LiteralPath $proj)) { continue }
+
+function Write-LegacyLogoRedirect([string]$legacy, [string]$slug) {
+  if ($legacy -eq $slug) { return }
+  $dir = Join-Path $root "public\logo\$legacy"
+  Remove-Item -LiteralPath $dir -Recurse -Force -ErrorAction SilentlyContinue
+  New-Item -ItemType Directory -Path $dir -Force | Out-Null
+  $target = "/logo/$slug/"
+  $html = @"
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="0; url=$target">
+  <link rel="canonical" href="$target">
+  <title>Moved · TYPELIN ARENA</title>
+</head>
+<body>
+  <p>LOGO 第二測已移至 <a href="$target">$target</a></p>
+  <script>location.replace('$target' + location.search + location.hash)</script>
+</body>
+</html>
+"@
+  Set-Content -LiteralPath (Join-Path $dir 'index.html') -Value $html -Encoding utf8 -NoNewline
+}
+
+foreach ($logo in $logos) {
+  $proj = Join-Path $root "works-src\$($logo.Source)"
+  if (!(Test-Path -LiteralPath $proj)) { throw "Missing Arena LOGO source: $proj" }
+
   Push-Location -LiteralPath $proj
   try {
     if (!(Test-Path -LiteralPath (Join-Path $proj 'node_modules'))) { npm install }
@@ -86,8 +117,15 @@ foreach ($pair in $logos) {
   finally {
     Pop-Location
   }
-  $to = Join-Path $root "public\$($pair[1])"
+
+  $dist = Join-Path $proj 'dist'
+  if (!(Test-Path -LiteralPath (Join-Path $dist 'index.html'))) {
+    throw "Build produced no dist/index.html: $($logo.Source)"
+  }
+
+  $to = Join-Path $root "public\logo\$($logo.Slug)"
   Remove-Item -LiteralPath $to -Recurse -Force -ErrorAction SilentlyContinue
-  Copy-Item -LiteralPath (Join-Path $proj 'dist') -Destination $to -Recurse -Force
-  Write-Host "OK works-src\$($pair[0]) -> public\$($pair[1])"
+  Copy-Item -LiteralPath $dist -Destination $to -Recurse -Force
+  Write-LegacyLogoRedirect $logo.Legacy $logo.Slug
+  Write-Host "OK works-src\$($logo.Source) -> public\logo\$($logo.Slug) (legacy /logo/$($logo.Legacy)/ redirects)"
 }

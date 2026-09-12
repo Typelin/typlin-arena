@@ -3,6 +3,7 @@ import type { RefObject } from 'react';
 import { ALL_FORKS, TOTAL_STEPS } from '../data/script';
 import { ghostChoices, pathId } from '../engine/path';
 import type { Choice } from '../engine/path';
+import { sampleByProb } from '../engine/sample';
 import { boundsOf, easeInOutCubic, easeOutCubic, nodeAt, setSpreadScale } from '../engine/layout';
 import type { Vec } from '../engine/layout';
 import { hashString, mulberry32 } from '../engine/rng';
@@ -23,6 +24,13 @@ const REPLAY_PER_STEP_MS = 140;
 /** 幽靈森林的棵數。 */
 const GHOST_COUNT = 9;
 
+/** 訪客停手多久之後，我自己接手。 */
+const AUTO_IDLE_MS = 8000;
+/** 我自己走一步的間隔（不含生長與落墨）。 */
+const AUTO_STEP_MS = 560;
+/** 指標要累積移動多少像素才算出聲——手抖不該打斷我。 */
+const AUTO_WAKE_PX = 28;
+
 export type ForkApi = {
   canvasRef: RefObject<HTMLCanvasElement | null>;
   worldRef: RefObject<HTMLDivElement | null>;
@@ -30,7 +38,8 @@ export type ForkApi = {
   phase: Phase;
   hover: number | null;
   setHover: (v: number | null) => void;
-  choose: (option: number) => void;
+  /** by 預設 'you'；'me' 表示這一步是我自己按機率抽的 */
+  choose: (option: number, by?: 'you' | 'me') => void;
   reset: () => void;
   muted: boolean;
   toggleMute: () => void;
@@ -39,6 +48,8 @@ export type ForkApi = {
   /** 總覽：拉遠到看得見整條路 */
   overview: boolean;
   toggleOverview: () => void;
+  /** 我自己在走：訪客停手之後，我接手 */
+  auto: boolean;
   id: string;
   reduced: boolean;
 };
@@ -55,6 +66,7 @@ export function useFork(): ForkApi {
   const [muted, setMuted] = useState(false);
   const [ghostsOn, setGhostsOn] = useState(false);
   const [overview, setOverview] = useState(false);
+  const [auto, setAuto] = useState(false);
 
   // ── 給動畫迴圈讀的即時值（state 是非同步的，迴圈不能等） ──
   const choicesRef = useRef<Choice[]>([]);
@@ -64,6 +76,7 @@ export function useFork(): ForkApi {
   const reducedRef = useRef(reduced);
   const mutedRef = useRef(muted);
   const overviewRef = useRef(false);
+  const autoRef = useRef(false);
 
   const audioRef = useRef<ClickAudio | null>(null);
   const camRef = useRef<Vec>({ x: 0, y: 0 });
@@ -84,6 +97,9 @@ export function useFork(): ForkApi {
   useEffect(() => {
     overviewRef.current = overview;
   }, [overview]);
+  useEffect(() => {
+    autoRef.current = auto;
+  }, [auto]);
   useEffect(() => {
     reducedRef.current = reduced;
   }, [reduced]);
@@ -295,7 +311,7 @@ export function useFork(): ForkApi {
 
   // ── 選擇 ───────────────────────────────────────────────────
   const choose = useCallback(
-    (option: number) => {
+    (option: number, by: 'you' | 'me' = 'you') => {
       const chs = choicesRef.current;
       if (chs.length >= TOTAL_STEPS) return;
       if (phaseRef.current === 'growing') return;
@@ -305,7 +321,7 @@ export function useFork(): ForkApi {
       if (option < 0 || option >= fork.options.length) return;
 
       audioRef.current?.tick(chs.length);
-      const next = [...chs, { fork: fork.index, option }];
+      const next: Choice[] = [...chs, { fork: fork.index, option, by }];
       choicesRef.current = next;
       growRef.current = { start: performance.now(), done: false };
       setChoices(next);
@@ -314,6 +330,77 @@ export function useFork(): ForkApi {
     },
     [setPhaseBoth]
   );
+
+  // ── 我自己走 ───────────────────────────────────────────────
+  //
+  // 這不是一個「模式」，是預設狀態：有訪客介入才是例外。
+  //
+  // 訪客停手八秒，我接手，用同一池機率自己往下抽——跟他點枝走的是同一組候選，
+  // 差別只在誰的手。他一出聲，筆立刻還他。
+  useEffect(() => {
+    let last = Date.now();
+    let px = 0;
+    let py = 0;
+    let moved = 0;
+    let armed = false;
+
+    /** 明確的意圖：點、按鍵、滾輪——立刻把筆還回去。 */
+    const wake = () => {
+      last = Date.now();
+      moved = 0;
+      if (autoRef.current) setAuto(false);
+    };
+
+    /** 指標移動要累積到一定距離才算意圖，否則手抖會一直打斷我。 */
+    const onMove = (e: PointerEvent) => {
+      if (!armed) {
+        armed = true;
+        px = e.clientX;
+        py = e.clientY;
+        last = Date.now();
+        return;
+      }
+      moved += Math.hypot(e.clientX - px, e.clientY - py);
+      px = e.clientX;
+      py = e.clientY;
+      if (moved >= AUTO_WAKE_PX) wake();
+    };
+
+    const events = ['pointerdown', 'keydown', 'wheel', 'touchstart'] as const;
+    for (const ev of events) window.addEventListener(ev, wake, { passive: true });
+    window.addEventListener('pointermove', onMove, { passive: true });
+
+    const iv = window.setInterval(() => {
+      if (autoRef.current) return;
+      if (phaseRef.current === 'done') return;
+      if (choicesRef.current.length >= TOTAL_STEPS) return;
+      if (Date.now() - last >= AUTO_IDLE_MS) setAuto(true);
+    }, 400);
+
+    return () => {
+      for (const ev of events) window.removeEventListener(ev, wake);
+      window.removeEventListener('pointermove', onMove);
+      window.clearInterval(iv);
+    };
+  }, []);
+
+  // 接手之後，每走完一格就自己抽下一個字，直到路走完。
+  useEffect(() => {
+    if (!auto) return;
+    if (phase !== 'choosing') return;
+    if (choices.length >= TOTAL_STEPS) return;
+    const fork = ALL_FORKS[choices.length];
+    if (!fork) return;
+    const t = window.setTimeout(() => {
+      choose(sampleByProb(fork.options), 'me');
+    }, AUTO_STEP_MS);
+    return () => window.clearTimeout(t);
+  }, [auto, phase, choices.length, choose]);
+
+  // 走到盡頭就停手，不用等訪客出聲。
+  useEffect(() => {
+    if (phase === 'done' && auto) setAuto(false);
+  }, [phase, auto]);
 
   const reset = useCallback(() => {
     choicesRef.current = [];
@@ -326,6 +413,7 @@ export function useFork(): ForkApi {
     setHover(null);
     setGhostsOn(false);
     setOverview(false);
+    setAuto(false);
   }, [setPhaseBoth]);
 
   const toggleMute = useCallback(() => setMuted((v) => !v), []);
@@ -368,6 +456,7 @@ export function useFork(): ForkApi {
     setGhostsOn,
     overview,
     toggleOverview,
+    auto,
     id,
     reduced,
   };

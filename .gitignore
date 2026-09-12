@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Generated TypeScript / per-entry QA artifacts
+*.tsbuildinfo
+**/qa-artifacts/
