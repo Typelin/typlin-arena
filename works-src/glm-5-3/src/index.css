@@ -1,0 +1,422 @@
+/* ============================================================
+   衡准儀 — GLM 5.3 自畫像
+   視覺語言：紙、墨、銅、朱砂。製版語言：細線刻、影線、尺標。
+   ============================================================ */
+
+:root {
+  /* 紙 */
+  --paper: #f2ede0;
+  --paper-deep: #e8e1cf;
+  /* 墨 */
+  --ink: #1d1a16;
+  --ink-soft: #4a443a;
+  /* 對比度 ≥4.5:1 的次級墨（取代舊 8a8272 的 3.25:1） */
+  --ink-mute: #6d6552;
+  /* 銅 */
+  --bronze: #6f5b36;
+  /* 朱砂 */
+  --cinnabar: #b33a2b;
+  /* 排版 */
+  --serif: 'Noto Serif TC', 'Songti TC', 'PMingLiU', serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--serif);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--cinnabar);
+  color: var(--paper);
+}
+
+/* ---------- 聚焦可見性 ---------- */
+:focus-visible {
+  outline: 2px solid var(--cinnabar);
+  outline-offset: 2px;
+}
+
+/* ---------- 紙面底層 ---------- */
+.sheet {
+  position: relative;
+  min-height: 100dvh;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 4rem);
+}
+
+.sheet::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(111, 91, 54, 0.05), transparent),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(29, 26, 22, 0.008) 3px 4px);
+}
+
+.stamp {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 10;
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  color: var(--ink-mute);
+  border: 1px solid rgba(109, 101, 82, 0.4);
+  padding: 0.3em 0.8em 0.3em 1.15em;
+  user-select: none;
+}
+
+/* ---------- 首屏儀器區 ---------- */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 6vw, 4rem);
+  padding-top: clamp(2rem, 8vh, 5rem);
+  min-height: 92dvh;
+  align-content: center;
+}
+
+.hero-head {
+  text-align: center;
+}
+
+.kicker {
+  display: block;
+  font-size: clamp(0.78rem, 1.6vw, 0.88rem);
+  letter-spacing: 0.5em;
+  color: var(--ink-mute);
+  margin-bottom: 1.2em;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+}
+
+.hero-sub {
+  margin-top: 1em;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--ink-soft);
+  letter-spacing: 0.15em;
+}
+
+/* 秤台 */
+.bench {
+  position: relative;
+  width: min(520px, 100%);
+  margin: 0 auto;
+}
+
+.bench-top {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+.bench-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+/* 拖字排 */
+.tile-rack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  min-height: 3.2rem;
+}
+
+.tile {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper-deep);
+  border: 1px solid rgba(29, 26, 22, 0.35);
+  padding: 0.55em 0.85em;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none; /* 觸控拖曳不被頁面滾動搶走 */
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 0 rgba(29, 26, 22, 0.25);
+}
+
+.tile:active {
+  cursor: grabbing;
+}
+
+.tile--used {
+  opacity: 0.28;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+.bench-hint {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.2em;
+  min-height: 1.4em;
+}
+
+/* ---------- 拖曳跟隨字影 ---------- */
+.drag-ghost {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-4deg);
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--ink);
+  background: var(--paper-deep);
+  border: 1px solid rgba(29, 26, 22, 0.45);
+  padding: 0.3em 0.5em;
+  box-shadow: 3px 4px 0 rgba(29, 26, 22, 0.18);
+  user-select: none;
+}
+
+/* ---------- 盤面懸停高亮：吊掛側的盤弧被喚醒（兌現設計承諾） ---------- */
+.bench-canvas--hot-l,
+.bench-canvas--hot-r {
+  outline: 1px dashed rgba(179, 58, 43, 0.35);
+  outline-offset: -6px;
+}
+
+/* ---------- 刻度尺點按熱區（疊在 canvas 下緣，觸控對等） ---------- */
+.scale-tap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 8%;
+  width: min(64%, 340px);
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  /* 不可見但可聚焦可點按 */
+}
+
+.scale-tap:not(:disabled):hover {
+  background: rgba(179, 58, 43, 0.06);
+}
+
+.scale-tap:disabled {
+  cursor: default;
+}
+
+/* ---------- 衡語即時顯示 ---------- */
+.bench-verdict {
+  text-align: center;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.12em;
+  min-height: 1.4em;
+}
+
+/* ---------- 章節 ---------- */
+section {
+  position: relative;
+  margin-top: clamp(4rem, 12vh, 8rem);
+}
+
+section h2 {
+  font-weight: 900;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  line-height: 1.2;
+  margin-bottom: 1em;
+  letter-spacing: 0.1em;
+}
+
+section p {
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  max-width: 62ch;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+
+section p + p {
+  margin-top: 1em;
+}
+
+/* ---------- 稱量紀錄（秤單式，mono 讀數） ---------- */
+.record {
+  margin-top: clamp(3rem, 8vh, 5rem);
+  border-top: 1px solid rgba(29, 26, 22, 0.3);
+  padding-top: 2rem;
+}
+
+.record-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.record-cell h3 {
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  color: var(--ink-mute);
+  margin-bottom: 0.5em;
+}
+
+.record-cell p {
+  font-family: var(--mono); /* 讀數用等寬：數字對得齊 */
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.record-cell p small {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-mute);
+  margin-left: 0.5em;
+}
+
+/* ---------- 隱藏章節（稱斷） ---------- */
+.verdict {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid rgba(179, 58, 43, 0.5);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  margin-top: 2rem;
+}
+
+.verdict p {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: var(--ink);
+}
+
+.verdict p:first-child {
+  color: var(--cinnabar);
+  letter-spacing: 0.25em;
+  font-size: 0.85rem;
+}
+
+/* ---------- 分隔線：尺規刻度（呼應儀器語法，非普通細線） ---------- */
+.rule {
+  border: none;
+  border-top: 1px solid rgba(29, 26, 22, 0.18);
+  margin: clamp(3rem, 8vh, 5rem) 0;
+  position: relative;
+  text-align: center;
+  overflow: visible;
+}
+
+.rule::after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  top: -0.55em;
+  width: 5.2em;
+  height: 0.36em;
+  background: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 10px);
+  opacity: 0.4;
+}
+
+/* ---------- 頁腳 ---------- */
+footer {
+  margin-top: clamp(4rem, 12vh, 8rem);
+  padding-bottom: 3rem;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--ink-mute);
+}
+
+footer p + p {
+  margin-top: 0.6em;
+}
+
+/* ---------- 歸零按鈕 ---------- */
+.bench-reset {
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+.reset-btn {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid rgba(29, 26, 22, 0.4);
+  padding: 0.5em 1.2em 0.5em 1.5em;
+  cursor: pointer;
+  min-height: 44px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.reset-btn:hover {
+  color: var(--cinnabar);
+  border-color: var(--cinnabar);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reset-btn {
+    transition: none;
+  }
+}
+
+/* ---------- 無聲無擺（reduced-motion 替代方案） ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    transition: none;
+  }
+  .tile:hover {
+    transform: none;
+  }
+  .scale-tap:not(:disabled):hover {
+    background: none;
+  }
+}

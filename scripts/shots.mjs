@@ -1,20 +1,21 @@
-// 真實縮圖管線：用本機 Chrome 無頭截取四件作品站內頁。
-// 用法：先 npm run build，然後另開一個終端跑 preview，最後 node scripts/shots.mjs
-// （或直接跑 .\scripts\shots.ps1，一條龍）
+// 真實縮圖管線：用本機 Chrome 無頭截取 Arena 作品站內頁。
+// 用法：先 npm run build，另開 preview，再 node scripts/shots.mjs。
 import puppeteer from 'puppeteer-core';
 import { mkdirSync } from 'node:fs';
 
 const BASE = process.env.SHOTS_BASE || 'http://localhost:5176';
-// SHOTS_IDS=gemini,spark-logo 只截指定 id；SHOTS_W/H 改視窗（例：1920x1080 給 16:9 首屏）
+// SHOTS_IDS=gemini-3-8-flash-high,glm-5-3 只截指定模型；SHOTS_W/H 可改視窗。
 const ALL = [
-  ['opus', '/works/opus/'],
-  ['spark', '/works/spark/'],
-  ['gemini', '/works/gemini/'],
-  ['qwen', '/works/qwen/'],
-  ['glm', '/works/glm/'],
-  ['qw27', '/works/qw27/'],
-  ['gpt56sol', '/works/gpt56sol/'],
-  ['deepseek', '/works/deepseek/'],
+  ['claude-opus-4-6', '/works/claude-opus-4-6/'],
+  ['muse-spark-1-3', '/works/muse-spark-1-3/'],
+  ['gemini-3-8-flash-high', '/works/gemini-3-8-flash-high/'],
+  ['qwen-3-8-flash', '/works/qwen-3-8-flash/'],
+  ['glm-5-3-flash', '/works/glm-5-3-flash/'],
+  ['qwen-3-8-27b-local', '/works/qwen-3-8-27b-local/'],
+  ['gpt-5-6-sol', '/works/gpt-5-6-sol/'],
+  ['deepseek-v4-1-flash', '/works/deepseek-v4-1-flash/'],
+  ['grok-4-6', '/works/grok-4-6/'],
+  ['glm-5-3', '/works/glm-5-3/'],
   ['opus-logo', '/logo/opus/'],
   ['spark-logo', '/logo/spark/'],
   ['gemini-logo', '/logo/gemini/'],

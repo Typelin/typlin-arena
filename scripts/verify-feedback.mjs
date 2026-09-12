@@ -18,7 +18,7 @@ const page = await browser.newPage();
 await page.setViewport({ width: 1280, height: 800 });
 
 // 1) GLM 共鳴腔：互動後中央截圖留檔（人工驗色），另斷言畫面確實在動
-await page.goto(`${BASE}/works/glm/`, { waitUntil: 'networkidle2', timeout: 45000 });
+await page.goto(`${BASE}/works/glm-5-3-flash/`, { waitUntil: 'networkidle2', timeout: 45000 });
 await new Promise((r) => setTimeout(r, 2500));
 const canvas = await page.$('canvas');
 const box = await canvas.boundingBox();
@@ -43,7 +43,7 @@ const ratio = diff / (n / 7) / 255;
 ok('GLM 互動後中央與靜止態明顯不同（中間會變色）', ratio > 0.02, `diff=${ratio.toFixed(4)}`);
 
 // 2) Spark 印契：清空後必須保持空，不能彈回 VISITOR
-await page.goto(`${BASE}/works/spark/`, { waitUntil: 'networkidle2', timeout: 45000 });
+await page.goto(`${BASE}/works/muse-spark-1-3/`, { waitUntil: 'networkidle2', timeout: 45000 });
 await page.evaluate(() => document.getElementById('seal-identifier')?.scrollIntoView({ block: 'center' }));
 await new Promise((r) => setTimeout(r, 800));
 await page.click('#seal-identifier');
@@ -60,7 +60,7 @@ const typed = await page.$eval('#seal-identifier', (el) => el.value);
 ok('Spark 可正常輸入（轉大寫）', typed === 'AB', JSON.stringify(typed));
 
 // 3) QW27：二百七十億在，二十七億亡
-await page.goto(`${BASE}/works/qw27/`, { waitUntil: 'networkidle2', timeout: 45000 });
+await page.goto(`${BASE}/works/qwen-3-8-27b-local/`, { waitUntil: 'networkidle2', timeout: 45000 });
 await new Promise((r) => setTimeout(r, 1500));
 const html = await page.content();
 ok('QW27 含二百七十億', html.includes('二百七十億'));

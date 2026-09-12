@@ -1,0 +1,23 @@
+{
+  "name": "grok46",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5196 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4196 --strictPort"
+  },
+  "dependencies": {
+    "@fontsource/noto-serif-tc": "^5.2.5",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  }
+}

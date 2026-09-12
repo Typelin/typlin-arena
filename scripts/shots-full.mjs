@@ -5,12 +5,12 @@ import { mkdirSync } from 'node:fs';
 
 const BASE = process.env.SHOTS_BASE || 'http://localhost:5176';
 const SHOTS = [
-  ['opus', '/works/opus/'],
-  ['spark', '/works/spark/'],
-  ['gemini', '/works/gemini/'],
-  ['qwen', '/works/qwen/'],
-  ['glm', '/works/glm/'],
-  ['qw27', '/works/qw27/'],
+  ['opus', '/works/claude-opus-4-6/'],
+  ['spark', '/works/muse-spark-1-3/'],
+  ['gemini', '/works/gemini-3-8-flash-high/'],
+  ['qwen', '/works/qwen-3-8-flash/'],
+  ['glm', '/works/glm-5-3-flash/'],
+  ['qw27', '/works/qwen-3-8-27b-local/'],
   ['sakimu', '/logo/spark/'],
 ];
 

@@ -117,7 +117,7 @@ export default function App() {
                 <em>裸泳。</em>
               </h1>
               <p className="hero__sub">
-                同一個 prompt，八個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
+                同一個 prompt，{works.length} 個模型橫評：有人交方程，有人交紙張，有人交整片黑夜。
                 這裡只收能動手的東西——評分標準只有一個：能不能被手改變。
               </p>
               <div className="hero__stats">
@@ -167,7 +167,7 @@ export default function App() {
             <div>
               <div className="secnum" aria-hidden="true">01</div>
               <p className="eyebrow">RANK · 作品排名（按評分排序）</p>
-              <h2 id="works-title">八件作品，<em>完整排名。</em></h2>
+              <h2 id="works-title">十一件作品，<em>完整排名。</em></h2>
               <p className="section__desc">分數與短評已整理完成。選擇「開啟」即可在站內全幅操作作品。</p>
             </div>
           </div>
