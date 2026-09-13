@@ -30,6 +30,8 @@ const AUTO_IDLE_MS = 8000;
 const AUTO_STEP_MS = 560;
 /** 指標要累積移動多少像素才算出聲——手抖不該打斷我。 */
 const AUTO_WAKE_PX = 28;
+/** 訪客停手多久之後，紙上開始顯示「我正在等」的進度條。比接手更早，用來預告。 */
+const IDLE_SHOW_MS = 1500;
 
 export type ForkApi = {
   canvasRef: RefObject<HTMLCanvasElement | null>;
@@ -50,6 +52,8 @@ export type ForkApi = {
   toggleOverview: () => void;
   /** 我自己在走：訪客停手之後，我接手 */
   auto: boolean;
+  /** 訪客已經停手一段時間（比 auto 早，用來預告接手） */
+  idle: boolean;
   id: string;
   reduced: boolean;
 };
@@ -67,6 +71,7 @@ export function useFork(): ForkApi {
   const [ghostsOn, setGhostsOn] = useState(false);
   const [overview, setOverview] = useState(false);
   const [auto, setAuto] = useState(false);
+  const [idle, setIdle] = useState(false);
 
   // ── 給動畫迴圈讀的即時值（state 是非同步的，迴圈不能等） ──
   const choicesRef = useRef<Choice[]>([]);
@@ -348,6 +353,7 @@ export function useFork(): ForkApi {
     const wake = () => {
       last = Date.now();
       moved = 0;
+      setIdle(false);
       if (autoRef.current) setAuto(false);
     };
 
@@ -371,10 +377,15 @@ export function useFork(): ForkApi {
     window.addEventListener('pointermove', onMove, { passive: true });
 
     const iv = window.setInterval(() => {
+      if (phaseRef.current === 'done') {
+        setIdle(false);
+        return;
+      }
+      const silent = Date.now() - last;
+      setIdle(silent >= IDLE_SHOW_MS);
       if (autoRef.current) return;
-      if (phaseRef.current === 'done') return;
       if (choicesRef.current.length >= TOTAL_STEPS) return;
-      if (Date.now() - last >= AUTO_IDLE_MS) setAuto(true);
+      if (silent >= AUTO_IDLE_MS) setAuto(true);
     }, 400);
 
     return () => {
@@ -414,6 +425,7 @@ export function useFork(): ForkApi {
     setGhostsOn(false);
     setOverview(false);
     setAuto(false);
+    setIdle(false);
   }, [setPhaseBoth]);
 
   const toggleMute = useCallback(() => setMuted((v) => !v), []);
@@ -457,6 +469,7 @@ export function useFork(): ForkApi {
     overview,
     toggleOverview,
     auto,
+    idle,
     id,
     reduced,
   };

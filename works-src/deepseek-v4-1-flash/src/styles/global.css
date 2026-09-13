@@ -930,6 +930,125 @@ body {
 
 /* ── 減少動態 ───────────────────────────────────────────────── */
 
+/* ── 紙的最上緣：我自己走的進度條 ────────────────────────────
+   它不是控制項，是狀態顯示。訪客停手它就開始充能，我接手它就跑起來。
+   每一格都染著「這一步是誰選的」的顏色——換手在最上面也看得見。 */
+
+.autobar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.autobar[data-state='waiting'],
+.autobar[data-state='walking'] {
+  opacity: 1;
+}
+
+/* 底軌：整條路三十格的長度 */
+.autobar__track {
+  position: absolute;
+  inset: 0;
+  background: var(--ink-4);
+}
+
+/* 已完成的格：一格一色，由 JS 依「誰選的」產生漸層 */
+.autobar__ink {
+  position: absolute;
+  inset: 0;
+  transition: clip-path 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* 充能：停手之後從左掃到右。掃滿，就是我把筆拿走的時候。 */
+.autobar__charge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+  background: linear-gradient(to right, rgba(180, 52, 31, 0), rgba(180, 52, 31, 0.55));
+}
+
+.autobar[data-state='waiting'] .autobar__charge {
+  opacity: 1;
+  /* 6500ms = AUTO_IDLE_MS(8000) - IDLE_SHOW_MS(1500)，掃滿即接手 */
+  animation: autobar-charge 6500ms linear forwards;
+}
+
+@keyframes autobar-charge {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* 跑動的光點：貼在當前進度上，表示我正在抽下一個字 */
+.autobar__runner {
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin-left: -1.5px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--seal);
+  opacity: 0;
+  transition: left 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.autobar[data-state='walking'] .autobar__runner {
+  opacity: 1;
+  animation: autobar-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes autobar-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(180, 52, 31, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(180, 52, 31, 0);
+  }
+}
+
+/* 標籤：只在我在走的時候出現，落在 HUD 中段的留白上 */
+.autobar__tag {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  font-size: 10px;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  color: var(--seal);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.autobar[data-state='walking'] .autobar__tag {
+  opacity: 0.85;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 窄螢幕的 HUD 中段沒有留白，標籤收起來，讓線自己說話 */
+@media (max-width: 620px) {
+  .autobar__tag {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .epilogue,
   .epilogue__line,
@@ -953,6 +1072,19 @@ body {
   .whisper,
   .leaf,
   .linkish {
+    transition: none;
+  }
+  /* 進度條留著（它是狀態，不是裝飾），但把動畫關掉 */
+  .autobar__charge {
+    animation: none;
+    opacity: 0;
+  }
+  .autobar__runner {
+    animation: none;
+  }
+  .autobar__ink,
+  .autobar__runner,
+  .autobar__tag {
     transition: none;
   }
   .forking {

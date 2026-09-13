@@ -5,8 +5,10 @@ import {
   AUTO_ALONE,
   AUTO_RESUME,
   AUTO_TAKEOVER,
+  INTERACTION_EGGS,
   LOOSE_LEAVES,
   LOOSE_LEAVES_FINALE,
+  MIDWAY_NOTES,
   WHISPERS,
   inscriptionFor,
 } from './data/secrets';
@@ -52,6 +54,7 @@ export default function App() {
     overview,
     toggleOverview,
     auto,
+    idle,
     id,
   } = useFork();
 
@@ -120,6 +123,20 @@ export default function App() {
   const mineCount = useMemo(() => selfChosen(choices), [choices]);
   const allMine = done && mineCount === TOTAL_STEPS && TOTAL_STEPS > 0;
 
+  // ── 頂端的紙邊進度條 ────────────────────────────────────────
+  // 完成度用一格一格的墨色畫出來，而且誰選的那一格就染誰的顏色——
+  // 於是「換手」不只在樹上看得見，在紙的最上面也看得見。
+  const pct = (choices.length / TOTAL_STEPS) * 100;
+  const inkGradient = useMemo(() => {
+    if (choices.length === 0) return 'none';
+    const stops = choices.map((c, i) => {
+      const a = (i / TOTAL_STEPS) * 100;
+      const b = ((i + 1) / TOTAL_STEPS) * 100;
+      return `${c.by === 'me' ? 'var(--seal)' : 'var(--ink-2)'} ${a}% ${b}%`;
+    });
+    return `linear-gradient(to right, ${stops.join(', ')})`;
+  }, [choices]);
+
   // ── 彩蛋 ────────────────────────────────────────────────────
   const [collected, setCollected] = useState<number[]>(loadLeaves);
   const [toast, setToast] = useState<string | null>(null);
@@ -138,6 +155,19 @@ export default function App() {
       if (toastTimer.current !== null) window.clearTimeout(toastTimer.current);
     },
     []
+  );
+
+  // ── 互動彩蛋 ───────────────────────────────────────────────
+  // 有些話不該獎勵第一次。同一件小事做夠多次，我才理你。
+  const eggsRef = useRef<Record<string, number>>({});
+  const bump = useCallback(
+    (key: string) => {
+      const n = (eggsRef.current[key] ?? 0) + 1;
+      eggsRef.current[key] = n;
+      const egg = INTERACTION_EGGS.find((e) => e.key === key);
+      if (egg && n === egg.at) say(egg.text);
+    },
+    [say]
   );
 
   // 筆的交換：我接手、我還回去——兩邊都要說一聲，否則訪客不知道主導權換手了。
@@ -175,21 +205,31 @@ export default function App() {
   const copyId = useCallback(() => {
     const text = `岔路 Forking Path — № ${id}`;
     const nav = navigator as Navigator & { clipboard?: Clipboard };
+    // 彩蛋一律在常規訊息之後講，否則會被蓋掉。
     if (nav.clipboard?.writeText) {
       nav.clipboard.writeText(text).then(
-        () => say('路徑編號已複製。拿去，給別人看你也走過這裡。'),
-        () => say(`複製不了。編號是 ${id}，自己抄。`)
+        () => {
+          say('路徑編號已複製。拿去，給別人看你也走過這裡。');
+          bump('copy');
+        },
+        () => {
+          say(`複製不了。編號是 ${id}，自己抄。`);
+          bump('copy');
+        }
       );
     } else {
       say(`編號是 ${id}，自己抄。`);
+      bump('copy');
     }
-  }, [id, say]);
+  }, [bump, id, say]);
 
   const stampTitle = useCallback(() => {
     const mark = choices.length === 0 ? '未落筆' : id;
     setStamp(mark);
     say(choices.length === 0 ? '紙是空的，印也只能蓋一個空字。' : `落款。這張紙現在叫 № ${mark}。`);
-  }, [choices.length, id, say]);
+    // 彩蛋比常規訊息稀有，放最後才不會被蓋掉。
+    bump('stamp');
+  }, [bump, choices.length, id, say]);
 
   /**
    * 落款要「雙擊」，但不依賴瀏覽器的 dblclick 判定——
@@ -238,11 +278,53 @@ export default function App() {
     };
   }, [done]);
 
+  // ── 中途評語 ───────────────────────────────────────────────
+  // 不是走完才給判詞。走到一半我就會忍不住出聲；但只在你自己動手的那一步說，
+  // 我自己在走的時候不吵。每一條只說一次。
+  const saidRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    if (choices.length === 0) {
+      saidRef.current.clear();
+      return;
+    }
+    if (auto) return;
+    if (choices[choices.length - 1].by === 'me') return;
+    const options = choices.map((c) => c.option);
+    for (const note of MIDWAY_NOTES) {
+      if (saidRef.current.has(note.key)) continue;
+      if (choices.length < note.from) continue;
+      if (!note.when(options)) continue;
+      saidRef.current.add(note.key);
+      say(note.text);
+      break;
+    }
+  }, [choices, auto, say]);
+
+  const onToggleMute = useCallback(() => {
+    bump('mute');
+    toggleMute();
+  }, [bump, toggleMute]);
+
+  const onToggleOverview = useCallback(() => {
+    bump('overview');
+    toggleOverview();
+  }, [bump, toggleOverview]);
+
+  /** 重走是新的紙：講過的話與數過的次數都歸零。 */
+  const onReset = useCallback(() => {
+    saidRef.current.clear();
+    eggsRef.current = {};
+    reset();
+  }, [reset]);
+
   // 觸控的隱藏層次：長按畫面 520ms 掀開幽靈森林
   const onPointerDown = (e: React.PointerEvent<HTMLElement>) => {
     if ((e.target as HTMLElement).closest('button')) return;
     if (holdRef.current !== null) window.clearTimeout(holdRef.current);
-    holdRef.current = window.setTimeout(() => setGhostsOn(true), 520);
+    holdRef.current = window.setTimeout(() => {
+      bump('ghost');
+      setGhostsOn(true);
+    }, 520);
   };
   const onPointerUp = () => {
     if (holdRef.current !== null) {
@@ -304,6 +386,25 @@ export default function App() {
       onPointerLeave={onPointerUp}
     >
       <canvas ref={canvasRef} className="forking__canvas" aria-hidden="true" />
+
+      {/* 紙的最上緣。它不是按鈕，是一個狀態：
+          你停手，它就開始充能；我接手，它就跑起來，而且我抽的每一格都是朱紅的。 */}
+      {!done && choices.length > 0 && (
+        <div
+          className="autobar"
+          data-state={auto ? 'walking' : idle ? 'waiting' : 'off'}
+          aria-hidden="true"
+        >
+          <span className="autobar__track" />
+          <span className="autobar__charge" />
+          <span
+            className="autobar__ink"
+            style={{ backgroundImage: inkGradient, clipPath: `inset(0 ${100 - pct}% 0 0)` }}
+          />
+          <span className="autobar__runner" style={{ left: `${pct}%` }} />
+          <span className="autobar__tag">我自己走</span>
+        </div>
+      )}
 
       <section className="overture" aria-hidden={choices.length > 0}>
         <p className="overture__p">我沒有想法，我只有一池機率。</p>
@@ -380,7 +481,7 @@ export default function App() {
           <button
             type="button"
             className="hud__btn"
-            onClick={toggleMute}
+            onClick={onToggleMute}
             aria-pressed={!muted}
             aria-label={muted ? '開啟聲音' : '靜音'}
           >
@@ -389,7 +490,7 @@ export default function App() {
           <button
             type="button"
             className="hud__btn"
-            onClick={reset}
+            onClick={onReset}
             disabled={choices.length === 0}
           >
             重走
@@ -518,10 +619,10 @@ export default function App() {
             )}
 
             <div className="epilogue__acts">
-              <button type="button" className="btn" onClick={reset}>
+              <button type="button" className="btn" onClick={onReset}>
                 再走一次
               </button>
-              <button type="button" className="btn btn--ghost" onClick={toggleOverview}>
+              <button type="button" className="btn btn--ghost" onClick={onToggleOverview}>
                 看整棵樹
               </button>
               <span className="epilogue__tip">按住 Shift／長按畫面：看幽靈森林</span>
@@ -535,7 +636,7 @@ export default function App() {
           <span className="overview-bar__meta">
             № {id} · {TOTAL_STEPS} 步 · {PARALLEL_UNIVERSES.toLocaleString('en-US')} 條路裡的一條
           </span>
-          <button type="button" className="btn" onClick={toggleOverview}>
+          <button type="button" className="btn" onClick={onToggleOverview}>
             回到字句
           </button>
         </div>
