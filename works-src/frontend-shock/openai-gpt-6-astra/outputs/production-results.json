@@ -1,0 +1,116 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "name": "production entry",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "keyboard trace accumulation",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "fracture requires deliberate input",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "alternate weaving changes geometry",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "five-stage journey",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "refresh preserves fingerprint and geometry",
+      "passed": true,
+      "detail": "8EAD"
+    },
+    {
+      "name": "real SVG download",
+      "passed": true,
+      "detail": "astra-form-8EAD.svg / 133111 bytes"
+    },
+    {
+      "name": "hidden layer hold and release",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "reset clears this work only",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "real pointer drag leaves traces",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "real pointer cut adds counterexample",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "390px entry layout",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "short viewport controls scroll into view",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "reduced-motion complete journey",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "360px completion layout",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "320px no horizontal overflow",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "touch input",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "touch swipe creates fracture",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "offline portable HTML executes",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "help dialog and Escape",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "storage-disabled journey",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "browser console and page errors",
+      "passed": true,
+      "detail": "zero errors across tested pages"
+    }
+  ],
+  "errors": []
+}

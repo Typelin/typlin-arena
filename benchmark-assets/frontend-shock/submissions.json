@@ -1,0 +1,17 @@
+[
+  {
+    "id": "openai-gpt-6-astra",
+    "model": "OpenAI GPT-6-Astra",
+    "title": "未定之形 / AN UNFINISHED FORM",
+    "status": "unscored",
+    "score": null,
+    "source": "works-src/frontend-shock/openai-gpt-6-astra",
+    "work": "/works/frontend-shock/openai-gpt-6-astra/",
+    "review": "/works/frontend-shock/openai-gpt-6-astra/review.html",
+    "thumbnail": "/shots/frontend-shock/openai-gpt-6-astra.png",
+    "verification": {
+      "unit": 12,
+      "chrome": 22
+    }
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "name": "openai-gpt-6-astra-unfinished-form",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A participatory instrument about forming, questioning, and reconstructing an answer.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs --production",
+    "test": "node --test tests/state.test.mjs"
+  },
+  "engines": { "node": ">=22" }
+}

@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f0">
+  <meta name="description" content="未定之形：一件關於答案如何在你我之間成形的互動作品。由 OpenAI GPT-6-Astra 創作。">
+  <title>未定之形 — ASTRA / An unfinished form</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23f5f5f0%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%235838f5%22%20stroke-width%3D%222%22%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2224%22%20ry%3D%2213%22%20transform%3D%22rotate(-40%2032%2032)%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2224%22%20ry%3D%2213%22%20transform%3D%22rotate(20%2032%2032)%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2224%22%20ry%3D%2213%22%20transform%3D%22rotate(80%2032%2032)%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%225%22%20fill%3D%22%23d1ed6a%22%2F%3E%3C%2Fsvg%3E%0A" type="image/svg+xml">
+  <style>@charset "UTF-8";
+:root{--paper:#f5f5f0;--ink:#242031;--muted:#716b7b;--rule:#d9d7d8;--purple:#5838f5;--acid:#d1ed6a;--mono:"Cascadia Code","SFMono-Regular",Consolas,monospace;--sans:"Arial","Noto Sans TC","Microsoft JhengHei",sans-serif;font-family:var(--sans);color:var(--ink);background:var(--paper);font-synthesis:none;color-scheme:light}
+*{box-sizing:border-box}body{margin:0}button,input,a{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button{color:inherit;cursor:pointer}button:disabled{cursor:not-allowed}button,a,input{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible,.instrument:focus-visible{outline:2px solid var(--purple)}button{border:0}button[hidden],[hidden]{display:none!important}a{color:inherit}::selection{background:var(--acid);color:var(--ink)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip-link{position:fixed;top:-100px;left:20px;z-index:20;background:var(--acid);padding:15px}.skip-link:focus{top:10px}.app{max-width:1920px;margin:0 auto;padding:0 48px;overflow:hidden}.masthead{height:91px;display:flex;align-items:center;border-bottom:1px solid var(--ink);gap:42px;position:relative;z-index:2}.wordmark{font-family:Arial,sans-serif;font-size:34px;font-weight:900;letter-spacing:-2px;text-decoration:none;display:flex;align-items:center;gap:12px}.wordmark-spark{font-size:38px;font-weight:400;color:var(--purple);line-height:1}.edition{display:flex;flex-direction:column;gap:6px;font-size:10px;letter-spacing:1.4px}.edition span:first-child{font-family:var(--mono);font-size:10px}.header-actions{margin-left:auto;display:flex;align-items:center;gap:24px}.text-button{background:none;padding:9px 0;font-size:11px;letter-spacing:0.8px}.text-button span{color:var(--purple);margin-left:5px}.about-button{background:none;border:1px solid #9e98a6;border-radius:50%;width:30px;height:30px;font:12px var(--mono)}.about-button:hover{background:var(--acid)}
+.exhibition{position:relative;min-height:645px;height:calc(100svh - 342px);max-height:880px;display:grid;grid-template-columns:43% 57%;isolation:isolate}.exhibit-index{position:absolute;top:24px;left:0;display:flex;align-items:center;gap:11px;font:10px var(--mono);letter-spacing:1px;z-index:3}.status-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);box-shadow:0 0 0 4px #5838f50c}.index-rule{height:1px;width:40px;background:var(--rule)}.copy-area{align-self:center;position:relative;z-index:2;padding:74px 0 75px;pointer-events:none}.copy-area button{pointer-events:auto}.eyebrow{font:10px var(--mono);letter-spacing:2.2px;color:var(--purple);margin:0 0 24px}.copy-area h1{font-weight:800;font-size:clamp(48px,5.25vw,83px);line-height:1.15;letter-spacing:-4px;margin:0;max-width:700px}.outline-word{-webkit-text-stroke:1px var(--ink);color:transparent;display:inline-block}.intro{font-size:13px;line-height:1.95;letter-spacing:0.5px;margin:26px 0 29px;color:#55505e}.live-caption{display:flex;align-items:flex-start;gap:13px;margin-bottom:26px}.caption-cross{font:25px var(--mono);line-height:1.3;color:var(--purple)}.live-caption p{margin:0;font-size:12px;line-height:1.85}.choice-group{display:flex;gap:10px;flex-wrap:wrap}.choice{background:transparent;border:1px solid #cdc9d0;border-radius:0;padding:10px 15px;font-size:11px;transition:background .2s,border-color .2s}.choice span{font:9px var(--mono);margin-right:6px;opacity:.7}.choice.active{background:var(--acid);border-color:var(--acid)}.choice:hover{border-color:var(--ink)}.instrument-wrap{position:relative;align-self:stretch;min-width:0;display:flex;flex-direction:column;justify-content:center;margin-left:-32px;z-index:1}.instrument{position:relative;touch-action:none;user-select:none;-webkit-user-select:none;aspect-ratio:800 / 660;width:100%;outline-offset:-12px;cursor:crosshair}.instrument svg{width:100%;height:100%;display:block;overflow:visible}.coordinate{display:flex;justify-content:space-between;font:9px var(--mono);letter-spacing:1px;color:#77717d;position:absolute;left:20px;right:0;z-index:2;pointer-events:none}.coordinate-top{top:26px}.coordinate-bottom{bottom:28px}.coordinate-bottom>span:first-child{display:flex;gap:8px;align-items:center}.tiny-square{width:5px;height:5px;background:var(--purple)}.device-label{position:absolute;left:50%;bottom:4%;transform:translateX(-50%);padding:9px 12px;white-space:nowrap;display:flex;gap:10px;align-items:center;background:var(--paper);border:1px solid var(--rule);font-size:10px;letter-spacing:.5px;pointer-events:none}.mini-cross{color:var(--purple);font-size:17px}.key-hint{font:11px var(--mono);color:var(--muted)}.reverse-label{position:absolute;top:15%;left:50%;transform:translateX(-50%);background:var(--acid);padding:10px 14px;font-size:11px;white-space:nowrap}.side-note{position:absolute;right:-30px;top:50%;transform:translate(50%,-50%) rotate(90deg);display:flex;gap:28px;font:8px var(--mono);letter-spacing:1px;color:#716b7b;white-space:nowrap}.stage-number{position:absolute;left:0;bottom:9px;font:90px Arial,sans-serif;font-weight:400;letter-spacing:-7px;color:#e5e3e6;z-index:-1;line-height:1}.console{border-top:1px solid var(--ink);position:relative;z-index:3}.stage-nav{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--rule)}.stage-step{position:relative;background:none;display:flex;align-items:center;gap:12px;padding:15px 0 17px;text-align:left;font-size:11px}.stage-step span{font:10px var(--mono);color:#85808a}.stage-step b{font-weight:400;letter-spacing:2px}.stage-step i{width:4px;height:4px;border-radius:50%;background:#cdc9d0;margin-left:auto;margin-right:26px}.stage-step.current{color:var(--purple)}.stage-step.current i{background:var(--purple)}.stage-step.current:after{position:absolute;bottom:-1px;left:0;right:24px;height:2px;background:var(--purple);content:""}.stage-step:disabled{color:#9b95a0}.stage-step:not(:disabled):hover b{text-decoration:underline;text-underline-offset:4px}.control-row{display:grid;grid-template-columns:1fr 1.05fr 1.05fr;gap:60px;padding:24px 0 22px;align-items:center}.tension-control{max-width:310px}.tension-control label{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.6px}.tension-control output{font:11px var(--mono);color:var(--purple)}input[type=range]{-webkit-appearance:none;appearance:none;background:transparent;width:100%;margin:8px 0 0;height:22px;cursor:ew-resize}input[type=range]::-webkit-slider-runnable-track{background:#d5d1de;height:2px}input[type=range]::-moz-range-track{background:#d5d1de;height:2px}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;height:12px;width:12px;border-radius:50%;background:var(--purple);border:3px solid var(--paper);outline:1px solid var(--purple);margin-top:-5px}input[type=range]::-moz-range-thumb{height:9px;width:9px;border-radius:50%;background:var(--purple);border:3px solid var(--paper);outline:1px solid var(--purple)}.range-ends{display:flex;justify-content:space-between;color:var(--muted);font-size:9px}.instruction-block{border-left:1px solid var(--rule);padding-left:24px}.instruction-block>span{font:9px var(--mono);letter-spacing:1px;color:var(--purple)}.instruction-block p{font-size:11px;line-height:1.85;margin:8px 0 0}.primary-action{width:100%;background:var(--purple);color:#fff;min-height:52px;display:flex;align-items:center;justify-content:space-between;padding:14px 19px;gap:25px;font-size:12px;letter-spacing:1px;position:relative;overflow:hidden;transition:background .2s}.primary-action:hover{background:#4024cc}.primary-action:active{background:#2b168e}.primary-action:disabled{background:#b4aacd;color:#fff}.action-arrow{font:24px Arial,sans-serif;line-height:1}.secondary-action{background:none;font-size:10px;display:flex;align-items:center;justify-content:space-between;width:100%;padding:10px 0 0;color:#676071;min-height:27px}.secondary-action span{font-size:15px}.footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--rule);padding:12px 0 16px;gap:20px;font-size:9px;letter-spacing:.7px;color:var(--muted)}.footer i{font-style:normal;padding:0 10px;color:#afaab6}.footer .text-button{font-size:10px}.final-stats{display:flex;gap:27px;padding-top:5px}.final-stats div{display:flex;flex-direction:column;gap:8px}.final-stats strong{font:25px var(--mono);color:var(--purple)}.final-stats span{font-size:9px;color:var(--muted)}
+[data-stage="1"] .copy-area h1{font-size:clamp(48px,4.85vw,74px)}[data-stage="2"] .copy-area h1{font-size:clamp(48px,5.7vw,87px)}[data-stage="2"] .eyebrow{color:#5b5227}[data-stage="2"] .stage-number{color:#e7e3d0}[data-stage="3"] .copy-area h1{font-size:clamp(48px,5.2vw,80px)}[data-stage="4"] .copy-area h1{font-size:clamp(45px,4.7vw,72px)}[data-stage="4"] .device-label{bottom:1%}.backside .instrument{background-image:linear-gradient(90deg,transparent 39px,#8e879214 40px),linear-gradient(transparent 39px,#8e879214 40px);background-size:40px 40px}.backside #threads{opacity:.32}.backside #ghost-threads{opacity:1}.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:20;background:var(--ink);color:var(--paper);padding:14px 22px;max-width:90vw;font-size:12px;line-height:1.6;box-shadow:0 8px 30px #29223220}dialog{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:46px;max-width:580px;width:calc(100% - 32px);max-height:calc(100svh - 40px);overflow:auto}dialog::backdrop{background:#24203166;backdrop-filter:blur(5px)}.dialog-close{position:absolute;right:18px;top:12px;background:none;font-size:25px;width:36px;height:36px}dialog h2{font-size:34px;line-height:1.35;letter-spacing:-1px;margin:0 0 23px}dialog p{font-size:12px;line-height:1.9;color:#5a5364}dialog dl{font-size:11px;border-top:1px solid var(--rule);padding-top:15px}dialog dt{color:var(--purple);margin-top:14px}dialog dd{margin:5px 0;line-height:1.8}.privacy-note{border-top:1px solid var(--rule);padding-top:17px;margin-top:22px}dialog .primary-action{margin-top:20px}.no-script{position:fixed;bottom:0;background:var(--acid);padding:20px;width:100%;text-align:center;z-index:99}
+@media(min-width:1500px){.app{padding:0 64px}.copy-area{padding-left:15px}.instrument-wrap{margin-left:-60px}.exhibition{min-height:700px}.copy-area h1{letter-spacing:-5px}}
+@media(max-width:1100px){.app{padding:0 30px}.masthead{height:78px}.exhibition{min-height:570px;grid-template-columns:44% 56%;height:calc(100svh - 333px)}.copy-area h1{font-size:54px;letter-spacing:-3px}.copy-area{padding-top:70px}.intro{font-size:12px}.instrument-wrap{margin-left:-40px;margin-right:-9px}.control-row{gap:30px}.coordinate{font-size:8px}.side-note{right:-18px}.device-label{font-size:9px;padding:8px}.edition{font-size:9px}.footer>span:nth-child(2){display:none}}
+@media(max-width:760px){.app{padding:0 22px}.masthead{height:73px;gap:20px}.wordmark{font-size:28px}.wordmark-spark{font-size:30px}.edition span:last-child{display:none}.edition{font-size:8px;letter-spacing:.3px}.edition span:first-child{font-size:8px}.header-actions{gap:15px}.header-actions .text-button{font-size:10px}.about-button{width:26px;height:26px}.exhibition{display:flex;flex-direction:column;min-height:0;max-height:none;height:auto;padding-top:64px}.exhibit-index{top:21px;font-size:9px}.copy-area{width:100%;padding:0;display:grid;grid-template-columns:1.2fr 1fr;column-gap:25px;align-items:start}.eyebrow{grid-column:1 / -1;margin-bottom:18px;font-size:9px}.copy-area h1,[data-stage="1"] .copy-area h1,[data-stage="2"] .copy-area h1,[data-stage="3"] .copy-area h1,[data-stage="4"] .copy-area h1{font-size:44px;letter-spacing:-2.5px;grid-row:2 / 4;line-height:1.18}.intro{font-size:10px;margin:1px 0 12px;line-height:1.85;grid-column:2}.live-caption{gap:7px;margin:0 0 12px;grid-column:2}.live-caption p{font-size:10px}.caption-cross{font-size:17px}.choice-group{grid-column:1 / -1;margin-top:19px;gap:7px}.choice{font-size:10px;padding:8px 12px}.instrument-wrap{margin:0 -11px;min-height:0;width:auto}.instrument{aspect-ratio:800 / 610;margin-top:-2px}.coordinate-top{top:12px}.coordinate{font-size:7px;left:12px;right:12px}.coordinate-top>span:first-child{opacity:0}.coordinate-bottom{bottom:17px}.device-label{bottom:5%;font-size:9px}.key-hint{display:none}.side-note{display:none}.stage-number{bottom:16px;font-size:62px;left:0}.stage-step{padding:14px 0;gap:7px}.stage-step span{font-size:8px}.stage-step b{font-size:10px;letter-spacing:1px}.stage-step i{display:none}.stage-step.current:after{right:13px}.control-row{grid-template-columns:1fr 1fr;gap:20px;padding:20px 0}.tension-control{width:100%;align-self:start;margin-top:2px}.instruction-block{display:none}.action-block{grid-column:2}.primary-action{font-size:11px;padding:13px 12px;gap:10px;min-height:48px}.secondary-action{font-size:9px}.footer{font-size:8px;padding-bottom:12px}.footer i{padding:0 5px}.footer .text-button{font-size:9px}.final-stats{grid-column:1 / -1;margin:18px 0 0;gap:32px}.final-stats strong{font-size:22px}.reverse-label{font-size:9px;padding:7px 11px}.toast{font-size:11px}.tension-control label{font-size:10px}dialog{padding:35px 25px}dialog h2{font-size:28px}}
+@media(max-width:760px){.outline-word{display:block}.copy-area h1{overflow-wrap:normal}.copy-area{grid-template-columns:1.12fr 1fr}.instrument:focus-visible{outline-offset:-6px}}
+@media(max-width:390px){.app{padding:0 16px}.edition{display:none}.copy-area{column-gap:14px;grid-template-columns:1.2fr 1fr}.copy-area h1,[data-stage="1"] .copy-area h1,[data-stage="2"] .copy-area h1,[data-stage="3"] .copy-area h1,[data-stage="4"] .copy-area h1{font-size:39px}.intro{font-size:9px}.live-caption p{font-size:9px}.choice{padding:7px 10px}.control-row{gap:15px}.footer>span{font-size:7px}.stage-step{gap:5px}}
+@media(min-width:761px) and (max-height:780px){.masthead{height:70px}.exhibition{min-height:500px;height:500px}.copy-area{padding-top:55px;padding-bottom:40px}.copy-area h1{font-size:62px}.intro{margin:18px 0}.live-caption{margin-bottom:19px}.instrument{height:480px;aspect-ratio:auto}.instrument svg{height:100%}.coordinate-top{top:19px}.coordinate-bottom{bottom:14px}.control-row{padding:17px 0}.stage-step{padding:12px 0}.footer{padding:8px 0}.stage-number{font-size:72px}.device-label{bottom:3%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+.reduced-motion *{transition:none!important;animation:none!important}
+@media(min-width:761px){.instrument{position:absolute;inset:43px 0 55px;width:auto;height:auto;aspect-ratio:auto}.instrument svg{overflow:hidden}.device-label{bottom:-5px}.instrument-wrap{margin-right:0}[data-stage="3"] .exhibition{grid-template-columns:38% 62%}[data-stage="3"] .instrument-wrap{margin-left:-25px}[data-stage="3"] .copy-area h1{font-size:clamp(48px,4.55vw,70px)}[data-stage="3"] .outline-word{display:block}[data-stage="4"] .instrument-wrap{margin-left:-8px}}
+@media(max-width:760px){.copy-area{grid-template-columns:1fr 1fr;column-gap:16px}.copy-area h1,[data-stage="1"] .copy-area h1,[data-stage="2"] .copy-area h1,[data-stage="3"] .copy-area h1,[data-stage="4"] .copy-area h1{grid-column:1 / -1;grid-row:auto;font-size:clamp(38px,10.9vw,54px);letter-spacing:-2px;line-height:1.15;margin-bottom:17px}.outline-word{display:inline-block}.intro{grid-column:1;font-size:11px;line-height:1.85;margin:0}.live-caption{grid-column:2;margin:0}.live-caption p{font-size:11px;line-height:1.85}.choice-group{margin-top:15px}.choice{min-height:39px}.instrument-wrap{margin-top:7px}.instrument{aspect-ratio:800 / 640}.coordinate-top{top:5px}.coordinate-bottom{bottom:8px}.device-label{bottom:3%}.stage-number{display:none}.control-row{gap:17px}.primary-action{font-size:11px;min-height:50px}.secondary-action{min-height:39px;line-height:1.5}.footer .text-button{min-height:40px}.header-actions{gap:12px}.about-button{min-height:36px;min-width:36px}.header-actions .text-button{min-height:40px}.tension-control label{line-height:1.8}.range-ends{font-size:10px}.stage-step{min-height:44px}.footer{padding-bottom:2px}.final-stats{margin-top:17px;padding-top:0}}
+@media(max-width:370px){.edition{display:none}.intro,.live-caption p{font-size:10px}.copy-area h1,[data-stage="1"] .copy-area h1,[data-stage="2"] .copy-area h1,[data-stage="3"] .copy-area h1,[data-stage="4"] .copy-area h1{font-size:37px}.action-block .primary-action{font-size:10px}}
+
+</style>
+  <script type="module">const STORAGE_KEY = "astra-unfinished-form-v1";
+const STAGE_NAMES = ["未定", "牽引", "反證", "重組", "留痕"];
+const clamp = (n, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
+function initialState() {
+  return { version: 1, stage: 0, reached: 0, direction: "clarity", tension: 0.36, anchor: { x: 0.5, y: 0.5 }, traces: [], scars: [], alternate: false, reverseFound: false, revision: 0 };
+}
+function transition(state, action) {
+  switch (action.type) {
+    case "DIRECTION":
+      return { ...state, direction: action.value === "wonder" ? "wonder" : "clarity", revision: state.revision + 1 };
+    case "TENSION":
+      return { ...state, tension: clamp(action.value), revision: state.revision + 1 };
+    case "ANCHOR": {
+      const point = { x: clamp(action.x), y: clamp(action.y) };
+      return { ...state, anchor: point, traces: [...state.traces, { ...point, stage: state.stage }].slice(-160), revision: state.revision + 1 };
+    }
+    case "SCAR":
+      if (state.stage !== 2 || state.scars.length >= 7) return state;
+      return { ...state, scars: [...state.scars, { x: clamp(action.x, 0.15, 0.85), y: clamp(action.y, 0.15, 0.85), angle: Number.isFinite(action.angle) ? action.angle : -0.7 }], revision: state.revision + 1 };
+    case "NEXT": {
+      if (state.stage === 2 && state.scars.length === 0) return state;
+      const stage = Math.min(4, state.stage + 1);
+      return { ...state, stage, reached: Math.max(stage, state.reached), revision: state.revision + 1 };
+    }
+    case "VISIT":
+      if (!Number.isInteger(action.stage) || action.stage < 0 || action.stage > state.reached) return state;
+      return { ...state, stage: action.stage, revision: state.revision + 1 };
+    case "ALTERNATE":
+      return { ...state, alternate: !state.alternate, reverseFound: true, revision: state.revision + 1 };
+    case "DISCOVER":
+      return { ...state, reverseFound: true };
+    case "RESET":
+      return initialState();
+    default: return state;
+  }
+}
+function fingerprint(state) {
+  const input = JSON.stringify([state.direction, state.tension, state.anchor, state.traces, state.scars, state.alternate]);
+  let hash = 2166136261;
+  for (const char of input) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619);
+  return (hash >>> 0).toString(16).slice(-4).toUpperCase();
+}
+function restore(raw) {
+  try {
+    const data = JSON.parse(raw);
+    if (!data || data.version !== 1) return initialState();
+    const state = initialState();
+    const finite = (v) => typeof v === "number" && Number.isFinite(v);
+    state.stage = Number.isInteger(data.stage) ? clamp(data.stage, 0, 4) : 0;
+    state.reached = Math.max(state.stage, Number.isInteger(data.reached) ? clamp(data.reached, 0, 4) : 0);
+    state.direction = data.direction === "wonder" ? "wonder" : "clarity";
+    state.tension = finite(data.tension) ? clamp(data.tension) : 0.36;
+    if (data.anchor && finite(data.anchor.x) && finite(data.anchor.y)) state.anchor = { x: clamp(data.anchor.x), y: clamp(data.anchor.y) };
+    const points = (list, max) => Array.isArray(list) ? list.filter(p => p && finite(p.x) && finite(p.y)).slice(-max).map(p => ({ x: clamp(p.x), y: clamp(p.y), stage: Number.isInteger(p.stage) ? clamp(p.stage, 0, 4) : 0, angle: finite(p.angle) ? p.angle : -0.7 })) : [];
+    state.traces = points(data.traces, 160).map(({ x, y, stage }) => ({ x, y, stage }));
+    state.scars = points(data.scars, 7).map(({ x, y, angle }) => ({ x, y, angle }));
+    state.alternate = data.alternate === true;
+    state.reverseFound = data.reverseFound === true;
+    if (state.reached >= 3 && !state.scars.length) return initialState();
+    return state;
+  } catch { return initialState(); }
+}
+
+
+const THREADS = 96;
+const SAMPLES = 88;
+const TAU = Math.PI * 2;
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function project(x, y, z, tilt = 0.88, turn = -0.48) {
+  const yy = y * Math.cos(tilt) - z * Math.sin(tilt);
+  const zz = y * Math.sin(tilt) + z * Math.cos(tilt);
+  const xx = x * Math.cos(turn) - yy * Math.sin(turn);
+  const y2 = x * Math.sin(turn) + yy * Math.cos(turn);
+  const perspective = 950 / (950 - zz);
+  return [400 + xx * perspective, 329 + y2 * perspective];
+}
+
+function pointAt(stage, i, t, state, phase = 0, reverse = false) {
+  const q = i / (THREADS - 1);
+  const v = (q - 0.5) * 2;
+  const phi = q * TAU;
+  const open = state.tension;
+  const wild = state.direction === "wonder" ? 1 : 0;
+  const ax = (state.anchor.x - 0.5) * 2;
+  const ay = (state.anchor.y - 0.5) * 2;
+  const memory = state.traces.length ? state.traces.reduce((s, p) => s + p.x - p.y, 0) / state.traces.length : 0;
+  const other = reverse !== state.alternate ? -1 : 1;
+  let x, y;
+  if (stage === 0) {
+    const u = t * TAU;
+    const twist = phi + u * (wild ? 2 : 1);
+    const radius = 195 + 14 * open * Math.sin(u * 3 + phase);
+    const tube = 70 + 14 * open;
+    const xx = (radius + tube * Math.cos(twist)) * Math.cos(u);
+    const yy = (radius + tube * Math.cos(twist)) * Math.sin(u);
+    const zz = tube * Math.sin(twist) * other;
+    [x, y] = project(xx, yy, zz, 0.87 + ay * .25, -.56 + ax * .17);
+  } else if (stage === 1) {
+    const neck = .075 + .925 * Math.pow(Math.abs(t * 2 - 1), 1.45);
+    x = 45 + 710 * t + Math.sin(t * Math.PI) * ax * 45;
+    y = 325 + v * 247 * neck + Math.sin(t * Math.PI) * (ay * 100 + v * Math.sin(phi + t * 4) * open * 50) + Math.sin(t * TAU) * wild * 30;
+    y += Math.sin(t * Math.PI) * 25 * other;
+  } else if (stage === 2) {
+    if (!state.scars.length) {
+      const neck = .075 + .925 * Math.pow(Math.abs(t * 2 - 1), 1.45);
+      return [45 + 710 * t, 325 + v * 247 * neck + Math.sin(t * Math.PI) * (ay * 100 + v * Math.sin(phi + t * 4) * open * 50)];
+    }
+    const left = t < .5;
+    const local = left ? t * 2 : (t - .5) * 2;
+    const scar = state.scars[0] || { x: .5, y: .5 };
+    const gap = 42 + state.scars.length * 10;
+    x = left ? 48 + (310 - gap) * local : 442 + gap + (310 - gap) * local;
+    const spread = left ? Math.pow(local, 2) : Math.pow(1 - local, 2);
+    y = 330 + v * (200 - spread * 80) + (left ? -1 : 1) * spread * (66 + q * 43) * other;
+    x += spread * Math.sin(phi * 2 + open * 3) * 26;
+    y += Math.sin(t * TAU) * ay * 50 + (scar.y - .5) * spread * 80;
+  } else if (stage === 3) {
+    const bank = i < THREADS / 2;
+    const n = bank ? i / 47 : (i - 48) / 47;
+    const ribbon = (n - .5) * 220;
+    const u = t * Math.PI * 1.72 - Math.PI * .86;
+    const curl = Math.sin(u) * 280;
+    const depth = Math.cos(u) * (135 + ribbon * .5);
+    x = 400 + curl * (bank ? .77 : -.77) + ribbon * .53;
+    y = 340 + curl * .64 + depth * (bank ? -1 : 1) * other + ribbon * .25;
+    x += Math.sin(t * TAU) * (ax * 40 + memory * 70) + open * 18 * Math.sin(n * 10 + t * 4);
+    y += Math.sin(t * Math.PI) * ay * 40 + wild * Math.cos(n * Math.PI) * 24;
+    for (const scar of state.scars) {
+      const center = .2 + scar.x * .6;
+      const force = Math.exp(-Math.pow((t - center) / .15, 2)) * (22 + scar.y * 26);
+      x += Math.cos(scar.angle) * force * (bank ? 1 : -1);
+      y += Math.sin(scar.angle) * force * other;
+    }
+  } else {
+    const warp = i < 48;
+    const lane = ((i % 48) / 47 - .5) * 2;
+    const travel = t * 2 - 1;
+    const px = warp ? lane : travel;
+    const py = warp ? travel : lane;
+    const envelope = Math.sin(t * Math.PI);
+    const wave = Math.sin(px * 3.3 + memory * 2) * Math.cos(py * 2.4);
+    x = 400 + px * 302 + Math.sin(py * 3 + lane * 1.3) * (18 + open * 38) * envelope;
+    y = 327 + py * 195 + wave * (45 + open * 42) * other + ax * 19 * envelope;
+    if (state.traces.length) {
+      const trace = state.traces[Math.min(state.traces.length - 1, Math.floor(t * state.traces.length))];
+      x += (trace.x - .5) * 13 * envelope;
+      y += (trace.y - .5) * 17 * envelope;
+    }
+    x += ay * 25 * Math.cos(lane * Math.PI) + wild * Math.sin(py * 6) * 14;
+    for (const scar of state.scars) {
+      const sx = 180 + scar.x * 440;
+      const sy = 187 + scar.y * 280;
+      const dx = x - sx, dy = y - sy;
+      const dist = Math.hypot(dx, dy);
+      const influence = Math.exp(-dist * dist / 7500) * 32;
+      x += (dx / Math.max(18, dist)) * influence + Math.cos(scar.angle) * influence * .5;
+      y += (dy / Math.max(18, dist)) * influence + Math.sin(scar.angle) * influence * .5;
+    }
+    y += memory * 35 * Math.sin(t * Math.PI) * other;
+  }
+  if (stage === 3) { x = 400 + (x - 400) * .94; y = 330 + (y - 330) * .84; }
+  return [x, y];
+}
+
+function pathFrom(points, stage, cut = false) {
+  let d = "";
+  for (let j = 0; j < points.length; j++) {
+    const p = points[j];
+    const move = j === 0 || (stage === 2 && j === Math.floor(points.length / 2)) || (cut && j === Math.floor(points.length * .53));
+    d += `${move ? "M" : "L"}${p[0].toFixed(2)},${p[1].toFixed(2)}`;
+  }
+  return d;
+}
+
+function createFrame(stage, state, phase = 0, reverse = false) {
+  return Array.from({ length: THREADS }, (_, i) => Array.from({ length: SAMPLES + 1 }, (_, j) => pointAt(stage, i, j / SAMPLES, state, phase, reverse)));
+}
+function blendFrame(from, to, t) {
+  return to.map((line, i) => line.map((p, j) => [lerp(from[i][j][0], p[0], t), lerp(from[i][j][1], p[1], t)]));
+}
+function springProgress(t) {
+  return t >= 1 ? 1 : 1 - Math.exp(-7.5 * t) * Math.cos(8.8 * t);
+}
+function normalizedPoint(event, element) {
+  const rect = element.getBoundingClientRect();
+  return { x: clamp((event.clientX - rect.left) / rect.width), y: clamp((event.clientY - rect.top) / rect.height) };
+}
+
+
+const NS = "http://www.w3.org/2000/svg";
+const make = (name, attrs = {}) => {
+  const node = document.createElementNS(NS, name);
+  for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
+  return node;
+};
+class LoomRenderer {
+  constructor(svg, reduced = false) {
+    this.svg = svg;
+    this.reduced = reduced;
+    this.paths = [];
+    this.ghosts = [];
+    this.humans = [];
+    this.frame = null;
+    this.raf = 0;
+    this.reverse = false;
+    this.state = null;
+    for (let i = 0; i < THREADS; i++) {
+      const path = make("path", { opacity: i % 7 === 0 ? ".96" : ".73" });
+      svg.querySelector("#threads").append(path);
+      this.paths.push(path);
+      if (i % 8 === 0) {
+        const ghost = make("path", { opacity: ".75" });
+        svg.querySelector("#ghost-threads").append(ghost);
+        this.ghosts.push({ i, path: ghost });
+      }
+      if (i % 16 === 0) {
+        const human = make("path");
+        svg.querySelector("#human-threads").append(human);
+        this.humans.push({ i, path: human });
+      }
+    }
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) cancelAnimationFrame(this.raf);
+      else if (this.state) this.update(this.state, { immediate: true });
+    });
+  }
+  update(state, { immediate = false, reverse = this.reverse } = {}) {
+    cancelAnimationFrame(this.raf);
+    this.reverse = reverse;
+    const oldStage = this.state?.stage;
+    this.state = state;
+    const target = createFrame(state.stage, state, 0, reverse);
+    const from = this.frame || target;
+    this.annotate(state);
+    this.paintGhosts(state);
+    if (immediate || this.reduced || document.hidden) {
+      this.frame = target;
+      this.paint(target, state);
+      return;
+    }
+    const duration = oldStage === state.stage ? 600 : state.stage === 3 ? 2200 : state.stage === 4 ? 1750 : 1500;
+    const isReweaving = oldStage !== state.stage && state.stage === 3;
+    const start = performance.now();
+    let last = 0;
+    const tick = now => {
+      if (now - last < 30 && now - start < duration) { this.raf = requestAnimationFrame(tick); return; }
+      last = now;
+      const t = Math.min(1, (now - start) / duration);
+      if (t === 1) this.frame = target;
+      else if (isReweaving) {
+        this.frame = target.map((thread, i) => {
+          const delay = i < 48 ? .06 + (i / 48) * .09 : .20 + ((i - 48) / 48) * .10;
+          const local = Math.max(0, Math.min(1, (t - delay) / (1 - delay)));
+          const progress = springProgress(local);
+          const retreat = t < delay ? Math.sin(t / delay * Math.PI) * (i < 48 ? -12 : 12) : 0;
+          return thread.map((p, j) => [from[i][j][0] + (p[0] - from[i][j][0]) * progress + retreat, from[i][j][1] + (p[1] - from[i][j][1]) * progress]);
+        });
+      } else this.frame = blendFrame(from, target, springProgress(t));
+      this.paint(this.frame, state);
+      if (t < 1) this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+  paint(frame, state) {
+    const pathStage = state.stage === 2 && !state.scars.length ? 1 : state.stage;
+    frame.forEach((points, i) => this.paths[i].setAttribute("d", pathFrom(points, pathStage)));
+    const showHuman = state.traces.length > 0 || state.stage > 0;
+    for (const { i, path } of this.humans) {
+      path.setAttribute("d", pathFrom(frame[i], pathStage));
+      path.setAttribute("opacity", showHuman ? "1" : "0");
+    }
+    const cursor = this.svg.querySelector("#cursor-guide");
+    const cx = state.stage === 0 ? 400 : 400 + (state.anchor.x - .5) * 280;
+    const cy = state.stage === 0 ? 330 : 330 + (state.anchor.y - .5) * 250;
+    cursor.setAttribute("transform", `translate(${cx} ${cy})`);
+    cursor.setAttribute("opacity", state.stage === 4 ? "0" : "1");
+  }
+  paintGhosts(state) {
+    const alternate = createFrame(state.stage, state, .6, !this.reverse);
+    for (const { i, path } of this.ghosts) path.setAttribute("d", pathFrom(alternate[i], state.stage));
+    this.svg.querySelector("#ghost-threads").setAttribute("opacity", this.reverse ? "1" : "0");
+  }
+  annotate(state) {
+    const layer = this.svg.querySelector("#annotation-layer");
+    const scars = this.svg.querySelector("#scar-layer");
+    layer.replaceChildren();
+    scars.replaceChildren();
+    const line = (d, stroke = "#b5afc0", dash = "") => layer.append(make("path", { d, fill: "none", stroke, "stroke-width": ".8", "stroke-dasharray": dash }));
+    const text = (content, x, y, color = "#7e748f", size = 9, anchor = "start") => {
+      const el = make("text", { x, y, fill: color, "font-size": size, "font-family": "Consolas, monospace", "letter-spacing": "1", "text-anchor": anchor });
+      el.textContent = content; layer.append(el);
+    };
+    if (state.stage === 0) {
+      line("M606 143H682V111"); text("POSSIBILITY / 096", 688, 107, "#645975", 8, "end");
+      line("M130 473H84V501"); text("NO SINGLE ANSWER", 84, 522, "#645975", 8);
+      text("∞", 400, 341, "#5e49a0", 29, "middle");
+    } else if (state.stage === 1) {
+      line("M64 62H736M64 56V68M736 56V68"); text("A DIRECTION IS A CONSTRAINT", 400, 49, "#756985", 9, "middle");
+      text("MANY", 65, 565); text("ONE INTENTION", 735, 565, "#756985", 9, "end");
+      line("M400 395V472H500"); text("YOUR INPUT", 509, 476, "#5838f5", 10);
+    } else if (state.stage === 2) {
+      const center = 400 + ((state.scars[0]?.x ?? .5) - .5) * 100;
+      line(`M${center} 72V580`, "#8c8139", "2 6");
+      text(state.scars.length ? "CERTAINTY, INTERRUPTED." : "A BEAUTIFUL ANSWER CAN BE WRONG.", 400, 57, "#7a6c31", 9, "middle");
+      text("BEFORE", 168, 595); text("WHAT IF?", 635, 595, "#7a6c31", 9, "end");
+      state.scars.forEach((scar, i) => {
+        const x = 360 + scar.x * 80;
+        const y = 190 + scar.y * 230 + i * 10;
+        scars.append(make("path", { d: `M${x - 70} ${y - 70}L${x + 70} ${y + 70}`, stroke: "#cde761", "stroke-width": "4" }));
+        scars.append(make("circle", { cx: x, cy: y, r: "5", fill: "#f5f5f0", stroke: "#68632c", "stroke-width": "1" }));
+        text(`0${i + 1}`, x + 16, y - 8, "#74652c", 9);
+      });
+    } else if (state.stage === 3) {
+      text("NOT RESTORED. RECOMPOSED.", 400, 66, "#5838f5", 10, "middle");
+      line("M76 191V479M69 191H83M69 479H83");
+      text("YOU", 700, 145, "#5e772c", 11); text("ME", 88, 535, "#5838f5", 11);
+      text(`${state.scars.length} FRACTURE${state.scars.length > 1 ? "S" : ""} / HELD IN THE WEAVE`, 400, 597, "#756985", 9, "middle");
+      state.scars.forEach((scar, i) => {
+        const x = 260 + scar.x * 260; const y = 220 + scar.y * 210;
+        scars.append(make("circle", { cx: x, cy: y, r: 9 + i * 2, stroke: "#829c30", "stroke-width": "1", "stroke-dasharray": "2 3" }));
+        scars.append(make("path", { d: `M${x - 4} ${y}H${x + 4}M${x} ${y - 4}V${y + 4}`, stroke: "#607921", "stroke-width": "1" }));
+      });
+    } else {
+      layer.append(make("rect", { x: 43, y: 75, width: 709, height: 518, fill: "none", stroke: "#bbb4c8", "stroke-width": "1" }));
+      line("M43 102H752M43 555H752");
+      text(`FORM / ${fingerprint(state)}`, 60, 93, "#5838f5", 10); text("AN UNFINISHED EDITION", 734, 93, "#756985", 8, "end");
+      text(`${String(state.traces.length).padStart(2, "0")} HUMAN TRACES`, 61, 578, "#756985", 9);
+      text(`${state.direction === "wonder" ? "WONDER" : "CLARITY"} / ${Math.round(state.tension * 100)}% OPEN`, 734, 578, "#756985", 9, "end");
+      state.scars.forEach((scar, i) => {
+        const x = 180 + scar.x * 440; const y = 187 + scar.y * 280;
+        scars.append(make("path", { d: `M${x - 8} ${y - 9}L${x + 8} ${y + 9}M${x - 8} ${y + 9}L${x + 8} ${y - 9}`, stroke: "#7c942f", "stroke-width": "1.3" }));
+        text(`R${i + 1}`, x + 11, y + 4, "#6a7c2f", 8);
+      });
+    }
+  }
+  export(state) {
+    const svg = this.svg.cloneNode(true);
+    svg.setAttribute("xmlns", NS);
+    svg.setAttribute("width", "1600");
+    svg.setAttribute("height", "1480");
+    svg.setAttribute("viewBox", "0 -70 800 740");
+    svg.querySelector("#cursor-guide")?.remove();
+    svg.querySelector("#ghost-threads")?.remove();
+    const background = make("rect", { x: 0, y: -70, width: 800, height: 740, fill: "#f5f5f0" });
+    svg.insertBefore(background, svg.firstChild);
+    const title = make("text", { x: 45, y: -22, fill: "#242031", "font-family": "Arial, sans-serif", "font-size": "23", "font-weight": "700" });
+    title.textContent = `ASTRA / AN UNFINISHED FORM / ${fingerprint(state)}`;
+    const note = make("text", { x: 45, y: 637, fill: "#716b7b", "font-family": "Consolas, monospace", "font-size": "9" });
+    note.textContent = `OPENAI GPT-6-ASTRA + YOU / ${state.traces.length} TRACES / ${state.scars.length} FRACTURES`;
+    const metadata = make("metadata"); metadata.textContent = JSON.stringify(state);
+    svg.append(title, note, metadata);
+    return new XMLSerializer().serializeToString(svg);
+  }
+}
+
+
+
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+const copy = [
+  { eyebrow: "AN UNFINISHED FORM", headline: "答案，<br>還不是<span class=\"outline-word\">答案。</span>", intro: "我不是一個裝滿答案的容器。<br>我是可能性與你的選擇，交會的地方。", caption: "把一個方向交給我。<br>看看它，會長成什麼。", hint: "拖曳線束，改變可能性", device: "等待一個方向", instruction: "不必知道答案。<br>先選擇你願意往哪裡走。", action: "讓它開始成形", secondary: "先看看，我如何運作" },
+  { eyebrow: "01 / AN INTENTION TAKES SHAPE", headline: "你的方向，<br>我的<span class=\"outline-word\">張力。</span>", intro: "限制不是創造的反面。<br>它讓無限的可能，第一次有了形狀。", caption: "向上拉，或偏離中心。<br>我的結構，會記得你的手。", hint: "拖曳中心，牽引線束", device: "正在收斂 / 保留偏移", instruction: "拖曳，留下至少一次介入。<br>也可以用方向鍵改變走向。", action: "但，這真的成立嗎？", secondary: "換一個探索方向" },
+  { eyebrow: "02 / DOUBT IS PART OF THE WORK", headline: "漂亮。<br>然後<span class=\"outline-word\">呢？</span>", intro: "一個看起來成立的答案，<br>也值得被認真地懷疑。", caption: "劃過線束，提出一個反例。<br>我不會把裂縫藏起來。", hint: "劃開結構 / 或在此按 X", device: "等待反例 / 不急著確定", instruction: "在裝置上劃出一道裂縫。<br>或按下按鈕，提出反例。", action: "提出一個反例", secondary: "再看一次，裂開之前" },
+  { eyebrow: "03 / A DIFFERENT KIND OF TOGETHER", headline: "不是修復。<br>是重新<span class=\"outline-word\">理解。</span>", intro: "我保留你的方向，也保留那個反例。<br>新的答案，必須容得下兩者。", caption: "紫色是我的提議，綠色是你的介入。<br>我們不必抹平彼此的差異。", hint: "拖曳，調整兩種力量的交會", device: "跨越裂縫 / 重新編織", instruction: "調整意外程度，試試另一種平衡。<br>每道裂縫，都已成為接點。", action: "留下這一次的形狀", secondary: "試試另一種織法" },
+  { eyebrow: "04 / THIS FORM BELONGS TO THIS ENCOUNTER", headline: "這不是我。<br>是這一次<span class=\"outline-word\">我們。</span>", intro: "同一座裝置，不同的人，會留下不同的織譜。<br>答案可以帶走，可能性不必結束。", caption: "你留下的偏移、猶豫與反例，<br>都還在這裡。", hint: "你的織譜 / 可以保存，也可以再改寫", device: "已展開 / 仍可改寫", instruction: "保存的是你親手形成的 SVG 織譜。<br>不是預先準備好的紀念品。", action: "保存這份織譜", secondary: "帶著記憶，重新編織" }
+];
+
+let storageAvailable = true;
+let raw = null;
+try { raw = localStorage.getItem(STORAGE_KEY); } catch { storageAvailable = false; }
+let state = raw ? restore(raw) : initialState();
+const motionMedia = matchMedia("(prefers-reduced-motion: reduce)");
+let reduced = motionMedia.matches;
+let reverse = false;
+let holdTimer = 0;
+let pointer = null;
+let lastMove = 0;
+let toastTimer = 0;
+const renderer = new LoomRenderer($("#loom"), reduced);
+const app = $("#app");
+const instrument = $("#instrument");
+
+function notify(message) {
+  clearTimeout(toastTimer);
+  $("#toast").textContent = message;
+  $("#toast").hidden = false;
+  toastTimer = setTimeout(() => { $("#toast").hidden = true; }, 3800);
+}
+function save() {
+  if (!storageAvailable) return;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { storageAvailable = false; }
+}
+function dispatch(action, options) {
+  const previous = state;
+  state = transition(state, action);
+  if (state === previous) return;
+  save();
+  render(options);
+}
+function render(options = {}) {
+  const c = copy[state.stage];
+  app.dataset.stage = state.stage;
+  app.classList.toggle("backside", reverse);
+  app.classList.toggle("reduced-motion", reduced);
+  $("#eyebrow").textContent = c.eyebrow;
+  $("#headline").innerHTML = c.headline;
+  $("#intro").innerHTML = c.intro;
+  $("#caption").innerHTML = c.caption;
+  $("#interaction-hint").textContent = c.hint;
+  $("#device-state").textContent = c.device;
+  $("#instruction").innerHTML = c.instruction;
+  $("#stage-name").textContent = STAGE_NAMES[state.stage];
+  $("#stage-code").textContent = String(state.stage + 1).padStart(3, "0");
+  $("#stage-number").textContent = String(state.stage + 1).padStart(2, "0");
+  $("#action-label").textContent = state.stage === 2 && state.scars.length ? "帶著裂縫，重新編織" : c.action;
+  $("#secondary-action").innerHTML = `${c.secondary} <span aria-hidden="true">↗</span>`;
+  $("#tension").value = Math.round(state.tension * 100);
+  $("#tension-value").textContent = `${Math.round(state.tension * 100)}%`;
+  $("#coordinate-value").textContent = `X ${state.anchor.x.toFixed(2)} / Y ${state.anchor.y.toFixed(2)}`;
+  $("#trace-total").textContent = String(state.traces.length).padStart(2, "0");
+  $("#direction-options").hidden = state.stage !== 0;
+  $("#final-stats").hidden = state.stage !== 4;
+  $("#trace-count").textContent = String(state.traces.length).padStart(2, "0");
+  $("#cut-count").textContent = String(state.scars.length).padStart(2, "0");
+  $("#form-id").textContent = fingerprint(state);
+  $("#motion-toggle").setAttribute("aria-pressed", String(reduced));
+  $("#motion-toggle span").textContent = reduced ? "減少" : "開";
+  $("#reverse-label").hidden = !reverse;
+  for (const button of $$("[data-direction]")) {
+    const active = button.dataset.direction === state.direction;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  }
+  for (const button of $$("[data-step]")) {
+    const n = Number(button.dataset.step);
+    button.disabled = n > state.reached;
+    button.classList.toggle("current", n === state.stage);
+    if (n === state.stage) button.setAttribute("aria-current", "step");
+    else button.removeAttribute("aria-current");
+  }
+  renderer.reduced = reduced;
+  renderer.update(state, { ...options, reverse });
+  if (options.announce) $("#live-status").textContent = `${state.stage + 1} / 5：${STAGE_NAMES[state.stage]}。${c.hint}`;
+}
+
+function download() {
+  renderer.update(state, { immediate: true });
+  const content = renderer.export(state);
+  const url = URL.createObjectURL(new Blob([content], { type: "image/svg+xml;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = `astra-form-${fingerprint(state)}.svg`;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  notify("織譜已交給瀏覽器下載。它保留了這次操作的完整形狀。");
+}
+function next() {
+  if (state.stage === 4) { download(); return; }
+  if (state.stage === 2 && !state.scars.length) {
+    dispatch({ type: "SCAR", x: state.anchor.x, y: state.anchor.y, angle: -.7 });
+    notify("反例已留下裂縫。接下來，不是復原，而是重新編織。");
+    return;
+  }
+  if (state.stage === 0 && !state.traces.length) dispatch({ type: "ANCHOR", x: state.anchor.x, y: state.anchor.y });
+  dispatch({ type: "NEXT" }, { announce: true });
+}
+$("#primary-action").addEventListener("click", next);
+$$("[data-direction]").forEach(button => button.addEventListener("click", () => dispatch({ type: "DIRECTION", value: button.dataset.direction })));
+$$("[data-step]").forEach(button => button.addEventListener("click", () => dispatch({ type: "VISIT", stage: Number(button.dataset.step) }, { announce: true })));
+$("#tension").addEventListener("input", event => dispatch({ type: "TENSION", value: Number(event.target.value) / 100 }));
+$("#secondary-action").addEventListener("click", () => {
+  if (state.stage === 0) $("#about-dialog").showModal();
+  else if (state.stage === 1) dispatch({ type: "DIRECTION", value: state.direction === "clarity" ? "wonder" : "clarity" });
+  else if (state.stage === 2) dispatch({ type: "VISIT", stage: 1 }, { announce: true });
+  else if (state.stage === 3) dispatch({ type: "ALTERNATE" });
+  else dispatch({ type: "VISIT", stage: 3 }, { announce: true });
+});
+$("#reset").addEventListener("click", () => {
+  reverse = false;
+  dispatch({ type: "RESET" }, { announce: true });
+  notify("新的起點。上一輪的形狀不再保留。");
+});
+$("#motion-toggle").addEventListener("click", () => { reduced = !reduced; render({ immediate: true }); });
+motionMedia.addEventListener("change", e => { reduced = e.matches; render({ immediate: true }); });
+$("#about-open").addEventListener("click", () => $("#about-dialog").showModal());
+for (const id of ["#about-close", "#about-start"]) $(id).addEventListener("click", () => $("#about-dialog").close());
+$("#about-dialog").addEventListener("click", event => { if (event.target === event.currentTarget) { const r = event.currentTarget.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) event.currentTarget.close(); } });
+
+function setReverse(value) {
+  if (reverse === value) return;
+  reverse = value;
+  if (value && !state.reverseFound) {
+    state = transition(state, { type: "DISCOVER" });
+    save();
+    notify("你找到了背面。被捨棄的可能性沒有消失；放開後回到這一次的選擇。");
+  }
+  render();
+}
+instrument.addEventListener("pointerdown", event => {
+  if (event.button !== 0) return;
+  instrument.focus({ preventScroll: true });
+  instrument.setPointerCapture(event.pointerId);
+  const p = normalizedPoint(event, instrument);
+  pointer = { id: event.pointerId, start: p, last: p, moved: false, scarMade: false, held: false };
+  clearTimeout(holdTimer);
+  if (Math.hypot(p.x - .5, p.y - .5) < .15) {
+    holdTimer = setTimeout(() => { if (pointer && !pointer.moved) { pointer.held = true; setReverse(true); } }, 650);
+  }
+});
+instrument.addEventListener("pointermove", event => {
+  if (!pointer || pointer.id !== event.pointerId) return;
+  const p = normalizedPoint(event, instrument);
+  const distance = Math.hypot(p.x - pointer.start.x, p.y - pointer.start.y);
+  if (distance > .012) { pointer.moved = true; clearTimeout(holdTimer); }
+  if (pointer.held) return;
+  if (performance.now() - lastMove < 55) return;
+  lastMove = performance.now();
+  if (state.stage === 2) {
+    if (distance > .065 && !pointer.scarMade) {
+      const x = (p.x + pointer.start.x) / 2; const y = (p.y + pointer.start.y) / 2;
+      dispatch({ type: "SCAR", x, y, angle: Math.atan2(p.y - pointer.start.y, p.x - pointer.start.x) });
+      pointer.scarMade = true;
+      $("#live-status").textContent = `已留下 ${state.scars.length} 道裂縫。`;
+    }
+  } else dispatch({ type: "ANCHOR", x: p.x, y: p.y });
+  pointer.last = p;
+});
+function pointerEnd(event) {
+  if (!pointer || pointer.id !== event.pointerId) return;
+  clearTimeout(holdTimer);
+  const cancelled = event.type === "pointercancel" || event.type === "lostpointercapture";
+  if (!cancelled && !pointer.held && !pointer.moved && state.stage !== 2) {
+    dispatch({ type: "ANCHOR", ...pointer.last });
+  }
+  pointer = null;
+  setReverse(false);
+  if (instrument.hasPointerCapture(event.pointerId)) instrument.releasePointerCapture(event.pointerId);
+}
+for (const name of ["pointerup", "pointercancel", "lostpointercapture"]) instrument.addEventListener(name, pointerEnd);
+instrument.addEventListener("keydown", event => {
+  const step = event.shiftKey ? .09 : .035;
+  const directions = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
+  if (directions[event.key]) {
+    event.preventDefault(); const [dx, dy] = directions[event.key];
+    dispatch({ type: "ANCHOR", x: state.anchor.x + dx, y: state.anchor.y + dy });
+  } else if (event.key.toLowerCase() === "x" && state.stage === 2) {
+    event.preventDefault(); if (!event.repeat) dispatch({ type: "SCAR", ...state.anchor, angle: -.7 });
+  } else if (event.code === "Space") {
+    event.preventDefault(); if (!event.repeat) setReverse(true);
+  } else if (event.key === "Escape") setReverse(false);
+});
+instrument.addEventListener("keyup", event => { if (event.code === "Space") { event.preventDefault(); setReverse(false); } });
+instrument.addEventListener("blur", () => { clearTimeout(holdTimer); setReverse(false); });
+window.addEventListener("blur", () => { clearTimeout(holdTimer); pointer = null; setReverse(false); });
+render({ immediate: true });
+if (state.stage > 0) notify(`已接回上一次的形狀：${STAGE_NAMES[state.stage]}。`);
+</script>
+</head>
+<body>
+  <a href="#instrument" class="skip-link">跳至互動裝置</a>
+  <div class="app" data-stage="0" id="app">
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="ASTRA 回到入口">ASTRA<span class="wordmark-spark" aria-hidden="true">✳</span></a>
+      <div class="edition"><span>OPENAI GPT-6-ASTRA</span><span>一個關於「成為」的互動實驗</span></div>
+      <div class="header-actions">
+        <button id="motion-toggle" class="text-button" aria-pressed="false">動態 <span>開</span></button>
+        <button id="about-open" class="about-button" aria-label="關於作品與操作方式">?</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="exhibition" aria-label="未定之形互動展覽">
+        <div class="exhibit-index"><span class="status-dot"></span><span>LIVE FORM / <span id="stage-code">001</span></span><span class="index-rule"></span><span id="stage-name">未定</span></div>
+        <div class="copy-area">
+          <p class="eyebrow" id="eyebrow">AN UNFINISHED FORM</p>
+          <h1 id="headline">答案，<br>還不是<span class="outline-word">答案。</span></h1>
+          <p class="intro" id="intro">我不是一個裝滿答案的容器。<br>我是可能性與你的選擇，交會的地方。</p>
+          <div class="live-caption"><span class="caption-cross" aria-hidden="true">+</span><p id="caption">把一個方向交給我。<br>看看它，會長成什麼。</p></div>
+          <div class="choice-group" aria-label="選擇探索方向" id="direction-options">
+            <button class="choice active" data-direction="clarity" aria-pressed="true"><span>01</span> 尋找秩序</button>
+            <button class="choice" data-direction="wonder" aria-pressed="false"><span>02</span> 製造意外</button>
+          </div>
+          <div class="final-stats" id="final-stats" hidden>
+            <div><strong id="trace-count">00</strong><span>次人的介入</span></div>
+            <div><strong id="cut-count">00</strong><span>道留下的裂縫</span></div>
+            <div><strong id="form-id">0000</strong><span>獨一份織譜</span></div>
+          </div>
+        </div>
+
+        <div class="instrument-wrap">
+          <div class="coordinate coordinate-top"><span>FIELD OF POSSIBILITIES</span><span id="coordinate-value">X 0.50 / Y 0.50</span></div>
+          <div class="instrument" id="instrument" tabindex="0" role="application" aria-label="線束裝置。拖曳改變張力；方向鍵亦可操作。反證階段拖曳可劃開結構，或按 X。按住空白鍵查看另一種織法。" aria-describedby="interaction-hint">
+            <svg id="loom" viewBox="0 0 800 660" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="thread-ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#241544"/><stop offset="0.35" stop-color="#5137fa"/><stop offset="0.7" stop-color="#7656ff"/><stop offset="1" stop-color="#aea4ed"/></linearGradient>
+                <linearGradient id="human-ink" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#3b6747"/><stop offset="0.5" stop-color="#7d9e0d"/><stop offset="1" stop-color="#cce84c"/></linearGradient>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#28233c" stroke-opacity="0.065" stroke-width="0.6"/></pattern>
+                <radialGradient id="surface"><stop stop-color="#e1dcff" stop-opacity="0.38"/><stop offset="1" stop-color="#f5f5f0" stop-opacity="0"/></radialGradient>
+              </defs>
+              <rect x="0" y="0" width="800" height="660" fill="url(#surface)"/>
+              <g id="registration" fill="none" stroke="#cbc8cf" stroke-width="0.7">
+                <path d="M400 24V636M38 330H762" stroke-dasharray="2 7"/>
+                <circle cx="400" cy="330" r="253" stroke-dasharray="2 9"/>
+                <path d="M46 68H63M54 60V77M737 68H754M746 60V77M46 592H63M54 584V601M737 592H754M746 584V601"/>
+              </g>
+              <g id="ghost-threads" fill="none" stroke="#8c849e" stroke-width="0.65" stroke-dasharray="3 6"></g>
+              <g id="thread-shadow" fill="none" stroke="#d9d2ee" stroke-width="1.8" opacity="0.5" transform="translate(0 8)"></g>
+              <g id="threads" fill="none" stroke="url(#thread-ink)" stroke-width="1.05" stroke-linecap="round"></g>
+              <g id="human-threads" fill="none" stroke="url(#human-ink)" stroke-width="1.6"></g>
+              <g id="scar-layer" fill="none"></g>
+              <g id="annotation-layer"></g>
+              <g id="cursor-guide" transform="translate(400 330)" pointer-events="none">
+                <circle r="25" fill="#f5f5f0" fill-opacity="0.94" stroke="#2a243d" stroke-width="0.65"/>
+                <path d="M-8 0H8M0-8V8" fill="none" stroke="#5137fa" stroke-width="1.2"/>
+                <circle r="3" fill="#cce84c" stroke="#302446" stroke-width="0.7"/>
+              </g>
+            </svg>
+            <div class="device-label" id="device-label"><span class="mini-cross">↗</span><span id="interaction-hint">拖曳線束，改變可能性</span><span class="key-hint">↔ ↕</span></div>
+            <div class="reverse-label" id="reverse-label" hidden>背面 / 被捨棄的可能性仍在這裡</div>
+          </div>
+          <div class="coordinate coordinate-bottom"><span><span class="tiny-square"></span> <span id="device-state">等待一個方向</span></span><span>96 THREADS · <span id="trace-total">00</span> TRACES</span></div>
+        </div>
+
+        <aside class="side-note"><span>不是內部推理紀錄，是一件協作的隱喻。</span><span>EST. 2026 — EXPERIMENT 01</span></aside>
+        <div class="stage-number" aria-hidden="true" id="stage-number">01</div>
+      </section>
+
+      <section class="console" aria-label="體驗控制台">
+        <nav class="stage-nav" aria-label="體驗階段">
+          <button data-step="0" class="stage-step current" aria-current="step"><span>01</span><b>未定</b><i></i></button>
+          <button data-step="1" class="stage-step" disabled><span>02</span><b>牽引</b><i></i></button>
+          <button data-step="2" class="stage-step" disabled><span>03</span><b>反證</b><i></i></button>
+          <button data-step="3" class="stage-step" disabled><span>04</span><b>重組</b><i></i></button>
+          <button data-step="4" class="stage-step" disabled><span>05</span><b>留痕</b><i></i></button>
+        </nav>
+        <div class="control-row">
+          <div class="tension-control"><label for="tension">容許多少意外 <output id="tension-value" for="tension">36%</output></label><input id="tension" type="range" min="0" max="100" value="36" aria-label="容許意外的程度"><div class="range-ends"><span>收斂</span><span>開放</span></div></div>
+          <div class="instruction-block"><span id="instruction-index">YOUR INPUT MATTERS</span><p id="instruction">不必知道答案。<br>先選擇你願意往哪裡走。</p></div>
+          <div class="action-block"><button id="primary-action" class="primary-action"><span id="action-label">讓它開始成形</span><span class="action-arrow" aria-hidden="true">↗</span></button><button id="secondary-action" class="secondary-action">先看看，我如何運作 <span>↗</span></button></div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer"><span>未定之形 <i>/</i> AN UNFINISHED FORM</span><span>不是獨白。是你我之間，正在發生的事。</span><button id="reset" class="text-button">重新開始 ↺</button></footer>
+    <div id="live-status" class="sr-only" role="status" aria-live="polite"></div>
+    <div class="toast" id="toast" role="status" hidden></div>
+  </div>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <button class="dialog-close" id="about-close" aria-label="關閉說明">×</button>
+    <p class="eyebrow">A NOTE FROM THE MAKER</p><h2 id="about-title">答案不是終點。<br>共同形成，才是。</h2>
+    <p>這件作品由 OpenAI GPT-6-Astra 創作。它把理解、限制、反證與協作轉譯成一座線束裝置；不是模型內部運算的即時視覺化。</p>
+    <dl><dt>拖曳 / 方向鍵</dt><dd>改變線束的張力與走向；每一次操作會留下痕跡。</dd><dt>反證階段</dt><dd>用拖曳劃開結構，或在裝置上按 X。裂縫會進入最後的織譜。</dd><dt>意外程度</dt><dd>越開放，線束越偏離規則；你可以隨時調整。</dd><dt>減少動態</dt><dd>可從右上角切換。每次操作直接呈現完成構圖，保留全部功能。</dd></dl>
+    <p class="privacy-note">無遠端 API、無追蹤、無上傳。進度只存在此瀏覽器；重新開始會清除本作品的進度。</p>
+    <button id="about-start" class="primary-action">回到裝置 <span>↗</span></button>
+  </dialog>
+  <noscript><div class="no-script">此互動作品需要 JavaScript 才能操作。請開啟 JavaScript 後重新載入。</div></noscript>
+</body>
+</html>
