@@ -1,0 +1,83 @@
+[
+  {
+    "label": "entry",
+    "result": "\"true\""
+  },
+  {
+    "label": "keyboard leaves a trace",
+    "result": "\"true\""
+  },
+  {
+    "label": "fracture waits for deliberate input",
+    "result": "\"true\""
+  },
+  {
+    "label": "counterexample changes state",
+    "result": "\"true\""
+  },
+  {
+    "label": "complete journey",
+    "result": "\"true\""
+  },
+  {
+    "label": "refresh restores completion",
+    "result": "\"true\""
+  },
+  {
+    "label": "refresh retains fingerprint",
+    "result": "8EAD"
+  },
+  {
+    "label": "SVG download",
+    "result": "download #primary-action C:\\Users\\Typelin_Station\\WorkBuddy AI\\2026-09-12-21-34-17\\gpt-6-astra\\outputs\\sample-weave.svg: ✗ Download was canceled\n",
+    "passed": false
+  },
+  {
+    "label": "hidden layer discoverable by keyboard",
+    "result": "\"true\""
+  },
+  {
+    "label": "mobile no horizontal overflow",
+    "result": "\"true\""
+  },
+  {
+    "label": "short viewport controls accessible",
+    "result": "\"true\""
+  },
+  {
+    "label": "reduced motion uses complete static states",
+    "result": "\"true\""
+  },
+  {
+    "label": "reduced motion journey reaches completion",
+    "result": "\"true\""
+  },
+  {
+    "label": "narrow completion layout fits",
+    "result": "\"true\""
+  },
+  {
+    "label": "portable HTML runs without a server",
+    "result": "\"true\""
+  },
+  {
+    "label": "portable HTML interaction",
+    "result": "\"true\""
+  },
+  {
+    "label": "help dialog works",
+    "result": "\"true\""
+  },
+  {
+    "label": "dialog closes with Escape",
+    "result": "\"true\""
+  },
+  {
+    "label": "console",
+    "result": ""
+  },
+  {
+    "label": "page errors",
+    "result": "none"
+  }
+]

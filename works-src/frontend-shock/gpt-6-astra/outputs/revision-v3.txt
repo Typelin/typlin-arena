@@ -1,0 +1,11 @@
+未定之形 03 / 第三次相遇
+
+工作目錄：D:\\Antigravity_proj\\important\\typlin-arena\\works-src\\frontend-shock\\gpt-6-astra
+
+這一版補上 WorkBuddy 第三版沒寫完的三件事：
+1. 三種可切換故事：做作品、寫故事、學習。切換會重新開始一輪。
+2. 向右展開後可點選一條分支；選中後線束與提案一起變。
+3. 手機「專心閱讀」收起頂端裝置高度，保留提案文字。
+
+操作
+開 outputs\\unfinished-form-v3.html。先往下捲；想插手時左右拖、點分支、或切換情境。

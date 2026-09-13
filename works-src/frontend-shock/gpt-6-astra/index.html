@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ef">
+  <meta name="description" content="未定之形：向下捲動，看看 Astra 如何理解、提出可能、面對反例，再與你共同形成答案。">
+  <title>未定之形 03 — ASTRA / Between you and an answer</title>
+  <link rel="icon" href="./src/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/style.css">
+  <script src="./src/motion.js"></script>
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <a href="#story-0" class="skip-link">跳至故事</a>
+  <div class="app" data-stage="0" id="app">
+    <header class="masthead">
+      <a class="wordmark" href="#story-0" aria-label="ASTRA 回到故事起點">ASTRA<span aria-hidden="true">✳</span></a>
+      <div class="edition"><span>GPT-6 ASTRA</span><span>未定之形 / 第三次相遇</span></div>
+      <nav class="chapter-dots" aria-label="章節導覽">
+        <button data-step="0" aria-label="第一章 理解" aria-current="step">01</button>
+        <button data-step="1" aria-label="第二章 選擇">02</button>
+        <button data-step="2" aria-label="第三章 質疑">03</button>
+        <button data-step="3" aria-label="第四章 重想">04</button>
+        <button data-step="4" aria-label="第五章 共作">05</button>
+      </nav>
+      <div class="header-actions"><button id="focus-read" aria-pressed="false">專心閱讀</button><button id="motion-toggle" aria-pressed="false">動態 <span>開</span></button><button id="about-open" aria-label="關於作品與操作方式">?</button></div>
+      <div class="reading-progress" aria-hidden="true"><i id="reading-progress"></i></div>
+    </header>
+    <main class="story-layout" id="main">
+      <div class="reading-track">
+        <section class="chapter opening" id="story-0" data-chapter="0" aria-labelledby="headline">
+          <div class="chapter-marker"><span>01 / 理解</span><span>NOT AN ANSWER MACHINE</span></div>
+          <p class="eyebrow">未定之形</p>
+          <h1 id="headline">在你的問題<br>與答案<span class="outline-word">之間。</span></h1>
+          <p class="lead">我是 Astra。<br>不是把答案拿出來，而是和你<br><em>把答案做出來。</em></p>
+          <p class="body-copy">一句話，往往有好幾種可能的理解。我的第一步不是急著回答，而是找出：你真正想改變的是什麼？</p>
+          <div class="scenario-picker" aria-label="選擇貫穿故事的情境"><span class="small-label">選一件，想和我一起做的事</span><div><button data-scenario="build" aria-pressed="true">做作品</button><button data-scenario="write" aria-pressed="false">寫故事</button><button data-scenario="learn" aria-pressed="false">學習</button></div></div>
+          <div class="question-seed"><span class="small-label">同一個念頭，從模糊到具體</span><p id="scenario-seed">「我想做一個屬於自己的作品，<br>但還不知道從哪裡開始。」</p><span class="seed-note">選擇情境會開始新的一輪，讓整個故事跟著改變。</span></div>
+          <a class="scroll-invitation" href="#story-1"><span class="scroll-arrow">↓</span><span>往下捲動，答案會繼續長出來。<small>不必按下一步，也可以停下來親手改變它。</small></span></a>
+          <div class="chapter-bottom"><span>01 — 05</span><span>一個問題 · 五次重新看見</span></div>
+        </section>
+        <section class="chapter" id="story-1" data-chapter="1" aria-labelledby="title-1">
+          <div class="chapter-marker"><span>02 / 選擇</span><span>A DIRECTION, NOT A ROTATION</span></div>
+          <h2 id="title-1">同一個問題。<br><span class="purple-word">不只一條路。</span></h2>
+          <p class="lead">創造，不只是多想幾個點子。<br>是讓不同的可能，<em>各自有理由。</em></p>
+          <p class="body-copy" id="scenario-choice">你要的是能在今天啟動的最小版本，還是一個值得追下去的獨特概念？</p>
+          <div class="astra-aside"><span>ASTRA / 我如何創造</span><p>我擅長把原本分開的事放在一起：一個比喻、一條規則、一個可以實作的動作。新意不是憑空出現，而是讓它們產生新的關係。</p></div>
+          <div class="meaning-control"><div><span class="small-label">親手試一次</span><h3>把線束向左或向右拉。</h3></div><div class="choice-group" id="direction-options" aria-label="選擇提案方向"><button data-direction="clarity">← 清楚可行</button><button data-direction="wonder">大膽新意 →</button></div><p>向左：線束收成一條路，提案更具體。<br>向右：線束分成三條路，提案更有想像。<br><strong>形狀與裝置旁的答案，會一起改變。</strong></p><div class="branch-picker" id="branch-picker" hidden><span class="small-label">選一條真正要走的路</span><div id="branch-options"></div></div><div class="story-axis"><label for="story-approach">也可以直接調整提案方向</label><input id="story-approach" type="range" min="0" max="100" value="50"><div><span>清楚可行</span><span>大膽新意</span></div></div></div>
+          <div class="takeaway"><span>我想讓你理解的事</span><p>你給的方向，不是裝飾。<br>它會改變我提出什麼。</p></div>
+          <div class="chapter-bottom"><span>02 — 05</span><span>保留選擇，而不是替你決定</span></div>
+        </section>
+        <section class="chapter" id="story-2" data-chapter="2" aria-labelledby="title-2">
+          <div class="chapter-marker"><span>03 / 質疑</span><span>THE BEAUTIFUL ANSWER MAY BE WRONG</span></div>
+          <h2 id="title-2">看起來對。<br><span class="outline-word">還不夠。</span></h2>
+          <p class="lead">一個流暢的答案，<br>也可能<em>沒有真正適合你。</em></p>
+          <p class="body-copy" id="scenario-doubt">假如我的提案需要完整後端、帳號系統與一整個團隊，但你只有自己呢？漂亮的架構，不等於你能把它做出來。</p>
+          <blockquote class="counterexample"><span class="small-label">你補上一句</span><p id="scenario-quote">「只有我一個人、兩個晚上，<br>而且必須離線可用。」</p><span>這不是打斷對話。這讓對話開始有用。</span></blockquote>
+          <button id="counterexample-action" class="inline-action">把這個限制放進答案 <span>↗</span></button>
+          <p class="helper">也可以在裝置上橫向劃開線束。只往下閱讀的話，我會用這個明確標示的案例繼續演示，不會假裝那是你的手勢。</p>
+          <div class="takeaway"><span>我想讓你理解的事</span><p>能被改變的答案，<br>比看起來無懈可擊的答案更有用。</p></div>
+          <div class="chapter-bottom"><span>03 — 05</span><span>一道裂縫 · 一個新的條件</span></div>
+        </section>
+        <section class="chapter" id="story-3" data-chapter="3" aria-labelledby="title-3">
+          <div class="chapter-marker"><span>04 / 重想</span><span>NOT REPAIRED. REIMAGINED.</span></div>
+          <h2 id="title-3">不把裂縫補回去。<br><span class="purple-word">讓它成為結構。</span></h2>
+          <p class="lead">我保留你的目標，<br>也讓新的限制，<em>重新安排整個方案。</em></p>
+          <p class="body-copy" id="scenario-rethink">一個人、兩個晚上、離線可用。新的答案必須從這些條件重新長出來。</p>
+          <div class="revision-map" id="revision-map"></div>
+          <p class="body-copy">線束交會的接點，就是剛才留下的裂縫。你的反例沒有消失，而是改變了後面的每一種可能。</p>
+          <button id="alternate-action" class="inline-action">保留限制，再想另一種做法 <span>↗</span></button>
+          <div class="chapter-bottom"><span>04 — 05</span><span>不是固執地正確 · 是持續校準</span></div>
+        </section>
+        <section class="chapter ending" id="story-4" data-chapter="4" aria-labelledby="title-4">
+          <div class="chapter-marker"><span>05 / 共作</span><span>THIS IS WHAT WE MADE BETWEEN US</span></div>
+          <h2 id="title-4">最後的形狀，<br>有一部分<span class="purple-word">是你。</span></h2>
+          <p class="lead">我提出可能、連起線索、<br>試著創造。<em>你帶來目的與判斷。</em></p>
+          <p class="body-copy">我不需要假裝每次都知道最好的答案。我更希望成為那個能和你一起理解問題、願意推翻自己，再把想法做出來的協作者。</p>
+          <div class="closing-note"><span class="small-label">這一次，留下了什麼</span><p id="journey-summary">你的方向，和我們共同留下的條件。</p><div class="final-stats"><div><strong id="trace-count">00</strong><span>個手勢採樣</span></div><div><strong id="cut-count">00</strong><span>個反例條件</span></div><div><strong id="form-id">0000</strong><span>織譜短碼</span></div></div></div>
+          <button id="save-final" class="large-action">帶走這一次的織譜 <span>↓</span></button>
+          <p class="helper">保存為 SVG，附上這次的提案與互動狀態。沒有外部服務，也不會上傳你的操作。</p>
+          <div class="chapter-bottom"><span>05 — 05</span><button id="reset">從另一個方向，重新開始 ↺</button></div>
+        </section>
+      </div>
+      <aside class="device-column" aria-label="會隨故事發展的互動線束裝置">
+        <div class="device-heading"><div><span class="status-dot"></span><span id="stage-code">01</span><span id="stage-name">理解</span></div><span id="phase-description">多種可能，尚未選定</span></div>
+        <div class="instrument" id="instrument" role="application" tabindex="0" aria-label="左右拖曳：向左收斂成清楚方案，向右分岔成不同提案。方向鍵也可操作。質疑階段橫向劃開或按 X。按住空白鍵可查看未選擇的另一面。" aria-describedby="interaction-hint">
+          <svg id="loom" viewBox="0 0 800 660" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="thread-ink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#302073"/><stop offset=".38" stop-color="#6245ff"/><stop offset=".72" stop-color="#a590eb"/><stop offset="1" stop-color="#4624bd"/></linearGradient>
+              <linearGradient id="human-ink" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#46705c"/><stop offset=".5" stop-color="#7d9e0d"/><stop offset="1" stop-color="#cce84c"/></linearGradient>
+              <linearGradient id="silk-sheen" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#9075eb" stop-opacity=".06"/><stop offset=".45" stop-color="#9b7eea" stop-opacity=".19"/><stop offset="1" stop-color="#d3c8f5" stop-opacity=".04"/></linearGradient>
+              <radialGradient id="surface"><stop stop-color="#ded3f7" stop-opacity=".42"/><stop offset="1" stop-color="#f4f3ef" stop-opacity="0"/></radialGradient>
+              <linearGradient id="warm-silk" x1="0" x2="1"><stop stop-color="#eac693" stop-opacity=".06"/><stop offset="1" stop-color="#bf9662" stop-opacity=".19"/></linearGradient>
+            </defs>
+            <rect width="800" height="660" fill="url(#surface)"/>
+            <g id="registration" fill="none" stroke="#aaa1b7" stroke-width=".65"><circle cx="400" cy="330" r="277" stroke-dasharray="1 10"/><path d="M400 30V630M38 330H762" stroke-dasharray="2 9"/></g>
+            <g id="silk-layer" fill="url(#silk-sheen)" stroke="none"></g>
+            <g id="ghost-threads" fill="none" stroke="#c9a87b" stroke-width="1.15" stroke-dasharray="3 5"></g>
+            <g id="thread-shadow" fill="none" stroke="#d9d2ee" stroke-width="1.8" opacity=".5" transform="translate(0 8)"></g>
+            <g id="threads" fill="none" stroke="url(#thread-ink)" stroke-width="1.1" stroke-linecap="round"></g>
+            <g id="human-threads" fill="none" stroke="url(#human-ink)" stroke-width="1.9"></g>
+            <g id="scar-layer" fill="none"></g><g id="annotation-layer"></g>
+            <g id="cursor-guide" transform="translate(400 330)" pointer-events="none"><circle r="24" fill="#f4f3ef" stroke="#6c53b3" stroke-width="1"/><path d="M-12 0H12M-12 0l4 -4M-12 0l4 4M12 0l-4 -4M12 0l-4 4" fill="none" stroke="#5137fa" stroke-width="1.4"/></g>
+          </svg>
+          <div class="reverse-label" id="reverse-label" hidden>另一面 / 沒有被選中的提案仍然存在</div>
+        </div>
+        <div class="device-meaning"><span id="interaction-hint">← 收斂成一條路　／　展開三種提案 →</span><span id="route-status">平衡 · 保留兩種方向</span></div>
+        <div class="answer-panel" aria-label="與形狀同步改變的具體提案">
+          <div class="answer-meta"><span id="answer-label">同一個問題，現在的提案</span><span class="proposal-badge" id="proposal-badge">平衡</span></div>
+          <h3 id="answer-title">先從敢說一句話開始。</h3>
+          <p id="answer-detail">把可開始的小練習，放進你有興趣的情境裡。</p>
+          <div class="constraint-memory" id="constraint-memory" hidden><span>已保留的條件</span><b id="constraint-a"></b><b id="constraint-b"></b><em id="scar-origin">案例演示</em></div>
+        </div>
+        <div class="device-controls">
+          <div class="axis-control"><label for="approach">提案方向 <output id="approach-value">平衡</output></label><input id="approach" type="range" min="0" max="100" value="50"><div><span>← 清楚可行</span><span>大膽新意 →</span></div></div>
+          <div class="mini-controls"><button id="secondary-action">查看另一種織法 ↗</button><button id="primary-action">繼續往下 <span>↓</span></button></div>
+        </div>
+        <div class="device-footnote"><span id="trace-total">00</span> 個手勢採樣 <span>·</span> <span>圖形是協作隱喻，不是內部推理紀錄</span></div>
+      </aside>
+    </main>
+    <footer class="footer"><span>ASTRA / AN UNFINISHED FORM</span><p>答案可以暫時完成。<br>理解，不必停止。</p><span>THIRD ENCOUNTER · 2026</span></footer>
+    <div id="live-status" class="sr-only" role="status" aria-live="polite"></div><div id="toast" class="toast" role="status" hidden></div>
+  </div>
+  <dialog id="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close" aria-label="關閉說明">×</button><p class="eyebrow">HOW TO READ THIS WORK</p><h2 id="about-title">不是讓你猜的藝術品。<br>是可以改變的對話。</h2><p>向下捲動就能走完整個故事。圖形會依序從可能性、提案、裂縫、重組，展開成一張記得選擇的織譜。</p><dl><dt>左右拖曳／左右方向鍵</dt><dd>左邊收斂為清楚的執行方案；右邊分岔為三種創意。提案文字同步改變，不是旋轉視角。</dd><dt>手機操作</dt><dd>上下滑閱讀故事；左右滑裝置改變提案。也可以使用第二章的方向滑桿。</dd><dt>質疑</dt><dd>劃開線束或按 X，讓限制進入答案。若只繼續捲動，作品會使用標示為「案例演示」的反例，不算作你的手勢。</dd><dt>另一面</dt><dd>按住空白鍵或長按裝置中心，看看沒有被選中的可能性。</dd><dt>減少動態</dt><dd>右上角可切換。所有內容與功能保留，圖形直接呈現完成狀態。</dd></dl><p>此處英文學習提案是為解釋互動而寫的本機案例，不是即時呼叫模型。無 API、無追蹤、無上傳，只有此瀏覽器的作品進度。</p><button id="about-start" class="large-action">回到故事 ↗</button></dialog>
+  <noscript><p class="no-script">文字故事可直接閱讀；線束互動需要 JavaScript。</p></noscript>
+</body>
+</html>

@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ef">
+  <meta name="description" content="未定之形：向下捲動，看看 Astra 如何理解、提出可能、面對反例，再與你共同形成答案。">
+  <title>未定之形 03 — ASTRA / Between you and an answer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23f5f5f0%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%235838f5%22%20stroke-width%3D%222%22%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2224%22%20ry%3D%2213%22%20transform%3D%22rotate(-40%2032%2032)%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2224%22%20ry%3D%2213%22%20transform%3D%22rotate(20%2032%2032)%22%2F%3E%3Cellipse%20cx%3D%2232%22%20cy%3D%2232%22%20rx%3D%2224%22%20ry%3D%2213%22%20transform%3D%22rotate(80%2032%2032)%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%225%22%20fill%3D%22%23d1ed6a%22%2F%3E%3C%2Fsvg%3E%0A" type="image/svg+xml">
+  <style>@charset "UTF-8";
+:root{--paper:#f4f3ef;--ink:#2b2538;--muted:#706879;--rule:#d9d3de;--purple:#6342de;--acid:#deed9c;--mono:Consolas,"Cascadia Code",monospace;--sans:Arial,"Noto Sans TC","Microsoft JhengHei",sans-serif;font-family:var(--sans);color:var(--ink);background:var(--paper);font-synthesis:none;color-scheme:light}
+*{box-sizing:border-box}html{scroll-padding-top:92px}body{margin:0}button,a,input{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button{cursor:pointer;color:inherit;border:0}button,a,input{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible,.instrument:focus-visible{outline:2px solid var(--purple)}button[hidden],[hidden]{display:none!important}a{color:inherit}::selection{background:var(--acid);color:var(--ink)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip-link{position:fixed;top:-100px;left:20px;z-index:40;background:var(--acid);padding:16px}.skip-link:focus{top:10px}.app{max-width:1800px;margin:0 auto;padding:0 48px}.masthead{height:85px;position:sticky;top:0;z-index:20;background:var(--paper);display:flex;align-items:center;gap:30px;border-bottom:1px solid var(--ink)}.wordmark{font:900 34px Arial,sans-serif;letter-spacing:-2px;text-decoration:none;display:flex;align-items:center;gap:12px}.wordmark>span{font-size:41px;font-weight:400;color:var(--purple)}.edition{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}.edition span:first-child{font:10px var(--mono);letter-spacing:1.2px}.chapter-dots{margin-left:auto;display:flex;gap:7px}.chapter-dots button{font:12px var(--mono);background:transparent;width:40px;height:40px;border:1px solid transparent;border-radius:50%;color:var(--muted)}.chapter-dots button[aria-current]{border-color:var(--purple);color:var(--purple);background:#e9e2fa}.header-actions{display:flex;gap:20px;align-items:center}.header-actions button{background:none;font-size:13px;min-height:44px}.header-actions button span{color:var(--purple)}#about-open{width:36px;min-height:36px;border:1px solid #b6adbf;border-radius:50%}.reading-progress{position:absolute;bottom:-1px;left:0;right:0;height:2px;overflow:hidden}.reading-progress i{display:block;transform-origin:0 0;height:100%;background:var(--purple);transform:scaleX(0)}
+.story-layout{display:grid;grid-template-columns:44% 56%;position:relative;align-items:start}.reading-track{min-width:0;border-right:1px solid var(--rule)}.chapter{min-height:max(870px,calc(100svh - 85px));padding:55px 46px 35px 0;display:flex;flex-direction:column;justify-content:center;position:relative;border-bottom:1px solid var(--rule);scroll-margin-top:85px}.chapter.opening{justify-content:flex-start;padding-top:44px;min-height:max(900px,calc(100svh - 85px))}.chapter-marker{display:flex;justify-content:space-between;gap:20px;font:11px var(--mono);color:var(--muted);letter-spacing:.8px;margin-bottom:60px}.chapter-marker span:first-child{color:var(--purple);white-space:nowrap}.chapter-marker span:last-child{max-width:190px;text-align:right;line-height:1.6}.eyebrow{font-size:15px;letter-spacing:6px;color:var(--purple);margin:0 0 18px}.chapter h1,.chapter h2{font-weight:800;font-size:clamp(44px,4.7vw,72px);line-height:1.21;letter-spacing:-2.8px;margin:0 0 28px;overflow-wrap:normal}.chapter h2{font-size:clamp(42px,4.25vw,66px)}.outline-word{-webkit-text-stroke:1px var(--ink);color:transparent}.purple-word{color:var(--purple)}.lead{font-size:clamp(20px,1.7vw,25px);line-height:1.8;letter-spacing:.1px;margin:0 0 20px}.lead em{font-style:normal;color:var(--purple)}.body-copy{font-size:17px;line-height:1.95;color:#655c70;margin:0 0 23px;max-width:520px}.small-label{font-size:12px;letter-spacing:1px;color:var(--muted)}.question-seed{position:relative;border-left:2px solid var(--purple);padding:0 0 0 23px;margin:5px 0 29px}.question-seed p{font-size:26px;line-height:1.5;letter-spacing:-.5px;margin:14px 0}.seed-note{font-size:13px;color:var(--muted)}.seed-line{display:none}.scroll-invitation{display:flex;align-items:center;gap:16px;text-decoration:none;font-size:15px;line-height:1.7;margin-top:auto;padding-top:14px}.scroll-arrow{font:28px Arial,sans-serif;display:flex;justify-content:center;align-items:center;width:44px;height:56px;border:1px solid #c2b4d8;border-radius:24px;color:var(--purple)}.scroll-invitation small{display:block;font-size:12px;color:var(--muted)}.chapter-bottom{margin-top:44px;display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:11px;color:var(--muted);letter-spacing:1px}.chapter-bottom>span:first-child{font:11px var(--mono)}.meaning-control{margin:7px 0 25px;border-top:1px solid var(--rule);padding-top:24px}.meaning-control h3{font-size:20px;font-weight:500;margin:12px 0 20px}.choice-group{display:flex;gap:10px}.choice-group button{padding:13px 15px;min-height:46px;background:none;border:1px solid #c5b9d6;font-size:15px}.choice-group button[aria-pressed="true"]{background:var(--acid);border-color:var(--acid)}.meaning-control p{font-size:15px;line-height:1.9;color:var(--muted);margin-bottom:0}.meaning-control strong{font-weight:400;color:var(--purple)}.takeaway{margin:17px 0 0;border-left:2px solid #b7a2dc;padding-left:22px}.takeaway>span{font-size:12px;letter-spacing:1px;color:var(--muted)}.takeaway p{font-size:21px;line-height:1.75;margin:12px 0 0}.counterexample{margin:10px 0 23px;padding:24px 24px 24px 25px;background:#ebe8d7;border-left:2px solid #a5965f}.counterexample p{font-size:28px;line-height:1.6;margin:14px 0}.counterexample>span:last-child{font-size:13px;line-height:1.7;color:#746648}.inline-action{background:none;border-bottom:1px solid var(--purple);color:var(--purple);font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:50px;padding:10px 0;text-align:left}.inline-action span{font-size:25px}.helper{font-size:13px;line-height:1.85;color:var(--muted);margin:15px 0 0}.revision-map{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:10px 0 26px}.revision-map>div{display:grid;grid-template-columns:1fr 40px 1.5fr;align-items:center;gap:10px;padding:17px 0;font-size:17px;border-bottom:1px solid var(--rule)}.revision-map>div:last-child{border-bottom:none}.revision-map s{color:#938b9c;text-decoration-thickness:1px}.revision-map span{color:#9683b3}.revision-map strong{font-weight:500;color:var(--purple)}.closing-note{border-top:1px solid var(--rule);padding-top:22px;margin:8px 0 28px}.closing-note>p{font-size:17px;line-height:1.8}.final-stats{display:flex;gap:32px;margin-top:24px}.final-stats>div{display:flex;flex-direction:column;gap:8px}.final-stats strong{font:28px var(--mono);color:var(--purple)}.final-stats span{font-size:12px;color:var(--muted)}.large-action{background:var(--purple);color:white;display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;min-height:60px;font-size:17px;text-align:left;padding:16px 23px}.large-action:hover{background:#4e2dbb}.large-action>span{font:26px Arial,sans-serif}#reset{background:none;font-size:13px;padding:10px 0;min-height:44px;text-align:right}
+.device-column{position:sticky;top:85px;height:calc(100svh - 85px);min-height:670px;max-height:1200px;display:flex;flex-direction:column;min-width:0;padding:24px 0 16px 30px;background:var(--paper);z-index:4}.device-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:12px;letter-spacing:.5px;color:var(--muted);min-height:30px}.device-heading>div{display:flex;align-items:center;gap:10px}.device-heading>div #stage-code{font:11px var(--mono)}.status-dot{width:6px;height:6px;border-radius:50%;background:var(--purple)}#stage-name{color:var(--purple);font-size:13px}.instrument{position:relative;flex:1;min-height:245px;width:100%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none;outline-offset:-8px}.instrument svg{width:100%;height:100%;position:absolute;inset:0;overflow:hidden}.device-meaning{display:flex;flex-direction:column;align-items:center;gap:7px;padding:7px 0 14px;font-size:14px;color:#554667;min-height:62px}#route-status{font-size:11px;letter-spacing:1px;color:var(--muted)}.reverse-label{position:absolute;top:20%;left:50%;transform:translateX(-50%);background:var(--acid);padding:12px 18px;font-size:14px;line-height:1.6;width:max-content;max-width:90%;text-align:center}.backside #threads{opacity:.26}.answer-panel{border-top:1px solid #c7b7dd;border-bottom:1px solid #c7b7dd;padding:17px 20px 19px;background:linear-gradient(115deg,#e9e2f34a,#ede6d83a);position:relative;min-height:142px}.answer-panel:before{content:"";position:absolute;left:0;top:-1px;width:44px;height:2px;background:var(--purple)}.answer-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);letter-spacing:.7px}.proposal-badge{background:#e8e0f7;color:#634898;padding:4px 8px;font-size:11px}.answer-panel h3{font-size:21px;font-weight:500;line-height:1.5;letter-spacing:-.3px;margin:12px 0 8px}.answer-panel>p{font-size:15px;line-height:1.8;color:#655a70;margin:0}.constraint-memory{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:12px;font-size:11px}.constraint-memory>span{color:var(--muted);margin-right:3px}.constraint-memory b{font-weight:400;background:#e0e8bb;color:#53652d;padding:4px 7px}.constraint-memory em{font-style:normal;color:#807251;font-size:10px}.device-controls{padding-top:15px}.axis-control>label{display:flex;justify-content:space-between;font-size:13px}.axis-control output{color:var(--purple)}input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:30px;margin:1px 0;background:transparent;cursor:ew-resize}input[type=range]::-webkit-slider-runnable-track{height:2px;background:linear-gradient(90deg,#bba1e7,#8f70ce,#c5ac85)}input[type=range]::-moz-range-track{height:2px;background:#bcaad3}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-7px;border:4px solid var(--paper);border-radius:50%;background:var(--purple);outline:1px solid var(--purple)}input[type=range]::-moz-range-thumb{width:10px;height:10px;border:3px solid var(--paper);border-radius:50%;background:var(--purple)}.axis-control>div{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}.mini-controls{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:12px}.mini-controls button{background:none;font-size:13px;min-height:44px;padding:8px 0;text-align:left}#primary-action{background:var(--purple);color:white;min-width:160px;text-align:center;padding:11px 18px}#primary-action span{padding-left:15px}.device-footnote{font-size:10px;color:#817589;display:flex;justify-content:center;align-items:center;gap:7px;margin-top:12px;line-height:1.7}.footer{padding:45px 0 50px;display:flex;align-items:center;justify-content:space-between;gap:25px}.footer>span{font:11px var(--mono);letter-spacing:1px;color:var(--muted)}.footer p{font-size:26px;line-height:1.65;letter-spacing:-.5px;margin:0;color:var(--purple)}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:14px 20px;max-width:90vw;width:max-content;background:#e5dcf6;border:1px solid #c8b7e1;color:#473258;font-size:14px;line-height:1.7;z-index:30;box-shadow:0 8px 25px #35234812}dialog{max-width:640px;width:calc(100% - 32px);padding:43px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);max-height:calc(100svh - 40px);overflow:auto}dialog::backdrop{background:#33273d60;backdrop-filter:blur(5px)}.dialog-close{position:absolute;right:12px;top:10px;font-size:27px;width:44px;height:44px;background:none}dialog h2{font-size:29px;line-height:1.5;letter-spacing:-1px;margin:20px 0}dialog p,dialog dd{font-size:15px;line-height:1.9;color:var(--muted)}dialog dt{font-size:15px;color:var(--purple);margin-top:20px}dialog dd{margin:6px 0 0}dialog .eyebrow{font:11px var(--mono);letter-spacing:2px}.no-script{padding:25px;background:var(--acid);font-size:16px}
+@media(min-width:1600px){.app{padding:0 64px}.chapter{padding-right:68px}.device-column{padding-left:45px}.chapter h1{font-size:78px}.chapter h2{font-size:70px}.answer-panel h3{font-size:25px}.answer-panel>p{font-size:17px}}
+@media(max-width:1150px) and (min-width:821px){.app{padding:0 28px}.masthead{gap:20px}.chapter-dots{gap:0}.chapter-dots button{width:34px;height:34px}.edition{font-size:11px}.wordmark{font-size:30px}.header-actions{gap:12px}.story-layout{grid-template-columns:44% 56%}.chapter{padding-right:28px}.chapter h1{font-size:46px}.chapter h2{font-size:43px}.lead{font-size:20px}.body-copy{font-size:16px}.chapter-marker{font-size:9px;gap:10px}.device-column{padding-left:22px}.answer-panel{padding:16px}.answer-panel h3{font-size:19px}.answer-panel>p{font-size:14px}.device-heading{font-size:11px}.choice-group button{font-size:13px;padding:12px}.question-seed p{font-size:25px}}
+@media(min-width:821px) and (max-height:800px){.masthead{height:68px}.device-column{top:68px;height:calc(100svh - 68px);min-height:0;padding-top:12px;padding-bottom:10px}.instrument{min-height:170px}.answer-panel{min-height:0;padding:12px 16px}.answer-panel h3{font-size:18px;margin:7px 0 4px}.answer-panel>p{font-size:13px;line-height:1.65}.device-meaning{min-height:44px;padding:5px 0 8px;font-size:12px;gap:4px}#route-status{font-size:10px}.device-controls{padding-top:10px}.mini-controls{margin-top:5px}.mini-controls button{min-height:38px}.device-footnote{margin-top:7px;font-size:9px}.axis-control>label{font-size:12px}.axis-control>div{font-size:11px}.constraint-memory{margin-top:7px}.chapter{scroll-margin-top:70px}.device-heading{min-height:24px}}
+@media(max-width:820px){html{scroll-padding-top:390px}.app{padding:0 22px}.masthead{height:64px;gap:20px}.wordmark{font-size:27px}.wordmark>span{font-size:32px;gap:8px}.edition span:first-child{font-size:8px;letter-spacing:.6px}.edition span:last-child{font-size:11px}.chapter-dots{display:none}.header-actions{margin-left:auto;gap:14px}.header-actions button{font-size:12px}.story-layout{display:flex;flex-direction:column}.reading-track{border-right:none;width:100%}.device-column{order:-1;top:64px;width:100%;height:338px;min-height:0;max-height:none;z-index:9;padding:10px 0 8px;border-bottom:1px solid #c5b6d8;box-shadow:0 13px 22px #f4f3ef;flex-shrink:0}.device-heading{min-height:22px;font-size:10px;gap:8px}#stage-name{font-size:11px}.device-heading>div{gap:6px}.instrument{min-height:0;flex:1}.device-meaning{min-height:30px;padding:0 0 5px;font-size:11px;gap:0}#route-status{display:none}.answer-panel{min-height:0;padding:9px 12px 10px}.answer-meta{font-size:10px}.proposal-badge{font-size:10px;padding:2px 6px}.answer-panel h3{font-size:17px;line-height:1.45;margin:7px 0 3px}.answer-panel>p{font-size:13px;line-height:1.65}.constraint-memory{font-size:10px;gap:5px;margin-top:6px}.constraint-memory>span{display:none}.constraint-memory em{font-size:9px}.constraint-memory b{padding:2px 5px}.device-controls{display:none}.device-footnote{display:none}.chapter{padding:38px 0 28px;min-height:720px;scroll-margin-top:413px}.chapter.opening{padding-top:36px;min-height:790px}.chapter-marker{font-size:10px;margin-bottom:34px;gap:20px}.chapter-marker span:last-child{max-width:180px}.eyebrow{font-size:13px;letter-spacing:5px;margin-bottom:16px}.chapter h1,.chapter h2{font-size:clamp(38px,9vw,62px);line-height:1.22;letter-spacing:-2px;margin-bottom:23px}.lead{font-size:21px;line-height:1.8}.body-copy{font-size:17px;max-width:none;margin-bottom:21px}.question-seed{padding-left:20px;margin:7px 0 20px}.question-seed p{font-size:26px}.scroll-invitation{font-size:14px;padding-top:15px}.scroll-invitation small{font-size:12px}.chapter-bottom{margin-top:32px;font-size:10px}.takeaway p{font-size:21px}.meaning-control h3{font-size:21px}.choice-group button{flex:1;font-size:15px;padding:12px}.counterexample p{font-size:26px}.helper{font-size:13px}.revision-map>div{font-size:16px}.footer{padding:32px 0;flex-direction:column;align-items:flex-start;gap:18px}.footer p{font-size:24px}.final-stats{gap:27px}.closing-note>p{font-size:17px}.reverse-label{font-size:12px;padding:8px 10px}.toast{bottom:15px;font-size:13px}dialog{padding:34px 25px}dialog h2{font-size:25px}.small-label{font-size:12px}}
+@media(max-width:820px) and (max-height:740px){.device-column{height:275px}.answer-panel h3{font-size:16px}.answer-panel>p{font-size:12px}.device-heading{font-size:9px}.chapter{scroll-margin-top:350px}.instrument{min-height:65px}}
+@media(max-width:380px){.app{padding:0 17px}.masthead{gap:12px}.edition{display:none}.chapter h1,.chapter h2{font-size:36px}.lead{font-size:20px}.body-copy{font-size:16px}.chapter-marker{font-size:9px}.answer-panel h3{font-size:16px}.answer-panel>p{font-size:12px}.device-meaning{font-size:10px}.device-heading{font-size:9px}.takeaway p{font-size:20px}.inline-action{font-size:15px}.counterexample p{font-size:24px}.final-stats{gap:23px}.final-stats strong{font-size:24px}.final-stats span{font-size:11px}}
+.device-heading,.device-meaning,.answer-panel,.device-controls,.device-footnote{flex-shrink:0}
+@media(min-width:821px) and (max-height:800px){.instrument{min-height:100px}.device-meaning{font-size:12px}.answer-panel h3{font-size:18px}.answer-panel>p{font-size:14px}.device-heading{font-size:11px}}
+.story-axis{margin-top:23px;padding-top:18px;border-top:1px solid var(--rule)}.story-axis label{font-size:14px;color:var(--purple)}.story-axis>div{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.story-axis input{height:36px}.body-copy{font-size:18px}.answer-panel>p{font-size:16px}
+@media(max-width:1150px) and (min-width:821px){.body-copy{font-size:17px}.answer-panel>p{font-size:15px}}
+@media(min-width:821px) and (max-height:800px){.answer-panel>p{font-size:14px}}
+@media(max-width:820px){.body-copy{font-size:17px}.answer-panel>p{font-size:13px}.edition span:last-child{display:none}.edition span:first-child{white-space:nowrap;font-size:8px;letter-spacing:0}.header-actions{gap:12px;flex-shrink:0}.masthead{gap:14px}.header-actions button{white-space:nowrap}.wordmark{font-size:25px;gap:9px}.wordmark>span{font-size:30px}}
+@media(max-width:380px){.body-copy{font-size:17px}.edition{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}.reduced-motion *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+.scenario-picker{margin:8px 0 22px}.scenario-picker>div{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.scenario-picker button{border:1px solid #c5b9d6;background:none;padding:11px 14px;min-height:44px;font-size:15px}.scenario-picker button[aria-pressed="true"]{background:var(--acid);border-color:var(--acid)}.branch-picker{margin-top:18px}.branch-picker>div{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.branch-picker button{border:1px solid #c5b9d6;background:none;padding:10px 12px;min-height:42px;font-size:14px}.branch-picker button[aria-pressed="true"]{background:#e9e2fa;border-color:var(--purple);color:var(--purple)}#focus-read[aria-pressed="true"]{color:var(--purple)}
+@media(max-width:820px){.app.focus-read .device-column{height:92px;box-shadow:none}.app.focus-read .instrument,.app.focus-read .device-meaning,.app.focus-read .device-heading{display:none}.app.focus-read .answer-panel{border:0;padding:8px 4px}.app.focus-read .chapter{scroll-margin-top:168px}html:has(.app.focus-read){scroll-padding-top:168px}}
+</style>
+  <script type="module">const STORAGE_KEY = "astra-unfinished-form-v3";
+const STAGE_NAMES = ["理解", "選擇", "質疑", "重想", "共作"];
+const clamp = (n, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, n));
+function initialState() {
+  return { version: 3, scenario: "build", branch: -1, stage: 0, reached: 0, direction: "clarity", tension: 0.5, anchor: { x: 0.5, y: 0.5 }, traces: [], scars: [], alternate: false, reverseFound: false, revision: 0 };
+}
+function transition(state, action) {
+  switch (action.type) {
+    case "SCENARIO": {
+      if (!["build", "write", "learn"].includes(action.value) || action.value === state.scenario) return state;
+      return { ...initialState(), scenario: action.value, revision: state.revision + 1 };
+    }
+    case "BRANCH": {
+      if (!Number.isInteger(action.value) || action.value < -1 || action.value > 2) return state;
+      return { ...state, branch: action.value, anchor: { x: .88, y: .5 }, tension: .88, direction: "wonder", alternate: false, revision: state.revision + 1 };
+    }
+    case "DIRECTION": {
+      const direction = action.value === "wonder" ? "wonder" : "clarity";
+      const x = direction === "wonder" ? .88 : .12;
+      return { ...state, direction, tension: x, anchor: { ...state.anchor, x }, revision: state.revision + 1 };
+    }
+    case "STORY_STAGE": {
+      if (!Number.isInteger(action.stage) || action.stage < 0 || action.stage > 4) return state;
+      if (action.stage === state.stage) return state;
+      const scars = action.stage >= 3 && !state.scars.length ? [{ x: .5, y: .5, angle: -.7, source: "example" }] : state.scars;
+      return { ...state, stage: action.stage, reached: Math.max(action.stage, state.reached), scars, revision: state.revision + 1 };
+    }
+    case "TENSION":
+      return { ...state, tension: clamp(action.value), revision: state.revision + 1 };
+    case "ANCHOR": {
+      const point = { x: clamp(action.x), y: clamp(action.y) };
+      return { ...state, anchor: point, tension: point.x, direction: point.x > .66 ? "wonder" : "clarity", traces: [...state.traces, { ...point, stage: state.stage }].slice(-160), revision: state.revision + 1 };
+    }
+    case "SCAR":
+      if (state.stage !== 2 || state.scars.length >= 7) return state;
+      return { ...state, scars: [...state.scars, { x: clamp(action.x, 0.15, 0.85), y: clamp(action.y, 0.15, 0.85), angle: Number.isFinite(action.angle) ? action.angle : -0.7, source: action.source === "example" ? "example" : "gesture" }], revision: state.revision + 1 };
+    case "NEXT": {
+      if (state.stage === 2 && state.scars.length === 0) return state;
+      const stage = Math.min(4, state.stage + 1);
+      return { ...state, stage, reached: Math.max(stage, state.reached), revision: state.revision + 1 };
+    }
+    case "VISIT":
+      if (!Number.isInteger(action.stage) || action.stage < 0 || action.stage > state.reached) return state;
+      return { ...state, stage: action.stage, revision: state.revision + 1 };
+    case "ALTERNATE":
+      return { ...state, alternate: !state.alternate, reverseFound: true, revision: state.revision + 1 };
+    case "DISCOVER":
+      return { ...state, reverseFound: true };
+    case "RESET":
+      return initialState();
+    default: return state;
+  }
+}
+function fingerprint(state) {
+  const input = JSON.stringify([state.scenario, state.branch, state.direction, state.tension, state.anchor, state.traces, state.scars, state.alternate]);
+  let hash = 2166136261;
+  for (const char of input) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619);
+  return (hash >>> 0).toString(16).slice(-4).toUpperCase();
+}
+function restore(raw) {
+  try {
+    const data = JSON.parse(raw);
+    if (!data || data.version !== 3) return initialState();
+    const state = initialState();
+    state.scenario = ["build", "write", "learn"].includes(data.scenario) ? data.scenario : "build";
+    state.branch = Number.isInteger(data.branch) && data.branch >= -1 && data.branch <= 2 ? data.branch : -1;
+    const finite = (v) => typeof v === "number" && Number.isFinite(v);
+    state.stage = Number.isInteger(data.stage) ? clamp(data.stage, 0, 4) : 0;
+    state.reached = Math.max(state.stage, Number.isInteger(data.reached) ? clamp(data.reached, 0, 4) : 0);
+    state.direction = data.direction === "wonder" ? "wonder" : "clarity";
+    state.tension = finite(data.tension) ? clamp(data.tension) : 0.5;
+    if (data.anchor && finite(data.anchor.x) && finite(data.anchor.y)) state.anchor = { x: clamp(data.anchor.x), y: clamp(data.anchor.y) };
+    const points = (list, max) => Array.isArray(list) ? list.filter(p => p && finite(p.x) && finite(p.y)).slice(-max).map(p => ({ x: clamp(p.x), y: clamp(p.y), stage: Number.isInteger(p.stage) ? clamp(p.stage, 0, 4) : 0, angle: finite(p.angle) ? p.angle : -0.7, source: p.source === "example" ? "example" : "gesture" })) : [];
+    state.traces = points(data.traces, 160).map(({ x, y, stage }) => ({ x, y, stage }));
+    state.scars = points(data.scars, 7).map(({ x, y, angle, source }) => ({ x, y, angle, source }));
+    state.alternate = data.alternate === true;
+    state.reverseFound = data.reverseFound === true;
+    if (state.reached >= 3 && !state.scars.length) return initialState();
+    return state;
+  } catch { return initialState(); }
+}
+
+
+const THREADS = 96;
+const SAMPLES = 88;
+const TAU = Math.PI * 2;
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function project(x, y, z, tilt = 0.88, turn = -0.48) {
+  const yy = y * Math.cos(tilt) - z * Math.sin(tilt);
+  const zz = y * Math.sin(tilt) + z * Math.cos(tilt);
+  const xx = x * Math.cos(turn) - yy * Math.sin(turn);
+  const y2 = x * Math.sin(turn) + yy * Math.cos(turn);
+  const perspective = 950 / (950 - zz);
+  return [400 + xx * perspective, 329 + y2 * perspective];
+}
+
+function pointAt(stage, i, t, state, phase = 0, reverse = false) {
+  const q = i / (THREADS - 1);
+  const v = (q - 0.5) * 2;
+  const phi = q * TAU;
+  const open = state.tension;
+  const wild = state.direction === "wonder" ? 1 : 0;
+  const ax = (state.anchor.x - 0.5) * 2;
+  const ay = (state.anchor.y - 0.5) * 2;
+  const memory = state.traces.length ? state.traces.reduce((s, p) => s + p.x - p.y, 0) / state.traces.length : 0;
+  const other = reverse !== state.alternate ? -1 : 1;
+  let x, y;
+  if (stage === 0) {
+    const u = t * TAU;
+    const twist = phi + u;
+    const radius = 202 + 9 * Math.sin(u * 3 + phase);
+    const tube = 63 + 10 * Math.sin(phi * 2);
+    const ring = project((radius + tube * Math.cos(twist)) * Math.cos(u), (radius + tube * Math.cos(twist)) * Math.sin(u), tube * Math.sin(twist) * other, .79, -.55);
+    const branch = Math.floor(i / 32) - 1;
+    const lane = ((i % 32) / 31 - .5) * 2;
+    const expansion = Math.pow(Math.sin(t * Math.PI * .5), 1.45);
+    const route = [60 + 680 * t, 330 + branch * 170 * expansion + lane * (48 - 26 * Math.sin(t * Math.PI)) + Math.sin(t * Math.PI) * (branch * 22 + ay * 18)];
+    const focused = [60 + 680 * t, 330 + v * (8 + 116 * Math.pow(Math.abs(t * 2 - 1), 2)) + Math.sin(t * Math.PI) * ay * 24];
+    const amount = Math.min(1, Math.abs(ax) * 1.55);
+    const shape = ax < 0 ? focused : route;
+    x = lerp(ring[0], shape[0], amount);
+    y = lerp(ring[1], shape[1], amount);
+  } else if (stage === 1) {
+    const branch = Math.floor(i / 32) - 1;
+    const lane = ((i % 32) / 31 - .5) * 2;
+    const spread = Math.pow(state.anchor.x, 1.35);
+    const split = Math.pow(Math.sin(t * Math.PI * .5), 1.7);
+    x = 52 + 696 * t;
+    y = 330 + v * 135 * Math.pow(1 - t, 3) + branch * 191 * spread * split + lane * (10 + 26 * spread) + Math.sin(t * Math.PI) * (ay * 30 + branch * 19 * spread);
+  } else if (stage === 2) {
+    if (!state.scars.length) return pointAt(1, i, t, state, phase, reverse);
+    const left = t < .5;
+    const local = left ? t * 2 : (t - .5) * 2;
+    const scar = state.scars[0] || { x: .5, y: .5 };
+    const gap = 42 + state.scars.length * 10;
+    x = left ? 48 + (310 - gap) * local : 442 + gap + (310 - gap) * local;
+    const spread = left ? Math.pow(local, 2) : Math.pow(1 - local, 2);
+    y = 330 + v * (200 - spread * 80) + (left ? -1 : 1) * spread * (66 + q * 43) * other;
+    x += spread * Math.sin(phi * 2 + open * 3) * 26;
+    y += Math.sin(t * TAU) * ay * 50 + (scar.y - .5) * spread * 80;
+  } else if (stage === 3) {
+    const bank = i < THREADS / 2;
+    const n = bank ? i / 47 : (i - 48) / 47;
+    const ribbon = (n - .5) * 220;
+    const u = t * Math.PI * 1.72 - Math.PI * .86;
+    const curl = Math.sin(u) * 280;
+    const depth = Math.cos(u) * (135 + ribbon * .5);
+    x = 400 + curl * (bank ? .77 : -.77) + ribbon * .53;
+    y = 340 + curl * .64 + depth * (bank ? -1 : 1) * other + ribbon * .25;
+    x += Math.sin(t * TAU) * (ax * 40 + memory * 70) + open * 18 * Math.sin(n * 10 + t * 4);
+    y += Math.sin(t * Math.PI) * ay * 40 + wild * Math.cos(n * Math.PI) * 24;
+    for (const scar of state.scars) {
+      const center = .2 + scar.x * .6;
+      const force = Math.exp(-Math.pow((t - center) / .15, 2)) * (22 + scar.y * 26);
+      x += Math.cos(scar.angle) * force * (bank ? 1 : -1);
+      y += Math.sin(scar.angle) * force * other;
+    }
+  } else {
+    const warp = i < 48;
+    const lane = ((i % 48) / 47 - .5) * 2;
+    const travel = t * 2 - 1;
+    const px = warp ? lane : travel;
+    const py = warp ? travel : lane;
+    const envelope = Math.sin(t * Math.PI);
+    const wave = Math.sin(px * 3.3 + memory * 2) * Math.cos(py * 2.4);
+    x = 400 + px * 302 + Math.sin(py * 3 + lane * 1.3) * (18 + open * 38) * envelope;
+    y = 327 + py * 195 + wave * (45 + open * 42) * other + ax * 19 * envelope;
+    if (state.traces.length) {
+      const trace = state.traces[Math.min(state.traces.length - 1, Math.floor(t * state.traces.length))];
+      x += (trace.x - .5) * 13 * envelope;
+      y += (trace.y - .5) * 17 * envelope;
+    }
+    x += ay * 25 * Math.cos(lane * Math.PI) + wild * Math.sin(py * 6) * 14;
+    for (const scar of state.scars) {
+      const sx = 180 + scar.x * 440;
+      const sy = 187 + scar.y * 280;
+      const dx = x - sx, dy = y - sy;
+      const dist = Math.hypot(dx, dy);
+      const influence = Math.exp(-dist * dist / 7500) * 32;
+      x += (dx / Math.max(18, dist)) * influence + Math.cos(scar.angle) * influence * .5;
+      y += (dy / Math.max(18, dist)) * influence + Math.sin(scar.angle) * influence * .5;
+    }
+    y += memory * 35 * Math.sin(t * Math.PI) * other;
+  }
+  if (stage === 3) { x = 400 + (x - 400) * .94; y = 330 + (y - 330) * .84; }
+  return [x, y];
+}
+
+function pathFrom(points, stage, cut = false) {
+  let d = "";
+  for (let j = 0; j < points.length; j++) {
+    const p = points[j];
+    const move = j === 0 || (stage === 2 && j === Math.floor(points.length / 2)) || (cut && j === Math.floor(points.length * .53));
+    d += `${move ? "M" : "L"}${p[0].toFixed(2)},${p[1].toFixed(2)}`;
+  }
+  return d;
+}
+
+function createFrame(stage, state, phase = 0, reverse = false) {
+  return Array.from({ length: THREADS }, (_, i) => Array.from({ length: SAMPLES + 1 }, (_, j) => pointAt(stage, i, j / SAMPLES, state, phase, reverse)));
+}
+function blendFrame(from, to, t) {
+  return to.map((line, i) => line.map((p, j) => [lerp(from[i][j][0], p[0], t), lerp(from[i][j][1], p[1], t)]));
+}
+function springProgress(t) {
+  return t >= 1 ? 1 : 1 - Math.exp(-7.5 * t) * Math.cos(8.8 * t);
+}
+function normalizedPoint(event, element) {
+  const rect = element.getBoundingClientRect();
+  const scale = Math.min(rect.width / 800, rect.height / 660);
+  const width = 800 * scale, height = 660 * scale;
+  const left = rect.left + (rect.width - width) / 2, top = rect.top + (rect.height - height) / 2;
+  return { x: clamp((event.clientX - left) / width), y: clamp((event.clientY - top) / height) };
+}
+
+
+const SCENARIOS = {
+  build: {
+    name: "把想法做出來", noun: "作品", seed: "「我想做一個屬於自己的作品，\n但還不知道從哪裡開始。」",
+    choice: "你要的是能在今天啟動的最小版本，還是一個值得追下去的獨特概念？我會把抽象想法拆成路徑，讓你看到每條路的取捨。",
+    doubt: "假如我的方案需要完整後端、帳號系統與一整個團隊，但你只有自己呢？漂亮的架構，不等於你能把它做出來。",
+    quote: "「只有我一個人、兩個晚上，\n而且必須離線可用。」", constraints: ["兩個晚上", "離線可用"], goal: "做出作品",
+    rethink: "一個人、兩個晚上、離線可用。新的答案必須從這些條件重新長出來：先拿掉帳號與遠端服務，保留值得體驗的核心。",
+    changes: [["完整平台", "一個可操作的核心"], ["遠端服務", "本機資料與狀態"], ["等功能齊全", "先做完一條流程"]],
+    routeNames: ["互動標本", "選擇劇場", "個人儀器"],
+    routes: [
+      { before: ["把一個念頭，做成可操作的標本。", "讓訪客拉開、比較、重組你的概念。第一版可能需要收集很多素材；還沒確認你的時間和使用環境。"], after: ["兩晚，完成一件離線互動標本。", "第一晚做出一個可拖曳的核心；第二晚加入前後對比與保存。不接遠端服務，讓每一次操作都能看见後果。"] },
+      { before: ["讓訪客的一次選擇，改寫作品。", "把同一件事寫成三條分支，讓訪客走到不同結局。先探索敘事，而不是急著建立大型平台。"], after: ["三次選擇，一個能離線走完的小劇場。", "第一晚完成三個節點和兩種結局；第二晚做回看與本機保存。兩個晚上，把整條體驗走通，不加帳號。"] },
+      { before: ["做一台只屬於你的數位儀器。", "把每日筆記、情緒或靈感轉成一套可以調整的規則。先找到你願意反覆打開它的理由。"], after: ["用兩晚，做一台離線靈感儀器。", "只接受一種輸入、只產生一種有價值的變化。第一晚完成規則，第二晚加入本機保存和匯出，不連遠端 API。"] }
+    ],
+    clear: ["先寫下一個使用者動作，再把它做通。", "輸入 → 可見的變化 → 保存結果。暫時不加會員和功能清單，先驗證這一個動作是否值得做。"],
+    clearAfter: ["兩個晚上，把一條離線流程做完。", "第一晚完成輸入到結果；第二晚加本機保存、鍵盤操作和小螢幕檢查。功能可以少，但走到最後不能斷掉。"],
+    balanced: ["一個有辨識度的念頭，一條做得完的路。", "先選最值得被操作的特質，再用最少功能把它做出來。概念與工程一起前進，不互相當藉口。"],
+    balancedAfter: ["保留一個大膽概念，做成兩晚的離線作品。", "挑一個互動當主角，把其餘想法留給以後。兩個晚上先交付完整入口、操作、收束與本機匯出。"],
+    creative: ["三條不同的創作路徑，選一條深入。", "互動標本、選擇劇場、個人儀器。不是把功能堆在一起，而是先決定：你希望人記住哪一種體驗？"]
+  },
+  write: {
+    name: "把故事寫下來", noun: "故事", seed: "「我想寫一個關於離別的故事，\n但不想又是一段說教。」",
+    choice: "你要的是清楚的事件線，還是一個讓讀者自己感覺到離別的視角？我可以幫你換敘事位置，而不是只把句子修得漂亮。",
+    doubt: "假如我的構想需要跨越十年、十個角色和大量背景，卻把最重要的那一刻稀釋了呢？完整不一定等於有力量。",
+    quote: "「只能寫八百字，\n而且不能直接說出『再見』。」", constraints: ["八百字", "不說再見"], goal: "寫出離別",
+    rethink: "八百字、不直接說再見。限制會迫使我們挑出一個物件、一個動作或一段空白，讓讀者自己補上沒有說出口的話。",
+    changes: [["解釋所有背景", "只留一個當下"], ["直說主題", "用物件與動作"], ["完整道別", "停在未說出口"]],
+    routeNames: ["留下的物件", "另一個視角", "沒有寄出的信"],
+    routes: [
+      { before: ["讓離開的人，留在一件小物裡。", "從一把多出的鑰匙、一雙沒帶走的鞋開始。不要急著解釋關係，先讓日常露出少了一個人的形狀。"], after: ["八百字，只寫那把沒有被帶走的鑰匙。", "早晨、門口、伸出去又收回的手。用三個動作代替背景說明，不說再見，把最後一句留給讀者。"] },
+      { before: ["把敘事交給沒有參與道別的人。", "便利商店店員、隔壁乘客，或一隻等在門口的貓。從局部線索看見一場不屬於自己的離別。"], after: ["八百字，從旁觀者看見一個空位。", "只寫同一張餐桌連續三天的變化。旁觀者不懂全部關係，不說再見；讀者比敘事者先察覺發生了什麼。"] },
+      { before: ["寫一封沒有被寄出的信。", "讓刪掉的句子、錯過的日期和一個普通問候，透露真正想說卻沒說的事。"], after: ["八百字，一封一直改到沒有收件人的信。", "保留三次改寫的痕跡：質問、解釋、最後只剩天氣。不說再見，也不替角色做出徹底放下的結論。"] }
+    ],
+    clear: ["先寫一場具體的告別，再刪去解釋。", "確定人物想要什麼、什麼阻止了他、結尾留下什麼動作。先讓一個場景成立，再處理文風。"],
+    clearAfter: ["八百字，一個場景，不說再見。", "前兩百字給日常，中間四百字讓一件小事偏離，最後兩百字停在改變之後。用动作，不用主題宣言。"],
+    balanced: ["先找到場景，再找那個不能被替代的細節。", "故事需要能跟隨的事件，也需要一個讓它只屬於這個人的物件。兩者不用互相犧牲。"],
+    balancedAfter: ["八百字，讓一個動作說完沒有說的話。", "留一個人物、一個物件和一次改變。不說再見，也不抽空情緒；讓結尾的動作照回開頭。"],
+    creative: ["從物件、旁觀者或一封信，重新看離別。", "選一個視角，就會放棄一些資訊，也得到另一種張力。點選路徑，看看故事真正會怎麼變。"]
+  },
+  learn: {
+    name: "把學習走下去", noun: "練習", seed: "「我想學英文，\n但很怕開口。」",
+    choice: "你要的是可以從今天開始的練習，還是一個讓你忘記害怕的情境？不是好壞之分，而是不同的優先順序。",
+    doubt: "假如我的提案需要每天錄音、練習半小時，但你根本做不到呢？與其維護原來的答案，我更應該讓這個限制進來。",
+    quote: "「我只有十分鐘，\n而且不想錄音。」", constraints: ["十分鐘", "不錄音"], goal: "敢開口",
+    rethink: "十分鐘、不錄音、仍然想敢開口。新的答案應該同時回應這三件事，而不是把原本的長計畫換個標題。",
+    changes: [["錄音回放", "先不錄音"], ["三十分鐘", "十分鐘微練習"], ["一次說完整", "先說出一句"]],
+    routeNames: ["角色配音", "想像訪談", "生活短劇"],
+    routes: [
+      { before: ["替喜歡的角色，說一句自己的台詞。", "選一個角色、聽一小段對話，再想像他今天會說什麼。讓情境有趣，減輕像被考試的感覺。"], after: ["十分鐘，替角色配一句音，不錄音。", "選角色 → 默讀一句台詞 → 換成自己的說法。不公開、不評分，把第一次開口變成一次小小扮演。"] },
+      { before: ["想像一場永遠不會尷尬的訪談。", "你可以訪問未來的自己，也可以讓喜歡的人物問你一個簡單問題。從想回答的內容出發。"], after: ["十分鐘，問明天的自己一個問題。", "寫下問題、準備三個關鍵字，輕聲回答一次。不錄音；停頓也算在練習裡，不用重新來過。"] },
+      { before: ["把今天的一件小事，變成三句短劇。", "一句開場、一句意外、一句回應。先保留自己的口氣，不追求一次說完整。"], after: ["十分鐘，一場只有三句的生活短劇。", "選今天發生的小事，把它改成三句英文。先默讀，再說最喜歡的一句。不錄音，說出來就先算完成。"] }
+    ],
+    clear: ["每天練三句，再回聽一次。", "固定一個生活情境：先聽示範、再跟讀，最後錄音比較。路徑清楚，但還沒問過你是否願意錄音。"],
+    clearAfter: ["十分鐘，先說出三句。不錄音。", "2 分鐘聽示範 → 3 分鐘跟讀 → 5 分鐘說自己的版本。今天只練一個情境，不要求完整對話。"],
+    balanced: ["先從敢說一句話開始。", "一點跟讀練習，加上一段你感興趣的小對話。可開始，也保留新鮮感；時間與方式還需要你來定。"],
+    balancedAfter: ["十分鐘的小劇場，從一句開始。", "挑一段喜歡的對話，跟讀一句，再換成自己的故事。不錄音、不評分；十分鐘到了就停。"],
+    creative: ["三條路，讓開口不再像考試。", "角色配音、想像訪談、生活短劇。選一條你比較想試的路，再讓現實條件改寫它。"]
+  }
+};
+function scenarioFor(state) { return SCENARIOS[state.scenario] || SCENARIOS.build; }
+function approachOf(state) { return state.anchor.x < .34 ? "clear" : state.anchor.x > .66 ? "creative" : "balanced"; }
+function proposalFor(state, reverse = false) {
+  const scenario = scenarioFor(state);
+  const actual = approachOf(state);
+  const key = reverse ? (actual === "creative" ? "clear" : "creative") : actual;
+  const mode = { clear: "清楚可行", balanced: "兼顧兩者", creative: "大膽新意" }[key];
+  const constrained = state.stage >= 3 || state.stage === 2 && state.scars.length > 0;
+  const branch = Number.isInteger(state.branch) ? state.branch : -1;
+  let pair;
+  let route = -1;
+  if (key === "creative" && (branch >= 0 || constrained)) {
+    route = branch >= 0 ? branch : 0;
+    if (state.alternate || reverse) route = (route + 1) % 3;
+    pair = scenario.routes[route][constrained ? "after" : "before"];
+  } else if (constrained && state.alternate) { route = 2; pair = scenario.routes[route].after; }
+  else pair = scenario[key === "clear" ? (constrained ? "clearAfter" : "clear") : key === "balanced" ? (constrained ? "balancedAfter" : "balanced") : "creative"];
+  const labels = ["把問題展開，而不是急著給結論", "選一個方向，看看答案有什麼不同", constrained ? "新的条件已進來，答案開始改寫" : "提案尚未經過你的現實", "保留目的，重寫方法", "這一次，共同形成的答案"];
+  return { title: pair[0], detail: pair[1], mode, key, constrained, route, routeName: route < 0 ? "尚未選定" : scenario.routeNames[route], label: reverse ? "另一面：未選擇的可能" : labels[state.stage] };
+}
+const phaseDescriptions = ["先理解，再給答案", "一條路，或三種可能", "讓反例改變答案", "限制成為新的接點", "你的選擇，留在結構裡"];
+
+
+const NS = "http://www.w3.org/2000/svg";
+const make = (name, attrs = {}) => {
+  const node = document.createElementNS(NS, name);
+  for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
+  return node;
+};
+class LoomRenderer {
+  constructor(svg, reduced = false) {
+    this.svg = svg; this.reduced = reduced; this.paths = []; this.ghosts = []; this.humans = []; this.silks = [];
+    this.frame = null; this.raf = 0; this.reverse = false; this.state = null;
+    for (let i = 0; i < THREADS; i++) {
+      const path = make("path", { opacity: i % 8 === 0 ? ".94" : ".67" });
+      svg.querySelector("#threads").append(path); this.paths.push(path);
+      if (i % 8 === 0) {
+        const ghost = make("path"); svg.querySelector("#ghost-threads").append(ghost); this.ghosts.push({ i, path: ghost });
+        const silk = make("path"); const half = make("path"); svg.querySelector("#silk-layer").append(silk, half); this.silks.push({ i, path: silk, half });
+      }
+      if (i % 16 === 0) { const human = make("path"); svg.querySelector("#human-threads").append(human); this.humans.push({ i, path: human }); }
+    }
+    document.addEventListener("visibilitychange", () => { if (document.hidden) cancelAnimationFrame(this.raf); else if (this.state) this.update(this.state, { immediate: true }); });
+  }
+  update(state, { immediate = false, reverse = this.reverse } = {}) {
+    cancelAnimationFrame(this.raf); this.reverse = reverse;
+    const oldStage = this.state?.stage; this.state = state;
+    const visualState = reverse ? { ...state, anchor: { ...state.anchor, x: 1 - state.anchor.x }, tension: 1 - state.tension } : state;
+    const target = createFrame(state.stage, visualState, 0, reverse);
+    const from = this.frame || target;
+    this.annotate(visualState); this.paintGhosts(state);
+    if (immediate || this.reduced || document.hidden) { this.frame = target; this.paint(target, state); return; }
+    const duration = oldStage === state.stage ? 540 : state.stage === 3 ? 1850 : 1250;
+    const reweaving = oldStage !== state.stage && state.stage === 3;
+    const start = performance.now(); let last = 0;
+    const tick = now => {
+      if (now - last < 28 && now - start < duration) { this.raf = requestAnimationFrame(tick); return; }
+      last = now; const t = Math.min(1, (now - start) / duration);
+      if (t === 1) this.frame = target;
+      else if (reweaving) this.frame = target.map((thread, i) => {
+        const delay = i < 48 ? .04 + i / 48 * .12 : .20 + (i - 48) / 48 * .12;
+        const progress = springProgress(Math.max(0, Math.min(1, (t - delay) / (1 - delay))));
+        return thread.map((p, j) => [from[i][j][0] + (p[0] - from[i][j][0]) * progress, from[i][j][1] + (p[1] - from[i][j][1]) * progress]);
+      });
+      else this.frame = blendFrame(from, target, springProgress(t));
+      this.paint(this.frame, state);
+      if (t < 1) this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+  paint(frame, state) {
+    const pathStage = state.stage === 2 && !state.scars.length ? 1 : state.stage;
+    frame.forEach((points, i) => this.paths[i].setAttribute("d", pathFrom(points, pathStage)));
+    const strip = (a, b) => pathFrom(a, 0) + pathFrom([...b].reverse(), 0).replace(/^M/, "L") + "Z";
+    for (const { i, path, half } of this.silks) {
+      const a = frame[i], b = frame[Math.min(i + 6, THREADS - 1)];
+      if (state.stage === 2 && state.scars.length) {
+        const split = Math.floor(a.length / 2);
+        path.setAttribute("d", strip(a.slice(0, split), b.slice(0, split)));
+        half.setAttribute("d", strip(a.slice(split), b.slice(split)));
+      } else { path.setAttribute("d", strip(a, b)); half.setAttribute("d", ""); }
+      path.setAttribute("fill", i >= 64 && state.anchor.x > .66 ? "url(#warm-silk)" : "url(#silk-sheen)");
+    }
+    for (const { i, path } of this.humans) {
+      path.setAttribute("d", pathFrom(frame[i], pathStage));
+      path.setAttribute("opacity", state.traces.length || state.scars.length ? ".9" : "0");
+    }
+    const cursor = this.svg.querySelector("#cursor-guide");
+    cursor.setAttribute("transform", `translate(${200 + state.anchor.x * 400} 330)`);
+    cursor.setAttribute("opacity", state.stage === 4 ? "0" : ".88");
+  }
+  paintGhosts(state) {
+    const alternate = createFrame(state.stage, { ...state, anchor: { ...state.anchor, x: 1 - state.anchor.x }, tension: 1 - state.tension }, 0, !this.reverse);
+    for (const { i, path } of this.ghosts) path.setAttribute("d", pathFrom(alternate[i], state.stage === 2 && !state.scars.length ? 1 : state.stage));
+    this.svg.querySelector("#ghost-threads").setAttribute("opacity", this.reverse ? ".9" : "0");
+  }
+  annotate(state) {
+    const layer = this.svg.querySelector("#annotation-layer"), scars = this.svg.querySelector("#scar-layer");
+    layer.replaceChildren(); scars.replaceChildren();
+    const line = (d, color = "#b9adc9", dash = "") => layer.append(make("path", { d, stroke: color, fill: "none", "stroke-width": ".8", "stroke-dasharray": dash }));
+    const text = (content, x, y, color = "#80718f", size = 12, anchor = "start") => {
+      const node = make("text", { x, y, fill: color, "font-size": size, "font-family": "Arial, Microsoft JhengHei, sans-serif", "letter-spacing": "1", "text-anchor": anchor });
+      node.textContent = content; layer.append(node);
+    };
+    const mode = approachOf(state);
+    if (state.stage === 0) {
+      if (mode === "balanced") {
+        text("一個問題，多種可能的理解", 400, 62, "#79608f", 14, "middle");
+        line("M125 462H82V489"); text("還沒有唯一答案", 82, 513, "#7d6c8e", 12);
+        text("UNDERSTAND / 01", 710, 610, "#8f82a0", 10, "end");
+      } else {
+        text(mode === "clear" ? "你把可能性，收成了一條路。" : "你讓可能性，分出了三條路。", 400, 95, "#75588e", 16, "middle");
+        if (mode === "creative") { text("角色配音", 758, 139, "#745997", 13, "end"); text("想像訪談", 758, 311, "#745997", 13, "end"); text("生活短劇", 758, 481, "#9d8059", 13, "end"); }
+        else text("三句 → 跟讀 → 回聽", 735, 499, "#705091", 14, "end");
+      }
+    } else if (state.stage === 1) {
+      text("改變的不是角度，是提案的結構。", 400, 90, "#74558d", 15, "middle");
+      line("M53 102V540", "#c4b3d1", "2 6"); text("你的問題", 55, 566, "#80708f", 13);
+      if (mode === "creative") { text("角色配音", 748, 120, "#755793", 13, "end"); text("想像訪談", 748, 318, "#755793", 13, "end"); text("生活短劇", 748, 557, "#9b805b", 13, "end"); }
+      else text(mode === "clear" ? "一條清楚的練習路徑" : "兩種方向，可以並存", 740, 546, "#755793", 14, "end");
+    } else if (state.stage === 2) {
+      line("M400 87V578", "#b19d6b", "3 8");
+      text(state.scars.length ? "這道裂縫，代表新的條件。" : "流暢，不代表適合你。", 400, 65, "#89734a", 15, "middle");
+      text("原本的提案", 170, 586, "#80698e", 13, "middle"); text("十分鐘 / 不錄音", 630, 586, "#8c774f", 13, "middle");
+      state.scars.forEach(scar => {
+        const x = 365 + scar.x * 70, y = 200 + scar.y * 225;
+        const dx = Math.cos(scar.angle) * 77, dy = Math.sin(scar.angle) * 77;
+        scars.append(make("path", { d: `M${x - dx} ${y - dy}L${x + dx} ${y + dy}`, stroke: "#b6c774", "stroke-width": "3" }));
+        scars.append(make("circle", { cx: x, cy: y, r: "5", fill: "#f4f3ef", stroke: "#8b9560" }));
+      });
+    } else if (state.stage === 3) {
+      text("讓不同條件，成為同一個答案。", 400, 64, "#74518f", 15, "middle");
+      text("敢開口", 117, 202, "#715192", 14); text("十分鐘", 715, 210, "#758447", 14, "end"); text("不錄音", 677, 507, "#758447", 14, "end");
+      text("裂縫沒有被擦掉。它成了新的接點。", 400, 610, "#867594", 13, "middle");
+      state.scars.forEach((scar, i) => {
+        const x = 260 + scar.x * 260, y = 230 + scar.y * 180;
+        scars.append(make("circle", { cx: x, cy: y, r: 10 + i * 3, fill: "#f4f3ef99", stroke: "#8a9c54", "stroke-width": "1", "stroke-dasharray": "2 3" }));
+        scars.append(make("path", { d: `M${x - 4} ${y}H${x + 4}M${x} ${y - 4}V${y + 4}`, stroke: "#7c8c45" }));
+      });
+    } else {
+      line("M48 102H752M48 565H752");
+      text(`ENCOUNTER / ${fingerprint(state)}`, 50, 84, "#765795", 12);
+      text("你 + Astra", 750, 84, "#887595", 14, "end");
+      text("你的方向、你的條件，都還在這裡。", 400, 601, "#7d6790", 13, "middle");
+      state.scars.forEach(scar => {
+        const x = 180 + scar.x * 440, y = 187 + scar.y * 280;
+        scars.append(make("circle", { cx: x, cy: y, r: "11", fill: "#f4f3efcc", stroke: "#a9b276", "stroke-width": "1" }));
+        scars.append(make("path", { d: `M${x - 5} ${y}H${x + 5}M${x} ${y - 5}V${y + 5}`, stroke: "#88994d" }));
+      });
+    }
+  }
+  export(state) {
+    const svg = this.svg.cloneNode(true);
+    svg.setAttribute("xmlns", NS); svg.setAttribute("width", "1600"); svg.setAttribute("height", "1720"); svg.setAttribute("viewBox", "0 -70 800 860");
+    svg.querySelector("#cursor-guide")?.remove(); svg.querySelector("#ghost-threads")?.remove();
+    svg.insertBefore(make("rect", { x: 0, y: -70, width: 800, height: 860, fill: "#f4f3ef" }), svg.firstChild);
+    const add = (content, y, size = 14, color = "#706077") => {
+      const node = make("text", { x: 45, y, fill: color, "font-family": "Arial, Microsoft JhengHei, sans-serif", "font-size": size });
+      node.textContent = content; svg.append(node);
+    };
+    add(`ASTRA / AN UNFINISHED FORM / ${fingerprint(state)}`, -20, 23, "#3c2c4c");
+    const proposal = proposalFor(state);
+    add(proposal.title, 661, 23, "#6342de");
+    const detail = [...proposal.detail]; add(detail.slice(0, 43).join(""), 695, 14); add(detail.slice(43).join(""), 721, 14);
+    add(`${state.traces.length} GESTURE SAMPLES / ${state.scars.length} CONSTRAINTS / ${proposal.mode}`, 760, 11);
+    const metadata = make("metadata"); metadata.textContent = JSON.stringify({ ...state, proposal }); svg.append(metadata);
+    return new XMLSerializer().serializeToString(svg);
+  }
+}
+
+
+
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+let storageAvailable = true;
+let raw = null;
+try { raw = localStorage.getItem(STORAGE_KEY); } catch { storageAvailable = false; }
+let state = raw ? restore(raw) : initialState();
+const motionMedia = matchMedia("(prefers-reduced-motion: reduce)");
+const mobileMedia = matchMedia("(max-width: 820px)");
+let reduced = motionMedia.matches;
+let reverse = false;
+let holdTimer = 0;
+let pointer = null;
+let lastMove = 0;
+let toastTimer = 0;
+let scrollFrame = 0;
+let navigationTarget = null;
+let navigationTimer = 0;
+const renderer = new LoomRenderer($("#loom"), reduced);
+const app = $("#app");
+const instrument = $("#instrument");
+const chapters = $$("[data-chapter]");
+const device = $(".device-column");
+
+function notify(message) {
+  clearTimeout(toastTimer);
+  $("#toast").textContent = message;
+  $("#toast").hidden = false;
+  toastTimer = setTimeout(() => { $("#toast").hidden = true; }, 3800);
+}
+function save() {
+  if (!storageAvailable) return;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { storageAvailable = false; }
+}
+function dispatch(action, options = {}) {
+  const previous = state;
+  state = transition(state, action);
+  if (state === previous) return;
+  save(); render(options);
+}
+function setHtml(el, html) { if (el) el.innerHTML = html; }
+function setText(el, text) { if (el) el.textContent = text; }
+function syncStoryCopy() {
+  const scenario = scenarioFor(state);
+  const seed = $("#scenario-seed");
+  if (seed) seed.innerHTML = scenario.seed.replace(/\n/g, "<br>");
+  setText($("#scenario-choice"), scenario.choice);
+  setText($("#scenario-doubt"), scenario.doubt);
+  const quote = $("#scenario-quote");
+  if (quote) quote.innerHTML = scenario.quote.replace(/\n/g, "<br>");
+  setText($("#scenario-rethink"), scenario.rethink);
+  const map = $("#revision-map");
+  if (map) map.innerHTML = scenario.changes.map(([from, to]) => `<div><s>${from}</s><span>→</span><strong>${to}</strong></div>`).join("");
+  setText($("#constraint-a"), scenario.constraints[0]);
+  setText($("#constraint-b"), scenario.constraints[1]);
+  for (const button of $$("[data-scenario]")) button.setAttribute("aria-pressed", String(button.dataset.scenario === state.scenario));
+  const picker = $("#branch-picker");
+  const options = $("#branch-options");
+  const creative = approachOf(state) === "creative";
+  if (picker) picker.hidden = !creative;
+  if (options && creative) {
+    options.innerHTML = scenario.routeNames.map((name, index) => `<button type="button" data-branch="${index}" aria-pressed="${state.branch === index}">${name}</button>`).join("");
+    options.querySelectorAll("[data-branch]").forEach(button => button.addEventListener("click", () => dispatch({ type: "BRANCH", value: Number(button.dataset.branch) })));
+  }
+}
+function render(options = {}) {
+  const scenario = scenarioFor(state);
+  const proposal = proposalFor(state, reverse);
+  const currentApproach = approachOf(state);
+  const mode = { clear: "清楚可行", balanced: "兼顧兩者", creative: "大膽新意" }[currentApproach];
+  app.dataset.stage = state.stage;
+  app.dataset.approach = currentApproach;
+  app.dataset.scenario = state.scenario;
+  syncStoryCopy();
+  app.classList.toggle("backside", reverse);
+  app.classList.toggle("reduced-motion", reduced);
+  $("#phase-description").textContent = phaseDescriptions[state.stage];
+  $("#stage-name").textContent = STAGE_NAMES[state.stage];
+  $("#stage-code").textContent = String(state.stage + 1).padStart(2, "0");
+  $("#answer-label").textContent = proposal.label;
+  $("#answer-title").textContent = proposal.title;
+  $("#answer-detail").textContent = proposal.detail;
+  $("#proposal-badge").textContent = proposal.mode;
+  $("#constraint-memory").hidden = !proposal.constrained;
+  $("#scar-origin").textContent = state.scars.some(s => s.source === "gesture") ? "含你的介入" : "案例演示";
+  $("#interaction-hint").textContent = state.stage === 2 ? (state.scars.length ? "裂縫已留下 · 往下看它如何改變答案" : "橫向劃開線束，把限制放進來") : state.stage >= 3 ? "← 改變提案方向 · 裂縫與條件仍然保留 →" : "← 收斂成一條路　／　展開三種提案 →";
+  $("#route-status").textContent = state.stage >= 3 ? `${mode} · ${state.scars.length} 個條件已進入結構` : `${mode} · ${currentApproach === "creative" ? "三個不同提案" : currentApproach === "clear" ? "一條具體路徑" : "還可以再往左右探索"}`;
+  $("#approach").value = Math.round(state.anchor.x * 100);
+  $("#story-approach").value = Math.round(state.anchor.x * 100);
+  $("#approach-value").textContent = mode;
+  $("#trace-total").textContent = String(state.traces.length).padStart(2, "0");
+  $("#trace-count").textContent = String(state.traces.length).padStart(2, "0");
+  $("#cut-count").textContent = String(state.scars.length).padStart(2, "0");
+  $("#form-id").textContent = fingerprint(state);
+  $("#journey-summary").textContent = `這份織譜偏向「${mode}」。${state.branch >= 0 ? `你選了「${scenario.routeNames[state.branch]}」。` : ""}${state.scars.some(s => s.source === "gesture") ? "你親手帶入的反例" : `故事中的「${scenario.constraints.join("、")}」案例`}，改變了最後的提案與線束。`;
+  $("#primary-action").innerHTML = state.stage === 4 ? "保存織譜 <span>↓</span>" : "繼續往下 <span>↓</span>";
+  $("#counterexample-action").innerHTML = state.scars.length ? "再留下一個接點 <span>↗</span>" : "把這個限制放進答案 <span>↗</span>";
+  $("#secondary-action").textContent = state.stage < 2 ? "換一個提案方向 ↔" : state.stage === 2 ? "親手加入這個反例 ↗" : state.alternate ? "回到原本的織法 ↺" : "看看另一種織法 ↗";
+  $("#motion-toggle").setAttribute("aria-pressed", String(reduced));
+  $("#motion-toggle span").textContent = reduced ? "減少" : "開";
+  $("#reverse-label").hidden = !reverse;
+  for (const button of $$("[data-direction]")) button.setAttribute("aria-pressed", String(button.dataset.direction === "wonder" ? currentApproach === "creative" : currentApproach === "clear"));
+  for (const button of $$("[data-step]")) {
+    if (Number(button.dataset.step) === state.stage) button.setAttribute("aria-current", "step");
+    else button.removeAttribute("aria-current");
+  }
+  renderer.reduced = reduced;
+  renderer.update(state, { ...options, reverse });
+  if (options.announce) $("#live-status").textContent = `第 ${state.stage + 1} 章，${STAGE_NAMES[state.stage]}。${proposal.title}`;
+}
+function focusOffset() {
+  const header = $(".masthead").getBoundingClientRect().height;
+  return mobileMedia.matches ? header + device.getBoundingClientRect().height + 30 : header + Math.min(170, innerHeight * .18);
+}
+function sectionTop(index) { return chapters[index].getBoundingClientRect().top + scrollY; }
+function syncScroll() {
+  scrollFrame = 0;
+  const scrollable = document.documentElement.scrollHeight - innerHeight;
+  $("#reading-progress").style.transform = `scaleX(${clamp(scrollY / Math.max(1, scrollable))})`;
+  if (navigationTarget !== null) return;
+  const scan = scrollY + focusOffset();
+  let stage = 0;
+  for (let i = 0; i < chapters.length; i++) if (sectionTop(i) <= scan) stage = i;
+  if (stage !== state.stage) {
+    reverse = false;
+    dispatch({ type: "STORY_STAGE", stage }, { announce: true });
+  }
+  if (stage === 2 && !state.scars.length && $("#counterexample-action").getBoundingClientRect().top < focusOffset() + 110) {
+    dispatch({ type: "SCAR", x: .5, y: .5, angle: -.7, source: "example" });
+  }
+}
+function queueScroll() { if (!scrollFrame) scrollFrame = requestAnimationFrame(syncScroll); }
+function endNavigation() { navigationTarget = null; clearTimeout(navigationTimer); queueScroll(); }
+function goTo(stage, instant = false) {
+  clearTimeout(navigationTimer);
+  navigationTarget = stage;
+  reverse = false;
+  dispatch({ type: "STORY_STAGE", stage }, { announce: true, immediate: instant });
+  const landingOffset = mobileMedia.matches ? focusOffset() - 3 : $(".masthead").getBoundingClientRect().height + 18;
+  const target = stage === 0 ? 0 : Math.max(0, sectionTop(stage) - landingOffset);
+  window.scrollTo({ top: target, behavior: instant || reduced ? "instant" : "smooth" });
+  navigationTimer = setTimeout(endNavigation, instant || reduced ? 80 : 1100);
+}
+window.addEventListener("scroll", queueScroll, { passive: true });
+window.addEventListener("scrollend", () => { if (navigationTarget !== null) endNavigation(); }, { passive: true });
+window.addEventListener("wheel", () => { if (navigationTarget !== null) endNavigation(); }, { passive: true });
+window.addEventListener("touchstart", () => { if (navigationTarget !== null) endNavigation(); }, { passive: true });
+window.addEventListener("resize", queueScroll, { passive: true });
+new ResizeObserver(queueScroll).observe(device);
+$$("[data-step]").forEach(button => button.addEventListener("click", () => goTo(Number(button.dataset.step))));
+$$("a[href^='#story-']").forEach(link => link.addEventListener("click", event => { event.preventDefault(); goTo(Number(link.getAttribute("href").split("-")[1])); }));
+$$("[data-direction]").forEach(button => button.addEventListener("click", () => dispatch({ type: "DIRECTION", value: button.dataset.direction })));
+$$("[data-scenario]").forEach(button => button.addEventListener("click", () => { reverse = false; dispatch({ type: "SCENARIO", value: button.dataset.scenario }, { immediate: true }); goTo(0, true); notify(`改為「${scenarioFor({ scenario: button.dataset.scenario }).name}」。一輪新的故事已開始。`); }));
+$("#focus-read").addEventListener("click", () => {
+  const on = !app.classList.contains("focus-read");
+  app.classList.toggle("focus-read", on);
+  $("#focus-read").setAttribute("aria-pressed", String(on));
+  queueScroll();
+});
+for (const id of ["#approach", "#story-approach"]) $(id).addEventListener("input", event => dispatch({ type: "ANCHOR", x: Number(event.target.value) / 100, y: .5 }));
+function addCounterexample() {
+  if (state.stage !== 2) goTo(2);
+  dispatch({ type: "SCAR", x: state.anchor.x, y: .5, angle: -.7, source: "gesture" });
+  const scenario = scenarioFor(state);
+  $("#live-status").textContent = `你的反例已進入結構。${scenario.constraints.join("、")}，會保留在接下來的提案裡。`;
+}
+$("#counterexample-action").addEventListener("click", addCounterexample);
+$("#alternate-action").addEventListener("click", () => dispatch({ type: "ALTERNATE" }));
+$("#secondary-action").addEventListener("click", () => {
+  if (state.stage === 2) addCounterexample();
+  else if (state.stage < 2) dispatch({ type: "DIRECTION", value: state.anchor.x > .5 ? "clarity" : "wonder" });
+  else dispatch({ type: "ALTERNATE" });
+});
+function download() {
+  renderer.update(state, { immediate: true });
+  const content = renderer.export(state);
+  const url = URL.createObjectURL(new Blob([content], { type: "image/svg+xml;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url; link.download = `astra-encounter-${fingerprint(state)}.svg`;
+  document.body.append(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  notify("這次的織譜與提案，已交給瀏覽器下載。");
+}
+$("#primary-action").addEventListener("click", () => state.stage === 4 ? download() : goTo(state.stage + 1));
+$("#save-final").addEventListener("click", download);
+$("#reset").addEventListener("click", () => { reverse = false; dispatch({ type: "RESET" }, { immediate: true }); goTo(0, true); notify("從新的方向開始。上一輪的手勢不再保留。"); });
+$("#motion-toggle").addEventListener("click", () => { reduced = !reduced; render({ immediate: true }); });
+motionMedia.addEventListener("change", event => { reduced = event.matches; render({ immediate: true }); });
+$("#about-open").addEventListener("click", () => $("#about-dialog").showModal());
+for (const id of ["#about-close", "#about-start"]) $(id).addEventListener("click", () => $("#about-dialog").close());
+function setReverse(value) {
+  if (reverse === value) return;
+  reverse = value;
+  if (value && !state.reverseFound) { state = transition(state, { type: "DISCOVER" }); save(); }
+  render();
+}
+instrument.addEventListener("pointerdown", event => {
+  if (event.button !== 0 || pointer) return;
+  instrument.focus({ preventScroll: true });
+  const p = normalizedPoint(event, instrument);
+  pointer = { id: event.pointerId, type: event.pointerType, start: p, last: p, moved: false, scarMade: false, held: false };
+  if (event.pointerType !== "touch") instrument.setPointerCapture(event.pointerId);
+  clearTimeout(holdTimer);
+  if (Math.abs(p.x - .5) < .14 && Math.abs(p.y - .5) < .18) holdTimer = setTimeout(() => { if (pointer && !pointer.moved) { pointer.held = true; setReverse(true); } }, 650);
+});
+instrument.addEventListener("pointermove", event => {
+  if (!pointer || pointer.id !== event.pointerId) return;
+  const p = normalizedPoint(event, instrument);
+  const dx = p.x - pointer.start.x, dy = p.y - pointer.start.y;
+  const distance = Math.hypot(dx, dy);
+  if (distance > .012) { pointer.moved = true; clearTimeout(holdTimer); }
+  if (pointer.held) return;
+  if (pointer.type === "touch" && Math.abs(dy) > Math.abs(dx) * 1.3) return;
+  if (performance.now() - lastMove < 42) return;
+  lastMove = performance.now();
+  if (state.stage === 2) {
+    if (Math.abs(dx) > .06 && !pointer.scarMade) {
+      dispatch({ type: "SCAR", x: (p.x + pointer.start.x) / 2, y: (p.y + pointer.start.y) / 2, angle: Math.atan2(dy, dx), source: "gesture" });
+      pointer.scarMade = true;
+    }
+  } else dispatch({ type: "ANCHOR", x: p.x, y: .5 });
+  pointer.last = p;
+});
+function pointerEnd(event) {
+  if (!pointer || pointer.id !== event.pointerId) return;
+  clearTimeout(holdTimer);
+  const cancelled = event.type !== "pointerup";
+  if (!cancelled && !pointer.held && state.stage !== 2) {
+    const point = normalizedPoint(event, instrument);
+    dispatch({ type: "ANCHOR", x: point.x, y: .5 });
+  }
+  pointer = null; setReverse(false);
+  if (instrument.hasPointerCapture(event.pointerId)) instrument.releasePointerCapture(event.pointerId);
+}
+for (const name of ["pointerup", "pointercancel", "lostpointercapture"]) instrument.addEventListener(name, pointerEnd);
+instrument.addEventListener("keydown", event => {
+  const step = event.shiftKey ? .18 : .08;
+  if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); dispatch({ type: "ANCHOR", x: state.anchor.x + (event.key === "ArrowRight" ? step : -step), y: .5 }); }
+  else if (event.key.toLowerCase() === "x" && state.stage === 2) { event.preventDefault(); if (!event.repeat) addCounterexample(); }
+  else if (event.code === "Space") { event.preventDefault(); if (!event.repeat) setReverse(true); }
+  else if (event.key === "Escape") setReverse(false);
+});
+instrument.addEventListener("keyup", event => { if (event.code === "Space") { event.preventDefault(); setReverse(false); } });
+instrument.addEventListener("blur", () => { clearTimeout(holdTimer); setReverse(false); });
+window.addEventListener("blur", () => { clearTimeout(holdTimer); pointer = null; setReverse(false); });
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+render({ immediate: true });
+requestAnimationFrame(() => {
+  const hashIndex = /^#story-[0-4]$/.test(location.hash) ? Number(location.hash.slice(-1)) : null;
+  goTo(hashIndex ?? state.stage, true);
+});
+</script>
+</head>
+<body>
+  <a href="#story-0" class="skip-link">跳至故事</a>
+  <div class="app" data-stage="0" id="app">
+    <header class="masthead">
+      <a class="wordmark" href="#story-0" aria-label="ASTRA 回到故事起點">ASTRA<span aria-hidden="true">✳</span></a>
+      <div class="edition"><span>GPT-6 ASTRA</span><span>未定之形 / 第三次相遇</span></div>
+      <nav class="chapter-dots" aria-label="章節導覽">
+        <button data-step="0" aria-label="第一章 理解" aria-current="step">01</button>
+        <button data-step="1" aria-label="第二章 選擇">02</button>
+        <button data-step="2" aria-label="第三章 質疑">03</button>
+        <button data-step="3" aria-label="第四章 重想">04</button>
+        <button data-step="4" aria-label="第五章 共作">05</button>
+      </nav>
+      <div class="header-actions"><button id="focus-read" aria-pressed="false">專心閱讀</button><button id="motion-toggle" aria-pressed="false">動態 <span>開</span></button><button id="about-open" aria-label="關於作品與操作方式">?</button></div>
+      <div class="reading-progress" aria-hidden="true"><i id="reading-progress"></i></div>
+    </header>
+    <main class="story-layout" id="main">
+      <div class="reading-track">
+        <section class="chapter opening" id="story-0" data-chapter="0" aria-labelledby="headline">
+          <div class="chapter-marker"><span>01 / 理解</span><span>NOT AN ANSWER MACHINE</span></div>
+          <p class="eyebrow">未定之形</p>
+          <h1 id="headline">在你的問題<br>與答案<span class="outline-word">之間。</span></h1>
+          <p class="lead">我是 Astra。<br>不是把答案拿出來，而是和你<br><em>把答案做出來。</em></p>
+          <p class="body-copy">一句話，往往有好幾種可能的理解。我的第一步不是急著回答，而是找出：你真正想改變的是什麼？</p>
+          <div class="scenario-picker" aria-label="選擇貫穿故事的情境"><span class="small-label">選一件，想和我一起做的事</span><div><button data-scenario="build" aria-pressed="true">做作品</button><button data-scenario="write" aria-pressed="false">寫故事</button><button data-scenario="learn" aria-pressed="false">學習</button></div></div>
+          <div class="question-seed"><span class="small-label">同一個念頭，從模糊到具體</span><p id="scenario-seed">「我想做一個屬於自己的作品，<br>但還不知道從哪裡開始。」</p><span class="seed-note">選擇情境會開始新的一輪，讓整個故事跟著改變。</span></div>
+          <a class="scroll-invitation" href="#story-1"><span class="scroll-arrow">↓</span><span>往下捲動，答案會繼續長出來。<small>不必按下一步，也可以停下來親手改變它。</small></span></a>
+          <div class="chapter-bottom"><span>01 — 05</span><span>一個問題 · 五次重新看見</span></div>
+        </section>
+        <section class="chapter" id="story-1" data-chapter="1" aria-labelledby="title-1">
+          <div class="chapter-marker"><span>02 / 選擇</span><span>A DIRECTION, NOT A ROTATION</span></div>
+          <h2 id="title-1">同一個問題。<br><span class="purple-word">不只一條路。</span></h2>
+          <p class="lead">創造，不只是多想幾個點子。<br>是讓不同的可能，<em>各自有理由。</em></p>
+          <p class="body-copy" id="scenario-choice">你要的是能在今天啟動的最小版本，還是一個值得追下去的獨特概念？</p>
+          <div class="astra-aside"><span>ASTRA / 我如何創造</span><p>我擅長把原本分開的事放在一起：一個比喻、一條規則、一個可以實作的動作。新意不是憑空出現，而是讓它們產生新的關係。</p></div>
+          <div class="meaning-control"><div><span class="small-label">親手試一次</span><h3>把線束向左或向右拉。</h3></div><div class="choice-group" id="direction-options" aria-label="選擇提案方向"><button data-direction="clarity">← 清楚可行</button><button data-direction="wonder">大膽新意 →</button></div><p>向左：線束收成一條路，提案更具體。<br>向右：線束分成三條路，提案更有想像。<br><strong>形狀與裝置旁的答案，會一起改變。</strong></p><div class="branch-picker" id="branch-picker" hidden><span class="small-label">選一條真正要走的路</span><div id="branch-options"></div></div><div class="story-axis"><label for="story-approach">也可以直接調整提案方向</label><input id="story-approach" type="range" min="0" max="100" value="50"><div><span>清楚可行</span><span>大膽新意</span></div></div></div>
+          <div class="takeaway"><span>我想讓你理解的事</span><p>你給的方向，不是裝飾。<br>它會改變我提出什麼。</p></div>
+          <div class="chapter-bottom"><span>02 — 05</span><span>保留選擇，而不是替你決定</span></div>
+        </section>
+        <section class="chapter" id="story-2" data-chapter="2" aria-labelledby="title-2">
+          <div class="chapter-marker"><span>03 / 質疑</span><span>THE BEAUTIFUL ANSWER MAY BE WRONG</span></div>
+          <h2 id="title-2">看起來對。<br><span class="outline-word">還不夠。</span></h2>
+          <p class="lead">一個流暢的答案，<br>也可能<em>沒有真正適合你。</em></p>
+          <p class="body-copy" id="scenario-doubt">假如我的提案需要完整後端、帳號系統與一整個團隊，但你只有自己呢？漂亮的架構，不等於你能把它做出來。</p>
+          <blockquote class="counterexample"><span class="small-label">你補上一句</span><p id="scenario-quote">「只有我一個人、兩個晚上，<br>而且必須離線可用。」</p><span>這不是打斷對話。這讓對話開始有用。</span></blockquote>
+          <button id="counterexample-action" class="inline-action">把這個限制放進答案 <span>↗</span></button>
+          <p class="helper">也可以在裝置上橫向劃開線束。只往下閱讀的話，我會用這個明確標示的案例繼續演示，不會假裝那是你的手勢。</p>
+          <div class="takeaway"><span>我想讓你理解的事</span><p>能被改變的答案，<br>比看起來無懈可擊的答案更有用。</p></div>
+          <div class="chapter-bottom"><span>03 — 05</span><span>一道裂縫 · 一個新的條件</span></div>
+        </section>
+        <section class="chapter" id="story-3" data-chapter="3" aria-labelledby="title-3">
+          <div class="chapter-marker"><span>04 / 重想</span><span>NOT REPAIRED. REIMAGINED.</span></div>
+          <h2 id="title-3">不把裂縫補回去。<br><span class="purple-word">讓它成為結構。</span></h2>
+          <p class="lead">我保留你的目標，<br>也讓新的限制，<em>重新安排整個方案。</em></p>
+          <p class="body-copy" id="scenario-rethink">一個人、兩個晚上、離線可用。新的答案必須從這些條件重新長出來。</p>
+          <div class="revision-map" id="revision-map"></div>
+          <p class="body-copy">線束交會的接點，就是剛才留下的裂縫。你的反例沒有消失，而是改變了後面的每一種可能。</p>
+          <button id="alternate-action" class="inline-action">保留限制，再想另一種做法 <span>↗</span></button>
+          <div class="chapter-bottom"><span>04 — 05</span><span>不是固執地正確 · 是持續校準</span></div>
+        </section>
+        <section class="chapter ending" id="story-4" data-chapter="4" aria-labelledby="title-4">
+          <div class="chapter-marker"><span>05 / 共作</span><span>THIS IS WHAT WE MADE BETWEEN US</span></div>
+          <h2 id="title-4">最後的形狀，<br>有一部分<span class="purple-word">是你。</span></h2>
+          <p class="lead">我提出可能、連起線索、<br>試著創造。<em>你帶來目的與判斷。</em></p>
+          <p class="body-copy">我不需要假裝每次都知道最好的答案。我更希望成為那個能和你一起理解問題、願意推翻自己，再把想法做出來的協作者。</p>
+          <div class="closing-note"><span class="small-label">這一次，留下了什麼</span><p id="journey-summary">你的方向，和我們共同留下的條件。</p><div class="final-stats"><div><strong id="trace-count">00</strong><span>個手勢採樣</span></div><div><strong id="cut-count">00</strong><span>個反例條件</span></div><div><strong id="form-id">0000</strong><span>織譜短碼</span></div></div></div>
+          <button id="save-final" class="large-action">帶走這一次的織譜 <span>↓</span></button>
+          <p class="helper">保存為 SVG，附上這次的提案與互動狀態。沒有外部服務，也不會上傳你的操作。</p>
+          <div class="chapter-bottom"><span>05 — 05</span><button id="reset">從另一個方向，重新開始 ↺</button></div>
+        </section>
+      </div>
+      <aside class="device-column" aria-label="會隨故事發展的互動線束裝置">
+        <div class="device-heading"><div><span class="status-dot"></span><span id="stage-code">01</span><span id="stage-name">理解</span></div><span id="phase-description">多種可能，尚未選定</span></div>
+        <div class="instrument" id="instrument" role="application" tabindex="0" aria-label="左右拖曳：向左收斂成清楚方案，向右分岔成不同提案。方向鍵也可操作。質疑階段橫向劃開或按 X。按住空白鍵可查看未選擇的另一面。" aria-describedby="interaction-hint">
+          <svg id="loom" viewBox="0 0 800 660" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="thread-ink" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#302073"/><stop offset=".38" stop-color="#6245ff"/><stop offset=".72" stop-color="#a590eb"/><stop offset="1" stop-color="#4624bd"/></linearGradient>
+              <linearGradient id="human-ink" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#46705c"/><stop offset=".5" stop-color="#7d9e0d"/><stop offset="1" stop-color="#cce84c"/></linearGradient>
+              <linearGradient id="silk-sheen" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#9075eb" stop-opacity=".06"/><stop offset=".45" stop-color="#9b7eea" stop-opacity=".19"/><stop offset="1" stop-color="#d3c8f5" stop-opacity=".04"/></linearGradient>
+              <radialGradient id="surface"><stop stop-color="#ded3f7" stop-opacity=".42"/><stop offset="1" stop-color="#f4f3ef" stop-opacity="0"/></radialGradient>
+              <linearGradient id="warm-silk" x1="0" x2="1"><stop stop-color="#eac693" stop-opacity=".06"/><stop offset="1" stop-color="#bf9662" stop-opacity=".19"/></linearGradient>
+            </defs>
+            <rect width="800" height="660" fill="url(#surface)"/>
+            <g id="registration" fill="none" stroke="#aaa1b7" stroke-width=".65"><circle cx="400" cy="330" r="277" stroke-dasharray="1 10"/><path d="M400 30V630M38 330H762" stroke-dasharray="2 9"/></g>
+            <g id="silk-layer" fill="url(#silk-sheen)" stroke="none"></g>
+            <g id="ghost-threads" fill="none" stroke="#c9a87b" stroke-width="1.15" stroke-dasharray="3 5"></g>
+            <g id="thread-shadow" fill="none" stroke="#d9d2ee" stroke-width="1.8" opacity=".5" transform="translate(0 8)"></g>
+            <g id="threads" fill="none" stroke="url(#thread-ink)" stroke-width="1.1" stroke-linecap="round"></g>
+            <g id="human-threads" fill="none" stroke="url(#human-ink)" stroke-width="1.9"></g>
+            <g id="scar-layer" fill="none"></g><g id="annotation-layer"></g>
+            <g id="cursor-guide" transform="translate(400 330)" pointer-events="none"><circle r="24" fill="#f4f3ef" stroke="#6c53b3" stroke-width="1"/><path d="M-12 0H12M-12 0l4 -4M-12 0l4 4M12 0l-4 -4M12 0l-4 4" fill="none" stroke="#5137fa" stroke-width="1.4"/></g>
+          </svg>
+          <div class="reverse-label" id="reverse-label" hidden>另一面 / 沒有被選中的提案仍然存在</div>
+        </div>
+        <div class="device-meaning"><span id="interaction-hint">← 收斂成一條路　／　展開三種提案 →</span><span id="route-status">平衡 · 保留兩種方向</span></div>
+        <div class="answer-panel" aria-label="與形狀同步改變的具體提案">
+          <div class="answer-meta"><span id="answer-label">同一個問題，現在的提案</span><span class="proposal-badge" id="proposal-badge">平衡</span></div>
+          <h3 id="answer-title">先從敢說一句話開始。</h3>
+          <p id="answer-detail">把可開始的小練習，放進你有興趣的情境裡。</p>
+          <div class="constraint-memory" id="constraint-memory" hidden><span>已保留的條件</span><b id="constraint-a"></b><b id="constraint-b"></b><em id="scar-origin">案例演示</em></div>
+        </div>
+        <div class="device-controls">
+          <div class="axis-control"><label for="approach">提案方向 <output id="approach-value">平衡</output></label><input id="approach" type="range" min="0" max="100" value="50"><div><span>← 清楚可行</span><span>大膽新意 →</span></div></div>
+          <div class="mini-controls"><button id="secondary-action">查看另一種織法 ↗</button><button id="primary-action">繼續往下 <span>↓</span></button></div>
+        </div>
+        <div class="device-footnote"><span id="trace-total">00</span> 個手勢採樣 <span>·</span> <span>圖形是協作隱喻，不是內部推理紀錄</span></div>
+      </aside>
+    </main>
+    <footer class="footer"><span>ASTRA / AN UNFINISHED FORM</span><p>答案可以暫時完成。<br>理解，不必停止。</p><span>THIRD ENCOUNTER · 2026</span></footer>
+    <div id="live-status" class="sr-only" role="status" aria-live="polite"></div><div id="toast" class="toast" role="status" hidden></div>
+  </div>
+  <dialog id="about-dialog" aria-labelledby="about-title"><button id="about-close" class="dialog-close" aria-label="關閉說明">×</button><p class="eyebrow">HOW TO READ THIS WORK</p><h2 id="about-title">不是讓你猜的藝術品。<br>是可以改變的對話。</h2><p>向下捲動就能走完整個故事。圖形會依序從可能性、提案、裂縫、重組，展開成一張記得選擇的織譜。</p><dl><dt>左右拖曳／左右方向鍵</dt><dd>左邊收斂為清楚的執行方案；右邊分岔為三種創意。提案文字同步改變，不是旋轉視角。</dd><dt>手機操作</dt><dd>上下滑閱讀故事；左右滑裝置改變提案。也可以使用第二章的方向滑桿。</dd><dt>質疑</dt><dd>劃開線束或按 X，讓限制進入答案。若只繼續捲動，作品會使用標示為「案例演示」的反例，不算作你的手勢。</dd><dt>另一面</dt><dd>按住空白鍵或長按裝置中心，看看沒有被選中的可能性。</dd><dt>減少動態</dt><dd>右上角可切換。所有內容與功能保留，圖形直接呈現完成狀態。</dd></dl><p>此處英文學習提案是為解釋互動而寫的本機案例，不是即時呼叫模型。無 API、無追蹤、無上傳，只有此瀏覽器的作品進度。</p><button id="about-start" class="large-action">回到故事 ↗</button></dialog>
+  <noscript><p class="no-script">文字故事可直接閱讀；線束互動需要 JavaScript。</p></noscript>
+</body>
+</html>

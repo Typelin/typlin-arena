@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "tests": [
+    {
+      "name": "production loads 96 thread instrument",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "desktop readable body type",
+      "passed": true,
+      "detail": "18px"
+    },
+    {
+      "name": "real drag changes both geometry and concrete proposal",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "native wheel advances without fabricated gesture traces",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "keyboard counterexample records human input",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "alternative respects constraints and changes answer",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "actual SVG download contains proposal and state",
+      "passed": true,
+      "detail": "164396 bytes"
+    },
+    {
+      "name": "refresh restores chapter and choices",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "scroll back preserves accumulated consequences",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "hidden alternative layer",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "reduced-motion navigation remains complete",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "short viewport controls visible without text overlap",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "390px layout and readable body",
+      "passed": true,
+      "detail": "16px"
+    },
+    {
+      "name": "horizontal touch changes proposal",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "vertical touch on instrument still scrolls page",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "scroll-only completion labels automatic example honestly",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "320px no horizontal overflow",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "wheel-only full journey visits every stage",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "single HTML runs offline",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "dialog keyboard dismissal",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "name": "zero browser errors",
+      "passed": true,
+      "detail": "passed"
+    }
+  ],
+  "errors": []
+}

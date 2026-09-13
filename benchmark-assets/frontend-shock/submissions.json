@@ -1,17 +1,17 @@
 [
   {
-    "id": "openai-gpt-6-astra",
-    "model": "OpenAI GPT-6-Astra",
+    "id": "gpt-6-astra",
+    "model": "GPT-6 Astra",
     "title": "未定之形 / AN UNFINISHED FORM",
-    "status": "unscored",
-    "score": null,
-    "source": "works-src/frontend-shock/openai-gpt-6-astra",
-    "work": "/works/frontend-shock/openai-gpt-6-astra/",
-    "review": "/works/frontend-shock/openai-gpt-6-astra/review.html",
-    "thumbnail": "/shots/frontend-shock/openai-gpt-6-astra.png",
+    "status": "scored",
+    "score": 82,
+    "source": "works-src/frontend-shock/gpt-6-astra",
+    "work": "/works/frontend-shock/gpt-6-astra/",
+    "review": "/works/frontend-shock/gpt-6-astra/review.html",
+    "thumbnail": "/shots/frontend-shock/gpt-6-astra.png",
     "verification": {
-      "unit": 12,
-      "chrome": 22
+      "unit": 22,
+      "chrome": 21
     }
   }
 ]

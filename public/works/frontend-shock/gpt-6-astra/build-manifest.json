@@ -1,0 +1,42 @@
+{
+  "index.html": {
+    "bytes": 15997,
+    "sha256": "ad2f8a1a443557e902e8e7950bc72f00282b474c161e197ad92c8db2137eea89"
+  },
+  "src/app.js": {
+    "bytes": 16320,
+    "sha256": "9941babfe7c54ac611ee83d2b1b03297725f478238f7d640fada84f3d99353ce"
+  },
+  "src/flourish.js": {
+    "bytes": 3208,
+    "sha256": "e544f700c2bc64bef3cf44e165fc2957c850c5fd0a0dee5f878e14bf4f5e02ba"
+  },
+  "src/geometry.js": {
+    "bytes": 6505,
+    "sha256": "d4a8afc5e6a7780250314d35d5be42a9d9f26fa12ca5e982ed6e5722837b1e08"
+  },
+  "src/icon.svg": {
+    "bytes": 433,
+    "sha256": "a5c82847060df61a1ddc863d0eb3ebb828b6177cb065e4563f05780f4c3bc232"
+  },
+  "src/motion.js": {
+    "bytes": 140491,
+    "sha256": "b24a0c29134800dad72021e22d5ead99fa941722526807f29c131f6fbffa5fe2"
+  },
+  "src/narrative.js": {
+    "bytes": 11293,
+    "sha256": "60782270886e312e206b3a5acc00f2d8aa704a62101b315e57531af4aab09484"
+  },
+  "src/renderer.js": {
+    "bytes": 10360,
+    "sha256": "017ecd3aeda01de0027fd325cd9d66ca0f9bc7deded9f4816e45c47db7d6502e"
+  },
+  "src/state.js": {
+    "bytes": 5283,
+    "sha256": "3fda55401cd86cfe2d71a53b3786803ba9a79441d3221206a2fd2c85a348729c"
+  },
+  "src/style.css": {
+    "bytes": 30636,
+    "sha256": "82afec6dabe1a5735c7c9dcaf7569d958856d3e531bc1aa59a9f99b1f5c657f8"
+  }
+}
