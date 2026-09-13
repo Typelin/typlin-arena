@@ -1,4 +1,4 @@
-import { SERVICES } from '../data/content'
+import { SERVICES, SERVICES_NOTE } from '../data/content'
 import { delay } from '../lib/motion'
 
 export function Services() {
@@ -46,6 +46,11 @@ export function Services() {
             </article>
           ))}
         </div>
+
+        <p className="services__note reveal">
+          <span className="petal-dot" aria-hidden="true" />
+          {SERVICES_NOTE}
+        </p>
       </div>
     </section>
   )

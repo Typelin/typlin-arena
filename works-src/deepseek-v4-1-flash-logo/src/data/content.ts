@@ -123,6 +123,7 @@ export const WORKS = [
     body: '把三張散落的 Excel 與一套老 ERP 縫成同一個介面，盤點時間從兩天縮到四十分鐘。',
     metric: '盤點工時 −82%',
     tone: 'iris',
+    quip: '業主說「先做個簡單版就好」，然後我們做了三個月。',
   },
   {
     year: '2025',
@@ -131,6 +132,7 @@ export const WORKS = [
     body: '一間三十年的老茶行。我們沒有把它做成電商，而是做成一本可以慢慢翻的茶譜。',
     metric: '平均停留 4 分 12 秒',
     tone: 'sakura',
+    quip: '業主原本堅持要購物車。我們花了兩週，勸他放棄。',
   },
   {
     year: '2025',
@@ -139,6 +141,7 @@ export const WORKS = [
     body: '離線可用的登山紀錄工具。山裡沒有訊號，所以整個架構都從「沒有網路」開始設計。',
     metric: '離線 100% 可用',
     tone: 'mist',
+    quip: '為了離線，我們最後刪掉的程式碼比留下的還多。',
   },
   {
     year: '2024',
@@ -147,8 +150,52 @@ export const WORKS = [
     body: '連鎖門市的人力排班。把規則寫進系統，讓主管從排班地獄裡被撈出來。',
     metric: '每月省下 30 小時',
     tone: 'iris',
+    quip: '排班這種事，本來就不該用人腦算。',
   },
 ] as const
+
+export const SERVICES_NOTE = '以上四件事，我們都不接急件——除非你願意等。'
+
+/** Rotating lines shown while the page sits idle. */
+export const IDLE_MURMURS = [
+  '沒在偷懶，只是在等你',
+  '花開之前，都是安靜的',
+  '此刻正在校準某個東西',
+  '安靜不等於停止',
+  '連休息也是流程的一部分',
+  '還在運轉，別擔心',
+] as const
+
+export const FOOTER_WHISPER = '這一頁的每一個像素，都是手寫的。'
+
+/** Copy fired by the easter eggs. Kept here so the tone stays in one voice. */
+export const EGG_MESSAGES = {
+  konami: '找到了。這條指令從 1986 年活到現在，跟你一樣有耐心。',
+  logoNudge: '你對我們的商標很有興趣，對吧？',
+  logoMax: '夠了，再點下去花就要謝了。',
+  petalsOff: '好，安靜一點。',
+  petalsOn: '花瓣回來了。',
+} as const
+
+/** Keyword triggers for the enquiry textarea. Matched case-insensitively. */
+export const EGG_KEYWORDS: { pattern: RegExp; message: string }[] = [
+  {
+    pattern: /免費|不用錢|無償|贊助/,
+    message: '免費的東西通常最貴——但你可以先說說看。',
+  },
+  {
+    pattern: /便宜|預算|砍價|折扣|算我便宜/,
+    message: '預算這種事，早說比晚說好。我們不會裝傻。',
+  },
+  {
+    pattern: /很急|急件|明天|這週|馬上|盡快/,
+    message: '急件我們接，但不會因此做得比較快。急的是排程，不是品質。',
+  },
+  {
+    pattern: /爆紅|發大財|一夜|保證賺/,
+    message: '這種期待我們先記下來，等交付那天再一起笑。',
+  },
+]
 
 export const STATS = [
   { value: '128', unit: '件', label: '交付專案' },

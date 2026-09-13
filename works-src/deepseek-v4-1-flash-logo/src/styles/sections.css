@@ -1322,6 +1322,297 @@
 }
 
 /* ============================================================
+   IDLE BAR — the page is never off, only quiet
+   ============================================================ */
+
+.idle-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-out);
+}
+
+.idle-bar.is-idle {
+  opacity: 1;
+}
+
+.idle-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(43, 58, 107, 0.09);
+}
+
+.idle-bar__runner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 36%;
+  background: linear-gradient(
+    90deg,
+    rgba(240, 160, 182, 0) 0%,
+    rgba(240, 160, 182, 0.95) 16%,
+    rgba(126, 143, 203, 1) 50%,
+    rgba(43, 58, 107, 0.92) 84%,
+    rgba(43, 58, 107, 0) 100%
+  );
+  box-shadow: 0 0 14px rgba(126, 143, 203, 0.5);
+  animation: idleRun 2.1s linear infinite;
+}
+
+.idle-bar__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(180deg, rgba(126, 143, 203, 0.18), rgba(126, 143, 203, 0));
+}
+
+/* Sweep is wider than the viewport so the runner is visible at almost every
+   instant — the bar should read as continuously running, not blinking. */
+@keyframes idleRun {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+.idle-chip {
+  position: fixed;
+  left: clamp(0.9rem, 3vw, 1.8rem);
+  bottom: clamp(0.9rem, 3vw, 1.8rem);
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.42rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  pointer-events: none;
+}
+
+.idle-chip.is-idle {
+  opacity: 1;
+  transform: none;
+}
+
+.idle-chip__dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sakura-deep);
+  animation: idlePulse 1.4s var(--ease-soft) infinite;
+}
+
+.idle-chip__key {
+  flex-shrink: 0;
+  font-family: var(--font-latin);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--periwinkle);
+}
+
+.idle-chip__sep {
+  flex-shrink: 0;
+  width: 1px;
+  height: 12px;
+  background: var(--line-strong);
+}
+
+.idle-chip__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: murmurIn 0.6s var(--ease-out);
+}
+
+@keyframes murmurIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@keyframes idlePulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+
+.toasts {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(1rem, 3.5vh, 2rem);
+  z-index: 80;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: min(92vw, 470px);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--ink);
+  animation: toastIn 0.55s var(--ease-out) both;
+}
+
+.toast__mark {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.42rem;
+  border-radius: 50% 0 50% 50%;
+  transform: rotate(45deg);
+  background: var(--sakura);
+}
+
+.toast--iris .toast__mark {
+  background: var(--periwinkle);
+}
+
+.toast--ink .toast__mark {
+  background: var(--ink);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+}
+
+/* ============================================================
+   EASTER EGG DETAILS
+   ============================================================ */
+
+.hero__card {
+  cursor: pointer;
+}
+
+.hero__card.is-pop {
+  animation: cardPop 0.56s var(--ease-out);
+}
+
+@keyframes cardPop {
+  0% {
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) rotate(-1.8deg) scale(1);
+  }
+  35% {
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) rotate(-1.8deg) scale(0.962);
+  }
+  100% {
+    transform: translate3d(var(--px, 0px), var(--py, 0px), 0) rotate(-1.8deg) scale(1);
+  }
+}
+
+.work__main {
+  position: relative;
+}
+
+.work__quip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.4rem;
+  font-size: 0.84rem;
+  letter-spacing: 0.02em;
+  color: var(--sakura-deep);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  pointer-events: none;
+}
+
+.work:hover .work__quip {
+  opacity: 1;
+  transform: none;
+}
+
+.services__note {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 2.2rem;
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+}
+
+.footer__whisper {
+  margin-bottom: 1.1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.12);
+  transition: color 0.9s var(--ease-out);
+  cursor: default;
+  user-select: none;
+}
+
+.footer__whisper:hover {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (max-width: 620px) {
+  .idle-chip__key,
+  .idle-chip__sep {
+    display: none;
+  }
+
+  .work__quip {
+    position: static;
+    margin-top: 0.55rem;
+    white-space: normal;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
    PETAL TOGGLE
    ============================================================ */
 
@@ -1610,11 +1901,14 @@
 @media (prefers-reduced-motion: reduce) {
   .hero__orbit,
   .hero__scroll-line::after,
-  .manifesto__bloom {
+  .manifesto__bloom,
+  .idle-bar__runner,
+  .idle-chip__dot {
     animation: none;
   }
 
-  .hero__card {
+  .hero__card,
+  .idle-chip {
     transition: none;
   }
 }

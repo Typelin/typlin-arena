@@ -32,6 +32,7 @@ export function Works() {
               <div className="work__main">
                 <h3 className="work__title">{work.title}</h3>
                 <p className="work__body">{work.body}</p>
+                <p className="work__quip">{work.quip}</p>
               </div>
 
               <div className="work__result">
@@ -46,7 +47,7 @@ export function Works() {
 
         <p className="works__note reveal">
           <span className="petal-dot" aria-hidden="true" />
-          想知道某一件的技術細節？來信問，我們很樂意講。
+          想知道某一件的技術細節？來信問。我們很難得遇到會問的人。
         </p>
       </div>
     </section>

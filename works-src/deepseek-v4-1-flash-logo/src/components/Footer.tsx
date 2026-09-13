@@ -1,4 +1,4 @@
-import { BRAND, NAV_LINKS } from '../data/content'
+import { BRAND, FOOTER_WHISPER, NAV_LINKS } from '../data/content'
 
 const LOGO_SRC = `${import.meta.env.BASE_URL}logo.png`
 
@@ -49,6 +49,8 @@ export function Footer() {
           </ul>
         </div>
       </div>
+
+      <p className="shell footer__whisper">{FOOTER_WHISPER}</p>
 
       <div className="shell footer__base">
         <p>© {new Date().getFullYear()} {BRAND.full}</p>

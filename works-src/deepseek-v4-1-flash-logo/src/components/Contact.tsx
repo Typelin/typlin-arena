@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { BRAND, PROJECT_TYPES } from '../data/content'
+import { BRAND, EGG_KEYWORDS, PROJECT_TYPES } from '../data/content'
 import { delay } from '../lib/motion'
+import { toast } from '../lib/toast'
 
 type Fields = {
   name: string
@@ -35,10 +36,20 @@ export function Contact() {
   const [fields, setFields] = useState<Fields>(EMPTY)
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const answered = useRef<Set<number>>(new Set())
 
   const update = (key: keyof Fields, value: string) => {
     setFields((prev) => ({ ...prev, [key]: value }))
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }))
+
+    // Certain phrasings in the brief get a reply before you even hit send.
+    if (key === 'message') {
+      EGG_KEYWORDS.forEach((egg, index) => {
+        if (answered.current.has(index) || !egg.pattern.test(value)) return
+        answered.current.add(index)
+        toast(egg.message, 'ink')
+      })
+    }
   }
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {

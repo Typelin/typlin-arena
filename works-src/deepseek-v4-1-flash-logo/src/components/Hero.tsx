@@ -1,14 +1,32 @@
 import { useEffect, useRef, useState } from 'react'
-import { BRAND, HERO } from '../data/content'
+import { BRAND, EGG_MESSAGES, HERO } from '../data/content'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { delay, parallax } from '../lib/motion'
+import { toast } from '../lib/toast'
 
 const LOGO_SRC = `${import.meta.env.BASE_URL}logo.png`
 
-export function Hero() {
+export function Hero({ onBloom }: { onBloom?: () => void }) {
   const stageRef = useRef<HTMLDivElement | null>(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [taps, setTaps] = useState(0)
+  const [pop, setPop] = useState(false)
   const reduced = usePrefersReducedMotion()
+
+  /** Three taps gets you a remark; six shakes the whole tree. */
+  const handleLogoTap = () => {
+    const next = taps + 1
+    setTaps(next)
+    setPop(true)
+    window.setTimeout(() => setPop(false), 560)
+
+    if (next === 3) toast(EGG_MESSAGES.logoNudge, 'iris')
+    if (next >= 6) {
+      setTaps(0)
+      toast(EGG_MESSAGES.logoMax)
+      onBloom?.()
+    }
+  }
 
   useEffect(() => {
     const stage = stageRef.current
@@ -105,7 +123,11 @@ export function Hero() {
             />
           </svg>
 
-          <figure className="hero__card" style={parallax(tilt.x, tilt.y)}>
+          <figure
+            className={`hero__card${pop ? ' is-pop' : ''}`}
+            style={parallax(tilt.x, tilt.y)}
+            onClick={handleLogoTap}
+          >
             <img
               className="hero__logo"
               src={LOGO_SRC}
