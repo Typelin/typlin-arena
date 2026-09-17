@@ -203,6 +203,15 @@ body::before {
 .work__verdict { color: #2e2a20; font-size: 18px; line-height: 1.8; margin: 12px 0 14px; max-width: 60ch; }
 .work__verdict-toggle { display: none; }
 .work__spec { display: flex; gap: 8px; flex-wrap: wrap; }
+.work__attempts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.work__attempts-label { color: var(--red); font-weight: 700; margin-right: 2px; }
+.work__attempts .btn { text-decoration: none; }
 .chip {
   font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
   border: 1px solid var(--line); border-radius: 6px; padding: 7px 12px; color: var(--muted); background: var(--paper);
@@ -975,6 +984,7 @@ body {
       "thumb"
       "verdict"
       "spec"
+      "attempts"
       "side";
     gap: 0.55rem;
     padding: 0.9rem;
@@ -1084,6 +1094,17 @@ body {
     font-size: 0.68rem;
     padding: 0.38rem 0.55rem;
   }
+
+  .work__attempts {
+    grid-area: attempts;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    margin-top: 0;
+  }
+
+  .work__attempts-label { margin-bottom: 0.1rem; }
+  .work__attempts .btn { width: 100%; justify-content: flex-start; }
 
   .work__side {
     grid-area: side;

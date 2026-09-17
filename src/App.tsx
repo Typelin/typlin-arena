@@ -112,8 +112,8 @@ export default function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  const duelA = works[0];
-  const duelB = works[1];
+  const deepseek = works.find((w) => w.id === 'deepseek-v4-1-flash');
+  const duelAttempts = deepseek?.attempts ?? [];
   const logoWorks = works.filter((w) => w.logoSrc).length;
   const pct = Math.round(progress * 100);
 
@@ -162,34 +162,33 @@ export default function App() {
                 <button type="button" className="btn btn--ghost" onClick={() => go('index')}>評分尺規</button>
               </div>
             </div>
-            <div className="duel rv" aria-label="本期主打對決">
+            <div className="duel rv" aria-label="DeepSeek V4.1 Flash 第一次與第二次重考對決">
               <div className="duel__head">
-                <span className="mono">本期對決 · 第一 vs 第二</span>
-                <span className="mono">{duelA.score} — {duelB.score}</span>
+                <span className="mono">CURRENT VS · DEEPSEEK V4.1 FLASH</span>
+                <span className="mono">{duelAttempts.map((attempt) => attempt.score ?? '待評').join(' — ')}</span>
               </div>
               <div className="duel__grid">
-                {[duelA, duelB].map((d) => (
-                  <div className="duel__cell" key={d.id}>
-                    <a className="duel__thumb duel__thumb--link" href={d.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${d.title} 完整作品`}>
-                      <Visual kind={d.visual} />
-                      <img src={d.thumb} alt={`${d.title}實機畫面`} loading="lazy" />
+                {duelAttempts.map((attempt) => (
+                  <div className="duel__cell" key={attempt.id}>
+                    <a className="duel__thumb duel__thumb--link" href={attempt.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${attempt.title} 完整作品`}>
+                      {deepseek && <Visual kind={deepseek.visual} />}
+                      <img src={attempt.thumb} alt={`${attempt.title}實機畫面`} loading="lazy" />
                       <span className="thumb__direct">完整作品 ↗</span>
                     </a>
                     <div className="duel__id">
-                      <p className="duel__name"><a className="duel__titlelink" href={d.src} target="_blank" rel="noreferrer">{d.title} ↗</a></p>
-                      <span className="duel__score">{d.score ?? '—'}</span>
-                      <p className="duel__meta">{d.model}</p>
+                      <p className="duel__name"><a className="duel__titlelink" href={attempt.src} target="_blank" rel="noreferrer">{attempt.title} ↗</a></p>
+                      <span className="duel__score">{attempt.score ?? '—'}</span>
+                      <p className="duel__meta">{attempt.label} · {attempt.note}</p>
                     </div>
                     <div className="duel__row">
-                      <a className="btn btn--small" href={d.src} target="_blank" rel="noreferrer">完整作品 ↗</a>
-                      <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(d)}>▣ 站內預覽</button>
+                      <a className="btn btn--small" href={attempt.src} target="_blank" rel="noreferrer">完整作品 ↗</a>
                     </div>
                   </div>
                 ))}
                 <div className="duel__vs" aria-hidden="true">VS</div>
               </div>
               <div className="duel__foot">
-                <span className="mono">雙題實測：自我介紹 × LOGO 落地 · 「完整作品」直達獨立分頁</span>
+                <span className="mono">同模型重考：A1 岔路 85 分 · A2 藍色大肥魚已完工，待重新評分</span>
               </div>
             </div>
           </div>
@@ -223,6 +222,16 @@ export default function App() {
                   <p className="work__prompt">{pl.prompt}</p>
                   <WorkVerdict text={pl.verdict} />
                   <div className="work__spec">{pl.spec.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
+                  {pl.attempts && pl.attempts.length > 1 && (
+                    <div className="work__attempts" aria-label={`${pl.model} 歷次重考`}>
+                      <span className="mono work__attempts-label">ATTEMPTS</span>
+                      {pl.attempts.map((attempt) => (
+                        <a className="btn btn--ghost btn--small" key={attempt.id} href={attempt.src} target="_blank" rel="noreferrer">
+                          {attempt.label.replace('ATTEMPT ', 'A')} · {attempt.title} · {attempt.score ?? '待評'} ↗
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="work__side">
                   <span className="bignum">{pl.score ?? '—'}<small> / 100</small></span>

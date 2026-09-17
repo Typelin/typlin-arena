@@ -1,3 +1,13 @@
+export type Attempt = {
+  id: string;
+  label: string;
+  title: string;
+  src: string;
+  thumb: string;
+  score: number | null;
+  note?: string;
+};
+
 export type Plate = {
   id: string;
   no: string;
@@ -18,6 +28,8 @@ export type Plate = {
   score2?: number | null;
   /** 評審親打的真實分數；null = 尚未評分 */
   score: number | null;
+  /** 同一模型的歷次重考；首頁仍只保留一張代表卡。 */
+  attempts?: Attempt[];
 };
 
 const SHARED_PROMPT = '同一道題：關於你自己的前端作品';
@@ -44,18 +56,32 @@ export const PLATES: Plate[] = [
     id: 'muse-spark-1-3',
     no: '02',
     short: 'SPARK',
-    model: 'MUSE SPARK 1.3',
-    title: '三層描圖紙',
+    model: 'MUSE SPARK 1.3 · CONTRIBUTOR FREE',
+    title: '拾火紙',
     prompt: SHARED_PROMPT,
-    spec: ['REACT 19', 'CANVAS 2D', 'WEBAUDIO 合成'],
-    verdict: '三層描圖紙把「對齊」變成手的動作，概念鮮明；互動完成度與細節收束略弱。',
+    spec: ['REACT 19', 'MOTION 13.4', 'CANVAS 2D 火星場', 'WEBAUDIO 合成', 'REDUCED MOTION'],
+    verdict: '重考新卷。把「拾火」做成整站物理語言：擊石、風、冷卻、黏附與燒洞都回到同一套互動因果；目前先替換為代表作，分數待重新評。',
     visual: 'tracing',
     src: '/works/muse-spark-1-3/',
     thumb: '/shots/muse-spark-1-3.png',
     logoSrc: '/logo/muse-spark-1-3/',
     logoThumb: '/shots/muse-spark-1-3-logo.png',
     score2: 86,
-    score: 64,
+    score: null,
+  },
+  {
+    id: 'kimi-k3',
+    no: '12',
+    short: 'K3',
+    model: 'KIMI K3',
+    title: 'Field Tuning / 場域調諧',
+    prompt: SHARED_PROMPT,
+    spec: ['REACT 18', 'MOTION 13.4', 'CANVAS 2D 場域', 'WEBAUDIO', 'REDUCED MOTION'],
+    verdict: '以「把模糊調成可同行的形狀」為核心，大字構圖、動態線場、章節狀態與聲音共同維持同一套場域語言；首屏記憶點與持續視覺表現都成立。',
+    visual: 'current',
+    src: '/works/kimi-k3/',
+    thumb: '/shots/kimi-k3.png',
+    score: 88,
   },
   {
     id: 'gemini-3-8-flash-high',
@@ -158,7 +184,27 @@ export const PLATES: Plate[] = [
     logoSrc: '/logo/deepseek-v4-1-flash/',
     logoThumb: '/shots/deepseek-v4-1-flash-logo.png',
     score2: 86,
-    score: 88,
+    score: 85,
+    attempts: [
+      {
+        id: 'a1-forking-path',
+        label: 'ATTEMPT 01',
+        title: '岔路 Forking Path',
+        src: '/works/deepseek-v4-1-flash/',
+        thumb: '/shots/deepseek-v4-1-flash.png',
+        score: 85,
+        note: '第一次正式答卷 · 85 分',
+      },
+      {
+        id: 'a2-blue-whale',
+        label: 'ATTEMPT 02',
+        title: '藍色大肥魚',
+        src: '/works/deepseek-v4-1-flash-blue-whale/',
+        thumb: '/shots/deepseek-v4-1-flash-blue-whale.png',
+        score: null,
+        note: '第二次重考 · 已完工，待評分',
+      },
+    ],
   },
   {
     id: 'grok-4-6',
