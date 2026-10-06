@@ -176,7 +176,7 @@ export default function App() {
                       <span className="thumb__direct">完整作品 ↗</span>
                     </a>
                     <div className="duel__id">
-                      <p className="duel__name"><a className="duel__titlelink" href={attempt.src} target="_blank" rel="noreferrer">{attempt.title} ↗</a></p>
+                      <p className="duel__name"><a className="duel__titlelink" href={attempt.src} target="_blank" rel="noreferrer">{attempt.title}{' '}↗</a></p>
                       <span className="duel__score">{attempt.score ?? '—'}</span>
                       <p className="duel__meta">{attempt.label} · {attempt.note}</p>
                     </div>
@@ -217,8 +217,8 @@ export default function App() {
                 </a>
                 <div className="work__copy">
                   <span className="work__rank">RANK {i + 1} · {pl.no} / PLATE</span>
-                  <h3><a className="work__titlelink" href={pl.src} target="_blank" rel="noreferrer">{pl.title} ↗</a></h3>
-                  <p className="work__model"><a className="work__modellink" href={pl.src} target="_blank" rel="noreferrer">{pl.model} · 直達作品頁 ↗</a></p>
+                  <h3><a className="work__titlelink" href={pl.src} target="_blank" rel="noreferrer">{pl.title}{' '}↗</a></h3>
+                  <p className="work__model"><a className="work__modellink" href={pl.src} target="_blank" rel="noreferrer">{pl.model} · 直達作品頁{' '}↗</a></p>
                   <p className="work__prompt">{pl.prompt}</p>
                   <WorkVerdict text={pl.verdict} />
                   <div className="work__spec">{pl.spec.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
