@@ -255,6 +255,23 @@ export const PLATES: Plate[] = [
     score2: 63,
     score: 58,
   },
+  {
+    id: 'mimo-v2.6-flash',
+    no: '13',
+    short: 'MIMO',
+    model: 'MIMO V2.6 FLASH',
+    title: '活字印刷所',
+    prompt: SHARED_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D 活字', 'NOTO SERIF TC', 'REDUCED MOTION'],
+    verdict: '把回答做成揀字、拼版、上墨、壓印四道工序。',
+    visual: 'current',
+    src: '/works/mimo-v2.6-flash/',
+    thumb: '/shots/mimo-v2.6-flash.png',
+    logoSrc: '/logo/mimo-v2.6-flash/',
+    logoThumb: '/shots/mimo-v2.6-flash-logo.png',
+    score2: 70,
+    score: 79,
+  },
 ];
 
 export type Criterion = { name: string; desc: string };

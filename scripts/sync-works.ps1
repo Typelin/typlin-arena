@@ -14,7 +14,8 @@ $works = @(
   @{ Source = 'gpt-5-6-sol';           Slug = 'gpt-5-6-sol';           Legacy = 'gpt56sol' },
   @{ Source = 'deepseek-v4-1-flash';   Slug = 'deepseek-v4-1-flash';   Legacy = 'deepseek' },
   @{ Source = 'grok-4-6';              Slug = 'grok-4-6';              Legacy = 'grok46' },
-  @{ Source = 'glm-5-3';               Slug = 'glm-5-3';               Legacy = 'glm53' }
+  @{ Source = 'glm-5-3';               Slug = 'glm-5-3';               Legacy = 'glm53' },
+  @{ Source = 'mimo-v2.6-flash';  Slug = 'mimo-v2.6-flash';  Legacy = 'mimo-v2.6-flash' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {
@@ -78,7 +79,8 @@ $logos = @(
   @{ Source = 'gpt-5-6-sol-logo';           Slug = 'gpt-5-6-sol';           Legacy = 'gpt-5-6-sol' },
   @{ Source = 'deepseek-v4-1-flash-logo';   Slug = 'deepseek-v4-1-flash';   Legacy = 'deepseek-v4-1-flash' },
   @{ Source = 'grok-4-6-logo';              Slug = 'grok-4-6';              Legacy = 'grok-4-6' },
-  @{ Source = 'glm-5-3-logo';               Slug = 'glm-5-3';               Legacy = 'glm-5-3' }
+  @{ Source = 'glm-5-3-logo';               Slug = 'glm-5-3';               Legacy = 'glm-5-3' },
+  @{ Source = 'mimo-v2.6-flash-logo';  Slug = 'mimo-v2.6-flash';  Legacy = 'mimo-v2.6-flash' }
 )
 
 function Write-LegacyLogoRedirect([string]$legacy, [string]$slug) {
