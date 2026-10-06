@@ -1,0 +1,1565 @@
+/* ============================================================
+   落字之前，先讀版心 · 設計系統
+   三色戒律：紙 #F3EFE6 · 墨 #17130F · 朱 #B23A2B
+   ============================================================ */
+
+:root {
+  --paper: #f3efe6;
+  --paper-hi: #fbf8f0;
+  --paper-deep: #e9e2d2;
+  --ink: #17130f;
+  --ink-soft: #4a423a;
+  --ink-faint: rgba(23, 19, 15, 0.16);
+  --cinnabar: #b23a2b;
+  --cinnabar-bright: #c94a34;
+  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --mono: "Cascadia Mono", "SF Mono", ui-monospace, monospace;
+  --ease-press: cubic-bezier(0.2, 0.85, 0.3, 1.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* 不設 scroll-behavior:smooth —— 與 sticky 長捲 + rAF 動畫疊加會拖影、搶捲動 */
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font-family: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cinnabar);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 紙紋 overlay ---------- */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  /* backgroundImage 由 PaperGrain 一次性寫入；不動畫、不重繪 */
+}
+
+.grain__noise {
+  position: absolute;
+  inset: 0;
+  background-size: 128px 128px;
+  background-repeat: repeat;
+  opacity: 0.055;
+}
+
+.grain__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 58%, rgba(23, 19, 15, 0.075) 100%);
+}
+
+/* ---------- 頂欄 ---------- */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 26px 18px;
+  background: linear-gradient(
+    to bottom,
+    rgba(243, 239, 230, 0.98) 0%,
+    rgba(243, 239, 230, 0.94) 55%,
+    rgba(243, 239, 230, 0) 100%
+  );
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.topbar__seal {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: var(--cinnabar);
+  color: var(--paper);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.topbar__name {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.topbar__name em {
+  font-style: normal;
+  opacity: 0.55;
+  margin-left: 10px;
+}
+
+.topbar__nav {
+  display: flex;
+  gap: 22px;
+}
+
+.topbar__nav a {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s, color 0.25s;
+}
+
+.topbar__nav a:hover {
+  color: var(--cinnabar);
+  border-bottom-color: var(--cinnabar);
+}
+
+/* ---------- 捲動長版：行程 ---------- */
+
+.journey {
+  position: relative;
+  /* 560vh：比 640vh 緊湊，四相位各 ~140vh，捲不完的疲勞感砍掉 */
+  height: 560vh;
+}
+
+.journey__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.type-field {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+/* 版框：工序段顯影，延續為全站裁切語彙 */
+.version-frame {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(23, 19, 15, 0.55);
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-press);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.version-frame.is-on {
+  opacity: 1;
+}
+
+/* 壓印瞬間：版框四角朱線撞擊閃 */
+.version-frame.is-strike .c::before,
+.version-frame.is-strike .c::after {
+  animation: corner-strike 0.5s var(--ease-press);
+}
+
+@keyframes corner-strike {
+  0% {
+    transform: scale(1);
+    background: var(--cinnabar);
+  }
+  30% {
+    transform: scale(2.4);
+    background: var(--cinnabar-bright);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--cinnabar);
+  }
+}
+
+.version-frame .c {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+}
+
+.version-frame .c::before,
+.version-frame .c::after {
+  content: "";
+  position: absolute;
+  background: var(--cinnabar);
+}
+
+.version-frame .c::before {
+  width: 14px;
+  height: 2px;
+}
+
+.version-frame .c::after {
+  width: 2px;
+  height: 14px;
+}
+
+.c--tl {
+  top: -7px;
+  left: -7px;
+}
+.c--tr {
+  top: -7px;
+  right: -7px;
+}
+.c--bl {
+  bottom: -7px;
+  left: -7px;
+}
+.c--br {
+  bottom: -7px;
+  right: -7px;
+}
+
+/* 左側行程軌 */
+.rail {
+  position: absolute;
+  left: 34px;
+  top: 22%;
+  height: 56%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.rail__line {
+  position: relative;
+  width: 1px;
+  height: 100%;
+  background: rgba(23, 19, 15, 0.28);
+}
+
+.rail__marker {
+  position: absolute;
+  left: -4.5px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--cinnabar);
+  transition: top 0.15s linear;
+}
+
+.rail__ticks {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  height: 100%;
+}
+
+.rail__tick {
+  position: absolute;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: rgba(23, 19, 15, 0.4);
+  transition: color 0.4s;
+}
+
+.rail__tick.is-on {
+  color: var(--cinnabar);
+  font-weight: 700;
+}
+
+.rail__tick:nth-child(1) {
+  top: 23%;
+}
+.rail__tick:nth-child(2) {
+  top: 44%;
+}
+.rail__tick:nth-child(3) {
+  top: 63%;
+}
+.rail__tick:nth-child(4) {
+  top: 81%;
+}
+
+/* ---------- 首屏 ---------- */
+
+.hero {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.hero.is-on {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hero__meta {
+  position: absolute;
+  top: 84px;
+  left: 7vw;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.22em;
+  color: var(--ink-soft);
+}
+
+.hero__seal {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--cinnabar);
+  color: var(--paper);
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.hero__title {
+  position: absolute;
+  top: 50%;
+  right: 8vw;
+  transform: translateY(-52%);
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-size: clamp(34px, 5.6vw, 62px);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  color: var(--ink);
+  /* 單層紙色 halo：雙層大半徑 text-shadow 在捲動時觸發重繪 */
+  text-shadow: 0 0 18px rgba(243, 239, 230, 0.92);
+}
+
+.hero__title-v {
+  color: var(--cinnabar);
+  /* 豎排主標的朱紅引線：從標題垂落到底的視覺導桿 */
+  position: relative;
+}
+
+.hero__title-v::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  width: 2px;
+  height: clamp(40px, 8vh, 72px);
+  background: linear-gradient(to bottom, var(--cinnabar), transparent);
+  transform: translateX(-50%);
+  animation: v-rule 2.4s ease-in-out infinite;
+}
+
+@keyframes v-rule {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-50%) scaleY(0.6);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scaleY(1);
+    transform-origin: top;
+  }
+}
+
+.hero__hint {
+  position: absolute;
+  left: 7vw;
+  bottom: 7vh;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 10px 16px 10px 12px;
+  background: rgba(243, 239, 230, 0.92);
+  border: 1px solid var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+}
+
+.hero__hint-line {
+  display: block;
+  width: 2px;
+  height: 34px;
+  background: var(--cinnabar);
+  transform-origin: top;
+  animation: hint-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- 工序章節（畫廊紙條） ---------- */
+
+.chapter {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.chapter--1,
+.chapter--3 {
+  right: 7vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.chapter--2 {
+  left: 7vw;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.chapter--4 {
+  left: 50%;
+  bottom: 6vh;
+  transform: translateX(-50%);
+}
+
+.chapter__inner {
+  position: relative;
+  width: min(430px, 86vw);
+  padding: 26px 30px 28px;
+  background: rgba(243, 239, 230, 0.97);
+  border-top: 3px solid var(--ink);
+  border-bottom: 1px solid var(--ink-faint);
+  /* 硬陰影＝活字壓在紙上的物理感（無 blur，合成便宜） */
+  box-shadow: 7px 9px 0 rgba(23, 19, 15, 0.1);
+  animation: slip-settle 0.45s var(--ease-press) both;
+  overflow: hidden;
+}
+
+/* 幽靈章號：巨大半透明數字沉在紙條底層 */
+.chapter__inner::before {
+  content: attr(data-ghost);
+  position: absolute;
+  right: -0.06em;
+  bottom: -0.22em;
+  font-size: clamp(120px, 18vw, 200px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chapter__inner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.chapter--4 .chapter__inner {
+  width: min(620px, 90vw);
+  border-top-color: var(--cinnabar);
+}
+
+@keyframes slip-settle {
+  from {
+    transform: translateY(14px) rotate(0.4deg);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.chapter__no {
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.34em;
+  color: var(--cinnabar);
+}
+
+.chapter__title {
+  margin: 0;
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}
+
+.chapter__rule {
+  height: 1px;
+  margin: 14px 0 14px;
+  background: var(--ink);
+  transform-origin: left;
+  animation: rule-draw 0.55s 0.3s cubic-bezier(0.6, 0, 0.2, 1) both;
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.chapter__body {
+  margin: 0;
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  animation: slip-copy 0.5s 0.42s both;
+}
+
+@keyframes slip-copy {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 撿字壓入：逐字入場（次要手法，主導動畫在字模場） */
+.stagger__ch {
+  display: inline-block;
+  opacity: 0;
+}
+
+.stagger__ch.is-on {
+  animation: set-type 0.4s var(--ease-press) forwards;
+  animation-delay: calc(var(--i) * 26ms);
+}
+
+@keyframes set-type {
+  from {
+    opacity: 0;
+    transform: translateY(0.32em) scale(1.07);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 隱藏層旁註 */
+.hit-note {
+  position: absolute;
+  z-index: 6;
+  transform: translate(-50%, -135%) scale(0.96);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(320px, 78vw);
+  padding: 10px 14px;
+  background: var(--paper-hi);
+  border: 1px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(23, 19, 15, 0.14);
+  opacity: 0;
+  transition:
+    opacity 0.22s,
+    transform 0.22s var(--ease-press);
+  pointer-events: none;
+}
+
+.hit-note.is-on {
+  opacity: 1;
+  transform: translate(-50%, -135%) scale(1);
+}
+
+.hit-note__ch {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--cinnabar);
+  color: var(--paper);
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.hit-note__text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ---------- 共用區塊標題（文武雙線：細線 + 粗線，延續版框語彙） ---------- */
+
+.section-head {
+  position: relative;
+  max-width: 720px;
+  margin-bottom: 6vh;
+  padding-top: 22px;
+  border-top: 3px solid var(--ink);
+}
+
+.section-head::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--ink);
+}
+
+.section-head__no {
+  margin: 0 0 14px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.4em;
+  color: var(--cinnabar);
+}
+
+.section-head__title {
+  margin: 0 0 18px;
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+
+.section-head__sub {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--ink-soft);
+  font-size: 15.5px;
+}
+
+/* ---------- 打樣室 ---------- */
+
+.proof,
+.judgment,
+.finale {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16vh 26px 8vh;
+  scroll-margin-top: 54px;
+}
+
+.press {
+  display: grid;
+  grid-template-columns: 250px 1fr 320px;
+  gap: 30px;
+  align-items: start;
+}
+
+.press__label {
+  margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.3em;
+  color: var(--ink-soft);
+}
+
+.tray {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+}
+
+.tray__cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: var(--paper-deep);
+  border: 1px solid var(--ink-faint);
+  font-size: 16px;
+  font-weight: 700;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    transform 0.1s;
+}
+
+.tray__cell:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.tray__cell:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+.tray__cell:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.tray__tools {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.btn {
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--ink);
+  background: transparent;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    opacity 0.18s;
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn--ink:hover {
+  background: var(--cinnabar);
+  border-color: var(--cinnabar);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--paper-deep);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 撿字盤 */
+.stick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 74px;
+  padding: 14px;
+  background: var(--paper-hi);
+  border: 1px solid var(--ink);
+  border-top: 3px solid var(--ink);
+}
+
+.stick__empty {
+  font-size: 14px;
+  color: rgba(23, 19, 15, 0.45);
+  letter-spacing: 0.06em;
+}
+
+.stick__cell {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: var(--paper-deep);
+  border: 1px solid var(--ink-faint);
+  font-size: 22px;
+  font-weight: 900;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.stick__cell:hover {
+  background: var(--cinnabar);
+  color: var(--paper);
+}
+
+.stick__meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.stick__input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 2px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ink-faint);
+  font-size: 15px;
+  letter-spacing: 0.1em;
+}
+
+.stick__input:focus {
+  outline: none;
+  border-bottom-color: var(--cinnabar);
+}
+
+.stick__input::placeholder {
+  color: rgba(23, 19, 15, 0.4);
+}
+
+.stick__count {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+}
+
+/* 壓印杆 */
+.lever {
+  position: relative;
+  width: 100%;
+  margin-top: 22px;
+  padding: 17px 20px;
+  background: var(--cinnabar);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.34em;
+  transition:
+    transform 0.12s,
+    background 0.2s,
+    opacity 0.2s;
+}
+
+.lever:hover:not(:disabled) {
+  background: var(--cinnabar-bright);
+}
+
+.lever:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.lever:disabled {
+  cursor: not-allowed;
+}
+
+.press:not(.is-pressing) .lever:disabled {
+  opacity: 0.45;
+}
+
+.lever__handle {
+  position: absolute;
+  top: -13px;
+  left: 22px;
+  width: 52px;
+  height: 6px;
+  background: var(--ink);
+  border-radius: 2px;
+  transform-origin: 7px 50%;
+  transition: transform 0.22s cubic-bezier(0.34, 1.5, 0.5, 1);
+}
+
+.is-charging .lever__handle {
+  transform: rotate(26deg);
+}
+
+.lever__text {
+  position: relative;
+}
+
+/* 紙台 */
+.bed {
+  position: relative;
+  aspect-ratio: 4 / 3.4;
+  background: var(--paper-hi);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.press.is-striking .bed {
+  animation: thunk 0.32s linear;
+}
+
+@keyframes thunk {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(2.5px, -1.5px);
+  }
+  50% {
+    transform: translate(-2px, 1.5px);
+  }
+  75% {
+    transform: translate(1.5px, 1px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.bed__mark {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.bed__mark::before,
+.bed__mark::after {
+  content: "";
+  position: absolute;
+  background: rgba(23, 19, 15, 0.5);
+}
+
+.bed__mark::before {
+  width: 16px;
+  height: 1px;
+  top: 7.5px;
+}
+
+.bed__mark::after {
+  width: 1px;
+  height: 16px;
+  left: 7.5px;
+}
+
+.bed__mark--tl {
+  top: 8px;
+  left: 8px;
+}
+.bed__mark--tr {
+  top: 8px;
+  right: 8px;
+}
+.bed__mark--bl {
+  bottom: 8px;
+  left: 8px;
+}
+.bed__mark--br {
+  bottom: 8px;
+  right: 8px;
+}
+
+.platen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: rgba(23, 19, 15, 0.16);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.16s cubic-bezier(0.45, 0, 0.85, 0.35);
+  pointer-events: none;
+}
+
+.platen.is-down {
+  transform: scaleY(1);
+}
+
+.bed__empty {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.3em;
+  color: rgba(23, 19, 15, 0.4);
+}
+
+/* 落墨顯影：印樣從紙纖維裡浮出來（無 blur） */
+.impression.is-new {
+  animation: impression-in 0.55s var(--ease-press) both;
+}
+
+.impression {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 10px 14px;
+  font-size: clamp(26px, 3.4vw, 40px);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-align: center;
+  color: rgba(23, 19, 15, var(--ink, 1));
+  transform: rotate(var(--rot, 0deg)) translate(var(--dx, 0), var(--dy, 0));
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85),
+    0 -1px 1px rgba(23, 19, 15, 0.28);
+}
+
+.impression.is-new {
+  animation: impression-in 0.55s var(--ease-press) both;
+}
+
+@keyframes impression-in {
+  0% {
+    clip-path: inset(42% 42%);
+    opacity: 0;
+  }
+  60% {
+    clip-path: inset(0);
+    opacity: 1;
+  }
+  100% {
+    clip-path: inset(0);
+    opacity: 1;
+  }
+}
+
+.impression.is-new {
+  animation: impression-in 0.55s var(--ease-press) both;
+}
+
+.archive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.archive__chip {
+  padding: 5px 9px;
+  background: var(--paper-deep);
+  border: 1px solid var(--ink-faint);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transform: rotate(var(--rot));
+}
+
+/* ---------- 校樣：判斷三則 ---------- */
+
+.judgment__list {
+  max-width: 840px;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.judge {
+  border-top: 1px solid var(--ink-faint);
+  padding: 30px 0 26px;
+}
+
+.judge__head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.judge__index {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--cinnabar);
+  letter-spacing: 0.1em;
+}
+
+.judge__principle {
+  flex: 1;
+  margin: 0;
+  font-size: clamp(20px, 2.6vw, 27px);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.judge__dot {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: var(--cinnabar);
+  border: none;
+  flex: none;
+  transition: transform 0.25s var(--ease-press);
+}
+
+.judge__dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 1px solid var(--cinnabar);
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  transform: scale(0.7);
+}
+
+.judge__dot:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.judge.is-open .judge__dot {
+  transform: rotate(45deg);
+}
+
+.judge__claim {
+  margin: 14px 0 0;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  font-size: 15.5px;
+}
+
+/* 旁註展開：grid-rows 折疊（reduced-motion 下瞬時） */
+.judge__note-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.6, 0, 0.2, 1);
+}
+
+.judge.is-open .judge__note-wrap {
+  grid-template-rows: 1fr;
+}
+
+.judge__note-inner {
+  overflow: hidden;
+}
+
+.judge__note {
+  margin: 18px 0 4px;
+  padding: 14px 0 4px 16px;
+  border-left: 2px solid var(--cinnabar);
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.35s 0.12s,
+    transform 0.35s 0.12s;
+}
+
+.judge.is-open .judge__note {
+  opacity: 1;
+  transform: none;
+}
+
+.judge__note-label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  color: var(--cinnabar);
+}
+
+/* ---------- 落印 ---------- */
+
+.finale__stage {
+  display: flex;
+  gap: 34px;
+  align-items: stretch;
+}
+
+.finale__sheet {
+  flex: 1;
+  min-width: 0;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-hi);
+  border: 1px solid var(--ink);
+  padding: 30px 34px;
+}
+
+.finale__imprints {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+
+.finale__await {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.34em;
+  color: rgba(23, 19, 15, 0.4);
+  margin: 0;
+}
+
+.imprint {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 96px;
+  height: 96px;
+  padding: 5px;
+  background: var(--cinnabar);
+  transform: rotate(var(--angle));
+  /* 硬陰影：印泥堆在紙上的厚 */
+  box-shadow: 4px 5px 0 rgba(23, 19, 15, 0.16);
+  animation: stamp-in 0.4s var(--ease-press) both;
+}
+
+.imprint i {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(243, 239, 230, 0.55);
+  font-style: normal;
+  font-weight: 900;
+  font-size: 27px;
+  color: var(--paper);
+  line-height: 1;
+}
+
+@keyframes stamp-in {
+  0% {
+    transform: rotate(var(--angle)) scale(1.7);
+    opacity: 0;
+  }
+  55% {
+    transform: rotate(var(--angle)) scale(0.95);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) scale(1);
+    opacity: 1;
+  }
+}
+
+.finale__colophon {
+  border-top: 1px solid var(--ink-faint);
+  padding-top: 18px;
+  opacity: 0.25;
+  transform: translateY(8px);
+  transition:
+    opacity 0.7s 0.25s,
+    transform 0.7s 0.25s;
+}
+
+.finale__colophon.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.finale__colophon p {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+
+.finale__colophon strong {
+  color: var(--ink);
+}
+
+.finale__cta {
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: var(--cinnabar) !important;
+}
+
+/* 大印按鈕 */
+.seal-btn {
+  flex: none;
+  width: 148px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.seal-btn__face {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 130px;
+  height: 130px;
+  padding: 7px;
+  background: var(--cinnabar);
+  border: 2px solid var(--cinnabar);
+  box-shadow: 5px 6px 0 rgba(23, 19, 15, 0.18);
+  transition:
+    transform 0.14s,
+    box-shadow 0.14s,
+    background 0.2s;
+}
+
+.seal-btn__face i {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(243, 239, 230, 0.6);
+  font-style: normal;
+  font-weight: 900;
+  font-size: 36px;
+  color: var(--paper);
+  line-height: 1;
+}
+
+.seal-btn:hover .seal-btn__face {
+  background: var(--cinnabar-bright);
+  transform: translateY(-3px);
+  box-shadow: 6px 9px 0 rgba(23, 19, 15, 0.2);
+}
+
+.seal-btn:active .seal-btn__face {
+  transform: translateY(3px) scale(0.985);
+  box-shadow: 2px 2px 0 rgba(23, 19, 15, 0.22);
+}
+
+.seal-btn__label {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.4em;
+  color: var(--ink-soft);
+}
+
+/* 版權頁 */
+.colophon {
+  margin-top: 12vh;
+  padding-top: 30px;
+  border-top: 1px solid var(--ink);
+}
+
+.colophon__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px 30px;
+}
+
+.colophon__grid p {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.colophon__grid span {
+  display: block;
+  color: var(--cinnabar);
+  letter-spacing: 0.3em;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.colophon__rule {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--ink-faint) 0 8px,
+    transparent 8px 14px
+  );
+  margin: 34px 0 18px;
+}
+
+.colophon__end {
+  margin: 0 0 40px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.5em;
+  color: var(--ink-soft);
+}
+
+/* ---------- 響應式 ---------- */
+
+@media (max-width: 1060px) {
+  .press {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .press__core {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .rail {
+    left: 26px;
+  }
+}
+
+@media (max-width: 760px) {
+  .journey {
+    height: 500vh;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .topbar__name em {
+    display: none;
+  }
+
+  .topbar__nav {
+    gap: 14px;
+  }
+
+  .topbar__nav a {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+
+  .hero__meta {
+    top: 72px;
+    left: 6vw;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .hero__title {
+    right: 6vw;
+    font-size: clamp(30px, 9vw, 44px);
+  }
+
+  .hero__hint {
+    left: 6vw;
+    right: 6vw;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+  }
+
+  .chapter--1,
+  .chapter--2,
+  .chapter--3,
+  .chapter--4 {
+    left: 5vw;
+    right: 5vw;
+    top: auto;
+    bottom: 7vh;
+    transform: none;
+  }
+
+  .chapter__inner,
+  .chapter--4 .chapter__inner {
+    width: 100%;
+    padding: 20px 20px 22px;
+  }
+
+  .chapter__body {
+    font-size: 14.5px;
+  }
+
+  .version-frame {
+    inset: 10px;
+  }
+
+  .proof,
+  .judgment,
+  .finale {
+    padding: 12vh 18px 6vh;
+  }
+
+  .press {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .press__core {
+    grid-row: auto;
+  }
+
+  .tray {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .stick__cell {
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
+  }
+
+  .finale__stage {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .seal-btn {
+    align-self: center;
+    flex-direction: row;
+    width: auto;
+    gap: 18px;
+  }
+
+  .seal-btn__face {
+    width: 104px;
+    height: 104px;
+  }
+
+  .seal-btn__face i {
+    font-size: 28px;
+  }
+
+  .finale__sheet {
+    padding: 22px 20px;
+    min-height: 300px;
+  }
+}
+
+/* ---------- 減少動態 ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .hero__hint-line {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
