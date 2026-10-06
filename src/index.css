@@ -123,7 +123,8 @@ body::before {
   padding: 12px 20px; background: var(--ink); color: var(--paper);
 }
 .duel__head .mono { color: var(--paper); }
-.duel__head .mono:last-child { color: var(--red); font-weight: 700; }
+.duel__head { gap: 12px; }
+.duel__head .mono:last-child { color: var(--red); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
 .duel__grid { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
 .duel__cell { padding: 18px 20px 20px; }
 .duel__cell + .duel__cell { border-left: 1px solid var(--line); }
@@ -371,13 +372,13 @@ table.idx { width: 100%; border-collapse: collapse; }
 .colophon__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding-bottom: 26px; }
 .colophon h4 { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--muted); margin: 0 0 8px; text-transform: uppercase; }
 .colophon p { font-size: 15.5px; color: var(--muted); margin: 0; }
-.wordmark {
+.colophon .wordmark {
   font-family: var(--serif); font-weight: 900; white-space: nowrap; line-height: 0.9;
   font-size: clamp(64px, 11.5vw, 176px); letter-spacing: 0.01em;
   color: transparent; -webkit-text-stroke: 1.5px var(--ink);
   margin: 0; padding-bottom: 8px; user-select: none;
 }
-.wordmark b { color: var(--red); -webkit-text-stroke: 0; font-weight: 900; }
+.colophon .wordmark b { color: var(--red); -webkit-text-stroke: 0; font-weight: 900; }
 
 @media (max-width: 1020px) {
   .hero__grid { grid-template-columns: 1fr; }
@@ -765,7 +766,7 @@ body {
   font-size: var(--text-meta);
 }
 
-.wordmark {
+.colophon .wordmark {
   font-size: clamp(4rem, 11vw, 13rem);
 }
 
@@ -1247,7 +1248,7 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .wordmark {
+  .colophon .wordmark {
     font-size: clamp(3.4rem, 18vw, 6.5rem);
   }
 }
