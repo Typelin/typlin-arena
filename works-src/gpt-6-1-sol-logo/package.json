@@ -1,0 +1,9 @@
+{
+  "name":"gpt-6-1-sol-sakimu",
+  "version":"1.0.0",
+  "private":true,
+  "type":"module",
+  "scripts":{"dev":"vite --host 127.0.0.1","build":"tsc -b && vite build","preview":"vite preview --host 127.0.0.1","verify":"node verification/verify.mjs","format":"prettier --write src vite.config.ts index.html verification/*.mjs"},
+  "dependencies":{"react":"^19.2.8","react-dom":"^19.2.8"},
+  "devDependencies":{"@types/react":"^19.2.18","@types/react-dom":"^19.2.4","@vitejs/plugin-react":"^6.1.0","typescript":"~6.0.2","vite":"^8.2.2","puppeteer-core":"^25.14.0","prettier":"^3.9.10"}
+}

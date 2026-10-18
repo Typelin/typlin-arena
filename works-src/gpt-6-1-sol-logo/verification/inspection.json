@@ -1,0 +1,206 @@
+{
+  "results": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "overflow": false,
+      "images": [
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        }
+      ],
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Display",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Text",
+          "status": "loaded"
+        }
+      ],
+      "overflowing": []
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "overflow": false,
+      "images": [
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        }
+      ],
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Display",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Text",
+          "status": "loaded"
+        }
+      ],
+      "overflowing": []
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "overflow": false,
+      "images": [
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        }
+      ],
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Display",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Text",
+          "status": "loaded"
+        }
+      ],
+      "overflowing": [
+        {},
+        {}
+      ]
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "overflow": false,
+      "images": [
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        }
+      ],
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Display",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Text",
+          "status": "loaded"
+        }
+      ],
+      "overflowing": [
+        {},
+        {}
+      ]
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "overflow": false,
+      "images": [
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        },
+        {
+          "src": "./logo.png",
+          "loaded": true,
+          "width": 800
+        }
+      ],
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Display",
+          "status": "loaded"
+        },
+        {
+          "family": "Sakimu Text",
+          "status": "loaded"
+        }
+      ],
+      "overflowing": []
+    }
+  ],
+  "errors": []
+}

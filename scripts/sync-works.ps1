@@ -1,6 +1,8 @@
 ﻿# 重打並同步全部 Arena 作品到 public/works。
 # Canonical 路徑使用完整模型 slug；舊短網址保留為 redirect，避免歷史文章失效。
 # 用法：在專案根目錄執行 .\scripts\sync-works.ps1
+#       只重打部分作品：.\scripts\sync-works.ps1 -Only gpt-6-1-sol,gpt-6-1-sol-logo
+param([string[]]$Only = @())
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot | Split-Path -Parent
 
@@ -16,7 +18,9 @@ $works = @(
   @{ Source = 'grok-4-6';              Slug = 'grok-4-6';              Legacy = 'grok46' },
   @{ Source = 'glm-5-3';               Slug = 'glm-5-3';               Legacy = 'glm53' },
   @{ Source = 'mimo-v2.6-flash';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
-  @{ Source = 'gemini-4-argon';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' }
+  @{ Source = 'gemini-4-argon';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' },
+  @{ Source = 'gpt-6-1-sol';           Slug = 'gpt-6-1-sol';           Legacy = 'gpt-6-1-sol' },
+  @{ Source = 'claude-opus-5-5';       Slug = 'claude-opus-5-5';       Legacy = 'claude-opus-5-5' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {
@@ -45,6 +49,7 @@ function Write-LegacyRedirect([string]$legacy, [string]$slug) {
 }
 
 foreach ($work in $works) {
+  if ($Only.Count -and $Only -notcontains $work.Source) { continue }
   $proj = Join-Path $root "works-src\$($work.Source)"
   if (!(Test-Path -LiteralPath $proj)) { throw "Missing Arena source: $proj" }
 
@@ -82,7 +87,9 @@ $logos = @(
   @{ Source = 'grok-4-6-logo';              Slug = 'grok-4-6';              Legacy = 'grok-4-6' },
   @{ Source = 'glm-5-3-logo';               Slug = 'glm-5-3';               Legacy = 'glm-5-3' },
   @{ Source = 'mimo-v2.6-flash-logo';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
-  @{ Source = 'gemini-4-argon-logo';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' }
+  @{ Source = 'gemini-4-argon-logo';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' },
+  @{ Source = 'gpt-6-1-sol-logo';           Slug = 'gpt-6-1-sol';           Legacy = 'gpt-6-1-sol' },
+  @{ Source = 'claude-opus-5-5-logo';       Slug = 'claude-opus-5-5';       Legacy = 'claude-opus-5-5' }
 )
 
 function Write-LegacyLogoRedirect([string]$legacy, [string]$slug) {
@@ -111,6 +118,7 @@ function Write-LegacyLogoRedirect([string]$legacy, [string]$slug) {
 }
 
 foreach ($logo in $logos) {
+  if ($Only.Count -and $Only -notcontains $logo.Source) { continue }
   $proj = Join-Path $root "works-src\$($logo.Source)"
   if (!(Test-Path -LiteralPath $proj)) { throw "Missing Arena LOGO source: $proj" }
 

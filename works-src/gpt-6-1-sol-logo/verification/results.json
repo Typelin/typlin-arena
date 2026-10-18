@@ -1,0 +1,1499 @@
+{
+  "time": "2026-10-18T07:37:46.800Z",
+  "base": "http://127.0.0.1:4612/",
+  "checks": [
+    {
+      "name": "Original PNG is copied byte for byte",
+      "passed": true,
+      "detail": {
+        "sha256": "f3fc63d045c442b094a03e017206c850b0d44563fb9677a2c346aa30a799511f"
+      }
+    },
+    {
+      "name": "Production includes the identical PNG",
+      "passed": true
+    },
+    {
+      "name": "Original logo loads in header, hero, and footer",
+      "passed": true
+    },
+    {
+      "name": "Local display and body fonts load",
+      "passed": true
+    },
+    {
+      "name": "Hero selection updates the live preview",
+      "passed": true
+    },
+    {
+      "name": "Hero selection synchronizes the service details",
+      "passed": true
+    },
+    {
+      "name": "Satellite controls update the brand scene",
+      "passed": true
+    },
+    {
+      "name": "Pointer motion tilts the logo stage",
+      "passed": true
+    },
+    {
+      "name": "Project filtering shows the matching study",
+      "passed": true
+    },
+    {
+      "name": "Project opens an accessible modal",
+      "passed": true
+    },
+    {
+      "name": "Project carousel changes the study",
+      "passed": true
+    },
+    {
+      "name": "Escape closes the modal and restores focus",
+      "passed": true
+    },
+    {
+      "name": "All projects can be restored",
+      "passed": true
+    },
+    {
+      "name": "Case CTA starts the matching project brief",
+      "passed": true
+    },
+    {
+      "name": "Service accordion exposes the selected details",
+      "passed": true
+    },
+    {
+      "name": "Service CTA carries its intention into the brief",
+      "passed": true
+    },
+    {
+      "name": "Process selection updates the project notes",
+      "passed": true
+    },
+    {
+      "name": "Process controls work from the keyboard",
+      "passed": true
+    },
+    {
+      "name": "FAQ opens with the correct accessible state",
+      "passed": true
+    },
+    {
+      "name": "FAQ can close again",
+      "passed": true
+    },
+    {
+      "name": "Empty brief uses native validation",
+      "passed": true
+    },
+    {
+      "name": "A valid brief creates an on-page result",
+      "passed": true
+    },
+    {
+      "name": "Project brief downloads a real file",
+      "passed": true
+    },
+    {
+      "name": "Downloaded brief preserves the entered information",
+      "passed": true
+    },
+    {
+      "name": "Brief copy writes the generated content",
+      "passed": true,
+      "detail": {
+        "status": "已複製需求卡"
+      }
+    },
+    {
+      "name": "Brief editing preserves the draft",
+      "passed": true
+    },
+    {
+      "name": "Mobile navigation opens with focus in the menu",
+      "passed": true
+    },
+    {
+      "name": "Mobile Escape restores the menu button focus",
+      "passed": true
+    },
+    {
+      "name": "Mobile navigation closes after selecting a section",
+      "passed": true
+    },
+    {
+      "name": "Layout 320×640, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 320×640, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 320×640, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 320×640, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 320×640, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 320×640, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 320,
+          "height": 640
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 375×667, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 375×667, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 375×667, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 375×667, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 375×667, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 375×667, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 390×844, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 390×844, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 390×844, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 390×844, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 390×844, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 390×844, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1440×900, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1440×900, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1440×900, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1440×900, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1440×900, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1440×900, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 844×390, top",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "id": "top",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 844×390, work",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "id": "work",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 844×390, services",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "id": "services",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 844×390, process",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "id": "process",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 844×390, questions",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "id": "questions",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Layout 844×390, start",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "id": "start",
+        "overflow": false,
+        "sectionInside": true,
+        "headerInside": true,
+        "tabsFit": true,
+        "satelliteButtonsInside": true
+      }
+    },
+    {
+      "name": "Reduced motion removes the pointer tilt",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion keeps the service switch usable",
+      "passed": true
+    },
+    {
+      "name": "Original source file is unchanged",
+      "passed": true
+    },
+    {
+      "name": "Browser has no runtime errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Runtime resources stay local",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "layouts": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "id": "top",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "id": "work",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "id": "services",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "id": "process",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "id": "questions",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "id": "start",
+      "overflow": false,
+      "sectionInside": true,
+      "headerInside": true,
+      "tabsFit": true,
+      "satelliteButtonsInside": true
+    }
+  ],
+  "sourceHash": "f3fc63d045c442b094a03e017206c850b0d44563fb9677a2c346aa30a799511f",
+  "errors": [],
+  "external": []
+}

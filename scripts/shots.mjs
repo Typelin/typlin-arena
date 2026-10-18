@@ -18,6 +18,8 @@ const ALL = [
   ['glm-5-3', '/works/glm-5-3/'],
   ['mimo-v2.6-flash', '/works/mimo-v2.6-flash/'],
   ['gemini-4-argon', '/works/gemini-4-argon/'],
+  ['gpt-6-1-sol', '/works/gpt-6-1-sol/'],
+  ['claude-opus-5-5', '/works/claude-opus-5-5/'],
   ['claude-opus-4-6-logo', '/logo/claude-opus-4-6/'],
   ['muse-spark-1-3-logo', '/logo/muse-spark-1-3/'],
   ['gemini-3-8-flash-high-logo', '/logo/gemini-3-8-flash-high/'],
@@ -30,6 +32,8 @@ const ALL = [
   ['glm-5-3-logo', '/logo/glm-5-3/'],
   ['mimo-v2.6-flash-logo', '/logo/mimo-v2.6-flash/'],
   ['gemini-4-argon-logo', '/logo/gemini-4-argon/'],
+  ['gpt-6-1-sol-logo', '/logo/gpt-6-1-sol/'],
+  ['claude-opus-5-5-logo', '/logo/claude-opus-5-5/'],
 ];
 const only = (process.env.SHOTS_IDS || '').split(',').map((s) => s.trim()).filter(Boolean);
 const SHOTS = only.length ? ALL.filter(([id]) => only.includes(id)) : ALL;

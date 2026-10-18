@@ -1,0 +1,521 @@
+{
+  "report": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 0,
+      "overflow": false,
+      "actualStage": "experience  stage-0 ",
+      "narrative": {
+        "x": 63.359375,
+        "y": 207,
+        "width": 648,
+        "height": 438.765625,
+        "bottom": 645.765625,
+        "right": 711.359375
+      },
+      "controls": {
+        "x": 737.28125,
+        "y": 641,
+        "width": 639.359375,
+        "height": 136,
+        "bottom": 777,
+        "right": 1376.640625
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "width": 1313.28125,
+        "height": 55,
+        "bottom": 853,
+        "right": 1376.640625
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 1,
+      "overflow": false,
+      "actualStage": "experience  stage-1 ",
+      "narrative": {
+        "x": 63.359375,
+        "y": 207,
+        "width": 648,
+        "height": 309.125,
+        "bottom": 516.125,
+        "right": 711.359375
+      },
+      "controls": {
+        "x": 737.28125,
+        "y": 641,
+        "width": 639.359375,
+        "height": 136,
+        "bottom": 777,
+        "right": 1376.640625
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "width": 1313.28125,
+        "height": 55,
+        "bottom": 853,
+        "right": 1376.640625
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 2,
+      "overflow": false,
+      "actualStage": "experience is-dark stage-2 ",
+      "narrative": {
+        "x": 63.359375,
+        "y": 180,
+        "width": 648,
+        "height": 212.53125,
+        "bottom": 392.53125,
+        "right": 711.359375
+      },
+      "controls": {
+        "x": 737.28125,
+        "y": 641,
+        "width": 639.359375,
+        "height": 136,
+        "bottom": 777,
+        "right": 1376.640625
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "width": 1313.28125,
+        "height": 55,
+        "bottom": 853,
+        "right": 1376.640625
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 3,
+      "overflow": false,
+      "actualStage": "experience  stage-3 ",
+      "narrative": {
+        "x": 63.359375,
+        "y": 243,
+        "width": 648,
+        "height": 382.5625,
+        "bottom": 625.5625,
+        "right": 711.359375
+      },
+      "controls": {
+        "x": 737.28125,
+        "y": 641,
+        "width": 639.359375,
+        "height": 136,
+        "bottom": 777,
+        "right": 1376.640625
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "width": 1313.28125,
+        "height": 55,
+        "bottom": 853,
+        "right": 1376.640625
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 0,
+      "overflow": false,
+      "actualStage": "experience  stage-0 ",
+      "narrative": {
+        "x": 23.390625,
+        "y": 145,
+        "width": 343.1875,
+        "height": 173.234375,
+        "bottom": 318.234375,
+        "right": 366.578125
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 617,
+        "width": 343.21875,
+        "height": 121,
+        "bottom": 738,
+        "right": 366.609375
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 755,
+        "width": 343.21875,
+        "height": 51,
+        "bottom": 806,
+        "right": 366.609375
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 1,
+      "overflow": false,
+      "actualStage": "experience  stage-1 ",
+      "narrative": {
+        "x": 23.390625,
+        "y": 145,
+        "width": 343.1875,
+        "height": 174.3125,
+        "bottom": 319.3125,
+        "right": 366.578125
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 617,
+        "width": 343.21875,
+        "height": 121,
+        "bottom": 738,
+        "right": 366.609375
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 755,
+        "width": 343.21875,
+        "height": 51,
+        "bottom": 806,
+        "right": 366.609375
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 2,
+      "overflow": false,
+      "actualStage": "experience is-dark stage-2 ",
+      "narrative": {
+        "x": 23.390625,
+        "y": 145,
+        "width": 343.1875,
+        "height": 186.265625,
+        "bottom": 331.265625,
+        "right": 366.578125
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 617,
+        "width": 343.21875,
+        "height": 121,
+        "bottom": 738,
+        "right": 366.609375
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 755,
+        "width": 343.21875,
+        "height": 51,
+        "bottom": 806,
+        "right": 366.609375
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 3,
+      "overflow": false,
+      "actualStage": "experience  stage-3 ",
+      "narrative": {
+        "x": 23.390625,
+        "y": 144.59375,
+        "width": 343.1875,
+        "height": 221.1875,
+        "bottom": 365.78125,
+        "right": 366.578125
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 616.59375,
+        "width": 343.21875,
+        "height": 121,
+        "bottom": 737.59375,
+        "right": 366.609375
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 754.59375,
+        "width": 343.21875,
+        "height": 51,
+        "bottom": 805.59375,
+        "right": 366.609375
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 0,
+      "overflow": false,
+      "actualStage": "experience  stage-0 ",
+      "narrative": {
+        "x": 22.5,
+        "y": 115,
+        "width": 330,
+        "height": 154.4375,
+        "bottom": 269.4375,
+        "right": 352.5
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 480,
+        "width": 330,
+        "height": 95,
+        "bottom": 575,
+        "right": 352.5
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 595,
+        "width": 330,
+        "height": 44,
+        "bottom": 639,
+        "right": 352.5
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 1,
+      "overflow": false,
+      "actualStage": "experience  stage-1 ",
+      "narrative": {
+        "x": 22.5,
+        "y": 115,
+        "width": 330,
+        "height": 151.78125,
+        "bottom": 266.78125,
+        "right": 352.5
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 480,
+        "width": 330,
+        "height": 95,
+        "bottom": 575,
+        "right": 352.5
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 595,
+        "width": 330,
+        "height": 44,
+        "bottom": 639,
+        "right": 352.5
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 2,
+      "overflow": false,
+      "actualStage": "experience is-dark stage-2 ",
+      "narrative": {
+        "x": 22.5,
+        "y": 115,
+        "width": 330,
+        "height": 168,
+        "bottom": 283,
+        "right": 352.5
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 480,
+        "width": 330,
+        "height": 95,
+        "bottom": 575,
+        "right": 352.5
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 595,
+        "width": 330,
+        "height": 44,
+        "bottom": 639,
+        "right": 352.5
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 3,
+      "overflow": false,
+      "actualStage": "experience  stage-3 ",
+      "narrative": {
+        "x": 22.5,
+        "y": 114.796875,
+        "width": 330,
+        "height": 190,
+        "bottom": 304.796875,
+        "right": 352.5
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 479.796875,
+        "width": 330,
+        "height": 95,
+        "bottom": 574.796875,
+        "right": 352.5
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 594.796875,
+        "width": 330,
+        "height": 44,
+        "bottom": 638.796875,
+        "right": 352.5
+      },
+      "fonts": [
+        {
+          "family": "DM Sans",
+          "status": "loaded"
+        },
+        {
+          "family": "Italiana",
+          "status": "loaded"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
