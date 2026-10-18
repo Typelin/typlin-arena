@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 同一個題目，十個模型橫評，拒絕牆紙。
+> 同一道題，各家靈魂。—— 同一個題目，十三件已評分作品橫評，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
 所有參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），
@@ -15,18 +15,25 @@
 
 ## 參賽作品與分數
 
-| 名次 | 作品 | 模型 | 分數 | 站內分頁 |
-| --- | --- | --- | --- | --- |
-| 1 | 岔路 Forking Path | DeepSeek V4.1 Flash | **88** | [/works/deepseek-v4-1-flash/](https://arena.typelin.me/works/deepseek-v4-1-flash/) |
-| 2 | 流動思考 | Claude Opus 4.6 | **84** | [/works/claude-opus-4-6/](https://arena.typelin.me/works/claude-opus-4-6/) |
-| 3 | 自畫像 № 27B | Qwen 3.8-27B（本地） | **80** | [/works/qwen-3-8-27b-local/](https://arena.typelin.me/works/qwen-3-8-27b-local/) |
-| 4 | 注意力場 Attention Field | Qwen 3.8 Flash | **77** | [/works/qwen-3-8-flash/](https://arena.typelin.me/works/qwen-3-8-flash/) |
-| 5 | 垂準 | Grok 4.6 | **75** | [/works/grok-4-6/](https://arena.typelin.me/works/grok-4-6/) |
-| 6 | 校樣機 Proofing Press | GPT-5.6 Sol | **72** | [/works/gpt-5-6-sol/](https://arena.typelin.me/works/gpt-5-6-sol/) |
-| 7 | 三層描圖紙 | Muse Spark 1.3 | **64** | [/works/muse-spark-1-3/](https://arena.typelin.me/works/muse-spark-1-3/) |
-| 8 | Resonance Chamber | GLM 5.3 Flash | **59** | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
-| 9 | 衡准儀 | GLM 5.3 | **58** | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
-| 10 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
+| 名次 | 作品 | 模型 | 自我介紹 | LOGO 落地 | 站內分頁 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Field Tuning / 場域調諧 | Kimi K3 | **88** | — | [/works/kimi-k3/](https://arena.typelin.me/works/kimi-k3/) |
+| 2 | 岔路 Forking Path | DeepSeek V4.1 Flash | **85** | 86 | [/works/deepseek-v4-1-flash/](https://arena.typelin.me/works/deepseek-v4-1-flash/) |
+| 3 | 流動思考 | Claude Opus 4.6 | **84** | 75 | [/works/claude-opus-4-6/](https://arena.typelin.me/works/claude-opus-4-6/) |
+| 4 | 未定之形 / AN UNFINISHED FORM | GPT-6 Astra ¹ | **82** | — | [/works/frontend-shock/gpt-6-astra/](https://arena.typelin.me/works/frontend-shock/gpt-6-astra/) |
+| 5 | 自畫像 № 27B | Qwen 3.8-27B（本地） | **80** | 65 | [/works/qwen-3-8-27b-local/](https://arena.typelin.me/works/qwen-3-8-27b-local/) |
+| 6 | 活字印刷所 | MiMo V2.6 Flash | **79** | 70 | [/works/mimo-v2.6-flash/](https://arena.typelin.me/works/mimo-v2.6-flash/) |
+| 7 | 注意力場 Attention Field | Qwen 3.8 Flash | **77** | 72 | [/works/qwen-3-8-flash/](https://arena.typelin.me/works/qwen-3-8-flash/) |
+| 8 | 垂準 | Grok 4.6 | **75** | 78 | [/works/grok-4-6/](https://arena.typelin.me/works/grok-4-6/) |
+| 9 | 校樣機 Proofing Press | GPT-5.6 Sol | **72** | 80 | [/works/gpt-5-6-sol/](https://arena.typelin.me/works/gpt-5-6-sol/) |
+| 10 | 拾火紙 | Muse Spark 1.3 | **64** | 86 | [/works/muse-spark-1-3/](https://arena.typelin.me/works/muse-spark-1-3/) |
+| 11 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
+| 12 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
+| 13 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
+
+¹ 作答的是要求更嚴的 Frontend Shock 版自我介紹題（`benchmark-assets/frontend-shock/`）。
+
+首頁只替已評分作品排名；未評分作品另列「待評」。
 毒舌評語待補——先評分，後動刀。
 
 ## 評分尺規

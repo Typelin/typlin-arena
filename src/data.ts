@@ -33,6 +33,9 @@ export type Plate = {
 };
 
 const SHARED_PROMPT = '同一道題：關於你自己的前端作品';
+/** Frontend Shock 加強題：主題相同，但要求更嚴，見 benchmark-assets/frontend-shock/PROMPT.md */
+const SHOCK_PROMPT = 'Frontend Shock 加強題：關於你自己（要求更嚴的版本）';
+export const LOGO_PROMPT = '同一道題：用同一張 LOGO 做完整品牌落地站';
 
 export const PLATES: Plate[] = [
   {
@@ -229,7 +232,7 @@ export const PLATES: Plate[] = [
     short: 'ASTRA',
     model: 'GPT-6 ASTRA',
     title: '未定之形 / AN UNFINISHED FORM',
-    prompt: SHARED_PROMPT,
+    prompt: SHOCK_PROMPT,
     spec: ['NATIVE ES MODULES', 'SVG 幾何編織', 'MOTION 13.2.0', '離線單檔輸出'],
     verdict: '把「未完成」做成一套可操作的回答結構：選擇、反例與修訂都會留下可見痕跡，互動不是裝飾而是敘事本體。版式與動效收束後完成度高，概念辨識度也足夠。',
     visual: 'current',

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { PLATES, CRITERIA, DOSSIER, type Plate } from './data';
+import { PLATES, CRITERIA, DOSSIER, LOGO_PROMPT, type Plate } from './data';
 
 /**
  * 標題用中文數字，但件數會變——寫死會在增減作品時說謊。
@@ -63,6 +63,62 @@ function WorkVerdict({ text }: { text: string }) {
   );
 }
 
+function WorkCard({ pl, rank, onPreview }: { pl: Plate; rank: number | null; onPreview: (pl: Plate) => void }) {
+  const label = rank != null ? `第${rank}名 ${pl.title}` : `待評 ${pl.title}`;
+  return (
+    <article className={`work rv${rank === 1 ? ' work--first' : ''}${rank == null ? ' work--pending' : ''}`} aria-label={label}>
+      <span className="work__ranknum" aria-hidden="true">{rank ?? '—'}</span>
+      <div className="thumb">
+        <a className="thumb__main" href={pl.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${pl.title} 完整作品`}>
+          <Visual kind={pl.visual} />
+          <img src={pl.thumb} alt={`${pl.title}實機畫面`} loading="lazy" />
+          <span className="thumb__direct">完整作品 ↗</span>
+        </a>
+        {pl.logoSrc && pl.logoThumb && (
+          <a className="thumb__pip" href={pl.logoSrc} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${pl.model} 的 LOGO 落地站`}>
+            <img src={pl.logoThumb} alt="" loading="lazy" />
+            <span>LOGO · {pl.score2 ?? '待評'}</span>
+          </a>
+        )}
+      </div>
+      <div className="work__copy">
+        <span className="work__rank">{rank != null ? `RANK ${rank}` : 'PENDING · 待評'} · {pl.no} / PLATE</span>
+        <h3><a className="work__titlelink" href={pl.src} target="_blank" rel="noreferrer">{pl.title}{' '}↗</a></h3>
+        <p className="work__model"><a className="work__modellink" href={pl.src} target="_blank" rel="noreferrer">{pl.model} · 直達作品頁{' '}↗</a></p>
+        <p className="work__prompt">{pl.prompt}</p>
+        <WorkVerdict text={pl.verdict} />
+        <div className="work__spec">{pl.spec.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
+        {pl.attempts && pl.attempts.length > 1 && (
+          <div className="work__attempts" aria-label={`${pl.model} 歷次重考`}>
+            <span className="mono work__attempts-label">ATTEMPTS</span>
+            {pl.attempts.map((attempt) => (
+              <a className="btn btn--ghost btn--small" key={attempt.id} href={attempt.src} target="_blank" rel="noreferrer">
+                {attempt.label.replace('ATTEMPT ', 'A')} · {attempt.title} · {attempt.score ?? '待評'} ↗
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="work__side">
+        <span className="bignum">{pl.score ?? '—'}<small> / 100</small></span>
+        {pl.score != null ? (
+          <div className={`bar${pl.score < 70 ? ' bar--low' : ''}`} aria-hidden="true">
+            <i style={{ width: `${pl.score}%` }} />
+          </div>
+        ) : (
+          <span className="mono work__pending">已收件 · 待評分</span>
+        )}
+        {pl.logoSrc && <span className="mono">LOGO落地 · {pl.score2 ?? '待評'}</span>}
+        <div className="work__actions">
+          <a className="btn btn--small" href={pl.src} target="_blank" rel="noreferrer">自我介紹 ↗</a>
+          {pl.logoSrc && <a className="btn btn--ghost btn--small" href={pl.logoSrc} target="_blank" rel="noreferrer">LOGO 落地 ↗</a>}
+          <button type="button" className="btn btn--preview btn--small" onClick={() => onPreview(pl)}>▣ 站內預覽</button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function App() {
   const progress = useProgress();
   const [open, setOpen] = useState<Plate | null>(null);
@@ -86,6 +142,9 @@ export default function App() {
   }, []);
 
   const works = [...PLATES].sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
+  const ranked = works.filter((w) => w.score != null);
+  const pending = works.filter((w) => w.score == null);
+  const rankOf = (w: Plate) => (w.score != null ? ranked.indexOf(w) + 1 : null);
   const openIdx = open ? works.findIndex((w) => w.id === open.id) : -1;
 
   const step = (d: number) => {
@@ -112,8 +171,9 @@ export default function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
-  const deepseek = works.find((w) => w.id === 'deepseek-v4-1-flash');
-  const duelAttempts = deepseek?.attempts ?? [];
+  // 首屏對決永遠是目前榜首兩件，排名一變就跟著變，不會停在過期的對手。
+  const duel = ranked.slice(0, 2);
+  const gap = duel.length === 2 ? (duel[0].score ?? 0) - (duel[1].score ?? 0) : 0;
   const logoWorks = works.filter((w) => w.logoSrc).length;
   const pct = Math.round(progress * 100);
 
@@ -153,8 +213,8 @@ export default function App() {
                 每件作品都能直接進獨立分頁實際操作，也可以留在 Arena 展開站內預覽。
               </p>
               <div className="hero__stats">
-                <div><b>{works.length}<i>.</i></b><span>參賽模型</span></div>
-                <div><b>2<i>.</i></b><span>實作題型</span></div>
+                <div><b>{works.length}<i>.</i></b><span>參賽作品</span></div>
+                <div><b>{ranked.length}<i>.</i></b><span>已評分</span></div>
                 <div><b>{logoWorks}<i>.</i></b><span>LOGO 落地</span></div>
               </div>
               <div className="hero__cta">
@@ -162,35 +222,38 @@ export default function App() {
                 <button type="button" className="btn btn--ghost" onClick={() => go('index')}>評分尺規</button>
               </div>
             </div>
-            <div className="duel rv" aria-label="DeepSeek V4.1 Flash 第一次與第二次重考對決">
-              <div className="duel__head">
-                <span className="mono">CURRENT VS · DEEPSEEK V4.1 FLASH</span>
-                <span className="mono">{duelAttempts.map((attempt) => attempt.score ?? '待評').join(' — ')}</span>
-              </div>
-              <div className="duel__grid">
-                {duelAttempts.map((attempt) => (
-                  <div className="duel__cell" key={attempt.id}>
-                    <a className="duel__thumb duel__thumb--link" href={attempt.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${attempt.title} 完整作品`}>
-                      {deepseek && <Visual kind={deepseek.visual} />}
-                      <img src={attempt.thumb} alt={`${attempt.title}實機畫面`} loading="lazy" />
-                      <span className="thumb__direct">完整作品 ↗</span>
-                    </a>
-                    <div className="duel__id">
-                      <p className="duel__name"><a className="duel__titlelink" href={attempt.src} target="_blank" rel="noreferrer">{attempt.title}{' '}↗</a></p>
-                      <span className="duel__score">{attempt.score ?? '—'}</span>
-                      <p className="duel__meta">{attempt.label} · {attempt.note}</p>
+            {duel.length === 2 && (
+              <div className="duel rv" aria-label={`榜首對決：${duel[0].model} 對 ${duel[1].model}`}>
+                <div className="duel__head">
+                  <span className="mono">CURRENT VS · 榜首對決</span>
+                  <span className="mono">{duel.map((w) => w.score).join(' — ')}</span>
+                </div>
+                <div className="duel__grid">
+                  {duel.map((w, i) => (
+                    <div className="duel__cell" key={w.id}>
+                      <a className="duel__thumb duel__thumb--link" href={w.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${w.title} 完整作品`}>
+                        <Visual kind={w.visual} />
+                        <img src={w.thumb} alt={`${w.title}實機畫面`} />
+                        <span className="thumb__direct">完整作品 ↗</span>
+                      </a>
+                      <div className="duel__id">
+                        <p className="duel__name"><a className="duel__titlelink" href={w.src} target="_blank" rel="noreferrer">{w.title}{' '}↗</a></p>
+                        <span className="duel__score">{w.score}</span>
+                        <p className="duel__meta">RANK {i + 1} · {w.model}</p>
+                      </div>
+                      <div className="duel__row">
+                        <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(w)}>▣ 站內預覽</button>
+                        <a className="btn btn--small" href={w.src} target="_blank" rel="noreferrer">完整作品 ↗</a>
+                      </div>
                     </div>
-                    <div className="duel__row">
-                      <a className="btn btn--small" href={attempt.src} target="_blank" rel="noreferrer">完整作品 ↗</a>
-                    </div>
-                  </div>
-                ))}
-                <div className="duel__vs" aria-hidden="true">VS</div>
+                  ))}
+                  <div className="duel__vs" aria-hidden="true">VS</div>
+                </div>
+                <div className="duel__foot">
+                  <span className="mono">{gap === 0 ? '同分並列' : `相差 ${gap} 分`} · 依目前評分自動選出前兩名{pending.length > 0 ? ` · 另有 ${pending.length} 件待評` : ''}</span>
+                </div>
               </div>
-              <div className="duel__foot">
-                <span className="mono">同模型重考：A1 岔路 85 分 · A2 藍色大肥魚已完工，待重新評分</span>
-              </div>
-            </div>
+            )}
           </div>
         </section>
 
@@ -201,55 +264,25 @@ export default function App() {
               <div className="secnum" aria-hidden="true">01</div>
               <p className="eyebrow">RANK · 作品排名（按評分排序）</p>
               <h2 id="works-title">
-                {cnNum(works.length)}件作品，<em>完整排名。</em>
+                {cnNum(ranked.length)}件已評分，<em>完整排名。</em>
               </h2>
               <p className="section__desc">點作品名稱或「自我介紹／LOGO 落地」可直接進獨立分頁實際操作；「站內預覽」才會留在 Arena 內展開互動視窗。</p>
             </div>
           </div>
           <div className="works">
-            {works.map((pl, i) => (
-              <article className={`work rv${i === 0 ? ' work--first' : ''}`} key={pl.id} aria-label={`第${i + 1}名 ${pl.title}`}>
-                <span className="work__ranknum" aria-hidden="true">{i + 1}</span>
-                <a className="thumb thumb--link" href={pl.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${pl.title} 完整作品`}>
-                  <Visual kind={pl.visual} />
-                  <img src={pl.thumb} alt={`${pl.title}實機畫面`} loading="lazy" />
-                  <span className="thumb__direct">完整作品 ↗</span>
-                </a>
-                <div className="work__copy">
-                  <span className="work__rank">RANK {i + 1} · {pl.no} / PLATE</span>
-                  <h3><a className="work__titlelink" href={pl.src} target="_blank" rel="noreferrer">{pl.title}{' '}↗</a></h3>
-                  <p className="work__model"><a className="work__modellink" href={pl.src} target="_blank" rel="noreferrer">{pl.model} · 直達作品頁{' '}↗</a></p>
-                  <p className="work__prompt">{pl.prompt}</p>
-                  <WorkVerdict text={pl.verdict} />
-                  <div className="work__spec">{pl.spec.map((s) => <span className="chip" key={s}>{s}</span>)}</div>
-                  {pl.attempts && pl.attempts.length > 1 && (
-                    <div className="work__attempts" aria-label={`${pl.model} 歷次重考`}>
-                      <span className="mono work__attempts-label">ATTEMPTS</span>
-                      {pl.attempts.map((attempt) => (
-                        <a className="btn btn--ghost btn--small" key={attempt.id} href={attempt.src} target="_blank" rel="noreferrer">
-                          {attempt.label.replace('ATTEMPT ', 'A')} · {attempt.title} · {attempt.score ?? '待評'} ↗
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="work__side">
-                  <span className="bignum">{pl.score ?? '—'}<small> / 100</small></span>
-                  {pl.score != null && (
-                    <div className={`bar${pl.score < 70 ? ' bar--low' : ''}`} aria-hidden="true">
-                      <i style={{ width: `${pl.score}%` }} />
-                    </div>
-                  )}
-                  {pl.logoSrc && <span className="mono">LOGO落地 · {pl.score2 ?? '—'}</span>}
-                  <div className="work__actions">
-                    <a className="btn btn--small" href={pl.src} target="_blank" rel="noreferrer">自我介紹 ↗</a>
-                    {pl.logoSrc && <a className="btn btn--ghost btn--small" href={pl.logoSrc} target="_blank" rel="noreferrer">LOGO 落地 ↗</a>}
-                    <button type="button" className="btn btn--preview btn--small" onClick={() => setOpen(pl)}>▣ 站內預覽</button>
-                  </div>
-                </div>
-              </article>
-            ))}
+            {ranked.map((pl) => <WorkCard key={pl.id} pl={pl} rank={rankOf(pl)} onPreview={setOpen} />)}
           </div>
+          {pending.length > 0 && (
+            <>
+              <div className="pending__head rv">
+                <p className="eyebrow">PENDING · 已收件，待評分</p>
+                <p className="section__desc">作品已經可以操作，分數還沒打，所以不排名次。</p>
+              </div>
+              <div className="works">
+                {pending.map((pl) => <WorkCard key={pl.id} pl={pl} rank={null} onPreview={setOpen} />)}
+              </div>
+            </>
+          )}
         </section>
 
         {/* 天梯 */}
@@ -299,7 +332,7 @@ export default function App() {
             <div className="overlay__bg" onClick={() => setOpen(null)} />
             <div className="overlay__box">
               <div className="overlay__top">
-                <span className="mono">站內預覽 · {open.no} · {open.model} · {open.title} · {open.score ?? '—'}/100</span>
+                <span className="mono">站內預覽 · {open.no} · {open.model} · {open.title} · {open.score != null ? `${open.score}/100` : '待評'}</span>
                 <span className="overlay__nav">
                   <button type="button" className="btn btn--ghost btn--small" onClick={() => step(-1)} aria-label="上一件">‹</button>
                   <button type="button" className="btn btn--ghost btn--small" onClick={() => step(1)} aria-label="下一件">›</button>
@@ -307,7 +340,7 @@ export default function App() {
                 </span>
               </div>
               <div className="overlay__tabs" role="tablist" aria-label="切換作品">
-                {works.map((w, i) => (
+                {works.map((w) => (
                   <button
                     key={w.id}
                     type="button"
@@ -317,7 +350,7 @@ export default function App() {
                     className={`otab${w.id === open.id ? ' active' : ''}`}
                     onClick={() => setOpen(w)}
                   >
-                    R{i + 1} {w.short} · {w.score ?? '—'}
+                    {rankOf(w) != null ? `R${rankOf(w)}` : '待評'} {w.short}{w.score != null ? ` · ${w.score}` : ''}
                   </button>
                 ))}
               </div>
@@ -333,7 +366,7 @@ export default function App() {
                 </div>
                 <aside className="overlay__side">
                   <h3 className="spread__name">{open.title}</h3>
-                  <p className="spread__prompt">{open.prompt}</p>
+                  <p className="spread__prompt">{itemSel === 'logo' && open.logoSrc ? LOGO_PROMPT : open.prompt}</p>
                   {open.logoSrc && (
                     <div className="seg" role="tablist" aria-label="切換子項">
                       <button
