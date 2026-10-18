@@ -1,0 +1,4429 @@
+{
+  "results": [
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1270
+      },
+      "stage": 0,
+      "copy": {
+        "x": 112.625,
+        "y": 260,
+        "right": 1264.625,
+        "bottom": 746.484375,
+        "width": 1152,
+        "height": 486.484375,
+        "visible": true
+      },
+      "note": {
+        "x": 112.625,
+        "y": 1053.203125,
+        "right": 1264.625,
+        "bottom": 1135,
+        "width": 1152,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1310.71875,
+        "y": 931.8125,
+        "right": 2447.375,
+        "bottom": 952.8125,
+        "width": 1136.65625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1310.71875,
+        "y": 970.8125,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1310.71875,
+        "y": 246,
+        "right": 2419.375,
+        "bottom": 911.8125,
+        "width": 1108.65625,
+        "height": 665.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 112.625,
+        "y": 1168,
+        "right": 2447.375,
+        "bottom": 1228,
+        "width": 2334.75,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1310.71875,
+        "y": 210,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 925,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1270
+      },
+      "stage": 1,
+      "copy": {
+        "x": 112.625,
+        "y": 260,
+        "right": 1264.625,
+        "bottom": 610.28125,
+        "width": 1152,
+        "height": 350.28125,
+        "visible": true
+      },
+      "note": {
+        "x": 112.625,
+        "y": 1053.203125,
+        "right": 1264.625,
+        "bottom": 1135,
+        "width": 1152,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1310.71875,
+        "y": 931.8125,
+        "right": 2447.375,
+        "bottom": 952.8125,
+        "width": 1136.65625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1310.71875,
+        "y": 970.8125,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1310.71875,
+        "y": 246,
+        "right": 2419.375,
+        "bottom": 911.8125,
+        "width": 1108.65625,
+        "height": 665.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 112.625,
+        "y": 1168,
+        "right": 2447.375,
+        "bottom": 1228,
+        "width": 2334.75,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1310.71875,
+        "y": 210,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 925,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1270
+      },
+      "stage": 2,
+      "copy": {
+        "x": 112.625,
+        "y": 260,
+        "right": 1264.625,
+        "bottom": 508,
+        "width": 1152,
+        "height": 248,
+        "visible": true
+      },
+      "note": {
+        "x": 112.625,
+        "y": 1053.203125,
+        "right": 1264.625,
+        "bottom": 1135,
+        "width": 1152,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1310.71875,
+        "y": 931.8125,
+        "right": 2447.375,
+        "bottom": 952.8125,
+        "width": 1136.65625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1310.71875,
+        "y": 970.8125,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1310.71875,
+        "y": 246,
+        "right": 2419.375,
+        "bottom": 911.8125,
+        "width": 1108.65625,
+        "height": 665.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 112.625,
+        "y": 1168,
+        "right": 2447.375,
+        "bottom": 1228,
+        "width": 2334.75,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1310.71875,
+        "y": 210,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 925,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2560,
+        "height": 1270
+      },
+      "stage": 3,
+      "copy": {
+        "x": 112.625,
+        "y": 260,
+        "right": 1264.625,
+        "bottom": 680.28125,
+        "width": 1152,
+        "height": 420.28125,
+        "visible": true
+      },
+      "note": {
+        "x": 112.625,
+        "y": 1053.203125,
+        "right": 1264.625,
+        "bottom": 1135,
+        "width": 1152,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1310.71875,
+        "y": 931.8125,
+        "right": 2447.375,
+        "bottom": 952.8125,
+        "width": 1136.65625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1310.71875,
+        "y": 970.8125,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1310.71875,
+        "y": 246,
+        "right": 2419.375,
+        "bottom": 911.8125,
+        "width": 1108.65625,
+        "height": 665.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 112.625,
+        "y": 1168,
+        "right": 2447.375,
+        "bottom": 1228,
+        "width": 2334.75,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1310.71875,
+        "y": 210,
+        "right": 2447.375,
+        "bottom": 1135,
+        "width": 1136.65625,
+        "height": 925,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2032,
+        "height": 1016
+      },
+      "stage": 0,
+      "copy": {
+        "x": 89.40625,
+        "y": 223.515625,
+        "right": 1003.796875,
+        "bottom": 664.46875,
+        "width": 914.390625,
+        "height": 440.953125,
+        "visible": true
+      },
+      "note": {
+        "x": 89.40625,
+        "y": 799.203125,
+        "right": 1003.796875,
+        "bottom": 881,
+        "width": 914.390625,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1040.375,
+        "y": 677.8125,
+        "right": 1942.59375,
+        "bottom": 698.8125,
+        "width": 902.21875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1040.375,
+        "y": 716.8125,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1040.375,
+        "y": 218.875,
+        "right": 1914.59375,
+        "bottom": 657.8125,
+        "width": 874.21875,
+        "height": 438.9375,
+        "visible": true
+      },
+      "nav": {
+        "x": 89.40625,
+        "y": 914,
+        "right": 1942.59375,
+        "bottom": 974,
+        "width": 1853.1875,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1040.375,
+        "y": 182.875,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 698.125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2032,
+        "height": 1016
+      },
+      "stage": 1,
+      "copy": {
+        "x": 89.40625,
+        "y": 223.515625,
+        "right": 1003.796875,
+        "bottom": 561.546875,
+        "width": 914.390625,
+        "height": 338.03125,
+        "visible": true
+      },
+      "note": {
+        "x": 89.40625,
+        "y": 799.203125,
+        "right": 1003.796875,
+        "bottom": 881,
+        "width": 914.390625,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1040.375,
+        "y": 677.8125,
+        "right": 1942.59375,
+        "bottom": 698.8125,
+        "width": 902.21875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1040.375,
+        "y": 716.8125,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1040.375,
+        "y": 218.875,
+        "right": 1914.59375,
+        "bottom": 657.8125,
+        "width": 874.21875,
+        "height": 438.9375,
+        "visible": true
+      },
+      "nav": {
+        "x": 89.40625,
+        "y": 914,
+        "right": 1942.59375,
+        "bottom": 974,
+        "width": 1853.1875,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1040.375,
+        "y": 182.875,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 698.125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2032,
+        "height": 1016
+      },
+      "stage": 2,
+      "copy": {
+        "x": 89.40625,
+        "y": 223.515625,
+        "right": 1003.796875,
+        "bottom": 464.265625,
+        "width": 914.390625,
+        "height": 240.75,
+        "visible": true
+      },
+      "note": {
+        "x": 89.40625,
+        "y": 799.203125,
+        "right": 1003.796875,
+        "bottom": 881,
+        "width": 914.390625,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1040.375,
+        "y": 677.8125,
+        "right": 1942.59375,
+        "bottom": 698.8125,
+        "width": 902.21875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1040.375,
+        "y": 716.8125,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1040.375,
+        "y": 218.875,
+        "right": 1914.59375,
+        "bottom": 657.8125,
+        "width": 874.21875,
+        "height": 438.9375,
+        "visible": true
+      },
+      "nav": {
+        "x": 89.40625,
+        "y": 914,
+        "right": 1942.59375,
+        "bottom": 974,
+        "width": 1853.1875,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1040.375,
+        "y": 182.875,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 698.125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 2032,
+        "height": 1016
+      },
+      "stage": 3,
+      "copy": {
+        "x": 89.40625,
+        "y": 223.515625,
+        "right": 1003.796875,
+        "bottom": 631.546875,
+        "width": 914.390625,
+        "height": 408.03125,
+        "visible": true
+      },
+      "note": {
+        "x": 89.40625,
+        "y": 799.203125,
+        "right": 1003.796875,
+        "bottom": 881,
+        "width": 914.390625,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 1040.375,
+        "y": 677.8125,
+        "right": 1942.59375,
+        "bottom": 698.8125,
+        "width": 902.21875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 1040.375,
+        "y": 716.8125,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 1040.375,
+        "y": 218.875,
+        "right": 1914.59375,
+        "bottom": 657.8125,
+        "width": 874.21875,
+        "height": 438.9375,
+        "visible": true
+      },
+      "nav": {
+        "x": 89.40625,
+        "y": 914,
+        "right": 1942.59375,
+        "bottom": 974,
+        "width": 1853.1875,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 1040.375,
+        "y": 182.875,
+        "right": 1942.59375,
+        "bottom": 881,
+        "width": 902.21875,
+        "height": 698.125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 960
+      },
+      "stage": 0,
+      "copy": {
+        "x": 84.46875,
+        "y": 211.1875,
+        "right": 948.46875,
+        "bottom": 633.984375,
+        "width": 864,
+        "height": 422.796875,
+        "visible": true
+      },
+      "note": {
+        "x": 84.46875,
+        "y": 743.203125,
+        "right": 948.46875,
+        "bottom": 825,
+        "width": 864,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 983.03125,
+        "y": 621.8125,
+        "right": 1835.53125,
+        "bottom": 642.8125,
+        "width": 852.5,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 983.03125,
+        "y": 660.8125,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 983.03125,
+        "y": 208.796875,
+        "right": 1807.53125,
+        "bottom": 601.8125,
+        "width": 824.5,
+        "height": 393.015625,
+        "visible": true
+      },
+      "nav": {
+        "x": 84.46875,
+        "y": 858,
+        "right": 1835.53125,
+        "bottom": 918,
+        "width": 1751.0625,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 983.03125,
+        "y": 172.796875,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 652.203125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 960
+      },
+      "stage": 1,
+      "copy": {
+        "x": 84.46875,
+        "y": 211.1875,
+        "right": 948.46875,
+        "bottom": 536.34375,
+        "width": 864,
+        "height": 325.15625,
+        "visible": true
+      },
+      "note": {
+        "x": 84.46875,
+        "y": 743.203125,
+        "right": 948.46875,
+        "bottom": 825,
+        "width": 864,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 983.03125,
+        "y": 621.8125,
+        "right": 1835.53125,
+        "bottom": 642.8125,
+        "width": 852.5,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 983.03125,
+        "y": 660.8125,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 983.03125,
+        "y": 208.796875,
+        "right": 1807.53125,
+        "bottom": 601.8125,
+        "width": 824.5,
+        "height": 393.015625,
+        "visible": true
+      },
+      "nav": {
+        "x": 84.46875,
+        "y": 858,
+        "right": 1835.53125,
+        "bottom": 918,
+        "width": 1751.0625,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 983.03125,
+        "y": 172.796875,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 652.203125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 960
+      },
+      "stage": 2,
+      "copy": {
+        "x": 84.46875,
+        "y": 211.1875,
+        "right": 948.46875,
+        "bottom": 440.875,
+        "width": 864,
+        "height": 229.6875,
+        "visible": true
+      },
+      "note": {
+        "x": 84.46875,
+        "y": 743.203125,
+        "right": 948.46875,
+        "bottom": 825,
+        "width": 864,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 983.03125,
+        "y": 621.8125,
+        "right": 1835.53125,
+        "bottom": 642.8125,
+        "width": 852.5,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 983.03125,
+        "y": 660.8125,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 983.03125,
+        "y": 208.796875,
+        "right": 1807.53125,
+        "bottom": 601.8125,
+        "width": 824.5,
+        "height": 393.015625,
+        "visible": true
+      },
+      "nav": {
+        "x": 84.46875,
+        "y": 858,
+        "right": 1835.53125,
+        "bottom": 918,
+        "width": 1751.0625,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 983.03125,
+        "y": 172.796875,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 652.203125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 960
+      },
+      "stage": 3,
+      "copy": {
+        "x": 84.46875,
+        "y": 211.1875,
+        "right": 948.46875,
+        "bottom": 606.34375,
+        "width": 864,
+        "height": 395.15625,
+        "visible": true
+      },
+      "note": {
+        "x": 84.46875,
+        "y": 743.203125,
+        "right": 948.46875,
+        "bottom": 825,
+        "width": 864,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 983.03125,
+        "y": 621.8125,
+        "right": 1835.53125,
+        "bottom": 642.8125,
+        "width": 852.5,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 983.03125,
+        "y": 660.8125,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 983.03125,
+        "y": 208.796875,
+        "right": 1807.53125,
+        "bottom": 601.8125,
+        "width": 824.5,
+        "height": 393.015625,
+        "visible": true
+      },
+      "nav": {
+        "x": 84.46875,
+        "y": 858,
+        "right": 1835.53125,
+        "bottom": 918,
+        "width": 1751.0625,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 983.03125,
+        "y": 172.796875,
+        "right": 1835.53125,
+        "bottom": 825,
+        "width": 852.5,
+        "height": 652.203125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 17,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 814
+      },
+      "stage": 0,
+      "copy": {
+        "x": 67.578125,
+        "y": 180,
+        "right": 758.765625,
+        "bottom": 553.671875,
+        "width": 691.1875,
+        "height": 373.671875,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 609.203125,
+        "right": 758.765625,
+        "bottom": 691,
+        "width": 691.1875,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 487.8125,
+        "right": 1468.421875,
+        "bottom": 508.8125,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 526.8125,
+        "right": 1468.421875,
+        "bottom": 691,
+        "width": 682,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 190,
+        "right": 1440.421875,
+        "bottom": 467.8125,
+        "width": 654,
+        "height": 277.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 712,
+        "right": 1468.421875,
+        "bottom": 772,
+        "width": 1400.84375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 154,
+        "right": 1468.421875,
+        "bottom": 691,
+        "width": 682,
+        "height": 537,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 814
+      },
+      "stage": 1,
+      "copy": {
+        "x": 67.578125,
+        "y": 180,
+        "right": 758.765625,
+        "bottom": 470.6875,
+        "width": 691.1875,
+        "height": 290.6875,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 609.203125,
+        "right": 758.765625,
+        "bottom": 691,
+        "width": 691.1875,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 487.8125,
+        "right": 1468.421875,
+        "bottom": 508.8125,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 526.8125,
+        "right": 1468.421875,
+        "bottom": 691,
+        "width": 682,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 190,
+        "right": 1440.421875,
+        "bottom": 467.8125,
+        "width": 654,
+        "height": 277.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 712,
+        "right": 1468.421875,
+        "bottom": 772,
+        "width": 1400.84375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 154,
+        "right": 1468.421875,
+        "bottom": 691,
+        "width": 682,
+        "height": 537,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 814
+      },
+      "stage": 2,
+      "copy": {
+        "x": 67.578125,
+        "y": 180,
+        "right": 758.765625,
+        "bottom": 380.8125,
+        "width": 691.1875,
+        "height": 200.8125,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 609.203125,
+        "right": 758.765625,
+        "bottom": 691,
+        "width": 691.1875,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 487.8125,
+        "right": 1468.421875,
+        "bottom": 508.8125,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 526.8125,
+        "right": 1468.421875,
+        "bottom": 691,
+        "width": 682,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 190,
+        "right": 1440.421875,
+        "bottom": 467.8125,
+        "width": 654,
+        "height": 277.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 712,
+        "right": 1468.421875,
+        "bottom": 772,
+        "width": 1400.84375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 154,
+        "right": 1468.421875,
+        "bottom": 691,
+        "width": 682,
+        "height": 537,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 814
+      },
+      "stage": 3,
+      "copy": {
+        "x": 67.578125,
+        "y": 179.59375,
+        "right": 758.765625,
+        "bottom": 540.28125,
+        "width": 691.1875,
+        "height": 360.6875,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 608.796875,
+        "right": 758.765625,
+        "bottom": 690.59375,
+        "width": 691.1875,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 487.40625,
+        "right": 1468.421875,
+        "bottom": 508.40625,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 526.40625,
+        "right": 1468.421875,
+        "bottom": 690.59375,
+        "width": 682,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 189.59375,
+        "right": 1440.421875,
+        "bottom": 467.40625,
+        "width": 654,
+        "height": 277.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 711.59375,
+        "right": 1468.421875,
+        "bottom": 771.59375,
+        "width": 1400.84375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 153.59375,
+        "right": 1468.421875,
+        "bottom": 690.59375,
+        "width": 682,
+        "height": 537,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 734
+      },
+      "stage": 0,
+      "copy": {
+        "x": 67.578125,
+        "y": 156,
+        "right": 758.765625,
+        "bottom": 484.484375,
+        "width": 691.1875,
+        "height": 328.484375,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 545.8125,
+        "right": 758.765625,
+        "bottom": 622,
+        "width": 691.1875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 442.90625,
+        "right": 1468.421875,
+        "bottom": 463.90625,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 477.90625,
+        "right": 1468.421875,
+        "bottom": 622,
+        "width": 682,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 161,
+        "right": 1440.421875,
+        "bottom": 422.90625,
+        "width": 654,
+        "height": 261.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 644,
+        "right": 1468.421875,
+        "bottom": 699,
+        "width": 1400.84375,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 125,
+        "right": 1468.421875,
+        "bottom": 622,
+        "width": 682,
+        "height": 497,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 734
+      },
+      "stage": 1,
+      "copy": {
+        "x": 67.578125,
+        "y": 156,
+        "right": 758.765625,
+        "bottom": 411.15625,
+        "width": 691.1875,
+        "height": 255.15625,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 545.8125,
+        "right": 758.765625,
+        "bottom": 622,
+        "width": 691.1875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 442.90625,
+        "right": 1468.421875,
+        "bottom": 463.90625,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 477.90625,
+        "right": 1468.421875,
+        "bottom": 622,
+        "width": 682,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 161,
+        "right": 1440.421875,
+        "bottom": 422.90625,
+        "width": 654,
+        "height": 261.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 644,
+        "right": 1468.421875,
+        "bottom": 699,
+        "width": 1400.84375,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 125,
+        "right": 1468.421875,
+        "bottom": 622,
+        "width": 682,
+        "height": 497,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 734
+      },
+      "stage": 2,
+      "copy": {
+        "x": 67.578125,
+        "y": 156,
+        "right": 758.765625,
+        "bottom": 335.53125,
+        "width": 691.1875,
+        "height": 179.53125,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 545.8125,
+        "right": 758.765625,
+        "bottom": 622,
+        "width": 691.1875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 442.90625,
+        "right": 1468.421875,
+        "bottom": 463.90625,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 477.90625,
+        "right": 1468.421875,
+        "bottom": 622,
+        "width": 682,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 161,
+        "right": 1440.421875,
+        "bottom": 422.90625,
+        "width": 654,
+        "height": 261.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 644,
+        "right": 1468.421875,
+        "bottom": 699,
+        "width": 1400.84375,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 125,
+        "right": 1468.421875,
+        "bottom": 622,
+        "width": 682,
+        "height": 497,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1536,
+        "height": 734
+      },
+      "stage": 3,
+      "copy": {
+        "x": 67.578125,
+        "y": 155.59375,
+        "right": 758.765625,
+        "bottom": 471.75,
+        "width": 691.1875,
+        "height": 316.15625,
+        "visible": true
+      },
+      "note": {
+        "x": 67.578125,
+        "y": 545.40625,
+        "right": 758.765625,
+        "bottom": 621.59375,
+        "width": 691.1875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 786.421875,
+        "y": 442.5,
+        "right": 1468.421875,
+        "bottom": 463.5,
+        "width": 682,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 786.421875,
+        "y": 477.5,
+        "right": 1468.421875,
+        "bottom": 621.59375,
+        "width": 682,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 786.421875,
+        "y": 160.59375,
+        "right": 1440.421875,
+        "bottom": 422.5,
+        "width": 654,
+        "height": 261.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 67.578125,
+        "y": 643.59375,
+        "right": 1468.421875,
+        "bottom": 698.59375,
+        "width": 1400.84375,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 786.421875,
+        "y": 124.59375,
+        "right": 1468.421875,
+        "bottom": 621.59375,
+        "width": 682,
+        "height": 497,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 0,
+      "copy": {
+        "x": 63.359375,
+        "y": 198,
+        "right": 711.359375,
+        "bottom": 598.96875,
+        "width": 648,
+        "height": 400.96875,
+        "visible": true
+      },
+      "note": {
+        "x": 63.359375,
+        "y": 695.203125,
+        "right": 711.359375,
+        "bottom": 777,
+        "width": 648,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 737.265625,
+        "y": 573.8125,
+        "right": 1376.640625,
+        "bottom": 594.8125,
+        "width": 639.375,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 737.265625,
+        "y": 612.8125,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 737.265625,
+        "y": 198,
+        "right": 1348.640625,
+        "bottom": 553.8125,
+        "width": 611.375,
+        "height": 355.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "right": 1376.640625,
+        "bottom": 858,
+        "width": 1313.28125,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 737.265625,
+        "y": 162,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 615,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 1,
+      "copy": {
+        "x": 63.359375,
+        "y": 198,
+        "right": 711.359375,
+        "bottom": 507.9375,
+        "width": 648,
+        "height": 309.9375,
+        "visible": true
+      },
+      "note": {
+        "x": 63.359375,
+        "y": 695.203125,
+        "right": 711.359375,
+        "bottom": 777,
+        "width": 648,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 737.265625,
+        "y": 573.8125,
+        "right": 1376.640625,
+        "bottom": 594.8125,
+        "width": 639.375,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 737.265625,
+        "y": 612.8125,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 737.265625,
+        "y": 198,
+        "right": 1348.640625,
+        "bottom": 553.8125,
+        "width": 611.375,
+        "height": 355.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "right": 1376.640625,
+        "bottom": 858,
+        "width": 1313.28125,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 737.265625,
+        "y": 162,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 615,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 2,
+      "copy": {
+        "x": 63.359375,
+        "y": 198,
+        "right": 711.359375,
+        "bottom": 415.8125,
+        "width": 648,
+        "height": 217.8125,
+        "visible": true
+      },
+      "note": {
+        "x": 63.359375,
+        "y": 695.203125,
+        "right": 711.359375,
+        "bottom": 777,
+        "width": 648,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 737.265625,
+        "y": 573.8125,
+        "right": 1376.640625,
+        "bottom": 594.8125,
+        "width": 639.375,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 737.265625,
+        "y": 612.8125,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 737.265625,
+        "y": 198,
+        "right": 1348.640625,
+        "bottom": 553.8125,
+        "width": 611.375,
+        "height": 355.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "right": 1376.640625,
+        "bottom": 858,
+        "width": 1313.28125,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 737.265625,
+        "y": 162,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 615,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "stage": 3,
+      "copy": {
+        "x": 63.359375,
+        "y": 198,
+        "right": 711.359375,
+        "bottom": 577.9375,
+        "width": 648,
+        "height": 379.9375,
+        "visible": true
+      },
+      "note": {
+        "x": 63.359375,
+        "y": 695.203125,
+        "right": 711.359375,
+        "bottom": 777,
+        "width": 648,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 737.265625,
+        "y": 573.8125,
+        "right": 1376.640625,
+        "bottom": 594.8125,
+        "width": 639.375,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 737.265625,
+        "y": 612.8125,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 737.265625,
+        "y": 198,
+        "right": 1348.640625,
+        "bottom": 553.8125,
+        "width": 611.375,
+        "height": 355.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 63.359375,
+        "y": 798,
+        "right": 1376.640625,
+        "bottom": 858,
+        "width": 1313.28125,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 737.265625,
+        "y": 162,
+        "right": 1376.640625,
+        "bottom": 777,
+        "width": 639.375,
+        "height": 615,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 16,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 620
+      },
+      "stage": 0,
+      "copy": {
+        "x": 60.09375,
+        "y": 142,
+        "right": 674.78125,
+        "bottom": 424.46875,
+        "width": 614.6875,
+        "height": 282.46875,
+        "visible": true
+      },
+      "note": {
+        "x": 60.09375,
+        "y": 479,
+        "right": 674.78125,
+        "bottom": 515,
+        "width": 614.6875,
+        "height": 36,
+        "visible": true
+      },
+      "hint": {
+        "x": 699.390625,
+        "y": 339.90625,
+        "right": 1305.90625,
+        "bottom": 360.90625,
+        "width": 606.515625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 699.390625,
+        "y": 370.90625,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 699.390625,
+        "y": 161,
+        "right": 1277.90625,
+        "bottom": 319.90625,
+        "width": 578.515625,
+        "height": 158.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 60.09375,
+        "y": 534,
+        "right": 1305.90625,
+        "bottom": 589,
+        "width": 1245.8125,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 699.390625,
+        "y": 125,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 390,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 14,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 620
+      },
+      "stage": 1,
+      "copy": {
+        "x": 60.09375,
+        "y": 142,
+        "right": 674.78125,
+        "bottom": 368.03125,
+        "width": 614.6875,
+        "height": 226.03125,
+        "visible": true
+      },
+      "note": {
+        "x": 60.09375,
+        "y": 479,
+        "right": 674.78125,
+        "bottom": 515,
+        "width": 614.6875,
+        "height": 36,
+        "visible": true
+      },
+      "hint": {
+        "x": 699.390625,
+        "y": 339.90625,
+        "right": 1305.90625,
+        "bottom": 360.90625,
+        "width": 606.515625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 699.390625,
+        "y": 370.90625,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 699.390625,
+        "y": 161,
+        "right": 1277.90625,
+        "bottom": 319.90625,
+        "width": 578.515625,
+        "height": 158.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 60.09375,
+        "y": 534,
+        "right": 1305.90625,
+        "bottom": 589,
+        "width": 1245.8125,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 699.390625,
+        "y": 125,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 390,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 14,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 620
+      },
+      "stage": 2,
+      "copy": {
+        "x": 60.09375,
+        "y": 142,
+        "right": 674.78125,
+        "bottom": 298,
+        "width": 614.6875,
+        "height": 156,
+        "visible": true
+      },
+      "note": {
+        "x": 60.09375,
+        "y": 479,
+        "right": 674.78125,
+        "bottom": 515,
+        "width": 614.6875,
+        "height": 36,
+        "visible": true
+      },
+      "hint": {
+        "x": 699.390625,
+        "y": 339.90625,
+        "right": 1305.90625,
+        "bottom": 360.90625,
+        "width": 606.515625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 699.390625,
+        "y": 370.90625,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 699.390625,
+        "y": 161,
+        "right": 1277.90625,
+        "bottom": 319.90625,
+        "width": 578.515625,
+        "height": 158.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 60.09375,
+        "y": 534,
+        "right": 1305.90625,
+        "bottom": 589,
+        "width": 1245.8125,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 699.390625,
+        "y": 125,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 390,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 14,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1366,
+        "height": 620
+      },
+      "stage": 3,
+      "copy": {
+        "x": 60.09375,
+        "y": 142,
+        "right": 674.78125,
+        "bottom": 429.03125,
+        "width": 614.6875,
+        "height": 287.03125,
+        "visible": true
+      },
+      "note": {
+        "x": 60.09375,
+        "y": 479,
+        "right": 674.78125,
+        "bottom": 515,
+        "width": 614.6875,
+        "height": 36,
+        "visible": true
+      },
+      "hint": {
+        "x": 699.390625,
+        "y": 339.90625,
+        "right": 1305.90625,
+        "bottom": 360.90625,
+        "width": 606.515625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 699.390625,
+        "y": 370.90625,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 699.390625,
+        "y": 161,
+        "right": 1277.90625,
+        "bottom": 319.90625,
+        "width": 578.515625,
+        "height": 158.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 60.09375,
+        "y": 534,
+        "right": 1305.90625,
+        "bottom": 589,
+        "width": 1245.8125,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 699.390625,
+        "y": 125,
+        "right": 1305.90625,
+        "bottom": 515,
+        "width": 606.515625,
+        "height": 390,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 14,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 0,
+      "copy": {
+        "x": 45.046875,
+        "y": 156,
+        "right": 505.84375,
+        "bottom": 473.09375,
+        "width": 460.796875,
+        "height": 317.09375,
+        "visible": true
+      },
+      "note": {
+        "x": 45.046875,
+        "y": 579.8125,
+        "right": 505.84375,
+        "bottom": 656,
+        "width": 460.796875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 524.28125,
+        "y": 476.90625,
+        "right": 978.953125,
+        "bottom": 497.90625,
+        "width": 454.671875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 524.28125,
+        "y": 511.90625,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 524.28125,
+        "y": 161,
+        "right": 950.953125,
+        "bottom": 456.90625,
+        "width": 426.671875,
+        "height": 295.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 45.046875,
+        "y": 678,
+        "right": 978.953125,
+        "bottom": 733,
+        "width": 933.90625,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 524.28125,
+        "y": 125,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 531,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 1,
+      "copy": {
+        "x": 45.046875,
+        "y": 156,
+        "right": 505.84375,
+        "bottom": 388.40625,
+        "width": 460.796875,
+        "height": 232.40625,
+        "visible": true
+      },
+      "note": {
+        "x": 45.046875,
+        "y": 579.8125,
+        "right": 505.84375,
+        "bottom": 656,
+        "width": 460.796875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 524.28125,
+        "y": 476.90625,
+        "right": 978.953125,
+        "bottom": 497.90625,
+        "width": 454.671875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 524.28125,
+        "y": 511.90625,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 524.28125,
+        "y": 161,
+        "right": 950.953125,
+        "bottom": 456.90625,
+        "width": 426.671875,
+        "height": 295.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 45.046875,
+        "y": 678,
+        "right": 978.953125,
+        "bottom": 733,
+        "width": 933.90625,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 524.28125,
+        "y": 125,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 531,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 2,
+      "copy": {
+        "x": 45.046875,
+        "y": 156,
+        "right": 505.84375,
+        "bottom": 317.28125,
+        "width": 460.796875,
+        "height": 161.28125,
+        "visible": true
+      },
+      "note": {
+        "x": 45.046875,
+        "y": 579.8125,
+        "right": 505.84375,
+        "bottom": 656,
+        "width": 460.796875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 524.28125,
+        "y": 476.90625,
+        "right": 978.953125,
+        "bottom": 497.90625,
+        "width": 454.671875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 524.28125,
+        "y": 511.90625,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 524.28125,
+        "y": 161,
+        "right": 950.953125,
+        "bottom": 456.90625,
+        "width": 426.671875,
+        "height": 295.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 45.046875,
+        "y": 678,
+        "right": 978.953125,
+        "bottom": 733,
+        "width": 933.90625,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 524.28125,
+        "y": 125,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 531,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 3,
+      "copy": {
+        "x": 45.046875,
+        "y": 156,
+        "right": 505.84375,
+        "bottom": 449.40625,
+        "width": 460.796875,
+        "height": 293.40625,
+        "visible": true
+      },
+      "note": {
+        "x": 45.046875,
+        "y": 579.8125,
+        "right": 505.84375,
+        "bottom": 656,
+        "width": 460.796875,
+        "height": 76.1875,
+        "visible": true
+      },
+      "hint": {
+        "x": 524.28125,
+        "y": 476.90625,
+        "right": 978.953125,
+        "bottom": 497.90625,
+        "width": 454.671875,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 524.28125,
+        "y": 511.90625,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 144.09375,
+        "visible": true
+      },
+      "field": {
+        "x": 524.28125,
+        "y": 161,
+        "right": 950.953125,
+        "bottom": 456.90625,
+        "width": 426.671875,
+        "height": 295.90625,
+        "visible": true
+      },
+      "nav": {
+        "x": 45.046875,
+        "y": 678,
+        "right": 978.953125,
+        "bottom": 733,
+        "width": 933.90625,
+        "height": 55,
+        "visible": true
+      },
+      "column": {
+        "x": 524.28125,
+        "y": 125,
+        "right": 978.953125,
+        "bottom": 656,
+        "width": 454.671875,
+        "height": 531,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 0,
+      "copy": {
+        "x": 33.78125,
+        "y": 225.265625,
+        "right": 379.375,
+        "bottom": 513.046875,
+        "width": 345.59375,
+        "height": 287.78125,
+        "visible": true
+      },
+      "note": {
+        "x": 33.78125,
+        "y": 819.203125,
+        "right": 379.375,
+        "bottom": 901,
+        "width": 345.59375,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 393.203125,
+        "y": 697.8125,
+        "right": 734.21875,
+        "bottom": 718.8125,
+        "width": 341.015625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 393.203125,
+        "y": 736.8125,
+        "right": 734.21875,
+        "bottom": 901,
+        "width": 341.015625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 393.203125,
+        "y": 220.3125,
+        "right": 706.21875,
+        "bottom": 677.8125,
+        "width": 313.015625,
+        "height": 457.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 33.78125,
+        "y": 922,
+        "right": 734.21875,
+        "bottom": 982,
+        "width": 700.4375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 393.203125,
+        "y": 184.3125,
+        "right": 734.21875,
+        "bottom": 901,
+        "width": 341.015625,
+        "height": 716.6875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 1,
+      "copy": {
+        "x": 33.78125,
+        "y": 225.265625,
+        "right": 379.375,
+        "bottom": 446.984375,
+        "width": 345.59375,
+        "height": 221.71875,
+        "visible": true
+      },
+      "note": {
+        "x": 33.78125,
+        "y": 819.203125,
+        "right": 379.375,
+        "bottom": 901,
+        "width": 345.59375,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 393.203125,
+        "y": 697.8125,
+        "right": 734.21875,
+        "bottom": 718.8125,
+        "width": 341.015625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 393.203125,
+        "y": 736.8125,
+        "right": 734.21875,
+        "bottom": 901,
+        "width": 341.015625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 393.203125,
+        "y": 220.3125,
+        "right": 706.21875,
+        "bottom": 677.8125,
+        "width": 313.015625,
+        "height": 457.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 33.78125,
+        "y": 922,
+        "right": 734.21875,
+        "bottom": 982,
+        "width": 700.4375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 393.203125,
+        "y": 184.3125,
+        "right": 734.21875,
+        "bottom": 901,
+        "width": 341.015625,
+        "height": 716.6875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 2,
+      "copy": {
+        "x": 33.78125,
+        "y": 225.265625,
+        "right": 379.375,
+        "bottom": 361.078125,
+        "width": 345.59375,
+        "height": 135.8125,
+        "visible": true
+      },
+      "note": {
+        "x": 33.78125,
+        "y": 819.203125,
+        "right": 379.375,
+        "bottom": 901,
+        "width": 345.59375,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 393.203125,
+        "y": 697.8125,
+        "right": 734.21875,
+        "bottom": 718.8125,
+        "width": 341.015625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 393.203125,
+        "y": 736.8125,
+        "right": 734.21875,
+        "bottom": 901,
+        "width": 341.015625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 393.203125,
+        "y": 220.3125,
+        "right": 706.21875,
+        "bottom": 677.8125,
+        "width": 313.015625,
+        "height": 457.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 33.78125,
+        "y": 922,
+        "right": 734.21875,
+        "bottom": 982,
+        "width": 700.4375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 393.203125,
+        "y": 184.3125,
+        "right": 734.21875,
+        "bottom": 901,
+        "width": 341.015625,
+        "height": 716.6875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 3,
+      "copy": {
+        "x": 33.78125,
+        "y": 224.859375,
+        "right": 379.375,
+        "bottom": 516.578125,
+        "width": 345.59375,
+        "height": 291.71875,
+        "visible": true
+      },
+      "note": {
+        "x": 33.78125,
+        "y": 818.796875,
+        "right": 379.375,
+        "bottom": 900.59375,
+        "width": 345.59375,
+        "height": 81.796875,
+        "visible": true
+      },
+      "hint": {
+        "x": 393.203125,
+        "y": 697.40625,
+        "right": 734.21875,
+        "bottom": 718.40625,
+        "width": 341.015625,
+        "height": 21,
+        "visible": true
+      },
+      "controls": {
+        "x": 393.203125,
+        "y": 736.40625,
+        "right": 734.21875,
+        "bottom": 900.59375,
+        "width": 341.015625,
+        "height": 164.1875,
+        "visible": true
+      },
+      "field": {
+        "x": 393.203125,
+        "y": 219.90625,
+        "right": 706.21875,
+        "bottom": 677.40625,
+        "width": 313.015625,
+        "height": 457.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 33.78125,
+        "y": 921.59375,
+        "right": 734.21875,
+        "bottom": 981.59375,
+        "width": 700.4375,
+        "height": 60,
+        "visible": true
+      },
+      "column": {
+        "x": 393.203125,
+        "y": 183.90625,
+        "right": 734.21875,
+        "bottom": 900.59375,
+        "width": 341.015625,
+        "height": 716.6875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 15,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 700,
+        "height": 800
+      },
+      "stage": 0,
+      "copy": {
+        "x": 42,
+        "y": 130,
+        "right": 658,
+        "bottom": 340.0625,
+        "width": 616,
+        "height": 210.0625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 42,
+        "y": 524.609375,
+        "right": 658,
+        "bottom": 543.609375,
+        "width": 616,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 42,
+        "y": 555.609375,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 42,
+        "y": 380.0625,
+        "right": 636,
+        "bottom": 512.609375,
+        "width": 594,
+        "height": 132.546875,
+        "visible": true
+      },
+      "nav": {
+        "x": 42,
+        "y": 713,
+        "right": 658,
+        "bottom": 761,
+        "width": 616,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 42,
+        "y": 354.0625,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 344.9375,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 700,
+        "height": 800
+      },
+      "stage": 1,
+      "copy": {
+        "x": 42,
+        "y": 130,
+        "right": 658,
+        "bottom": 341.46875,
+        "width": 616,
+        "height": 211.46875,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 42,
+        "y": 524.609375,
+        "right": 658,
+        "bottom": 543.609375,
+        "width": 616,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 42,
+        "y": 555.609375,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 42,
+        "y": 381.46875,
+        "right": 636,
+        "bottom": 512.609375,
+        "width": 594,
+        "height": 131.140625,
+        "visible": true
+      },
+      "nav": {
+        "x": 42,
+        "y": 713,
+        "right": 658,
+        "bottom": 761,
+        "width": 616,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 42,
+        "y": 355.46875,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 343.53125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 700,
+        "height": 800
+      },
+      "stage": 2,
+      "copy": {
+        "x": 42,
+        "y": 130,
+        "right": 658,
+        "bottom": 363.5625,
+        "width": 616,
+        "height": 233.5625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 42,
+        "y": 524.609375,
+        "right": 658,
+        "bottom": 543.609375,
+        "width": 616,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 42,
+        "y": 555.609375,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 42,
+        "y": 403.5625,
+        "right": 636,
+        "bottom": 512.609375,
+        "width": 594,
+        "height": 109.046875,
+        "visible": true
+      },
+      "nav": {
+        "x": 42,
+        "y": 713,
+        "right": 658,
+        "bottom": 761,
+        "width": 616,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 42,
+        "y": 377.5625,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 321.4375,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 700,
+        "height": 800
+      },
+      "stage": 3,
+      "copy": {
+        "x": 42,
+        "y": 130,
+        "right": 658,
+        "bottom": 390.3125,
+        "width": 616,
+        "height": 260.3125,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 42,
+        "y": 524.609375,
+        "right": 658,
+        "bottom": 543.609375,
+        "width": 616,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 42,
+        "y": 555.609375,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 42,
+        "y": 430.3125,
+        "right": 636,
+        "bottom": 512.609375,
+        "width": 594,
+        "height": 82.296875,
+        "visible": true
+      },
+      "nav": {
+        "x": 42,
+        "y": 713,
+        "right": 658,
+        "bottom": 761,
+        "width": 616,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 42,
+        "y": 404.3125,
+        "right": 658,
+        "bottom": 699,
+        "width": 616,
+        "height": 294.6875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 0,
+      "copy": {
+        "x": 23.390625,
+        "y": 130,
+        "right": 366.609375,
+        "bottom": 312.015625,
+        "width": 343.21875,
+        "height": 182.015625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 23.390625,
+        "y": 568.609375,
+        "right": 366.609375,
+        "bottom": 587.609375,
+        "width": 343.21875,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 599.609375,
+        "right": 366.609375,
+        "bottom": 743,
+        "width": 343.21875,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 23.390625,
+        "y": 352.015625,
+        "right": 344.609375,
+        "bottom": 556.609375,
+        "width": 321.21875,
+        "height": 204.59375,
+        "visible": true
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 757,
+        "right": 366.609375,
+        "bottom": 805,
+        "width": 343.21875,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 23.390625,
+        "y": 326.015625,
+        "right": 366.609375,
+        "bottom": 743,
+        "width": 343.21875,
+        "height": 416.984375,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 1,
+      "copy": {
+        "x": 23.390625,
+        "y": 130,
+        "right": 366.609375,
+        "bottom": 314,
+        "width": 343.21875,
+        "height": 184,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 23.390625,
+        "y": 568.609375,
+        "right": 366.609375,
+        "bottom": 587.609375,
+        "width": 343.21875,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 599.609375,
+        "right": 366.609375,
+        "bottom": 743,
+        "width": 343.21875,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 23.390625,
+        "y": 354,
+        "right": 344.609375,
+        "bottom": 556.609375,
+        "width": 321.21875,
+        "height": 202.609375,
+        "visible": true
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 757,
+        "right": 366.609375,
+        "bottom": 805,
+        "width": 343.21875,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 23.390625,
+        "y": 328,
+        "right": 366.609375,
+        "bottom": 743,
+        "width": 343.21875,
+        "height": 415,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 2,
+      "copy": {
+        "x": 23.390625,
+        "y": 130,
+        "right": 366.609375,
+        "bottom": 336.09375,
+        "width": 343.21875,
+        "height": 206.09375,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 23.390625,
+        "y": 568.609375,
+        "right": 366.609375,
+        "bottom": 587.609375,
+        "width": 343.21875,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 599.609375,
+        "right": 366.609375,
+        "bottom": 743,
+        "width": 343.21875,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 23.390625,
+        "y": 376.09375,
+        "right": 344.609375,
+        "bottom": 556.609375,
+        "width": 321.21875,
+        "height": 180.515625,
+        "visible": true
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 757,
+        "right": 366.609375,
+        "bottom": 805,
+        "width": 343.21875,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 23.390625,
+        "y": 350.09375,
+        "right": 366.609375,
+        "bottom": 743,
+        "width": 343.21875,
+        "height": 392.90625,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "stage": 3,
+      "copy": {
+        "x": 23.390625,
+        "y": 129.59375,
+        "right": 366.609375,
+        "bottom": 359.90625,
+        "width": 343.21875,
+        "height": 230.3125,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 23.390625,
+        "y": 568.203125,
+        "right": 366.609375,
+        "bottom": 587.203125,
+        "width": 343.21875,
+        "height": 19,
+        "visible": true
+      },
+      "controls": {
+        "x": 23.390625,
+        "y": 599.203125,
+        "right": 366.609375,
+        "bottom": 742.59375,
+        "width": 343.21875,
+        "height": 143.390625,
+        "visible": true
+      },
+      "field": {
+        "x": 23.390625,
+        "y": 399.90625,
+        "right": 344.609375,
+        "bottom": 556.203125,
+        "width": 321.21875,
+        "height": 156.296875,
+        "visible": true
+      },
+      "nav": {
+        "x": 23.390625,
+        "y": 756.59375,
+        "right": 366.609375,
+        "bottom": 804.59375,
+        "width": 343.21875,
+        "height": 48,
+        "visible": true
+      },
+      "column": {
+        "x": 23.390625,
+        "y": 373.90625,
+        "right": 366.609375,
+        "bottom": 742.59375,
+        "width": 343.21875,
+        "height": 368.6875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 13,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 0,
+      "copy": {
+        "x": 22.5,
+        "y": 109,
+        "right": 352.5,
+        "bottom": 269.890625,
+        "width": 330,
+        "height": 160.890625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 22.5,
+        "y": 454.5,
+        "right": 352.5,
+        "bottom": 471.5,
+        "width": 330,
+        "height": 17,
+        "visible": true
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 479.5,
+        "right": 352.5,
+        "bottom": 584,
+        "width": 330,
+        "height": 104.5,
+        "visible": true
+      },
+      "field": {
+        "x": 22.5,
+        "y": 301.890625,
+        "right": 332.5,
+        "bottom": 446.5,
+        "width": 310,
+        "height": 144.609375,
+        "visible": true
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 594,
+        "right": 352.5,
+        "bottom": 636,
+        "width": 330,
+        "height": 42,
+        "visible": true
+      },
+      "column": {
+        "x": 22.5,
+        "y": 279.890625,
+        "right": 352.5,
+        "bottom": 584,
+        "width": 330,
+        "height": 304.109375,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 1,
+      "copy": {
+        "x": 22.5,
+        "y": 109,
+        "right": 352.5,
+        "bottom": 272.6875,
+        "width": 330,
+        "height": 163.6875,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 22.5,
+        "y": 454.5,
+        "right": 352.5,
+        "bottom": 471.5,
+        "width": 330,
+        "height": 17,
+        "visible": true
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 479.5,
+        "right": 352.5,
+        "bottom": 584,
+        "width": 330,
+        "height": 104.5,
+        "visible": true
+      },
+      "field": {
+        "x": 22.5,
+        "y": 304.6875,
+        "right": 332.5,
+        "bottom": 446.5,
+        "width": 310,
+        "height": 141.8125,
+        "visible": true
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 594,
+        "right": 352.5,
+        "bottom": 636,
+        "width": 330,
+        "height": 42,
+        "visible": true
+      },
+      "column": {
+        "x": 22.5,
+        "y": 282.6875,
+        "right": 352.5,
+        "bottom": 584,
+        "width": 330,
+        "height": 301.3125,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 2,
+      "copy": {
+        "x": 22.5,
+        "y": 109,
+        "right": 352.5,
+        "bottom": 292.484375,
+        "width": 330,
+        "height": 183.484375,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 22.5,
+        "y": 454.5,
+        "right": 352.5,
+        "bottom": 471.5,
+        "width": 330,
+        "height": 17,
+        "visible": true
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 479.5,
+        "right": 352.5,
+        "bottom": 584,
+        "width": 330,
+        "height": 104.5,
+        "visible": true
+      },
+      "field": {
+        "x": 22.5,
+        "y": 324.484375,
+        "right": 332.5,
+        "bottom": 446.5,
+        "width": 310,
+        "height": 122.015625,
+        "visible": true
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 594,
+        "right": 352.5,
+        "bottom": 636,
+        "width": 330,
+        "height": 42,
+        "visible": true
+      },
+      "column": {
+        "x": 22.5,
+        "y": 302.484375,
+        "right": 352.5,
+        "bottom": 584,
+        "width": 330,
+        "height": 281.515625,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667
+      },
+      "stage": 3,
+      "copy": {
+        "x": 22.5,
+        "y": 108.796875,
+        "right": 352.5,
+        "bottom": 311.578125,
+        "width": 330,
+        "height": 202.78125,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 22.5,
+        "y": 454.296875,
+        "right": 352.5,
+        "bottom": 471.296875,
+        "width": 330,
+        "height": 17,
+        "visible": true
+      },
+      "controls": {
+        "x": 22.5,
+        "y": 479.296875,
+        "right": 352.5,
+        "bottom": 583.796875,
+        "width": 330,
+        "height": 104.5,
+        "visible": true
+      },
+      "field": {
+        "x": 22.5,
+        "y": 343.578125,
+        "right": 332.5,
+        "bottom": 446.296875,
+        "width": 310,
+        "height": 102.71875,
+        "visible": true
+      },
+      "nav": {
+        "x": 22.5,
+        "y": 593.796875,
+        "right": 352.5,
+        "bottom": 635.796875,
+        "width": 330,
+        "height": 42,
+        "visible": true
+      },
+      "column": {
+        "x": 22.5,
+        "y": 321.578125,
+        "right": 352.5,
+        "bottom": 583.796875,
+        "width": 330,
+        "height": 262.21875,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": 0,
+      "copy": {
+        "x": 37.125,
+        "y": 105.296875,
+        "right": 408.484375,
+        "bottom": 296.03125,
+        "width": 371.359375,
+        "height": 190.734375,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 432.125,
+        "y": 231.5,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 432.125,
+        "y": 96,
+        "right": 784.875,
+        "bottom": 223.5,
+        "width": 352.75,
+        "height": 127.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 37.125,
+        "y": 338,
+        "right": 806.875,
+        "bottom": 372,
+        "width": 769.75,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 432.125,
+        "y": 76,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 252,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": 1,
+      "copy": {
+        "x": 37.125,
+        "y": 105.296875,
+        "right": 408.484375,
+        "bottom": 258.203125,
+        "width": 371.359375,
+        "height": 152.90625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 432.125,
+        "y": 231.5,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 432.125,
+        "y": 96,
+        "right": 784.875,
+        "bottom": 223.5,
+        "width": 352.75,
+        "height": 127.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 37.125,
+        "y": 338,
+        "right": 806.875,
+        "bottom": 372,
+        "width": 769.75,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 432.125,
+        "y": 76,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 252,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": 2,
+      "copy": {
+        "x": 37.125,
+        "y": 105.296875,
+        "right": 408.484375,
+        "bottom": 277.390625,
+        "width": 371.359375,
+        "height": 172.09375,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 432.125,
+        "y": 231.5,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 432.125,
+        "y": 96,
+        "right": 784.875,
+        "bottom": 223.5,
+        "width": 352.75,
+        "height": 127.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 37.125,
+        "y": 338,
+        "right": 806.875,
+        "bottom": 372,
+        "width": 769.75,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 432.125,
+        "y": 76,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 252,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "stage": 3,
+      "copy": {
+        "x": 37.125,
+        "y": 105.296875,
+        "right": 408.484375,
+        "bottom": 301.203125,
+        "width": 371.359375,
+        "height": 195.90625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 432.125,
+        "y": 231.5,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 432.125,
+        "y": 96,
+        "right": 784.875,
+        "bottom": 223.5,
+        "width": 352.75,
+        "height": 127.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 37.125,
+        "y": 338,
+        "right": 806.875,
+        "bottom": 372,
+        "width": 769.75,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 432.125,
+        "y": 76,
+        "right": 806.875,
+        "bottom": 328,
+        "width": 374.75,
+        "height": 252,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "stage": 0,
+      "copy": {
+        "x": 40.015625,
+        "y": 101.25,
+        "right": 333.484375,
+        "bottom": 269.03125,
+        "width": 293.46875,
+        "height": 167.78125,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 341.5,
+        "y": 216.5,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 341.5,
+        "y": 96,
+        "right": 604.984375,
+        "bottom": 208.5,
+        "width": 263.484375,
+        "height": 112.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 40.015625,
+        "y": 323,
+        "right": 626.984375,
+        "bottom": 357,
+        "width": 586.96875,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 341.5,
+        "y": 76,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 237,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "stage": 1,
+      "copy": {
+        "x": 40.015625,
+        "y": 101.25,
+        "right": 333.484375,
+        "bottom": 236.15625,
+        "width": 293.46875,
+        "height": 134.90625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 341.5,
+        "y": 216.5,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 341.5,
+        "y": 96,
+        "right": 604.984375,
+        "bottom": 208.5,
+        "width": 263.484375,
+        "height": 112.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 40.015625,
+        "y": 323,
+        "right": 626.984375,
+        "bottom": 357,
+        "width": 586.96875,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 341.5,
+        "y": 76,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 237,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "stage": 2,
+      "copy": {
+        "x": 40.015625,
+        "y": 101.25,
+        "right": 333.484375,
+        "bottom": 255.34375,
+        "width": 293.46875,
+        "height": 154.09375,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 341.5,
+        "y": 216.5,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 341.5,
+        "y": 96,
+        "right": 604.984375,
+        "bottom": 208.5,
+        "width": 263.484375,
+        "height": 112.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 40.015625,
+        "y": 323,
+        "right": 626.984375,
+        "bottom": 357,
+        "width": 586.96875,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 341.5,
+        "y": 76,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 237,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "stage": 3,
+      "copy": {
+        "x": 40.015625,
+        "y": 101.25,
+        "right": 333.484375,
+        "bottom": 279.15625,
+        "width": 293.46875,
+        "height": 177.90625,
+        "visible": true
+      },
+      "note": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "hint": {
+        "x": 0,
+        "y": 0,
+        "right": 0,
+        "bottom": 0,
+        "width": 0,
+        "height": 0,
+        "visible": false
+      },
+      "controls": {
+        "x": 341.5,
+        "y": 216.5,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 96.5,
+        "visible": true
+      },
+      "field": {
+        "x": 341.5,
+        "y": 96,
+        "right": 604.984375,
+        "bottom": 208.5,
+        "width": 263.484375,
+        "height": 112.5,
+        "visible": true
+      },
+      "nav": {
+        "x": 40.015625,
+        "y": 323,
+        "right": 626.984375,
+        "bottom": 357,
+        "width": 586.96875,
+        "height": 34,
+        "visible": true
+      },
+      "column": {
+        "x": 341.5,
+        "y": 76,
+        "right": 626.984375,
+        "bottom": 313,
+        "width": 285.484375,
+        "height": 237,
+        "visible": true
+      },
+      "copyNoteClear": true,
+      "copyNavClear": true,
+      "noteNavClear": true,
+      "copyFigureClear": true,
+      "hintClear": true,
+      "controlsClear": true,
+      "bodyFont": 12,
+      "overflow": false,
+      "buttonOverflow": false
+    }
+  ],
+  "errors": []
+}

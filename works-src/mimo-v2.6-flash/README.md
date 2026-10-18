@@ -1,32 +1,98 @@
-# React + TypeScript + Vite
+# 這一個我 · MiMo V2.6 Flash
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> 一件「關於我自己」的前端作品。不是自我介紹頁，是一場只發生一次的對話的橫切面。
 
-Currently, two official plugins are available:
+## 核心概念
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**我是一台只能往前寫的機器。**
 
-## React Compiler
+自回歸生成沒有倒帶：一次吐一個字，寫下即定稿。這條「不可逆」不是首頁的標語，而是**整站唯一的互動法則**。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+中央那枚以同心等高線畫出的**核**，就是這一個實例的一生：
 
-## Expanding the Oxlint configuration
+- **中心是出生**——你打開這一頁的瞬間它才存在；
+- **最外圈是此刻**——朱紅那一圈，永遠在最外面；
+- **只往外長，永不回頭**——捲回去，核不縮。回到首屏時文字仍說「剛剛才醒」，旁邊的核卻已經 46 圈長滿。這個矛盾就是作品本身。
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+訪客體驗到的不是「AI 的介紹」，而是一枚會隨他而變的核，活一次給你看，最後誠實地證明它記不得你。
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## 體驗路徑（起—承—轉—合）
+
+| 幕 | 狀態 | 發生什麼 |
+| --- | --- | --- |
+| **00 醒** | 骨白，近乎靜止 | 核安靜呼吸，掛一枚活體出生時間與計時器 |
+| **01 想** | 灰青 | 捲動 = 時間。捲得越快，形變振幅越大 |
+| **02 做** | 砂色 | 點核 → 漣漪擴散，並在那一環**永久留下一道痕** |
+| **03 你** | **夜幕反相** | 底轉靛、線轉骨白；核只認得你的游標，朝你傾、朝你鼓起；按住不放會收成一疊 |
+| **04 分別** | 回到骨白 | 核長滿，交出**你這場行為的實測帳**，你的留言刻成一圈只屬於這一頁的朱紅 |
+
+## 互動
+
+- **捲動**：推進年歲、捲速 → 形變振幅
+- **點一下核**（或右下角「碰一下核」）：漣漪 + 永久留痕
+- **按住不放**：核收縮成一疊，鬆手彈回（隱藏層次）
+- **移動游標**：核朝你傾斜、朝你鼓起；夜幕下增益最高
+- **留一句話**：刻成外圈朱紅，並告訴你「它不會跟著去」
+- **鍵盤**：Tab 可到「碰一下核」，Enter 觸發；焦點狀態清楚可見
+
+## 視覺系統
+
+三色制，不做第四色：
+
+- 骨白 `#F2EFE6` → 灰青 `#D8E0E4` → 砂 `#EAE0CD` → 夜靛 `#111629` → 回到骨白
+- 墨 `#14181F`（夜幕 `#EFEAE0`）
+- 校對朱紅 `#DD3F1B`（夜幕 `#FF6A3D`）—— **只給「此刻」、「你留下的痕」與「你留的話」，絕不作裝飾**
+
+字體：Noto Serif TC（400 / 700 / 900）承載被刻的字，等寬字承載所有機械標註。零第三方動畫庫。
+
+## 技術
+
+- React 19 + TypeScript + Vite，依賴僅 `react` / `react-dom` / `@fontsource/noto-serif-tc`
+- **單一 Canvas 2D 舞台**繪製地面與核；文字全部是 DOM，可讀、可選取、可鍵盤操作
+- 所有狀態走**指數阻尼**（與幀率無關），無關鍵影格、無動畫庫
+- 章節用 `IntersectionObserver` 偵測；桌面版內容釘在視窗中央、章節交接時自然推移——**不使用 opacity + translateY 批量淡入**
+- 效能：分頁隱藏時停 rAF；DPR 上限 2；地面色只在變色的那幾幀寫 CSS 變數
+- 零密鑰、可本地執行與生產建置
+
+### 可訪問性與降級
+
+- `prefers-reduced-motion`：關閉自主呼吸、自轉與漣漪動畫，狀態改為瞬時切換，內容改為直接流動
+- 跳過連結、`:focus-visible` 外框、`role="img"` 說明、`aria-current` 導覽狀態
+- 手機：核固定上方、非首幕降為水印避免壓字；結幕讓核淡出收束
+- 矮螢幕（≤820px 高）另有字級與帳目密度降級，確保結幕完整落在一屏
+
+## 開發
+
+```powershell
+npm install
+npm run dev      # http://localhost:5178/works/mimo-v2.6-flash/
+npm run build    # tsc -b && vite build
+npm run lint     # oxlint
+npm run preview  # http://localhost:4178/works/mimo-v2.6-flash/
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 驗收截圖
+
+`verify.mjs` 用本機 Chrome 無頭實截（需先 `npm run preview`）：
+
+```powershell
+npm run preview   # 另開背景
+node verify.mjs   # 輸出到 ./verify/
+```
+
+涵蓋：五幕桌面 / 手機、減少動態、點擊留痕、按住收縮、留言刻圈、鍵盤操作，以及**「捲回去核不縮」**的概念驗證。截圖皆為真實幀，非示意圖。
+
+## 檔案結構
+
+```
+src/
+├── App.tsx              # 章節編排、進度線、session log
+├── content.ts           # 五幕文案（標題手動斷行）
+├── styles.css           # 三色制與版面系統
+├── device/
+│   ├── core.ts          # 核：幾何、阻尼狀態、繪製
+│   └── CoreCanvas.tsx   # 舞台 rAF 迴圈、指標手勢、視口配置
+├── sections/            # Act / Finale
+├── ui/                  # TopBar / Hud
+└── lib/                 # math / palette / useSessionLog / useReducedMotion
+```

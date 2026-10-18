@@ -1,0 +1,926 @@
+{
+  "timestamp": "2026-10-18T07:14:40.003Z",
+  "base": "http://127.0.0.1:4611/",
+  "checks": [
+    {
+      "name": "Keyboard skip link is first",
+      "passed": true
+    },
+    {
+      "name": "Skip link focuses controls without changing chapter",
+      "passed": true
+    },
+    {
+      "name": "Pause stops ambient rendering",
+      "passed": true
+    },
+    {
+      "name": "Intention changes geometry",
+      "passed": true
+    },
+    {
+      "name": "Intention has selected state",
+      "passed": true
+    },
+    {
+      "name": "Native slider supports keyboard",
+      "passed": true
+    },
+    {
+      "name": "Slider output and accessible value agree",
+      "passed": true
+    },
+    {
+      "name": "Dragging changes the sculpture",
+      "passed": true
+    },
+    {
+      "name": "Long press discovers unweaving",
+      "passed": true
+    },
+    {
+      "name": "Long press releases cleanly",
+      "passed": true
+    },
+    {
+      "name": "Unweaving has a keyboard equivalent",
+      "passed": true
+    },
+    {
+      "name": "Persistent inspection has pressed state",
+      "passed": true
+    },
+    {
+      "name": "About opens a modal dialog",
+      "passed": true
+    },
+    {
+      "name": "Escape closes dialog and restores focus",
+      "passed": true
+    },
+    {
+      "name": "Chapter navigation preserves intention and tension",
+      "passed": true
+    },
+    {
+      "name": "Save creates an SVG file",
+      "passed": true
+    },
+    {
+      "name": "Saved artwork contains geometry and chosen parameters",
+      "passed": true,
+      "detail": {
+        "bytes": 549352,
+        "file": "between-sol-possibility-56.svg"
+      }
+    },
+    {
+      "name": "Saved SVG renders successfully",
+      "passed": true
+    },
+    {
+      "name": "Mobile touch selects an intention",
+      "passed": true
+    },
+    {
+      "name": "Layout 390×844, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 390×844, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 390×844, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 390×844, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 375×667, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 375×667, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 375×667, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 375×667, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 375,
+          "height": 667,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 768×1024, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1024×768, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1024,
+          "height": 768
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 1920×1080, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 844×390, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 844×390, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 844×390, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 844×390, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 844,
+          "height": 390,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 667×375, chapter 1",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 667,
+          "height": 375,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 0,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 667×375, chapter 2",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 667,
+          "height": 375,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 1,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 667×375, chapter 3",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 667,
+          "height": 375,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 2,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Layout 667×375, chapter 4",
+      "passed": true,
+      "detail": {
+        "viewport": {
+          "width": 667,
+          "height": 375,
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "stage": 3,
+        "overflow": false,
+        "controlsVisible": true,
+        "navVisible": true,
+        "buttonsReachable": true
+      }
+    },
+    {
+      "name": "Reduced motion has no ambient animation",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion still responds to input",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion chapter navigation is immediate",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion settles to a static composition",
+      "passed": true
+    },
+    {
+      "name": "Canvas renders continuously without long tasks",
+      "passed": true,
+      "detail": {
+        "renderedFrames": 179,
+        "approximateFPS": 60,
+        "medianFrameInterval": 16.7,
+        "p95FrameInterval": 17.2,
+        "longTasksOver50ms": 0
+      }
+    },
+    {
+      "name": "No browser runtime errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Runtime assets are entirely local",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "layouts": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 375,
+        "height": 667,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 768
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 0,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 1,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 2,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    },
+    {
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "isMobile": true,
+        "hasTouch": true
+      },
+      "stage": 3,
+      "overflow": false,
+      "controlsVisible": true,
+      "navVisible": true,
+      "buttonsReachable": true
+    }
+  ],
+  "performance": {
+    "renderedFrames": 179,
+    "approximateFPS": 60,
+    "medianFrameInterval": 16.7,
+    "p95FrameInterval": 17.2,
+    "longTasksOver50ms": 0
+  },
+  "errors": [],
+  "external": []
+}
