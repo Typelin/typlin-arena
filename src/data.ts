@@ -64,14 +64,14 @@ export const PLATES: Plate[] = [
     prompt: SHARED_PROMPT,
     spec: ['REACT 19', 'MOTION 13.4', 'CANVAS 2D 火星場', 'WEBAUDIO 合成', 'REDUCED MOTION'],
     verdict:
-      '重考新卷，比描圖紙完整得多：划動擊出火星、拾起的字別在紙緣，再一路帶到巨字牆和收束編號，章節之間的因果是真的，停手 8 秒代拾、靜態紙替代與鍵盤操作也都做到。扣分在視覺：火星只是一團團模糊紅點，不像火；桌面版內容擠在左半欄，右側大片留白；宣稱「全站最關鍵」的燒洞轉場只是一張深色卡片，沒有真正燒穿。概念與文字好過畫面。',
+      '重考新卷，比描圖紙完整：划動擊出火星、拾起的字別在紙緣，再一路帶到巨字牆和收束編號，章節之間的因果是真的，代拾、靜態紙與鍵盤操作也都做到。但視覺表現力明顯撐不起「火」：首屏只是一張空白紙和一顆紅鈕，沒有記憶點；火星是一團團模糊紅點，不像火；桌面版內容擠在左半欄，右側大片留白；宣稱最關鍵的燒洞轉場只是一張深色卡片。概念與文字遠好過畫面。',
     visual: 'tracing',
     src: '/works/muse-spark-1-3/',
     thumb: '/shots/muse-spark-1-3.png?v=2',
     logoSrc: '/logo/muse-spark-1-3/',
     logoThumb: '/shots/muse-spark-1-3-logo.png',
     score2: 86,
-    score: 74,
+    score: 68,
   },
   {
     id: 'kimi-k3',
