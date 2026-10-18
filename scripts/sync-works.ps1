@@ -1,4 +1,4 @@
-# 重打並同步全部 Arena 作品到 public/works。
+﻿# 重打並同步全部 Arena 作品到 public/works。
 # Canonical 路徑使用完整模型 slug；舊短網址保留為 redirect，避免歷史文章失效。
 # 用法：在專案根目錄執行 .\scripts\sync-works.ps1
 $ErrorActionPreference = 'Stop'
@@ -15,7 +15,8 @@ $works = @(
   @{ Source = 'deepseek-v4-1-flash';   Slug = 'deepseek-v4-1-flash';   Legacy = 'deepseek' },
   @{ Source = 'grok-4-6';              Slug = 'grok-4-6';              Legacy = 'grok46' },
   @{ Source = 'glm-5-3';               Slug = 'glm-5-3';               Legacy = 'glm53' },
-  @{ Source = 'mimo-v2.6-flash';  Slug = 'mimo-v2.6-flash';  Legacy = 'mimo-v2.6-flash' }
+  @{ Source = 'mimo-v2.6-flash';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
+  @{ Source = 'gemini-4-argon';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {
@@ -80,7 +81,8 @@ $logos = @(
   @{ Source = 'deepseek-v4-1-flash-logo';   Slug = 'deepseek-v4-1-flash';   Legacy = 'deepseek-v4-1-flash' },
   @{ Source = 'grok-4-6-logo';              Slug = 'grok-4-6';              Legacy = 'grok-4-6' },
   @{ Source = 'glm-5-3-logo';               Slug = 'glm-5-3';               Legacy = 'glm-5-3' },
-  @{ Source = 'mimo-v2.6-flash-logo';  Slug = 'mimo-v2.6-flash';  Legacy = 'mimo-v2.6-flash' }
+  @{ Source = 'mimo-v2.6-flash-logo';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
+  @{ Source = 'gemini-4-argon-logo';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' }
 )
 
 function Write-LegacyLogoRedirect([string]$legacy, [string]$slug) {

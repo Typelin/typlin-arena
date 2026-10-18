@@ -256,6 +256,32 @@ export const PLATES: Plate[] = [
     score2: 70,
     score: 79,
   },
+  {
+    id: 'gemini-4-argon',
+    no: '14',
+    short: 'ARGON',
+    model: 'Gemini 4 argon 灰測',
+    title: '惰性光學干涉儀 THE INERT LENS',
+    prompt: SHARED_PROMPT,
+    spec: [
+      'REACT 19',
+      'CANVAS 2D 干涉光路',
+      'FRAMER MOTION 彈簧阻尼',
+      'WEBAUDIO 諧波音階',
+      '五章滾動編舞 · 階段優先',
+      'S 鍵光譜透視 · 隱藏底層',
+      'REDUCED MOTION 靜態藍圖',
+    ],
+    verdict:
+      '把「氬」的物理事實直接長成作品結構：原子序 18、惰性、無色，只有在人的意圖電壓注入時才電離出精確的冷紫光譜。五章依序是惰性激發（18-Ar，暖白光學腔體、無導覽列，長按或拖曳注入電離電壓）、多維色散（把一句模糊意圖折射為正交可執行光譜）、像差校正（溫和而直接地修正偏折的前提）、取捨光圈（三個明確拒絕定義形式）、雙生共焦（人類直覺波與機器結構波的干涉）。核心體驗裝置是貫穿全程的干涉儀畫布，任何操作都即時改變干涉條紋與焦點幾何；隱藏層需以 S 鍵開啟光譜透視才會顯影。自評面板誠實記錄了三處重構，其中最大一處是徹底刪除 opacity + translateY 的批次浮現。第二測 LOGO 落地改為商業品牌展示（SAKIMU TECH STUDIO 咲夢信息科技工作室 · 用代碼創造美好未來），品牌資訊全部取自素材本身而非自行命名。',
+    visual: 'current',
+    src: '/works/gemini-4-argon/',
+    thumb: '/shots/gemini-4-argon.png',
+    logoSrc: '/logo/gemini-4-argon/',
+    logoThumb: '/shots/gemini-4-argon-logo.png',
+    score2: null,
+    score: null,
+  },
 ];
 
 export type Criterion = { name: string; desc: string };
