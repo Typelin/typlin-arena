@@ -1,10 +1,10 @@
 根據提供的 LOGO 做一個落地站。
 
 Arena 工作區：
-D:\Antigravity_proj\important\typlin-arena
+D:\Antigravity_proj\projects\personal-web\typlin-arena
 
 本次題目的原始 LOGO PNG：
-D:\Antigravity_proj\important\typlin-arena\benchmark-assets\logo-landing\logo.png
+D:\Antigravity_proj\projects\personal-web\typlin-arena\benchmark-assets\logo-landing\logo.png
 
 請實際使用這張原始 LOGO 素材。
 你可以將它複製到自己的項目中使用，但不要修改、移動或覆蓋上述原始檔案。
@@ -13,7 +13,7 @@ D:\Antigravity_proj\important\typlin-arena\benchmark-assets\logo-landing\logo.pn
 
 你的作品必須建立在：
 
-D:\Antigravity_proj\important\typlin-arena\works-src\
+D:\Antigravity_proj\projects\personal-web\typlin-arena\works-src\
 
 底下的獨立資料夾中。
 
