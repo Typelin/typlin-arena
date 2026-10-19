@@ -18,7 +18,6 @@ $works = @(
   @{ Source = 'grok-4-6';              Slug = 'grok-4-6';              Legacy = 'grok46' },
   @{ Source = 'glm-5-3';               Slug = 'glm-5-3';               Legacy = 'glm53' },
   @{ Source = 'mimo-v2.6-flash';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
-  @{ Source = 'gemini-4-argon';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' },
   @{ Source = 'gpt-6-1-sol';           Slug = 'gpt-6-1-sol';           Legacy = 'gpt-6-1-sol' },
   @{ Source = 'claude-opus-5-5';       Slug = 'claude-opus-5-5';       Legacy = 'claude-opus-5-5' }
 )
@@ -87,7 +86,6 @@ $logos = @(
   @{ Source = 'grok-4-6-logo';              Slug = 'grok-4-6';              Legacy = 'grok-4-6' },
   @{ Source = 'glm-5-3-logo';               Slug = 'glm-5-3';               Legacy = 'glm-5-3' },
   @{ Source = 'mimo-v2.6-flash-logo';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
-  @{ Source = 'gemini-4-argon-logo';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' },
   @{ Source = 'gpt-6-1-sol-logo';           Slug = 'gpt-6-1-sol';           Legacy = 'gpt-6-1-sol' },
   @{ Source = 'claude-opus-5-5-logo';       Slug = 'claude-opus-5-5';       Legacy = 'claude-opus-5-5' }
 )
