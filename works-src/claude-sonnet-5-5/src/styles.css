@@ -1,0 +1,721 @@
+:root {
+  --bg: #1b2dc0;
+  --fg: #f5eedd;
+  --hot: #f8e24a;
+  --inv: 0;
+  --seq: 0;
+  --serif-cjk: 'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', 'MingLiU', 'Noto Serif CJK TC', serif;
+  --sans-cjk: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans CJK TC', system-ui, sans-serif;
+  --display: 'Instrument Serif', 'Times New Roman', serif;
+  --mono: 'DM Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  --pad: 6vw;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  scrollbar-width: none;
+  -webkit-text-size-adjust: 100%;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans-cjk);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 紙與布的顆粒：靜態，一次光柵化 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--hot);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ───────── 核心裝置 ───────── */
+.stage-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+}
+
+.hits {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.string-hit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.string-hit.is-held {
+  cursor: grabbing;
+}
+.string-hit:focus-visible {
+  box-shadow: inset 0 0 0 1.5px var(--hot);
+}
+
+/* ───────── 標題：字坐在弦上 ───────── */
+.title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.04em;
+  font-family: var(--serif-cjk);
+  font-weight: 500;
+  font-size: min(calc(88vw / 9.4), 17svh, 150px);
+  line-height: 1;
+  color: var(--fg);
+  pointer-events: none;
+  user-select: none;
+}
+.title span {
+  display: inline-block;
+  margin-bottom: -0.06em;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+/* ───────── 署名：Sonnet 5.5 ───────── */
+.mark {
+  position: fixed;
+  z-index: 3;
+  left: var(--pad);
+  top: max(84px, 13svh);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--fg);
+  pointer-events: none;
+  user-select: none;
+  clip-path: inset(-20px calc(var(--mk-out, 0) * 100%) -20px 0);
+}
+.mark-by {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+.mark-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.12em;
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.82;
+}
+.mark-name {
+  font-size: clamp(54px, 9.5vw, 148px);
+  letter-spacing: -0.01em;
+  will-change: transform;
+}
+.mark-ver {
+  font-size: clamp(54px, 9.5vw, 148px);
+  letter-spacing: -0.02em;
+  color: var(--hot);
+  margin-left: 0.22em;
+  will-change: transform;
+  transform-origin: 0 100%;
+}
+
+/* ───────── 結尾的拓印預覽：疊在巨大的 5.5 上 ───────── */
+.keepsake-wrap {
+  position: fixed;
+  z-index: 4;
+  right: clamp(110px, 11vw, 190px);
+  top: max(84px, 11svh);
+  margin: 0;
+  width: min(250px, 19vw);
+  transform: rotate(-2deg);
+  pointer-events: none;
+}
+.keepsake {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  border: 1px solid color-mix(in srgb, var(--fg) 45%, transparent);
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--fg) 16%, transparent);
+  background: #eee8d8;
+}
+.keepsake-wrap figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+.keepsake-wrap figcaption i {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 0;
+}
+@media (max-width: 900px) {
+  .keepsake-wrap {
+    display: none;
+  }
+}
+
+/* ───────── 版面外殼 ───────── */
+.chrome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px var(--pad) 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.chrome-sound {
+  pointer-events: auto;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  padding: 6px 0 4px;
+  min-height: 32px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: none;
+}
+
+.ruler {
+  position: fixed;
+  right: 12px;
+  top: 50%;
+  z-index: 6;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.ruler-tick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 0 4px 0 8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+  transition: opacity 0.25s;
+}
+.ruler-tick:hover,
+.ruler-tick[aria-current='step'] {
+  opacity: 1;
+}
+.ruler-label {
+  opacity: 0;
+  transform-origin: right;
+  transition: opacity 0.25s;
+}
+.ruler-tick:hover .ruler-label,
+.ruler-tick:focus-visible .ruler-label,
+.ruler-tick[aria-current='step'] .ruler-label {
+  opacity: 1;
+}
+.ruler-mark {
+  display: block;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.ruler-tick[aria-current='step'] .ruler-mark {
+  width: 34px;
+}
+
+.playhead {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 7;
+  background: var(--hot);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--seq));
+  opacity: 0;
+  pointer-events: none;
+}
+.playhead[data-on='true'] {
+  opacity: 1;
+}
+
+/* ───────── 章節與弓式文字 ───────── */
+.track {
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+}
+.sec {
+  position: relative;
+}
+.s0 { height: 135svh; }
+.s1 { height: 175svh; }
+.s2 { height: 175svh; }
+.s3 { height: 320svh; }
+.s4 { height: 160svh; }
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.block {
+  position: absolute;
+  left: var(--pad);
+  width: min(35rem, calc(100% - var(--pad) - 76px));
+  padding: 8px 12px 8px 0;
+  clip-path: inset(-6px calc((1 - var(--in, 1)) * 100%) -6px calc(var(--out, 0) * 100%));
+  visibility: hidden;
+}
+.b0 { bottom: 8svh; }
+.b1,
+.b2 { top: max(66px, 8svh); }
+.b3 { top: max(66px, 8svh); }
+.b4 { top: max(66px, 7svh); }
+
+.eyebrow {
+  margin: 0 0 0.35em;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+}
+.eyebrow i {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 38px;
+  letter-spacing: 0;
+  line-height: 1;
+  color: var(--hot);
+}
+
+.block h2 {
+  margin: 0 0 0.5em;
+  font-family: var(--serif-cjk);
+  font-weight: 500;
+  font-size: clamp(24px, 3.2vw, 44px);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.block p {
+  margin: 0 0 0.7em;
+  font-size: clamp(14px, 1.25vw, 16px);
+  letter-spacing: 0.03em;
+  max-width: 34em;
+}
+.block .lede {
+  font-family: var(--serif-cjk);
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1.5;
+  max-width: 20em;
+}
+.block .note {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
+}
+.scrollcue {
+  position: absolute;
+  right: 76px;
+  bottom: 8svh;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  writing-mode: vertical-rl;
+  opacity: 0.7;
+}
+.scrollcue::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 56px;
+  margin: 10px auto 0;
+  background: currentColor;
+}
+
+.tally {
+  font-family: var(--mono);
+  font-size: 12px !important;
+  letter-spacing: 0.1em !important;
+}
+.tally i {
+  font-family: var(--display);
+  font-size: 30px;
+  color: var(--hot);
+  letter-spacing: 0;
+  padding: 0 0.15em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 1.1em 0 0.9em;
+  pointer-events: auto;
+}
+.btn {
+  background: none;
+  border: 1.5px solid currentColor;
+  padding: 11px 18px;
+  min-height: 44px;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.colophon {
+  pointer-events: auto;
+  font-size: 13px;
+}
+.colophon summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  padding: 8px 0;
+  min-height: 36px;
+}
+.colophon p {
+  font-size: 13px;
+  opacity: 0.8;
+}
+.colophon .secret {
+  font-family: var(--serif-cjk);
+  color: var(--hot);
+  opacity: 1;
+}
+
+/* ───────── 讀數與字幕 ───────── */
+.readout,
+.caption {
+  position: fixed;
+  left: var(--pad);
+  z-index: 4;
+  width: min(40rem, calc(100% - var(--pad) - 80px));
+  pointer-events: none;
+}
+.readout {
+  bottom: 5svh;
+}
+.readout[data-stage='2'] {
+  bottom: 21svh;
+}
+/* 首屏：標題下方已有句子與提示，註解改放在標題上方的空白處 */
+.readout[data-stage='0'] {
+  bottom: auto;
+  top: calc(max(84px, 13svh) + clamp(100px, 17svh, 170px));
+}
+.readout p {
+  margin: 0;
+  padding: 6px 0;
+}
+.readout b {
+  display: block;
+  font-weight: 500;
+  font-size: clamp(16px, 1.7vw, 22px);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+}
+.readout span {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+.readout .hint span {
+  margin: 0;
+  opacity: 0.6;
+}
+
+.caption {
+  bottom: 4svh;
+}
+.caption p {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25em 0.8em 0.25em 0.1em;
+  background: var(--bg);
+  font-family: var(--serif-cjk);
+  font-size: clamp(19px, 2.4vw, 32px);
+  line-height: 1.4;
+}
+
+.bow {
+  animation: bow 0.85s cubic-bezier(0.65, 0, 0.2, 1) both;
+}
+@keyframes bow {
+  from {
+    clip-path: inset(-6px 100% -6px 0);
+  }
+  to {
+    clip-path: inset(-6px -6px -6px 0);
+  }
+}
+
+/* ───────── 調音尺 ───────── */
+.tuner {
+  position: fixed;
+  left: var(--pad);
+  right: 84px;
+  bottom: 4svh;
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(16px, 3vw, 40px);
+  clip-path: inset(-10px 100% -10px 0);
+  visibility: hidden;
+  transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.2, 1), visibility 0s 0.9s;
+}
+.tuner[data-on='true'] {
+  clip-path: inset(-10px -10px -10px 0);
+  visibility: visible;
+  transition: clip-path 0.9s cubic-bezier(0.65, 0, 0.2, 1) 0.25s, visibility 0s;
+}
+.tuner-ratio {
+  flex: none;
+  min-width: 3.3ch;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(44px, 7vw, 92px);
+  line-height: 0.82;
+  color: var(--hot);
+  white-space: nowrap;
+}
+.tuner-body {
+  flex: 1;
+  min-width: 0;
+}
+.tuner-label {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.tuner-track {
+  position: relative;
+  height: 40px;
+}
+.tuner-tick {
+  position: absolute;
+  top: 4px;
+  width: 1.5px;
+  height: 9px;
+  background: var(--fg);
+  opacity: 0.7;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.tuner input[type='range'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: none;
+  cursor: ew-resize;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: none;
+}
+.tuner input[type='range']::-webkit-slider-runnable-track {
+  height: 1.5px;
+  background: var(--fg);
+}
+.tuner input[type='range']::-moz-range-track {
+  height: 1.5px;
+  background: var(--fg);
+}
+.tuner input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: var(--hot);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 1.5px var(--hot);
+}
+.tuner input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--hot);
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 1.5px var(--hot);
+}
+.tuner-meter {
+  height: 3px;
+  background: color-mix(in srgb, var(--fg) 22%, transparent);
+}
+.tuner-meter i {
+  display: block;
+  height: 100%;
+  background: var(--hot);
+  transform-origin: 0 50%;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ───────── 手機 ───────── */
+@media (max-width: 700px) {
+  :root {
+    --pad: 20px;
+  }
+  .chrome {
+    padding-top: 14px;
+    font-size: 11px;
+  }
+  .ruler {
+    right: 2px;
+  }
+  .ruler-tick {
+    padding: 0 6px 0 4px;
+    min-height: 40px;
+  }
+  .ruler-mark {
+    width: 10px;
+  }
+  .ruler-tick[aria-current='step'] .ruler-mark {
+    width: 22px;
+  }
+  .ruler-label {
+    display: none;
+  }
+  .block {
+    width: calc(100% - var(--pad) - 44px);
+  }
+  .scrollcue {
+    right: 36px;
+  }
+  .readout,
+  .caption {
+    width: calc(100% - var(--pad) - 44px);
+  }
+  .readout[data-stage='2'] {
+    bottom: 25svh;
+  }
+  .tuner {
+    right: 44px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+  }
+  .tuner-ratio {
+    font-size: 54px;
+  }
+  .title {
+    font-size: min(calc(90vw / 9.4), 17svh);
+  }
+}
+
+@media (max-height: 520px) {
+  .block p:not(.eyebrow):not(.note) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bow {
+    animation: none;
+  }
+  .tuner,
+  .tuner[data-on='true'],
+  .tuner-meter i,
+  .ruler-mark,
+  .ruler-label,
+  .btn {
+    transition: none;
+  }
+}
