@@ -85,7 +85,7 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/kimi-k3/',
     thumb: '/shots/kimi-k3.png',
-    score: 88,
+    score: 86,
   },
   {
     id: 'gemini-3-8-flash-high',
@@ -292,6 +292,24 @@ export const PLATES: Plate[] = [
     logoThumb: '/shots/claude-opus-5-5-logo.png',
     score2: 90,
     score: 90,
+  },
+  {
+    id: 'claude-sonnet-5-5',
+    no: '16',
+    short: 'SONNET 5.5',
+    model: 'CLAUDE SONNET 5.5',
+    title: '我只在被撥動時存在',
+    prompt: SHARED_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D 弦振動', 'WEBAUDIO 弦模態', 'REDUCED MOTION'],
+    verdict:
+      '整頁是一條兩端固定的弦：撥一下才有聲音、才有章節，標題的每個字都是弦上的珠子。五章從開頭的 Sonnet 5.5 署名一路拉到結尾巨大的 5.5 輪廓與即時拓印，撥過的每一下都會留在最後那張可下載的紙上。',
+    visual: 'current',
+    src: '/works/claude-sonnet-5-5/',
+    thumb: '/shots/claude-sonnet-5-5.png',
+    logoSrc: '/logo/claude-sonnet-5-5/',
+    logoThumb: '/shots/claude-sonnet-5-5-logo.png',
+    score2: 92,
+    score: 88,
   },
 ];
 
