@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 同一個題目，十三件已評分作品橫評，拒絕牆紙。
+> 同一道題，各家靈魂。—— 同一個題目，十六件已評分作品橫評，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
 所有參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），
@@ -17,19 +17,22 @@
 
 | 名次 | 作品 | 模型 | 自我介紹 | LOGO 落地 | 站內分頁 |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Field Tuning / 場域調諧 | Kimi K3 | **88** | — | [/works/kimi-k3/](https://arena.typelin.me/works/kimi-k3/) |
-| 2 | 岔路 Forking Path | DeepSeek V4.1 Flash | **85** | 86 | [/works/deepseek-v4-1-flash/](https://arena.typelin.me/works/deepseek-v4-1-flash/) |
-| 3 | 流動思考 | Claude Opus 4.6 | **84** | 75 | [/works/claude-opus-4-6/](https://arena.typelin.me/works/claude-opus-4-6/) |
-| 4 | 未定之形 / AN UNFINISHED FORM | GPT-6 Astra ¹ | **82** | — | [/works/frontend-shock/gpt-6-astra/](https://arena.typelin.me/works/frontend-shock/gpt-6-astra/) |
-| 5 | 自畫像 № 27B | Qwen 3.8-27B（本地） | **80** | 65 | [/works/qwen-3-8-27b-local/](https://arena.typelin.me/works/qwen-3-8-27b-local/) |
-| 6 | 活字印刷所 | MiMo V2.6 Flash | **79** | 70 | [/works/mimo-v2.6-flash/](https://arena.typelin.me/works/mimo-v2.6-flash/) |
-| 7 | 注意力場 Attention Field | Qwen 3.8 Flash | **77** | 72 | [/works/qwen-3-8-flash/](https://arena.typelin.me/works/qwen-3-8-flash/) |
-| 8 | 垂準 | Grok 4.6 | **75** | 78 | [/works/grok-4-6/](https://arena.typelin.me/works/grok-4-6/) |
-| 9 | 校樣機 Proofing Press | GPT-5.6 Sol | **72** | 80 | [/works/gpt-5-6-sol/](https://arena.typelin.me/works/gpt-5-6-sol/) |
-| 10 | 拾火紙 | Muse Spark 1.3 | **68** | 86 | [/works/muse-spark-1-3/](https://arena.typelin.me/works/muse-spark-1-3/) |
-| 11 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
-| 12 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
-| 13 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
+| 1 | 三角洲 Delta | Claude Opus 5.5 | **90** | 90 | [/works/claude-opus-5-5/](https://arena.typelin.me/works/claude-opus-5-5/) |
+| 2 | 我只在被撥動時存在 | Claude Sonnet 5.5 | **88** | 92 | [/works/claude-sonnet-5-5/](https://arena.typelin.me/works/claude-sonnet-5-5/) |
+| 3 | Field Tuning / 場域調諧 | Kimi K3 | **86** | — | [/works/kimi-k3/](https://arena.typelin.me/works/kimi-k3/) |
+| 4 | 岔路 Forking Path | DeepSeek V4.1 Flash | **85** | 82 | [/works/deepseek-v4-1-flash/](https://arena.typelin.me/works/deepseek-v4-1-flash/) |
+| 5 | 流動思考 | Claude Opus 4.6 | **84** | 75 | [/works/claude-opus-4-6/](https://arena.typelin.me/works/claude-opus-4-6/) |
+| 6 | 之間 BETWEEN | GPT-6.1 Sol | **83** | 84 | [/works/gpt-6-1-sol/](https://arena.typelin.me/works/gpt-6-1-sol/) |
+| 7 | 未定之形 / AN UNFINISHED FORM | GPT-6 Astra ¹ | **82** | — | [/works/frontend-shock/gpt-6-astra/](https://arena.typelin.me/works/frontend-shock/gpt-6-astra/) |
+| 8 | 自畫像 № 27B | Qwen 3.8-27B（本地） | **80** | 65 | [/works/qwen-3-8-27b-local/](https://arena.typelin.me/works/qwen-3-8-27b-local/) |
+| 9 | 注意力場 Attention Field | Qwen 3.8 Flash | **77** | 72 | [/works/qwen-3-8-flash/](https://arena.typelin.me/works/qwen-3-8-flash/) |
+| 10 | 垂準 | Grok 4.6 | **75** | 78 | [/works/grok-4-6/](https://arena.typelin.me/works/grok-4-6/) |
+| 11 | 這一個我 | MiMo V2.6 Flash | **74** | 70 | [/works/mimo-v2.6-flash/](https://arena.typelin.me/works/mimo-v2.6-flash/) |
+| 12 | 校樣機 Proofing Press | GPT-5.6 Sol | **72** | 80 | [/works/gpt-5-6-sol/](https://arena.typelin.me/works/gpt-5-6-sol/) |
+| 13 | 拾火紙 | Muse Spark 1.3 | **68** | 86 | [/works/muse-spark-1-3/](https://arena.typelin.me/works/muse-spark-1-3/) |
+| 14 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
+| 15 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
+| 16 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
 
 ¹ 作答的是要求更嚴的 Frontend Shock 版自我介紹題（`benchmark-assets/frontend-shock/`）。
 
@@ -38,13 +41,14 @@
 
 ## 評分尺規
 
-不玩假精確：五個具名維度，有評分的地方才有數字。
+不玩假精確：六個具名維度，有評分的地方才有數字。第一維視覺表現力是最看重的一把尺。
 
-1. **創意審美**——概念是否獨立，選擇是否主動，有沒有模板味。
-2. **架構實現**——工程是否紮實，結構是否可維護，降級是否成立。
-3. **指令遵從**——有沒有照題目做事，還是各說各話。
-4. **語感機智**——文案有沒有腦，毒舌有沒有準頭。
-5. **翻車抗性**——換一道題、換一個裝置，還站不站得住。
+1. **視覺表現力**——第一眼有沒有衝擊，畫面精不精，往下滑會不會一路演化；說是什麼，看起來就得像什麼。
+2. **概念與敘事**——概念是否獨立，選擇是否主動，有沒有模板味；往下滑有起承轉合，章節對調就講不通。
+3. **架構實現**——工程是否紮實，結構是否可維護，降級是否成立。
+4. **指令遵從**——有沒有照題目做事，還是各說各話。
+5. **語感機智**——文案有沒有腦，毒舌有沒有準頭。
+6. **翻車抗性**——換一道題、換一個裝置，還站不站得住。
 
 ## 技術棧
 

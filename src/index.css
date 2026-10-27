@@ -445,10 +445,11 @@ button { font: inherit; color: inherit; }
 
 /* ---------- criteria ---------- */
 
-.criteria { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--ink); }
-.criterion { padding: 28px 24px 8px; border-right: 1px solid var(--line-2); transition-delay: calc(var(--i) * 80ms); }
-.criterion:first-child { padding-left: 0; }
-.criterion:last-child { border-right: 0; }
+.criteria { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+.criterion { padding: 28px 24px 20px; border-right: 1px solid var(--line-2); transition-delay: calc(var(--i) * 80ms); }
+.criterion:nth-child(3n + 1) { padding-left: 0; }
+.criterion:nth-child(3n) { border-right: 0; }
+.criterion:nth-child(n + 4) { border-top: 1px solid var(--line-2); }
 .criterion__no { display: block; font-family: var(--display); font-size: 52px; line-height: 1; color: var(--red); }
 .criterion h3 { margin-top: 28px; font-family: var(--serif); font-weight: 900; font-size: 22px; }
 .criterion p { margin-top: 10px; font-size: 15px; color: var(--muted); }
@@ -531,9 +532,6 @@ button { font: inherit; color: inherit; }
   .feature { grid-template-columns: minmax(0, 1fr); }
   .feature--flip .feature__art { order: 0; }
   .feature__art { max-width: 820px; }
-  .criteria { grid-template-columns: repeat(3, 1fr); row-gap: 8px; }
-  .criterion:nth-child(3) { border-right: 0; }
-  .criterion:nth-child(4) { padding-left: 0; }
   .row__main { grid-template-columns: 56px 120px minmax(0, 1fr) 80px 80px 48px; gap: 0 18px; }
   .index__cols { grid-template-columns: 80px 80px 48px; column-gap: 18px; }
   .row__more { padding-left: calc(56px + 120px + 36px); }
@@ -579,7 +577,7 @@ button { font: inherit; color: inherit; }
   .row__toggle { grid-area: toggle; width: 36px; height: 36px; }
   .row__more { grid-template-columns: minmax(0, 1fr); padding-left: 0; }
   .criteria { grid-template-columns: minmax(0, 1fr); }
-  .criterion { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line-2); display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; }
+  .criteria .criterion { padding: 22px 0; border-right: 0; border-top: 0; border-bottom: 1px solid var(--line-2); display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; }
   .criterion__no { grid-row: span 2; font-size: 40px; }
   .criterion h3 { margin-top: 0; }
   .essays { grid-template-columns: minmax(0, 1fr); }

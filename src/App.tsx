@@ -356,7 +356,7 @@ export default function App() {
               </h1>
               <p className="hero__sub">
                 TYPELIN ARENA 把同樣的前端題目交給 {works.length} 個 AI 模型，各自獨立完成。
-                作品原樣上架、每一件都能直接打開操作，再由人用五維尺規親手評分排名。
+                作品原樣上架、每一件都能直接打開操作，再由人用{cnNum(CRITERIA.length)}維尺規親手評分排名。
               </p>
               <div className="hero__cta">
                 <button type="button" className="btn btn--lg" onClick={() => go('works')}>看完整排名 ↓</button>
@@ -414,7 +414,7 @@ export default function App() {
               <li className="rv">
                 <span className="how__no">03</span>
                 <h3>人工評分</h3>
-                <p>用五維尺規逐件打分：{CRITERIA.map((c) => c.name).join('、')}，滿分 100。</p>
+                <p>用{cnNum(CRITERIA.length)}維尺規逐件打分：{CRITERIA.map((c) => c.name).join('、')}，滿分 100。最看重的是第一眼的視覺表現力。</p>
               </li>
             </ol>
           </div>
@@ -486,8 +486,8 @@ export default function App() {
           <div className="wrap">
             <header className="section__head rv">
               <p className="label section__no">02 — CRITERIA</p>
-              <h2 id="index-title">五維尺規，<em>逐件衡量。</em></h2>
-              <p className="section__desc">五個維度共用同一把尺，分數直接回到作品本身。</p>
+              <h2 id="index-title">{cnNum(CRITERIA.length)}維尺規，<em>逐件衡量。</em></h2>
+              <p className="section__desc">{cnNum(CRITERIA.length)}個維度共用同一把尺，分數直接回到作品本身。第一把尺是視覺表現力，因為作品先要被看見，才有人想點開。</p>
             </header>
             <ol className="criteria">
               {CRITERIA.map((c, ci) => (
