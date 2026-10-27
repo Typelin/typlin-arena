@@ -634,6 +634,10 @@ export const ArgonChamberCanvas: React.FC<ArgonChamberCanvasProps> = ({
           c.fillStyle = item.fgColor
           c.textAlign = 'left'
           c.textBaseline = 'middle'
+          c.lineJoin = 'round'
+          c.lineWidth = 5
+          c.strokeStyle = `rgba(${item.haloRgb[0]}, ${item.haloRgb[1]}, ${item.haloRgb[2]}, 0.95)`
+          c.strokeText(item.text, chosen.x, centerY)
           c.fillText(item.text, chosen.x, centerY)
 
           c.strokeStyle = item.accentColor
