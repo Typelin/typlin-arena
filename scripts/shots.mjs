@@ -20,6 +20,7 @@ const ALL = [
   ['gpt-6-1-sol', '/works/gpt-6-1-sol/'],
   ['claude-opus-5-5', '/works/claude-opus-5-5/'],
   ['claude-sonnet-5-5', '/works/claude-sonnet-5-5/'],
+  ['gemini-4-argon', '/works/gemini-4-argon/'],
   ['claude-opus-4-6-logo', '/logo/claude-opus-4-6/'],
   ['muse-spark-1-3-logo', '/logo/muse-spark-1-3/'],
   ['gemini-3-8-flash-high-logo', '/logo/gemini-3-8-flash-high/'],

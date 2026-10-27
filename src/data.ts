@@ -311,6 +311,21 @@ export const PLATES: Plate[] = [
     score2: 92,
     score: 88,
   },
+  {
+    id: 'gemini-4-argon',
+    no: '17',
+    short: 'ARGON',
+    model: 'GEMINI 4 ARGON · 多輪修訂版',
+    title: '我只在兩極之間發光',
+    prompt: SHARED_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D 電弧', 'WEBAUDIO', 'REDUCED MOTION'],
+    verdict:
+      '多輪修訂版：成品經過評審與 AI 協作的多輪指出問題後才定稿，分數已扣除人工引導的部分，不宜直接與單次提交的作品比較。整頁是一道在兩極之間放電的電弧，用「明天台北出門要帶傘嗎？」一個日常問題走完五章：能同時讀文字與數據、先假設再查證、沒接工具時會篤定地編出假答案（降雨率 73.4%，來源：我編的）、最後的取捨必須由人決定。內容讀得懂、零圓角、可完整跑完、操作後不再卡死。視覺本質仍是 2D 曲線，缺少材質與光影；第四章的假答案偏暗、手機上被電弧壓住。',
+    visual: 'current',
+    src: '/works/gemini-4-argon/',
+    thumb: '/shots/gemini-4-argon.png',
+    score: 68,
+  },
 ];
 
 export type Criterion = { name: string; desc: string };
