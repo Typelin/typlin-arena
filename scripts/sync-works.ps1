@@ -20,7 +20,8 @@ $works = @(
   @{ Source = 'mimo-v2.6-flash';       Slug = 'mimo-v2.6-flash';       Legacy = 'mimo-v2.6-flash' },
   @{ Source = 'gpt-6-1-sol';           Slug = 'gpt-6-1-sol';           Legacy = 'gpt-6-1-sol' },
   @{ Source = 'claude-opus-5-5';       Slug = 'claude-opus-5-5';       Legacy = 'claude-opus-5-5' },
-  @{ Source = 'claude-sonnet-5-5';     Slug = 'claude-sonnet-5-5';     Legacy = 'claude-sonnet-5-5' }
+  @{ Source = 'claude-sonnet-5-5';     Slug = 'claude-sonnet-5-5';     Legacy = 'claude-sonnet-5-5' },
+  @{ Source = 'gemini-4-argon';        Slug = 'gemini-4-argon';        Legacy = 'gemini-4-argon' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {
