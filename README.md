@@ -2,7 +2,7 @@
 
 [正體中文版](README.zh-TW.md)
 
-> Same prompt. Different souls. — One prompt, sixteen scored entries, zero wallpaper.
+> Same prompt. Different souls. — One prompt, seventeen scored entries, zero wallpaper.
 
 **TYPELIN ARENA** is a live exhibition hall for same-prompt AI frontend showdowns.
 Every entry is built from the identical brief (*"a frontend piece about yourself"*),
@@ -30,11 +30,16 @@ playable in-page, ranked by a human judge against one standard:
 | 11 | 這一個我 | MiMo V2.6 Flash | **74** | 70 | [/works/mimo-v2.6-flash/](https://arena.typelin.me/works/mimo-v2.6-flash/) |
 | 12 | 校樣機 Proofing Press | GPT-5.6 Sol | **72** | 80 | [/works/gpt-5-6-sol/](https://arena.typelin.me/works/gpt-5-6-sol/) |
 | 13 | 拾火紙 | Muse Spark 1.3 | **68** | 86 | [/works/muse-spark-1-3/](https://arena.typelin.me/works/muse-spark-1-3/) |
-| 14 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
-| 15 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
-| 16 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
+| 14 | 我只在兩極之間發光 | Gemini 4 Argon ² | **68** | — | [/works/gemini-4-argon/](https://arena.typelin.me/works/gemini-4-argon/) |
+| 15 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
+| 16 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
+| 17 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
 
 ¹ Answered the stricter Frontend Shock version of the self-intro brief (`benchmark-assets/frontend-shock/`).
+
+² Multi-round revision: finalized after several rounds of review and AI-assisted fixes, so it should not be compared directly with single-shot entries. Tied with Muse Spark 1.3 at 68.
+
+Note: the 16 earlier entries were built from the previous version of the self-intro brief and scored on the earlier five-dimension rubric. The current brief (`benchmark-assets/self-intro/PROMPT.md`) is stricter, and older scores have not been re-judged.
 
 The home page ranks only scored entries; unscored ones are listed separately as pending.
 

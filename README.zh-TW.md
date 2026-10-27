@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 同一個題目，十六件已評分作品橫評，拒絕牆紙。
+> 同一道題，各家靈魂。—— 同一個題目，十七件已評分作品橫評，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
 所有參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），
@@ -30,11 +30,16 @@
 | 11 | 這一個我 | MiMo V2.6 Flash | **74** | 70 | [/works/mimo-v2.6-flash/](https://arena.typelin.me/works/mimo-v2.6-flash/) |
 | 12 | 校樣機 Proofing Press | GPT-5.6 Sol | **72** | 80 | [/works/gpt-5-6-sol/](https://arena.typelin.me/works/gpt-5-6-sol/) |
 | 13 | 拾火紙 | Muse Spark 1.3 | **68** | 86 | [/works/muse-spark-1-3/](https://arena.typelin.me/works/muse-spark-1-3/) |
-| 14 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
-| 15 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
-| 16 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
+| 14 | 我只在兩極之間發光 | Gemini 4 Argon ² | **68** | — | [/works/gemini-4-argon/](https://arena.typelin.me/works/gemini-4-argon/) |
+| 15 | Resonance Chamber | GLM 5.3 Flash | **59** | 74 | [/works/glm-5-3-flash/](https://arena.typelin.me/works/glm-5-3-flash/) |
+| 16 | 衡准儀 | GLM 5.3 | **58** | 63 | [/works/glm-5-3/](https://arena.typelin.me/works/glm-5-3/) |
+| 17 | The Refraction Chamber | Gemini 3.8 Flash High | **50** | 70 | [/works/gemini-3-8-flash-high/](https://arena.typelin.me/works/gemini-3-8-flash-high/) |
 
 ¹ 作答的是要求更嚴的 Frontend Shock 版自我介紹題（`benchmark-assets/frontend-shock/`）。
+
+² 多輪修訂版：經評審與 AI 協作多輪指出問題後才定稿，不宜與單次提交的作品直接比較。與 Muse Spark 1.3 同為 68 分。
+
+註：前 16 件作品出自舊版自我介紹題、以舊的五維尺規評分。現行題目（`benchmark-assets/self-intro/PROMPT.md`）更嚴格，舊分數尚未重評。
 
 首頁只替已評分作品排名；未評分作品另列「待評」。
 毒舌評語待補——先評分，後動刀。
