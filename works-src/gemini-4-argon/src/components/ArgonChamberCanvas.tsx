@@ -673,7 +673,7 @@ export const ArgonChamberCanvas: React.FC<ArgonChamberCanvasProps> = ({
           [236, 231, 220], // 0: Warm limestone daylight
           [214, 226, 240], // 1: Cool optical slate
           [9, 20, 36],     // 2: Deep Prussian night
-          [24, 4, 10],     // 3: Breakdown crimson-obsidian
+          [58, 12, 26],    // 3: Breakdown crimson-obsidian
           [9, 15, 28],     // 4: Symbiosis deep indigo
         ]
         const idx0 = Math.min(3, Math.max(0, Math.floor(s)))
@@ -1146,11 +1146,11 @@ export const ArgonChamberCanvas: React.FC<ArgonChamberCanvasProps> = ({
           // Background chaotic red lightning web filling the screen during eruption
           if (wStage3 > 0.15 && unshatteredCount > 0) {
             ctx.save()
-            ctx.globalAlpha = clamp(wStage3 * 0.45, 0, 0.5)
+            ctx.globalAlpha = clamp(wStage3 * 0.3, 0, 0.34)
             ctx.strokeStyle = '#FF2947'
             ctx.lineWidth = 1.4
             for (let w = 0; w < 8; w++) {
-              const wy = H * (0.14 + (w / 7) * 0.56)
+              const wy = H * (0.3 + (w / 7) * 0.42)
               drawSpline(
                 ctx,
                 leftAnchorX,
