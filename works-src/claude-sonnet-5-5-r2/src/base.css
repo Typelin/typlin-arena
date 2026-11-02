@@ -1,0 +1,230 @@
+@font-face {
+  font-family: "Fraunces";
+  src: url("./fonts/fraunces-full.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("./fonts/fraunces-full-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plex Mono";
+  src: url("./fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plex Mono";
+  src: url("./fonts/plex-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Serif TC Sub";
+  src: url("./fonts/noto-serif-tc-sub.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+:root {
+  --ink: #17110e;
+  --ink-2: #241a14;
+  --cream: #f6ead3;
+  --cream-2: #efdfc0;
+  --sand: #e4cc9f;
+  --clay: #c4532b;
+  --clay-deep: #8f2f14;
+  --clay-hot: #e8643a;
+  --night: #0a0f1e;
+  --night-2: #131b33;
+  --frost: #b9c7ee;
+
+  --f-display: "Fraunces", "Noto Serif TC Sub", "Songti TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --f-zh-serif: "Noto Serif TC Sub", "Fraunces", "Songti TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --f-body: "PingFang TC", "Microsoft JhengHei", "Noto Serif TC Sub", "Fraunces", sans-serif;
+  --f-mono: "Plex Mono", "PingFang TC", "Microsoft JhengHei", "Noto Serif TC Sub", monospace;
+
+  --pad: clamp(20px, 5vw, 72px);
+  --strip: var(--cream);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+main {
+  display: block;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+dt,
+ol,
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+code {
+  font-family: var(--f-mono);
+  font-size: 0.88em;
+}
+
+canvas {
+  display: block;
+}
+
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.ch {
+  position: relative;
+}
+
+.kicker {
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.kicker::before {
+  content: "";
+  width: 36px;
+  height: 1.5px;
+  background: currentColor;
+  flex: none;
+}
+
+h2 {
+  font-family: var(--f-zh-serif);
+  font-weight: 800;
+  font-size: clamp(30px, 4.6vw, 62px);
+  line-height: 1.16;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+.lead {
+  font-family: var(--f-zh-serif);
+  font-weight: 500;
+  font-size: clamp(18px, 1.75vw, 24px);
+  line-height: 1.6;
+  margin-top: 26px;
+  max-width: 28em;
+  text-wrap: pretty;
+}
+
+.lead {
+  text-wrap: balance;
+}
+
+.ch p:not(.kicker):not(.lead) {
+  max-width: 30em;
+}
+
+/* 章節進度：十四條線 */
+.strip {
+  position: fixed;
+  z-index: 50;
+  right: clamp(8px, 1.4vw, 22px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  color: var(--strip);
+  transition: color 0.5s;
+}
+.strip i {
+  display: block;
+  width: 14px;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.28;
+  transform-origin: right center;
+  transition: opacity 0.35s, transform 0.5s cubic-bezier(0.2, 0.9, 0.2, 1.4);
+}
+.strip i.on {
+  opacity: 1;
+  transform: scaleX(1.9);
+}
+.strip i.cur {
+  opacity: 1;
+  transform: scaleX(2.8);
+  color: var(--clay-hot);
+}
+
+@media (max-width: 720px) {
+  .strip {
+    right: 4px;
+    gap: 5px;
+  }
+  .strip i {
+    width: 9px;
+  }
+  .strip i.on {
+    transform: scaleX(1.5);
+  }
+  .strip i.cur {
+    transform: scaleX(2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip i {
+    transition: none;
+  }
+}
