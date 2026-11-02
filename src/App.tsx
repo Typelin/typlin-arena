@@ -111,7 +111,7 @@ function Verdict({ text, clamp = true }: { text: string; clamp?: boolean }) {
 function Attempts({ pl }: { pl: Plate }) {
   if (!pl.attempts || pl.attempts.length < 2) return null;
   return (
-    <div className="attempts" aria-label={`${pl.model} 歷次重考`}>
+    <div className="attempts" aria-label={`${pl.model} 歷次作答`}>
       <span className="label">ATTEMPTS</span>
       {pl.attempts.map((a) => (
         <a key={a.id} href={a.src} target="_blank" rel="noreferrer">
@@ -419,7 +419,7 @@ export default function App() {
             <button type="button" onClick={() => go('index')}>尺規</button>
             <button type="button" onClick={() => go('dossier')}>文章</button>
           </nav>
-          <span className="topbar__meta label">VOL.01 · {pad2(works.length)} WORKS</span>
+          <span className="topbar__meta label">VOL.01</span>
         </div>
         <div className="progress" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" data-pct={pct} />
       </header>
@@ -429,15 +429,14 @@ export default function App() {
         <section className="hero" aria-labelledby="hero-title">
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(modelCount)} MODELS</span></p>
+              <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(modelCount)} MODELS · {pad2(works.length)} WORKS</span></p>
               <h1 id="hero-title">
                 <span className="hero__line">同一道前端題，</span>
                 <span className="hero__line">哪個 <em>AI</em> 做得</span>
                 <span className="hero__line hero__line--accent">最好？</span>
               </h1>
               <p className="hero__sub">
-                TYPELIN ARENA 把前端題目交給 {modelCount} 個 AI 模型，各自獨立完成。
-                作品原樣上架、每一件都能直接打開操作，再由人用{cnNum(CRITERIA.length)}維尺規親手評分排名。題目改版就另開一區，不跟舊的混排。
+                TYPELIN ARENA 把前端題目交給 {modelCount} 個 AI 模型，各自獨立完成。<span className="nb">作品原樣上架</span>、每一件都能直接打開操作，再由人用{cnNum(CRITERIA.length)}維尺規親手<span className="nb">評分排名</span>。<span className="nb">題目</span>改版就另開一區，不跟舊的混排。
               </p>
               <div className="hero__cta">
                 <button type="button" className="btn btn--lg" onClick={() => go('works')}>看完整排名 ↓</button>
@@ -448,8 +447,8 @@ export default function App() {
             {ranked.length > 0 && (
               <aside className="board rv" aria-labelledby="board-title">
                 <header className="board__head">
-                  <h2 id="board-title" className="label">LEADERBOARD · 目前排名</h2>
-                  <span className="label">{boardZone === newZone ? '新題目' : '舊題目'} · 自我介紹 / 100</span>
+                  <h2 id="board-title" className="label">LEADERBOARD · {boardZone === newZone ? '新題目' : '舊題目'}</h2>
+                  <span className="label">自我介紹 / 100</span>
                 </header>
                 <a className="board__champ" href={ranked[0].src} target="_blank" rel="noreferrer" aria-label={`第 1 名 ${ranked[0].model}，作品《${ranked[0].title}》，${ranked[0].score} 分`}>
                   <span className="board__thumb"><img src={ranked[0].thumb} alt="" width={960} height={600} /></span>
@@ -503,7 +502,7 @@ export default function App() {
           <div className="wrap">
             <dl className="stats">
               <div><dt>參賽模型</dt><dd>{pad2(modelCount)}</dd></div>
-              <div><dt>已評分</dt><dd>{pad2(scoredCount)}</dd></div>
+              <div><dt>已評分作品</dt><dd>{pad2(scoredCount)}</dd></div>
               <div><dt>LOGO 落地站</dt><dd>{pad2(logoWorks)}</dd></div>
               <div><dt>{boardZone === newZone ? '新題目最高分' : '舊題目最高分'}</dt><dd>{top}</dd></div>
             </dl>
