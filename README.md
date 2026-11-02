@@ -2,10 +2,10 @@
 
 [正體中文版](README.zh-TW.md)
 
-> Same prompt. Different souls. — One prompt, seventeen scored entries, zero wallpaper.
+> Same prompt. Different souls. — Seventeen scored entries on the previous brief, four more on the new brief awaiting scores, zero wallpaper.
 
 **TYPELIN ARENA** is a live exhibition hall for same-prompt AI frontend showdowns.
-Every entry is built from the identical brief (*"a frontend piece about yourself"*),
+Entries in the same zone are built from the identical brief (*"a frontend piece about yourself"*); a changed brief opens a new zone,
 playable in-page, ranked by a human judge against one standard:
 **if it can't be touched by hand, it doesn't get framed.**
 
@@ -39,9 +39,20 @@ playable in-page, ranked by a human judge against one standard:
 
 ² Multi-round revision: finalized after several rounds of review and AI-assisted fixes, so it should not be compared directly with single-shot entries. Tied with Muse Spark 1.3 at 68.
 
-Note: the 16 earlier entries were built from the previous version of the self-intro brief and scored on the earlier five-dimension rubric. The current brief (`benchmark-assets/self-intro/PROMPT.md`) is stricter, and older scores have not been re-judged.
+Note: the first 16 entries were built from the previous brief and scored on the earlier five-dimension rubric. The new brief (`benchmark-assets/self-intro/PROMPT.md`) is stricter, and older scores have not been re-judged against it.
 
-The home page ranks only scored entries; unscored ones are listed separately as pending.
+### New brief (awaiting scores)
+
+The new brief weights visual impact at 70%, content and meaning at 20%, and engineering and testing at 10%. Each entry must look up its own facts on the web and write "not officially disclosed" when something cannot be found. Scores on the new brief are not comparable with the table above, so the two are ranked separately. Claude Sonnet 5.5, Claude Opus 5.5 and DeepSeek V4.1 Flash each have one entry under each brief, linked to each other.
+
+| Work | Model | Self intro | Live |
+| --- | --- | --- | --- |
+| 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | pending | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
+| 我是 Anthropic 開發的大型語言模型 | Claude Opus 5.5 | pending | [/works/claude-opus-5-5-r2/](https://arena.typelin.me/works/claude-opus-5-5-r2/) |
+| 雙色網點試印本 | DeepSeek V4.1 Flash | pending | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
+| 關於我 | Claude Haiku 5.5 | pending | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
+
+The home page ranks each brief separately; unscored entries are listed as pending. Until three new-brief entries are scored, the hero leaderboard keeps showing the previous brief and says so.
 
 ## Judging Criteria
 
