@@ -1,0 +1,193 @@
+.effort {
+  background: var(--sand);
+  color: var(--ink);
+  padding: clamp(72px, 11vh, 140px) 0;
+  overflow: hidden;
+}
+.effort::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 70% at 80% 40%, rgba(255, 244, 220, 0.55), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(23, 17, 14, 0.03) 0 1px, transparent 1px 3px);
+}
+.effort-grid {
+  position: relative;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 5vw, 90px);
+  align-items: center;
+}
+.effort-copy {
+  padding-inline: 0;
+}
+.effort-copy .kicker {
+  color: var(--clay-deep);
+}
+.hint-turn {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--clay-deep);
+  transition: opacity 0.5s;
+}
+.hint-turn.gone {
+  opacity: 0;
+}
+.hint-turn i {
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  border-right-color: transparent;
+  animation: spin 3.2s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+}
+@keyframes spin {
+  0%,
+  40% {
+    transform: rotate(0);
+  }
+  80%,
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.rig {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-areas:
+    "draft knob"
+    "draft dets"
+    "out out";
+  align-items: center;
+  gap: 18px clamp(14px, 2.4vw, 36px);
+}
+#draft {
+  grid-area: draft;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-height: 72vh;
+}
+.knob-wrap {
+  grid-area: knob;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  justify-self: center;
+  aspect-ratio: 1;
+  align-self: end;
+}
+.knob-wrap canvas {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+.knob-wrap.grab canvas {
+  cursor: grabbing;
+}
+.detents {
+  grid-area: dets;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  align-self: start;
+}
+.detents button {
+  appearance: none;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 7px 9px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.detents button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--cream);
+}
+.detents button:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+}
+.readout {
+  grid-area: out;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 18px;
+  padding-top: 14px;
+  border-top: 1.5px solid var(--ink);
+}
+.readout b {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1;
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--clay-deep);
+}
+.readout span {
+  font-family: var(--f-zh-serif);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.vh:focus-visible + .vh {
+  outline: none;
+}
+
+@media (max-width: 860px) {
+  .effort-grid {
+    grid-template-columns: 1fr;
+  }
+  .rig {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
+  }
+}
+@media (max-width: 520px) {
+  .rig {
+    grid-template-columns: 138px minmax(0, 1fr);
+    grid-template-areas:
+      "knob out"
+      "dets dets"
+      "draft draft";
+    gap: 14px 16px;
+  }
+  .readout {
+    border-top: 0;
+    padding-top: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: center;
+  }
+  #draft {
+    max-height: none;
+    aspect-ratio: 4 / 4.3;
+  }
+  .detents {
+    justify-content: flex-start;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hint-turn i {
+    animation: none;
+  }
+}

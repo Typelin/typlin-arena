@@ -1,0 +1,144 @@
+.context {
+  height: 460vh;
+  background: var(--night);
+  color: var(--cream);
+}
+.ctx-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(300px, 4fr) minmax(0, 8fr);
+  gap: clamp(20px, 3vw, 56px);
+  padding: clamp(24px, 5vh, 56px) clamp(16px, 3.4vw, 60px);
+  padding-right: clamp(28px, 4vw, 70px);
+  overflow: hidden;
+}
+.ctx-cap {
+  align-self: center;
+  min-width: 0;
+}
+.ctx-cap .kicker {
+  color: var(--clay-hot);
+}
+.ctx-cap h2 {
+  font-size: clamp(28px, 3.5vw, 50px);
+}
+.ctx-cap .lead {
+  font-size: clamp(16px, 1.45vw, 20px);
+  margin-top: 18px;
+}
+.ctx-note {
+  margin-top: 26px;
+  padding-left: 16px;
+  border-left: 2px solid var(--clay-hot);
+  font-family: var(--f-zh-serif);
+  font-weight: 500;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.6;
+  color: var(--frost);
+  min-height: 3.3em;
+}
+.ctx-live {
+  margin-top: 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: rgba(246, 234, 211, 0.7);
+}
+.ctx-live b {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(34px, 4.4vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  min-width: 4.4ch;
+}
+.ctx-stage {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 12px;
+}
+.ctx-stage canvas {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: radial-gradient(80% 80% at 50% 50%, #131b33 0%, #0a0f1e 100%);
+  box-shadow: inset 0 0 0 1px rgba(185, 199, 238, 0.16);
+}
+.ctx-out {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  opacity: calc(var(--k, 0));
+  transform: translateY(calc((1 - var(--k, 0)) * 10px));
+}
+.ctx-out i {
+  width: 18px;
+  height: 12px;
+  background: #ff9660;
+  display: block;
+}
+.ctx-out b {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+  color: #ff9660;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 860px) {
+  .context {
+    height: 430vh;
+  }
+  .ctx-pin {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 14px;
+    padding: 20px var(--pad) 16px;
+  }
+  .ctx-cap .kicker {
+    margin-bottom: 10px;
+  }
+  .ctx-cap h2 {
+    font-size: clamp(24px, 6.4vw, 32px);
+  }
+  .ctx-cap .lead {
+    margin-top: 8px;
+    font-size: 15px;
+  }
+  .ctx-note {
+    margin-top: 12px;
+    min-height: 3.2em;
+    font-size: 14px;
+  }
+  .ctx-live {
+    margin-top: 8px;
+  }
+  .ctx-live b {
+    font-size: 30px;
+  }
+  .ctx-out b {
+    font-size: 22px;
+  }
+}
+@media (max-height: 640px) and (min-width: 861px) {
+  .ctx-cap .lead,
+  .ctx-live {
+    display: none;
+  }
+}

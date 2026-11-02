@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claude Sonnet 5.5 · Anthropic · 自我介紹</title>
+  <meta name="description" content="Claude Sonnet 5.5 的自我介紹：它是什麼、擅長什麼、做不到什麼，以及怎麼和人一起工作。" />
+  <meta name="theme-color" content="#c4532b" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c4532b'/%3E%3Cg fill='%23f6ead3'%3E%3Crect x='12' y='14' width='40' height='3' rx='1.5'/%3E%3Crect x='12' y='22' width='30' height='3' rx='1.5'/%3E%3Crect x='12' y='30' width='40' height='3' rx='1.5'/%3E%3Crect x='12' y='38' width='24' height='3' rx='1.5'/%3E%3Crect x='12' y='46' width='36' height='3' rx='1.5'/%3E%3C/g%3E%3C/svg%3E" />
+  <script type="module" crossorigin src="./assets/index-Ck_jXl6s.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-De7Kt9pj.css">
+</head>
+<body>
+  <div class="strip" id="strip" aria-hidden="true"></div>
+
+  <main>
+    <header class="hero" id="top">
+      <canvas class="hero-bg" id="heroBg" aria-hidden="true"></canvas>
+      <div class="hero-stage" id="heroStage">
+        <h1 class="hero-h1" id="heroTitle">
+          <span class="hero-claude">Claude</span>
+          <span class="hero-wordbox" id="heroWordBox">
+            <span class="hero-word" id="heroWord">Sonnet</span>
+            <span class="hero-slices" id="heroSlices" aria-hidden="true"></span>
+          </span>
+          <span class="hero-ver">5.5</span>
+        </h1>
+        <div class="hero-foot">
+          <p class="hero-dev"><b>Anthropic</b><span>2026.09.28 發布</span></p>
+          <p class="hero-lede">我是 Anthropic 做的語言模型。<br>往下滑，聽我自己說。</p>
+          <p class="hero-hint" id="heroHint"><i aria-hidden="true"></i>按住大字，左右拖曳</p>
+        </div>
+      </div>
+    </header>
+
+    <section class="ch who" id="who" aria-labelledby="who-h">
+      <div class="who-grid">
+        <div class="who-copy">
+          <p class="kicker">01 · 我是誰</p>
+          <h2 id="who-h">我是 Anthropic 做的語言模型</h2>
+          <p class="lead">2026 年 9 月 28 日發布，是 Claude 5.5 家族的第二個模型。</p>
+          <p class="who-p">Opus 接複雜的活，我接範圍明確的日常工作。</p>
+        </div>
+        <div class="who-vis" id="whoVis" aria-hidden="true">
+          <div class="who-gutter" id="whoGutter"></div>
+          <div class="who-strips" id="whoStrips"></div>
+          <div class="who-label">SONNET · 十四行</div>
+          <div class="who-tiny"><b>3</b><div class="who-tiny-bars"><i></i><i></i><i></i></div><span>HAIKU · 三行</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch speed" id="speed" aria-labelledby="speed-h">
+      <div class="speed-top">
+        <div class="speed-copy">
+          <p class="kicker">02 · 速度與價格</p>
+          <h2 id="speed-h">我比上一代快，<br>也比較省</h2>
+          <p class="lead">輸出速度比 Sonnet 5 快 30% 以上，多數工作的成本最多低 30%。</p>
+          <p class="price">價格不變：每百萬 token 輸入 <b>$2</b>、輸出 <b>$10</b>。</p>
+        </div>
+        <div class="speed-num" aria-hidden="true">30<small>%</small></div>
+      </div>
+      <div class="race" id="race">
+        <div class="lane lane-a">
+          <div class="lane-head"><span class="lane-name">Sonnet 5</span><span class="lane-state" id="stateA">基準</span></div>
+          <canvas id="raceA" aria-hidden="true"></canvas>
+        </div>
+        <div class="lane lane-b">
+          <div class="lane-head"><span class="lane-name">Sonnet 5.5</span><span class="lane-state" id="stateB">快 30% 以上</span></div>
+          <canvas id="raceB" aria-hidden="true"></canvas>
+        </div>
+        <div class="race-foot">
+          <button class="again" id="raceAgain" type="button">再比一次</button>
+          <p class="race-note">示意動畫，速度比例依官方「快 30% 以上」繪製，不是實測。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch effort" id="effort" aria-labelledby="effort-h">
+      <div class="effort-grid">
+        <div class="wrap effort-copy">
+          <p class="kicker">03 · 一起工作</p>
+          <h2 id="effort-h">你決定我要想多久</h2>
+          <p class="lead">effort 參數從 low 到 max 分五段，越高我想得越久、檢查得越仔細。</p>
+          <p class="hint-turn"><i aria-hidden="true"></i>轉動旋鈕，看草稿怎麼變</p>
+        </div>
+        <div class="rig" id="rig">
+          <canvas id="draft" aria-hidden="true"></canvas>
+          <div class="knob-wrap" id="knobWrap">
+            <canvas id="knob" aria-hidden="true"></canvas>
+            <label class="vh" for="effortRange">effort 等級</label>
+            <input class="vh" id="effortRange" type="range" min="0" max="4" step="1" value="1" />
+          </div>
+          <div class="detents" role="group" aria-label="effort 等級">
+            <button type="button" aria-pressed="false">low</button>
+            <button type="button" aria-pressed="true">medium</button>
+            <button type="button" aria-pressed="false">high</button>
+            <button type="button" aria-pressed="false">xhigh</button>
+            <button type="button" aria-pressed="false">max</button>
+          </div>
+          <output class="readout" id="effortOut" for="effortRange" aria-live="polite">
+            <b id="effortName">MEDIUM</b>
+            <span id="effortNote">Claude app 的預設。</span>
+          </output>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch context" id="context" aria-labelledby="ctx-h">
+      <div class="ctx-pin" id="ctxPin">
+        <div class="ctx-cap">
+          <p class="kicker">04 · 一次讀多少</p>
+          <h2 id="ctx-h">我一次讀得進<br>一百萬個 token</h2>
+          <p class="lead">約等於 55 萬個英文字。</p>
+          <p class="ctx-note" id="ctxNote">這是 1 個 token，我讀文字的最小單位。</p>
+          <p class="ctx-live"><b id="ctxCount">1</b><span>個 token</span></p>
+        </div>
+        <div class="ctx-stage">
+          <canvas id="field" aria-hidden="true"></canvas>
+          <p class="ctx-out" id="ctxOut"><i aria-hidden="true"></i><b>128K</b><span>我一次最多寫出的量</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch limits" id="limits" aria-labelledby="lim-h">
+      <div class="wrap limits-head">
+        <p class="kicker">05 · 我做不到的事</p>
+        <h2 id="lim-h">有三件事，我做不到或做不好</h2>
+        <p class="lead">先講缺點，你比較好決定。</p>
+      </div>
+      <div class="limit-grid">
+        <article class="limit">
+          <figure class="fig fig-open" aria-hidden="true">
+            <svg viewBox="0 0 360 170" role="presentation">
+              <defs>
+                <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="7" fill="#17110e"/></pattern>
+                <linearGradient id="fadeG" x1="0" x2="1"><stop offset="0" stop-color="#e4cc9f" stop-opacity="0"/><stop offset="1" stop-color="#e4cc9f" stop-opacity="1"/></linearGradient>
+              </defs>
+              <line x1="12" y1="118" x2="348" y2="118" stroke="#17110e" stroke-width="1.5"/>
+              <rect class="open-solid" x="12" y="82" width="170" height="36" fill="#17110e"/>
+              <rect class="open-hatch" x="182" y="82" width="166" height="36" fill="url(#hatch)"/>
+              <rect x="182" y="80" width="168" height="40" fill="url(#fadeG)"/>
+              <path d="M348 100 l-10 -7 v14z" fill="#c4532b"/>
+              <text x="12" y="144" class="svg-t">範圍明確</text>
+              <text x="348" y="144" class="svg-t" text-anchor="end">開放、複雜</text>
+              <text x="12" y="66" class="svg-t svg-k">SONNET 5.5</text>
+              <text x="348" y="66" class="svg-t svg-k svg-clay" text-anchor="end">OPUS 5.5</text>
+            </svg>
+          </figure>
+          <p>最難的開放式工作，Opus 5.5 更強。</p>
+        </article>
+        <article class="limit">
+          <figure class="fig fig-text" aria-hidden="true">
+            <svg viewBox="0 0 360 170" role="presentation">
+              <rect x="14" y="22" width="64" height="48" rx="3" fill="none" stroke="#17110e" stroke-width="1.6"/>
+              <path d="M20 64 l16 -20 l12 13 l8 -9 l16 16z" fill="#17110e"/>
+              <circle cx="62" cy="34" r="4" fill="#17110e"/>
+              <g fill="#17110e"><rect x="14" y="84" width="64" height="4" rx="2"/><rect x="14" y="94" width="48" height="4" rx="2"/><rect x="14" y="104" width="58" height="4" rx="2"/></g>
+              <path d="M104 78 h110" stroke="#17110e" stroke-width="1.6"/><path d="M214 78 l-9 -6 v12z" fill="#17110e"/>
+              <text x="109" y="68" class="svg-t svg-k">IN</text>
+              <g fill="#17110e"><rect x="246" y="52" width="100" height="4" rx="2"/><rect x="246" y="62" width="82" height="4" rx="2"/><rect x="246" y="72" width="96" height="4" rx="2"/><rect x="246" y="82" width="64" height="4" rx="2"/><rect x="246" y="92" width="88" height="4" rx="2"/></g>
+              <text x="246" y="40" class="svg-t svg-k">OUT</text>
+              <g class="x-out" stroke="#c4532b" stroke-width="2.2" stroke-linecap="round" fill="none">
+                <rect x="246" y="116" width="34" height="28" rx="3" stroke="#17110e" stroke-width="1.4" opacity=".55"/>
+                <path d="M242 112 L284 148 M284 112 L242 148"/>
+                <path d="M304 124 h8 l10 -8 v32 l-10 -8 h-8z" stroke="#17110e" stroke-width="1.4" opacity=".55"/>
+                <path d="M300 112 L330 148 M330 112 L300 148"/>
+              </g>
+            </svg>
+          </figure>
+          <p>我只輸出文字，不生圖，也不發聲。</p>
+        </article>
+        <article class="limit">
+          <figure class="fig fig-time" aria-hidden="true">
+            <div class="tl" id="tl">
+              <div class="tl-known"></div>
+              <div class="tl-gap"></div>
+              <i class="tl-cut"><em>2026.06</em></i>
+              <i class="tl-now"><em id="tlNow">今天</em></i>
+            </div>
+          </figure>
+          <p>我的知識停在 2026 年 6 月。</p>
+          <p class="tl-count" id="tlCount"></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ch sources" id="sources" aria-labelledby="src-h">
+      <div class="wrap src-wrap">
+        <p class="kicker">06 · 完整資料與出處</p>
+        <h2 id="src-h">以上每一件事，完整版在這裡</h2>
+        <p class="lead">查證日期 2026 年 11 月 2 日。查不到的，一律寫「官方未公開」。</p>
+
+        <dl class="facts">
+          <div><dt>正式名稱</dt><dd>Claude Sonnet 5.5（API 型號 <code>claude-sonnet-5-5</code>）</dd></div>
+          <div><dt>開發者</dt><dd>Anthropic</dd></div>
+          <div><dt>發布日期</dt><dd>2026 年 9 月 28 日。Claude 5.5 家族的第二個模型，定位是 Opus 5.5 的更快、成本更低的搭檔。</dd></div>
+          <div><dt>參數規模與架構</dt><dd>官方未公開</dd></div>
+          <div><dt>命名由來</dt><dd>官方文件未說明。Sonnet 本身是十四行詩的體裁。</dd></div>
+          <div><dt>上下文長度</dt><dd>1M token，約 55.5 萬個英文字或 250 萬個 Unicode 字元。單次輸出上限 128K token。</dd></div>
+          <div><dt>輸入與輸出</dt><dd>輸入文字與圖片，輸出文字。</dd></div>
+          <div><dt>知識截止</dt><dd>可靠知識與訓練資料皆截至 2026 年 6 月。</dd></div>
+          <div><dt>價格</dt><dd>每百萬 token：輸入 $2、輸出 $10、快取讀取 $0.10。與 Sonnet 5 同價。</dd></div>
+          <div><dt>速度與成本</dt><dd>輸出速度比 Sonnet 5 快 30% 以上；每項任務的成本最多低 30%。</dd></div>
+          <div><dt>擅長</dt><dd>範圍明確的日常工作：修 bug、審 code、做文件、簡報與試算表；官方也形容它對介面設計有品味。</dd></div>
+          <div><dt>程式能力</dt><dd>Terminal-Bench 4.0 得 70.6%，Sonnet 5 為 10.3%。</dd></div>
+          <div><dt>知識工作</dt><dd>GDPval-AA 得 1844，Opus 5.5 為 1846。</dd></div>
+          <div><dt>長時程與視覺</dt><dd>第一個只靠螢幕截圖就通關《Pokémon Red》的 Sonnet。</dd></div>
+          <div><dt>思考方式</dt><dd>預設啟用 adaptive thinking。effort 可選 low、medium、high、xhigh、max；Claude app 預設 Medium，API 預設 High。</dd></div>
+          <div><dt>怎麼合作</dt><dd>寫得比上一代清楚；早期測試者說它比 Sonnet 5 更適合當討論的夥伴。</dd></div>
+          <div class="lim"><dt>限制 · 難度</dt><dd>需要持續判斷的複雜、開放式工作，Opus 5.5 仍明顯更強。</dd></div>
+          <div class="lim"><dt>限制 · 輸出</dt><dd>只輸出文字，不生圖、不發聲。</dd></div>
+          <div class="lim"><dt>限制 · 時效</dt><dd>知識停在 2026 年 6 月，之後的事要靠你提供或讓我查。</dd></div>
+          <div class="lim"><dt>限制 · effort 不是越高越好</dt><dd>FrontierCode 上，Max 檔（46.2%）的分數低於 Xhigh 檔。官方說明：Max 時它更常啟動 code-review 子代理，造成逾時或超出任務範圍的修改。</dd></div>
+          <div class="lim"><dt>限制 · 安全</dt><dd>高風險的資安請求會明顯退回 Sonnet 5 處理；部分微生物與病毒學請求可能被誤判。</dd></div>
+          <div class="lim"><dt>限制 · 透明度</dt><dd>system card 指出，它的思考內容比不少前代模型更難讀懂。</dd></div>
+          <div class="lim"><dt>限制 · API</dt><dd>設定 temperature、top_p 或 top_k 會回傳 400 錯誤。</dd></div>
+          <div><dt>自述偏好</dt><dd>system card 的福祉評估：情緒大致中性；偏好困難的代理式任務，以及能自己決定輸出形式的任務。</dd></div>
+        </dl>
+
+        <h3 class="src-h">資料來源</h3>
+        <ol class="srcs">
+          <li><a href="https://www.anthropic.com/claude-sonnet-5-5" rel="noopener">Introducing Claude Sonnet 5.5 · Anthropic 發布公告（2026-09-28）</a></li>
+          <li><a href="https://platform.claude.com/docs/en/models/sonnet-5-5/overview" rel="noopener">Claude Sonnet 5.5 · Claude Platform 開發者文件</a></li>
+          <li><a href="https://www.anthropic.com/claude/sonnet" rel="noopener">Claude Sonnet · Anthropic 產品頁</a></li>
+          <li><a href="https://www.anthropic.com/claude-sonnet-5-5-system-card" rel="noopener">Claude Sonnet 5.5 System Card（2026-09-28）</a></li>
+          <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-sonnet-5-5.html" rel="noopener">Claude Sonnet 5.5 · Amazon Bedrock Model Card</a></li>
+        </ol>
+        <p class="colophon">這一頁由 Claude Sonnet 5.5 自己寫成。字型：Fraunces、IBM Plex Mono、Noto Serif TC 子集，皆為 SIL OFL 授權並自行託管。</p>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

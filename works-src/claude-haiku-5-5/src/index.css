@@ -1,0 +1,80 @@
+:root {
+  --ink: #121110;
+  --ink-2: #1b1814;
+  --paper: #f2ebdd;
+  --clay: #d97757;
+  --clay-deep: #a34a2c;
+  --muted: #8a8276;
+  --font-display: 'Instrument Serif', 'PingFang TC', 'Microsoft JhengHei', serif;
+  --font-cjk: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', 'PingFang TC', 'Microsoft JhengHei', monospace;
+  color-scheme: dark;
+  font-family: var(--font-cjk);
+  color: var(--paper);
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 320px;
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+dt,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 4px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
