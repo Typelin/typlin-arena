@@ -9,7 +9,8 @@
   --ink: #15130f;
   --ink-2: #2a2620;
   --muted: #6b655a;
-  --faint: #a39c8d;
+  --faint: #867e6d; /* 大字用，在紙色與卡色上對比 3.2 以上 */
+  --faint-text: #726b5d; /* 小字用，在紙色與卡色上對比 4.6 以上 */
   --line: rgba(21, 19, 15, 0.14);
   --line-2: rgba(21, 19, 15, 0.28);
   --red: #c23b22;
@@ -66,6 +67,7 @@ button { font: inherit; color: inherit; }
   color: var(--muted);
   line-height: 1.5;
 }
+.nb { white-space: nowrap; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap;
@@ -105,12 +107,12 @@ button { font: inherit; color: inherit; }
 .topbar {
   position: fixed; inset: 0 0 auto 0; z-index: 50;
   background: color-mix(in srgb, var(--paper) 86%, transparent);
+  /* 只寫標準屬性：兩者並存時 Lightning CSS 會丟掉標準版，Chrome 與 Firefox 就沒有毛玻璃；Safari 的前綴由建置補上 */
   backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom: 1px solid var(--line);
 }
 .topbar__in { display: flex; align-items: center; gap: 28px; height: 64px; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
 .brand__mark { width: 22px; height: 22px; }
 .brand__name { font-family: var(--serif); font-weight: 700; font-size: 14px; letter-spacing: 0.32em; }
 .nav { display: flex; gap: 4px; margin-left: auto; }
@@ -159,7 +161,7 @@ button { font: inherit; color: inherit; }
 .hero__line:nth-child(2) { animation-delay: 0.08s; }
 .hero__line--accent { color: var(--red); animation-delay: 0.16s; }
 .hero__sub {
-  margin-top: clamp(22px, 3.6vh, 34px); max-width: 31em; color: var(--ink-2); font-size: 17px; line-height: 1.9;
+  margin-top: clamp(22px, 3.6vh, 34px); max-width: 31em; color: var(--ink-2); font-size: 17px; line-height: 1.9; text-wrap: pretty;
   animation: rise 1.2s var(--ease) 0.26s both;
 }
 .hero__cta {
@@ -200,7 +202,7 @@ button { font: inherit; color: inherit; }
   padding: 11px 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: background-color 0.3s;
 }
 .board__list a:hover { background: color-mix(in srgb, var(--paper-2) 60%, transparent); }
-.board__list .board__rank { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: 0.1em; padding-left: 4px; }
+.board__list .board__rank { font-family: var(--mono); font-size: 11px; color: var(--faint-text); letter-spacing: 0.1em; padding-left: 4px; }
 .board__id { display: grid; min-width: 0; }
 .board__id b { font-family: var(--display); font-weight: 400; font-size: 22px; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .board__bar { display: block; height: 3px; background: var(--line); }
@@ -286,7 +288,7 @@ button { font: inherit; color: inherit; }
   font-family: var(--serif); font-weight: 600; font-size: 15px;
   border-right: 1px solid var(--line);
 }
-.ticker b { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--faint); letter-spacing: 0.1em; }
+.ticker b { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--faint-text); letter-spacing: 0.1em; }
 .ticker em { font-style: normal; font-family: var(--display); font-size: 22px; color: var(--red); }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
@@ -377,8 +379,13 @@ button { font: inherit; color: inherit; }
 .specs li { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
 .specs li::before { content: ""; width: 4px; height: 4px; background: var(--red); opacity: 0.7; }
 
-.attempts { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 16px; align-items: baseline; }
-.attempts a { font-size: 13px; color: var(--ink); }
+.attempts { display: flex; flex-wrap: wrap; gap: 0 16px; margin-top: 10px; align-items: baseline; }
+.attempts a {
+  display: inline-block; padding: 6px 0; font-size: 13px; color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--line-2); text-decoration-thickness: 1px; text-underline-offset: 5px;
+  transition: color 0.3s, text-decoration-color 0.3s;
+}
+.attempts a:hover { color: var(--red); text-decoration-color: var(--red); }
 
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 30px; }
 .actions .btn { min-height: 44px; }
@@ -494,7 +501,7 @@ button { font: inherit; color: inherit; }
 
 .overlay { position: fixed; inset: 0; z-index: 80; display: none; }
 .overlay.open { display: block; }
-.overlay__bg { position: absolute; inset: 0; background: rgba(21, 19, 15, 0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.overlay__bg { position: absolute; inset: 0; background: rgba(21, 19, 15, 0.62); backdrop-filter: blur(6px); }
 .overlay__box {
   position: absolute; inset: 3vh 3vw; display: grid; grid-template-rows: auto auto minmax(0, 1fr);
   background: var(--paper); box-shadow: 0 40px 120px -20px rgba(0, 0, 0, 0.5);
