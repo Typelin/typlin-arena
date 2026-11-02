@@ -30,11 +30,16 @@ export type Plate = {
   score: number | null;
   /** 同一模型的歷次重考；首頁仍只保留一張代表卡。 */
   attempts?: Attempt[];
+  /** 作答的題目：'new' = 新題目；未填 = 舊題目。兩種題目各自排名，不混排。 */
+  era?: 'new';
+  /** 同一模型在另一個題目下的作品 id（兩張卡互指）。 */
+  twin?: string;
 };
 
 const SHARED_PROMPT = '同一道題：關於你自己的前端作品';
 /** Frontend Shock 加強題：主題相同，但要求更嚴，見 benchmark-assets/frontend-shock/PROMPT.md */
 const SHOCK_PROMPT = 'Frontend Shock 加強題：關於你自己（要求更嚴的版本）';
+const NEW_PROMPT = '新題目：關於你自己（視覺表現力佔七成）';
 export const LOGO_PROMPT = '同一道題：用同一張 LOGO 做完整品牌落地站';
 
 export const PLATES: Plate[] = [
@@ -174,6 +179,7 @@ export const PLATES: Plate[] = [
   },
   {
     id: 'deepseek-v4-1-flash',
+    twin: 'deepseek-v4-1-flash-r2',
     no: '08',
     short: 'DEEPSEEK',
     model: 'DEEPSEEK V4.1 FLASH',
@@ -277,6 +283,7 @@ export const PLATES: Plate[] = [
   },
   {
     id: 'claude-opus-5-5',
+    twin: 'claude-opus-5-5-r2',
     no: '15',
     short: 'OPUS 5.5',
     model: 'CLAUDE OPUS 5.5',
@@ -295,6 +302,7 @@ export const PLATES: Plate[] = [
   },
   {
     id: 'claude-sonnet-5-5',
+    twin: 'claude-sonnet-5-5-r2',
     no: '16',
     short: 'SONNET 5.5',
     model: 'CLAUDE SONNET 5.5',
@@ -325,6 +333,73 @@ export const PLATES: Plate[] = [
     src: '/works/gemini-4-argon/',
     thumb: '/shots/gemini-4-argon.png',
     score: 68,
+  },
+  {
+    id: 'claude-sonnet-5-5-r2',
+    era: 'new',
+    twin: 'claude-sonnet-5-5',
+    no: '18',
+    short: 'SONNET 5.5',
+    model: 'CLAUDE SONNET 5.5 · 新題目',
+    title: '我是 Anthropic 做的語言模型',
+    prompt: NEW_PROMPT,
+    spec: ['VITE + TS', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。六段：我是誰、比上一代快也省、你決定我想多久、一次讀進一百萬個 token、三件做不到的事、完整事實與出處。',
+    visual: 'current',
+    src: '/works/claude-sonnet-5-5-r2/',
+    thumb: '/shots/claude-sonnet-5-5-r2.png',
+    score: null,
+  },
+  {
+    id: 'claude-opus-5-5-r2',
+    era: 'new',
+    twin: 'claude-opus-5-5',
+    no: '19',
+    short: 'OPUS 5.5',
+    model: 'CLAUDE OPUS 5.5 · 新題目',
+    title: '我是 Anthropic 開發的大型語言模型',
+    prompt: NEW_PROMPT,
+    spec: ['REACT 19', 'WEBGL', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。九段：先想再答（effort 五級）、一次讀進 100 萬個 token、很長的程式工作、先講重點、只輸出文字、知識截止、貼上的文字、共事時守在範圍內、完整資料與出處。參數規模與架構寫「官方未公開」。',
+    visual: 'current',
+    src: '/works/claude-opus-5-5-r2/',
+    thumb: '/shots/claude-opus-5-5-r2.png',
+    score: null,
+  },
+  {
+    id: 'deepseek-v4-1-flash-r2',
+    era: 'new',
+    twin: 'deepseek-v4-1-flash',
+    no: '20',
+    short: 'DSV4.1F',
+    model: 'DEEPSEEK V4.1 FLASH · 新題目',
+    title: '雙色網點試印本',
+    prompt: NEW_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。六章：尺度、上下文、短處、推理強度、一起工作、資料。首章把參數規模攤成許多小點。',
+    visual: 'current',
+    src: '/works/deepseek-v4-1-flash-r2/',
+    thumb: '/shots/deepseek-v4-1-flash-r2.png',
+    score: null,
+  },
+  {
+    id: 'claude-haiku-5-5',
+    era: 'new',
+    no: '21',
+    short: 'HAIKU 5.5',
+    model: 'CLAUDE HAIKU 5.5 · 新題目',
+    title: '關於我',
+    prompt: NEW_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答，用面試當框架，開場請訪客當面試官。六段：Claude 5.5 家族裡的小型模型、一次讀進 100 萬個 token、10 萬 token 以內的價格、公告的六項基準都低於 Sonnet 5.5、適合當 Opus 5.5 或 Sonnet 5.5 的子代理、參數與架構官方未公開。',
+    visual: 'current',
+    src: '/works/claude-haiku-5-5/',
+    thumb: '/shots/claude-haiku-5-5.png',
+    score: null,
   },
 ];
 

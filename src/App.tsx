@@ -21,6 +21,7 @@ const pad2 = (n: number) => String(n).padStart(2, '0');
 const modelMain = (m: string) => m.split(' · ')[0];
 const modelNote = (m: string) => m.split(' · ').slice(1).join(' · ');
 const reduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isNew = (p: Plate) => p.era === 'new';
 
 function useProgress() {
   const [p, setP] = useState(0);
@@ -121,6 +122,20 @@ function Attempts({ pl }: { pl: Plate }) {
   );
 }
 
+/** 同一模型在另一個題目下的作品（兩張卡互相連結）。 */
+function Twin({ pl }: { pl: Plate }) {
+  const other = pl.twin ? PLATES.find((p) => p.id === pl.twin) : undefined;
+  if (!other) return null;
+  return (
+    <div className="attempts" aria-label={`${pl.model} 在另一個題目下的作品`}>
+      <span className="label">同一模型</span>
+      <a href={other.src} target="_blank" rel="noreferrer">
+        {isNew(other) ? '新題目' : '舊題目'} · 《{other.title}》 · {other.score ?? '待評'} ↗
+      </a>
+    </div>
+  );
+}
+
 function Scores({ pl }: { pl: Plate }) {
   return (
     <dl className="scores">
@@ -185,6 +200,7 @@ function Feature({ pl, rank, onPreview }: { pl: Plate; rank: number; onPreview: 
         <Verdict text={pl.verdict} />
         <ul className="specs" aria-label="技術">{pl.spec.map((s) => <li key={s}>{s}</li>)}</ul>
         <Attempts pl={pl} />
+        <Twin pl={pl} />
         <Actions pl={pl} onPreview={onPreview} />
       </div>
     </article>
@@ -192,9 +208,10 @@ function Feature({ pl, rank, onPreview }: { pl: Plate; rank: number; onPreview: 
 }
 
 /** 第四名之後：目錄式索引，一列一件，點開看評語。 */
-function Row({ pl, rank, onPreview, onHover }: {
+function Row({ pl, rank, logo, onPreview, onHover }: {
   pl: Plate;
   rank: number | null;
+  logo: boolean;
   onPreview: (pl: Plate) => void;
   onHover: (pl: Plate | null) => void;
 }) {
@@ -212,9 +229,11 @@ function Row({ pl, rank, onPreview, onHover }: {
         <span className="row__score" aria-label={`自我介紹 ${pl.score ?? '待評'}`}>
           <small>自我介紹</small>{pl.score ?? '—'}
         </span>
-        <span className="row__score row__score--logo" aria-label={`LOGO 落地 ${pl.logoSrc ? pl.score2 ?? '待評' : '無'}`}>
-          <small>LOGO</small>{pl.logoSrc ? pl.score2 ?? '—' : '—'}
-        </span>
+        {logo && (
+          <span className="row__score row__score--logo" aria-label={`LOGO 落地 ${pl.logoSrc ? pl.score2 ?? '待評' : '無'}`}>
+            <small>LOGO</small>{pl.logoSrc ? pl.score2 ?? '—' : '—'}
+          </span>
+        )}
         <button type="button" className="row__toggle" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
           <span className="sr-only">{open ? '收起' : '展開'} {pl.model} 評語</span>
           <i aria-hidden="true" />
@@ -225,6 +244,7 @@ function Row({ pl, rank, onPreview, onHover }: {
           <Verdict text={pl.verdict} clamp={false} />
           <ul className="specs" aria-label="技術">{pl.spec.map((s) => <li key={s}>{s}</li>)}</ul>
           <Attempts pl={pl} />
+          <Twin pl={pl} />
         </div>
         <Actions pl={pl} onPreview={onPreview} />
       </div>
@@ -264,6 +284,62 @@ function HoverPeek({ pl }: { pl: Plate | null }) {
   );
 }
 
+type ZoneData = { ranked: Plate[]; pending: Plate[] };
+
+/** 一種題目一區：自己的前三名跨頁、索引與待評，名次只在區內計算。 */
+function Zone({ zone, tag, title, desc, logo, rankOf, onPreview, onHover }: {
+  zone: ZoneData;
+  tag: string;
+  title: string;
+  desc: string;
+  logo: boolean;
+  rankOf: (pl: Plate) => number | null;
+  onPreview: (pl: Plate) => void;
+  onHover: (pl: Plate | null) => void;
+}) {
+  const podium = zone.ranked.slice(0, 3);
+  const rest = zone.ranked.slice(3);
+  return (
+    <div className="zone">
+      <header className="zone__head rv">
+        <p className="label">{tag}</p>
+        <h3 className="zone__title">{title}</h3>
+        <p className="section__desc">{desc}</p>
+      </header>
+
+      {podium.length > 0 && (
+        <div className="podium">
+          {podium.map((pl) => <Feature key={pl.id} pl={pl} rank={rankOf(pl)!} onPreview={onPreview} />)}
+        </div>
+      )}
+
+      {rest.length > 0 && (
+        <>
+          <div className="index__head rv">
+            <p className="label">THE INDEX · 第 4 名起</p>
+            <p className={`label index__cols${logo ? '' : ' index__cols--nologo'}`} aria-hidden="true"><span>自我介紹</span>{logo && <span>LOGO</span>}</p>
+          </div>
+          <ol className={`index${logo ? '' : ' index--nologo'}`}>
+            {rest.map((pl) => <Row key={pl.id} pl={pl} rank={rankOf(pl)} logo={logo} onPreview={onPreview} onHover={onHover} />)}
+          </ol>
+        </>
+      )}
+
+      {zone.pending.length > 0 && (
+        <>
+          <div className="index__head rv">
+            <p className="label">PENDING · 已收件，待評分</p>
+            <p className="section__desc">作品已經可以操作，分數還沒打，所以不排名次。</p>
+          </div>
+          <ol className={`index${logo ? '' : ' index--nologo'}`}>
+            {zone.pending.map((pl) => <Row key={pl.id} pl={pl} rank={null} logo={logo} onPreview={onPreview} onHover={onHover} />)}
+          </ol>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function App() {
   const progress = useProgress();
   const [open, setOpen] = useState<Plate | null>(null);
@@ -287,10 +363,17 @@ export default function App() {
     return () => io.disconnect();
   }, []);
 
-  const works = [...PLATES].sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
-  const ranked = works.filter((w) => w.score != null);
-  const pending = works.filter((w) => w.score == null);
-  const rankOf = (w: Plate) => (w.score != null ? ranked.indexOf(w) + 1 : null);
+  const sorted = [...PLATES].sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
+  const zoneOf = (list: Plate[]): ZoneData => ({ ranked: list.filter((w) => w.score != null), pending: list.filter((w) => w.score == null) });
+  const newZone = zoneOf(sorted.filter(isNew));
+  const oldZone = zoneOf(sorted.filter((w) => !isNew(w)));
+  const works = [...newZone.ranked, ...newZone.pending, ...oldZone.ranked, ...oldZone.pending];
+  /** 首屏榜單：新題目有 3 件以上打分前，先顯示舊題目榜並標明。 */
+  const boardZone = newZone.ranked.length >= 3 ? newZone : oldZone;
+  const ranked = boardZone.ranked;
+  const modelCount = PLATES.length - PLATES.filter((p) => p.twin).length / 2;
+  const scoredCount = works.filter((w) => w.score != null).length;
+  const rankOf = (w: Plate) => (w.score != null ? (isNew(w) ? newZone : oldZone).ranked.indexOf(w) + 1 : null);
   const openIdx = open ? works.findIndex((w) => w.id === open.id) : -1;
 
   const step = (d: number) => {
@@ -320,8 +403,6 @@ export default function App() {
   const logoWorks = works.filter((w) => w.logoSrc).length;
   const top = ranked[0]?.score ?? 0;
   const pct = Math.round(progress * 100);
-  const podium = ranked.slice(0, 3);
-  const rest = ranked.slice(3);
 
   return (
     <div ref={rootRef}>
@@ -348,15 +429,15 @@ export default function App() {
         <section className="hero" aria-labelledby="hero-title">
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(works.length)} MODELS</span></p>
+              <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(modelCount)} MODELS</span></p>
               <h1 id="hero-title">
                 <span className="hero__line">同一道前端題，</span>
                 <span className="hero__line">哪個 <em>AI</em> 做得</span>
                 <span className="hero__line hero__line--accent">最好？</span>
               </h1>
               <p className="hero__sub">
-                TYPELIN ARENA 把同樣的前端題目交給 {works.length} 個 AI 模型，各自獨立完成。
-                作品原樣上架、每一件都能直接打開操作，再由人用{cnNum(CRITERIA.length)}維尺規親手評分排名。
+                TYPELIN ARENA 把前端題目交給 {modelCount} 個 AI 模型，各自獨立完成。
+                作品原樣上架、每一件都能直接打開操作，再由人用{cnNum(CRITERIA.length)}維尺規親手評分排名。題目改版就另開一區，不跟舊的混排。
               </p>
               <div className="hero__cta">
                 <button type="button" className="btn btn--lg" onClick={() => go('works')}>看完整排名 ↓</button>
@@ -368,7 +449,7 @@ export default function App() {
               <aside className="board rv" aria-labelledby="board-title">
                 <header className="board__head">
                   <h2 id="board-title" className="label">LEADERBOARD · 目前排名</h2>
-                  <span className="label">自我介紹題 / 100</span>
+                  <span className="label">{boardZone === newZone ? '新題目' : '舊題目'} · 自我介紹 / 100</span>
                 </header>
                 <a className="board__champ" href={ranked[0].src} target="_blank" rel="noreferrer" aria-label={`第 1 名 ${ranked[0].model}，作品《${ranked[0].title}》，${ranked[0].score} 分`}>
                   <span className="board__thumb"><img src={ranked[0].thumb} alt="" width={960} height={600} /></span>
@@ -392,7 +473,7 @@ export default function App() {
                   ))}
                 </ol>
                 <button type="button" className="board__more" onClick={() => go('works')}>
-                  看全部 {works.length} 個模型 <span aria-hidden="true">→</span>
+                  看全部 {works.length} 件作品 <span aria-hidden="true">→</span>
                 </button>
               </aside>
             )}
@@ -404,7 +485,7 @@ export default function App() {
               <li className="rv">
                 <span className="how__no">01</span>
                 <h3>同一道題</h3>
-                <p>每個模型拿到完全相同的題目：<b>用前端作品介紹自己</b>，以及<b>用同一張 LOGO 做品牌落地站</b>。</p>
+                <p>同一區的模型拿到同一道題目：<b>用前端作品介紹自己</b>（舊題目另有<b>用同一張 LOGO 做品牌落地站</b>）。題目改版就另開一區，不混排；少數例外會在作品上標明。</p>
               </li>
               <li className="rv">
                 <span className="how__no">02</span>
@@ -421,10 +502,10 @@ export default function App() {
 
           <div className="wrap">
             <dl className="stats">
-              <div><dt>參賽模型</dt><dd>{pad2(works.length)}</dd></div>
-              <div><dt>已評分</dt><dd>{pad2(ranked.length)}</dd></div>
+              <div><dt>參賽模型</dt><dd>{pad2(modelCount)}</dd></div>
+              <div><dt>已評分</dt><dd>{pad2(scoredCount)}</dd></div>
               <div><dt>LOGO 落地站</dt><dd>{pad2(logoWorks)}</dd></div>
-              <div><dt>本期最高分</dt><dd>{top}</dd></div>
+              <div><dt>{boardZone === newZone ? '新題目最高分' : '舊題目最高分'}</dt><dd>{top}</dd></div>
             </dl>
           </div>
 
@@ -446,37 +527,30 @@ export default function App() {
           <div className="wrap">
             <header className="section__head rv">
               <p className="label section__no">01 — RANKING</p>
-              <h2 id="works-title">{cnNum(ranked.length)}個模型，<em>完整排名。</em></h2>
-              <p className="section__desc">作品名稱與題型按鈕直達獨立分頁；「站內預覽」在 Arena 內展開互動視窗，可左右切換。</p>
+              <h2 id="works-title">題目不同，<em>分開排名。</em></h2>
+              <p className="section__desc">作品名稱與題型按鈕直達獨立分頁；「站內預覽」在 Arena 內展開互動視窗，可左右切換。新題目與舊題目的分數不能直接比較，所以各排各的名次。</p>
             </header>
 
-            <div className="podium">
-              {podium.map((pl) => <Feature key={pl.id} pl={pl} rank={rankOf(pl)!} onPreview={setOpen} />)}
-            </div>
-
-            {rest.length > 0 && (
-              <>
-                <div className="index__head rv">
-                  <p className="label">THE INDEX · 第 4 名起</p>
-                  <p className="label index__cols" aria-hidden="true"><span>自我介紹</span><span>LOGO</span></p>
-                </div>
-                <ol className="index">
-                  {rest.map((pl) => <Row key={pl.id} pl={pl} rank={rankOf(pl)} onPreview={setOpen} onHover={setHover} />)}
-                </ol>
-              </>
-            )}
-
-            {pending.length > 0 && (
-              <>
-                <div className="index__head rv">
-                  <p className="label">PENDING · 已收件，待評分</p>
-                  <p className="section__desc">作品已經可以操作，分數還沒打，所以不排名次。</p>
-                </div>
-                <ol className="index">
-                  {pending.map((pl) => <Row key={pl.id} pl={pl} rank={null} onPreview={setOpen} onHover={setHover} />)}
-                </ol>
-              </>
-            )}
+            <Zone
+              zone={newZone}
+              tag="NEW BRIEF · 新題目"
+              title="新題目"
+              desc="視覺表現力佔七成、內容與寓意兩成、工程與測試一成。作品要先上網查證自己的資料，查不到的參數就照實寫「官方未公開」。"
+              logo={false}
+              rankOf={rankOf}
+              onPreview={setOpen}
+              onHover={setHover}
+            />
+            <Zone
+              zone={oldZone}
+              tag="PREVIOUS BRIEF · 舊題目"
+              title="舊題目"
+              desc="以更早的題目作答，前 16 件用舊的五維尺規評分，尚未用新題目重評。"
+              logo
+              rankOf={rankOf}
+              onPreview={setOpen}
+              onHover={setHover}
+            />
           </div>
           <HoverPeek pl={hover} />
         </section>
@@ -551,7 +625,7 @@ export default function App() {
                     className={`otab${w.id === open.id ? ' active' : ''}`}
                     onClick={() => setOpen(w)}
                   >
-                    {rankOf(w) != null ? pad2(rankOf(w)!) : '待評'} {w.short}
+                    {isNew(w) ? '新 ' : ''}{rankOf(w) != null ? pad2(rankOf(w)!) : '待評'} {w.short}
                   </button>
                 ))}
               </div>
@@ -566,7 +640,7 @@ export default function App() {
                   />
                 </div>
                 <aside className="overlay__side">
-                  <p className="label">{rankOf(open) != null ? `No.${rankOf(open)}` : '待評'} · 參賽模型</p>
+                  <p className="label">{isNew(open) ? '新題目 · ' : ''}{rankOf(open) != null ? `No.${rankOf(open)}` : '待評'} · 參賽模型</p>
                   <h3 className="spread__name">{open.model}</h3>
                   <p className="spread__work">作品《{open.title}》</p>
                   <p className="spread__prompt">{itemSel === 'logo' && open.logoSrc ? LOGO_PROMPT : open.prompt}</p>
@@ -595,7 +669,7 @@ export default function App() {
 
       <footer className="colophon">
         <div className="wrap colophon__grid">
-          <div><h4 className="label">關於</h4><p>TYPELIN ARENA 用「自我介紹」與「LOGO 落地」兩道前端實作題，直接比較 AI 的設計、工程與互動完成度。</p></div>
+          <div><h4 className="label">關於</h4><p>TYPELIN ARENA 用「自我介紹」與「LOGO 落地」兩道前端實作題（新題目目前只有自我介紹），直接比較 AI 的設計、工程與互動完成度。</p></div>
           <div><h4 className="label">觀看方式</h4><p>作品名稱與題型按鈕皆直達獨立分頁；「站內預覽」則在 Arena 內展開 iframe 實際操作。</p></div>
           <div><h4 className="label">標準</h4><p>分數只是索引。真正的比較方式，是把每一件作品打開、操作、看它能不能站得住。</p></div>
         </div>
