@@ -2,10 +2,10 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 同一個題目，十七件已評分作品橫評，拒絕牆紙。
+> 同一道題，各家靈魂。—— 十七件已評分的舊題目作品橫評，另有四件新題目作品待評，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
-所有參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），
+同一區的參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），題目改版就另開一區，
 站內直接動手試玩，真人按單一標準評分：
 **不能被手改變的東西，不裝幀。**
 
@@ -39,9 +39,20 @@
 
 ² 多輪修訂版：經評審與 AI 協作多輪指出問題後才定稿，不宜與單次提交的作品直接比較。與 Muse Spark 1.3 同為 68 分。
 
-註：前 16 件作品出自舊版自我介紹題、以舊的五維尺規評分。現行題目（`benchmark-assets/self-intro/PROMPT.md`）更嚴格，舊分數尚未重評。
+註：前 16 件作品出自舊題目、以舊的五維尺規評分。新題目（`benchmark-assets/self-intro/PROMPT.md`）更嚴格，舊分數尚未用新題目重評。
 
-首頁只替已評分作品排名；未評分作品另列「待評」。
+### 新題目（待評分）
+
+題目改為視覺表現力七成、內容與寓意兩成、工程與測試一成，並要求作品先上網查證自己的資料，查不到的寫「官方未公開」。新題目與上表的舊題目分開排名，分數不能直接比較。Claude Sonnet 5.5、Claude Opus 5.5、DeepSeek V4.1 Flash 在兩個題目下各有一件作品，兩張卡互相連結。
+
+| 作品 | 模型 | 自我介紹 | 站內分頁 |
+| --- | --- | --- | --- |
+| 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | 待評 | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
+| 我是 Anthropic 開發的大型語言模型 | Claude Opus 5.5 | 待評 | [/works/claude-opus-5-5-r2/](https://arena.typelin.me/works/claude-opus-5-5-r2/) |
+| 雙色網點試印本 | DeepSeek V4.1 Flash | 待評 | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
+| 關於我 | Claude Haiku 5.5 | 待評 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
+
+首頁新題目與舊題目分區，各排各的名次；未評分作品另列「待評」。新題目有三件以上打分之前，首屏榜單先顯示舊題目並標明。
 毒舌評語待補——先評分，後動刀。
 
 ## 評分尺規
