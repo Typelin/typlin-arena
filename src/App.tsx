@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PLATES, CRITERIA, DOSSIER, LOGO_PROMPT, type Plate } from './data';
+import { REELS } from './reels';
 
 /**
  * 標題用中文數字，但件數會變——寫死會在增減作品時說謊。
@@ -22,6 +23,8 @@ const modelMain = (m: string) => m.split(' · ')[0];
 const modelNote = (m: string) => m.split(' · ').slice(1).join(' · ');
 const reduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isNew = (p: Plate) => p.era === 'new';
+/** 首屏印樣用的小圖（scripts/shots-mini.py 產生），保留原圖的版本參數。 */
+const miniOf = (src: string) => src.replace('/shots/', '/shots/mini/').replace(/\.png(?=\?|$)/, '.webp');
 
 function useProgress() {
   const [p, setP] = useState(0);
@@ -46,7 +49,7 @@ function useProgress() {
 }
 
 /** 分數進入視窗時從零數上來；減少動態時直接顯示。 */
-function Count({ to }: { to: number }) {
+function Count({ to, className = 'count' }: { to: number; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [v, setV] = useState(() => (reduced() ? to : 0));
   useEffect(() => {
@@ -73,7 +76,351 @@ function Count({ to }: { to: number }) {
       cancelAnimationFrame(raf);
     };
   }, [to]);
-  return <span ref={ref} className="count">{v}</span>;
+  return <span ref={ref} className={className}>{v}</span>;
+}
+
+/** 數字換值時從舊值滾到新值；減少動態時直接顯示。 */
+function Tween({ to, className }: { to: number; className?: string }) {
+  const [v, setV] = useState(() => (reduced() ? to : 0));
+  const from = useRef(v);
+  useEffect(() => {
+    if (reduced()) return;
+    const a = from.current;
+    const dur = Math.abs(to - a) > 20 ? 1100 : 600;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const x = Math.min(1, (now - t0) / dur);
+      const val = Math.round(a + (to - a) * (1 - Math.pow(1 - x, 3)));
+      from.current = val;
+      setV(val);
+      if (x < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [to]);
+  return <span className={className}>{reduced() ? to : v}</span>;
+}
+
+const BOARD_SIZE = 6;
+const BOARD_DWELL = 5200;
+
+/**
+ * 首屏榜單：預覽框輪播前六名，滑過、聚焦或點刻度就換成那一件。
+ * 只在卡片進入視窗、沒有被操作、且未要求減少動態時自動換。
+ */
+function Board({ zone, isNewZone, total, onMore, onShow }: {
+  zone: ZoneData;
+  isNewZone: boolean;
+  total: number;
+  onMore: () => void;
+  onShow: (pl: Plate) => void;
+}) {
+  const top = zone.ranked.slice(0, BOARD_SIZE);
+  const n = top.length;
+  const ref = useRef<HTMLElement>(null);
+  const [sel, setSel] = useState(0);
+  const [held, setHeld] = useState(false);
+  const [live, setLive] = useState(false);
+  /** 只載入看過與下一張的大圖，避免首屏一次拉六張全尺寸截圖。 */
+  const [seen, setSeen] = useState<number[]>([0]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduced()) return;
+    const io = new IntersectionObserver(([e]) => setLive(e.isIntersecting), { threshold: 0.3 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const playing = live && !held && n > 1;
+  useEffect(() => {
+    if (!playing) return;
+    const t = setTimeout(() => setSel((s) => (s + 1) % n), BOARD_DWELL);
+    return () => clearTimeout(t);
+  }, [playing, sel, n]);
+
+  useEffect(() => {
+    const next = (sel + 1) % n;
+    setSeen((s) => (s.includes(sel) && s.includes(next) ? s : [...new Set([...s, sel, next])]));
+    if (top[sel]) onShow(top[sel]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sel, n]);
+
+  if (!n) return null;
+  const cur = top[sel];
+
+  return (
+    <aside
+      ref={ref}
+      className="board rv"
+      aria-labelledby="board-title"
+      onPointerEnter={(e) => e.pointerType === 'mouse' && setHeld(true)}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && setHeld(false)}
+      onFocus={() => setHeld(true)}
+      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget as Node | null) && setHeld(false)}
+    >
+      <header className="board__head">
+        <h2 id="board-title" className="label">LEADERBOARD · {isNewZone ? '新題目' : '舊題目'}</h2>
+        <span className="label">自我介紹 / 100</span>
+      </header>
+      <div className="board__rail" role="group" aria-label="切換預覽名次">
+        {top.map((w, i) => (
+          <button
+            key={w.id}
+            type="button"
+            className={`board__seg${i === sel ? ' is-on' : ''}${i < sel ? ' is-past' : ''}`}
+            aria-pressed={i === sel}
+            aria-label={`預覽第 ${i + 1} 名 ${w.model}`}
+            onClick={() => setSel(i)}
+          >
+            <span className="board__seg-no" aria-hidden="true">{pad2(i + 1)}</span>
+            <span className="board__seg-line" aria-hidden="true">
+              {i === sel && <i key={`${sel}-${playing ? 'run' : 'hold'}`} className={playing ? 'is-run' : ''} style={{ animationDuration: `${BOARD_DWELL}ms` }} />}
+            </span>
+          </button>
+        ))}
+      </div>
+      <a className="board__champ" href={cur.src} target="_blank" rel="noreferrer" aria-label={`第 ${sel + 1} 名 ${cur.model}，作品《${cur.title}》，${cur.score} 分`}>
+        <span className="board__thumb">
+          {top.map((w, i) => seen.includes(i) && (
+            <img key={w.id} className={i === sel ? 'is-on' : ''} src={w.thumb} alt="" width={960} height={600} />
+          ))}
+          <Reel key={cur.id} pl={cur} />
+        </span>
+        <span className="board__champ-id" key={cur.id}>
+          <span className="board__rank">No.{sel + 1}</span>
+          <b>{modelMain(cur.model)}</b>
+          <i>作品《{cur.title}》</i>
+        </span>
+        <Tween to={cur.score ?? 0} className="board__score board__score--big" />
+      </a>
+      <ol className="board__list">
+        {top.slice(1).map((w, i) => (
+          <li key={w.id} className={i + 1 === sel ? 'is-sel' : ''} style={{ '--i': i } as React.CSSProperties}>
+            <a href={w.src} target="_blank" rel="noreferrer" onPointerEnter={(e) => e.pointerType === 'mouse' && setSel(i + 1)} onFocus={() => setSel(i + 1)}>
+              <span className="board__rank">{pad2(i + 2)}</span>
+              <span className="board__id"><b>{modelMain(w.model)}</b><i>《{w.title}》</i></span>
+              <span className="board__bar" aria-hidden="true"><i style={{ width: `${w.score}%` }} /></span>
+              <Count to={w.score ?? 0} className="board__score" />
+            </a>
+          </li>
+        ))}
+      </ol>
+      <button type="button" className="board__more" onClick={onMore}>
+        看全部 {total} 件作品 <span aria-hidden="true">→</span>
+      </button>
+    </aside>
+  );
+}
+
+/** 從同一區已評分的作品裡抽兩件分數不同的，避開上一組。 */
+function drawPair(pool: Plate[], prev?: [Plate, Plate]): [Plate, Plate] | null {
+  if (pool.length < 2) return null;
+  for (let tries = 0; tries < 40; tries++) {
+    const a = pool[Math.floor(Math.random() * pool.length)];
+    const b = pool[Math.floor(Math.random() * pool.length)];
+    if (a === b || a.score === b.score) continue;
+    if (prev && (prev.includes(a) || prev.includes(b)) && tries < 30) continue;
+    return [a, b];
+  }
+  return null;
+}
+
+/**
+ * 盲猜對決：兩件同題作品並排，藏起模型與分數，讓訪客先猜哪件分數高。
+ * 只抽同一區的作品，因為兩種題目的分數不能互比。
+ */
+function Duel({ pool, isNewZone, onOpen }: { pool: Plate[]; isNewZone: boolean; onOpen: (pl: Plate) => void }) {
+  const [pair, setPair] = useState(() => drawPair(pool));
+  const [pick, setPick] = useState<0 | 1 | null>(null);
+  const [tally, setTally] = useState({ played: 0, right: 0, streak: 0 });
+  if (!pair) return null;
+  const win: 0 | 1 = (pair[0].score ?? 0) > (pair[1].score ?? 0) ? 0 : 1;
+  const done = pick != null;
+
+  const choose = (i: 0 | 1) => {
+    if (done) return;
+    setPick(i);
+    const ok = i === win;
+    setTally((t) => ({ played: t.played + 1, right: t.right + (ok ? 1 : 0), streak: ok ? t.streak + 1 : 0 }));
+  };
+  const next = () => {
+    setPair((p) => drawPair(pool, p ?? undefined));
+    setPick(null);
+  };
+
+  return (
+    <section className="duel rv" aria-labelledby="duel-title">
+      <header className="duel__head">
+        <div>
+          <p className="label duel__kicker">DUEL · 盲猜一局</p>
+          <h2 id="duel-title" className="duel__title">先別看分數，<em>你覺得哪件比較好？</em></h2>
+        </div>
+        <p className="duel__tally label" aria-live="polite">
+          第 {pad2(tally.played + (done ? 0 : 1))} 局 · 猜中 {tally.right} · 連勝 <b>{tally.streak}</b>
+        </p>
+      </header>
+      <div className={`duel__ring${done ? ' is-done' : ''}`}>
+        {pair.map((w, k) => {
+          const i = k as 0 | 1;
+          const verdict = done && pick === i ? (i === win ? '猜中' : '猜錯') : null;
+          return (
+            <article key={w.id} className={`duel__side${done && i === win ? ' is-win' : ''}${done && i !== win ? ' is-lose' : ''}`}>
+              <button type="button" className="duel__art" onClick={() => choose(i)} disabled={done} aria-label={done ? `${w.model}《${w.title}》` : `猜《${w.title}》分數比較高`}>
+                <span className="duel__frame">
+                  <img src={w.thumb} alt={`作品《${w.title}》實機畫面`} loading="lazy" width={960} height={600} />
+                  <Reel key={w.id} pl={w} />
+                  {verdict && <span className={`duel__stamp${verdict === '猜錯' ? ' is-miss' : ''}`}>{verdict}</span>}
+                </span>
+                {!done && <span className="duel__cta">這件比較高 ↑</span>}
+              </button>
+              <div className="duel__id">
+                <p className="label">{k === 0 ? 'LEFT' : 'RIGHT'} · 作品《{w.title}》</p>
+                <h3 className="duel__model">{done ? modelMain(w.model) : <span className="duel__hidden">MODEL ？？？</span>}</h3>
+              </div>
+              <div className="duel__score" aria-hidden={!done}>
+                {done ? <Tween key={`${w.id}-s`} to={w.score ?? 0} /> : <span className="duel__q">?</span>}
+              </div>
+            </article>
+          );
+        })}
+        <span className="duel__vs" aria-hidden="true">vs.</span>
+      </div>
+      <footer className="duel__foot">
+        <p className="duel__note">
+          {done
+            ? `差 ${Math.abs((pair[0].score ?? 0) - (pair[1].score ?? 0))} 分。${isNewZone ? '新題目' : '舊題目'}同一把尺規評出來的。`
+            : `兩件都來自${isNewZone ? '新題目' : '舊題目'}，同一道題、同一把尺。點作品猜。`}
+        </p>
+        <div className="duel__actions">
+          {done && pair.map((w) => (
+            <button key={w.id} type="button" className="textbtn textbtn--preview" onClick={() => onOpen(w)}>{w.short}</button>
+          ))}
+          <button type="button" className={done ? 'btn' : 'btn btn--line'} onClick={next}>{done ? '再來一組 →' : '換一組'}</button>
+        </div>
+      </footer>
+    </section>
+  );
+}
+
+/** 紅筆圈註：評審親手批改的筆跡，載入時畫一次。 */
+function PenCircle() {
+  return (
+    <svg className="pen" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength={1} d="M120 14 C 70 2, 14 22, 10 56 C 6 92, 72 104, 120 98 C 170 92, 196 70, 190 44 C 184 18, 140 6, 92 12 C 70 15, 54 20, 44 27" />
+    </svg>
+  );
+}
+
+/**
+ * 首屏接觸印樣：全部作品縮在一張紙上，滑過看是誰，點一下站內預覽。
+ * 榜單卡正在預覽的那一件會被圈出來。
+ */
+function Sheet({ works, rankOf, shownId, onOpen }: {
+  works: Plate[];
+  rankOf: (pl: Plate) => number | null;
+  shownId: string | null;
+  onOpen: (pl: Plate) => void;
+}) {
+  const [cur, setCur] = useState<Plate | null>(null);
+  const capRank = cur ? rankOf(cur) : null;
+  return (
+    <div className="sheet" onPointerLeave={() => setCur(null)}>
+      <p className="sheet__head">
+        <span className="label">CONTACT SHEET · 全部 {works.length} 件</span>
+        <span className="label sheet__hint">點一下站內預覽</span>
+      </p>
+      <ul className="sheet__grid">
+        {works.map((w, i) => {
+          const r = rankOf(w);
+          return (
+            <li key={w.id} style={{ '--i': i } as React.CSSProperties}>
+              <button
+                type="button"
+                className={`sheet__tile${cur?.id === w.id ? ' is-on' : ''}${shownId === w.id ? ' is-shown' : ''}`}
+                aria-label={`站內預覽 ${w.model} 作品《${w.title}》，${r != null ? `${isNew(w) ? '新題目' : '舊題目'}第 ${r} 名` : '待評分'}`}
+                onPointerEnter={() => setCur(w)}
+                onFocus={() => setCur(w)}
+                onBlur={() => setCur(null)}
+                onClick={() => onOpen(w)}
+              >
+                <img src={miniOf(w.thumb)} alt="" width={320} height={222} loading="lazy" decoding="async" />
+                <span className="sheet__no" aria-hidden="true">{r != null ? `${isNew(w) ? '新 ' : ''}${pad2(r)}` : '待評'}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="sheet__cap" aria-hidden="true">
+        {cur ? (
+          <span key={cur.id}>
+            <b>{isNew(cur) ? '新題目' : '舊題目'} · {capRank != null ? `No.${capRank}` : '待評'}</b>
+            {modelMain(cur.model)}<i>《{cur.title}》</i><em>{cur.score ?? '—'}</em>
+          </span>
+        ) : (
+          <span key="idle" className="sheet__idle">滑過任一格，看是哪個模型交的卷</span>
+        )}
+      </p>
+    </div>
+  );
+}
+
+/** 與 scripts/reels-sprite.py、index.css 的 .reel 動畫一致：6 欄 × 12 列共 72 格。 */
+const REEL_MS = 6000;
+const REEL_DELAY = 280;
+const reelOf = (pl: Plate) => `/reels/${pl.id}.webp`;
+
+/**
+ * 捲動影帶：滑鼠停在作品上，從頭播放整頁往下捲的過程（scripts/reels.mjs 錄製的格狀雪碧圖）。
+ * 停留一下才下載，掃過去不會白抓；離開就停。觸控裝置與減少動態時不播。
+ * 不給 active 時跟著父層（作品框）的滑鼠進出。
+ */
+function Reel({ pl, active }: { pl: Plate; active?: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [hover, setHover] = useState(false);
+  const [ready, setReady] = useState(false);
+  const on = active ?? hover;
+
+  useEffect(() => {
+    const host = ref.current?.parentElement;
+    if (active !== undefined || !host) return;
+    const enter = (e: PointerEvent) => e.pointerType === 'mouse' && setHover(true);
+    const leave = () => setHover(false);
+    host.addEventListener('pointerenter', enter);
+    host.addEventListener('pointerleave', leave);
+    return () => {
+      host.removeEventListener('pointerenter', enter);
+      host.removeEventListener('pointerleave', leave);
+    };
+  }, [active]);
+
+  useEffect(() => {
+    if (!on || ready || reduced()) return;
+    const img = new Image();
+    const t = setTimeout(() => {
+      img.onload = () => setReady(true);
+      img.src = reelOf(pl);
+    }, REEL_DELAY);
+    return () => {
+      clearTimeout(t);
+      img.onload = null;
+    };
+  }, [on, ready, pl]);
+
+  if (reduced() || !REELS.has(pl.id)) return null;
+  const playing = on && ready;
+  return (
+    <span
+      ref={ref}
+      className={`reel${on ? ' is-on' : ''}${playing ? ' is-play' : ''}`}
+      style={ready ? { backgroundImage: `url(${reelOf(pl)})` } : undefined}
+      aria-hidden="true"
+    >
+      <span className="reel__tag">{playing ? '整頁捲動中' : '載入捲動預覽…'}</span>
+      <i className="reel__bar" style={{ animationDuration: `${REEL_MS}ms` }} />
+    </span>
+  );
 }
 
 function Stamp({ kind }: { kind: Plate['visual'] }) {
@@ -86,6 +433,7 @@ function Mat({ pl, eager, size = 'l' }: { pl: Plate; eager?: boolean; size?: 'l'
     <a className={`mat mat--${size}`} href={pl.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${pl.model} 的作品《${pl.title}》`}>
       <span className="mat__frame">
         <img src={pl.thumb} alt={`${pl.model} 作品《${pl.title}》實機畫面`} loading={eager ? 'eager' : 'lazy'} width={960} height={600} />
+        {size === 'l' && <Reel key={pl.id} pl={pl} />}
         <Stamp kind={pl.visual} />
       </span>
       {size === 'l' && <span className="mat__hint">開啟作品 ↗</span>}
@@ -169,10 +517,49 @@ function Actions({ pl, onPreview }: { pl: Plate; onPreview: (pl: Plate) => void 
   );
 }
 
-/** 前三名：圖錄跨頁，一件一頁。 */
+const toneCache = new Map<string, string>();
+
+/** 從小圖取作品的主色，給展廳的燈光用；飽和的像素權重較高，白底配藍字的作品也會打出藍光。 */
+function useTone(pl: Plate): string | null {
+  const [tone, setTone] = useState(() => toneCache.get(pl.id) ?? null);
+  useEffect(() => {
+    if (toneCache.has(pl.id)) return;
+    let alive = true;
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = 32;
+      c.height = 20;
+      const g = c.getContext('2d', { willReadFrequently: true });
+      if (!g) return;
+      g.drawImage(img, 0, 0, c.width, c.height);
+      const d = g.getImageData(0, 0, c.width, c.height).data;
+      let r = 0, gr = 0, b = 0, w = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        const sat = Math.max(d[i], d[i + 1], d[i + 2]) - Math.min(d[i], d[i + 1], d[i + 2]);
+        const k = 1 + (sat / 32) ** 2;
+        r += d[i] * k; gr += d[i + 1] * k; b += d[i + 2] * k; w += k;
+      }
+      const v = `rgb(${Math.round(r / w)} ${Math.round(gr / w)} ${Math.round(b / w)})`;
+      toneCache.set(pl.id, v);
+      if (alive) setTone(v);
+    };
+    img.src = miniOf(pl.thumb);
+    return () => { alive = false; };
+  }, [pl.id, pl.thumb]);
+  return tone;
+}
+
+/** 前三名：展廳裡一件一面牆，牆上的光取自作品本身。 */
 function Feature({ pl, rank, onPreview }: { pl: Plate; rank: number; onPreview: (pl: Plate) => void }) {
+  const tone = useTone(pl);
   return (
-    <article className={`feature rv${rank % 2 === 0 ? ' feature--flip' : ''}`} aria-label={`第${rank}名 ${pl.model}：${pl.title}`}>
+    <article
+      className={`feature rv${rank % 2 === 0 ? ' feature--flip' : ''}`}
+      style={tone ? ({ '--tone': tone } as React.CSSProperties) : undefined}
+      aria-label={`第${rank}名 ${pl.model}：${pl.title}`}
+    >
       <div className="feature__art">
         <Mat pl={pl} />
         {pl.logoSrc && pl.logoThumb && (
@@ -280,6 +667,7 @@ function HoverPeek({ pl }: { pl: Plate | null }) {
   return (
     <div className={`peek${pl ? ' is-on' : ''}`} ref={ref} aria-hidden="true">
       {pl && <img src={pl.thumb} alt="" />}
+      {pl && <Reel key={pl.id} pl={pl} active />}
     </div>
   );
 }
@@ -308,8 +696,14 @@ function Zone({ zone, tag, title, desc, logo, rankOf, onPreview, onHover }: {
       </header>
 
       {podium.length > 0 && (
-        <div className="podium">
-          {podium.map((pl) => <Feature key={pl.id} pl={pl} rank={rankOf(pl)!} onPreview={onPreview} />)}
+        <div className="stage">
+          <div className="stage__head rv">
+            <p className="label">THE HALL · 前 {podium.length} 名</p>
+            <p className="label stage__note">每面牆的光，取自作品本身的顏色</p>
+          </div>
+          <div className="podium">
+            {podium.map((pl) => <Feature key={pl.id} pl={pl} rank={rankOf(pl)!} onPreview={onPreview} />)}
+          </div>
         </div>
       )}
 
@@ -345,6 +739,8 @@ export default function App() {
   const [open, setOpen] = useState<Plate | null>(null);
   const [itemSel, setItemSel] = useState<'self' | 'logo'>('self');
   const [hover, setHover] = useState<Plate | null>(null);
+  const [shown, setShown] = useState<string | null>(null);
+  const showOnBoard = useCallback((pl: Plate) => setShown(pl.id), []);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -432,7 +828,7 @@ export default function App() {
               <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(modelCount)} MODELS · {pad2(works.length)} WORKS</span></p>
               <h1 id="hero-title">
                 <span className="hero__line">同一道前端題，</span>
-                <span className="hero__line">哪個 <em>AI</em> 做得</span>
+                <span className="hero__line">哪個 <em className="hero__ai">AI<PenCircle /></em> 做得</span>
                 <span className="hero__line hero__line--accent">最好？</span>
               </h1>
               <p className="hero__sub">
@@ -442,40 +838,14 @@ export default function App() {
                 <button type="button" className="btn btn--lg" onClick={() => go('works')}>看完整排名 ↓</button>
                 <button type="button" className="textbtn textbtn--lg" onClick={() => go('how')}>怎麼評的</button>
               </div>
+              <Sheet works={works} rankOf={rankOf} shownId={shown} onOpen={setOpen} />
             </div>
 
-            {ranked.length > 0 && (
-              <aside className="board rv" aria-labelledby="board-title">
-                <header className="board__head">
-                  <h2 id="board-title" className="label">LEADERBOARD · {boardZone === newZone ? '新題目' : '舊題目'}</h2>
-                  <span className="label">自我介紹 / 100</span>
-                </header>
-                <a className="board__champ" href={ranked[0].src} target="_blank" rel="noreferrer" aria-label={`第 1 名 ${ranked[0].model}，作品《${ranked[0].title}》，${ranked[0].score} 分`}>
-                  <span className="board__thumb"><img src={ranked[0].thumb} alt="" width={960} height={600} /></span>
-                  <span className="board__champ-id">
-                    <span className="board__rank">No.1</span>
-                    <b>{modelMain(ranked[0].model)}</b>
-                    <i>作品《{ranked[0].title}》</i>
-                  </span>
-                  <span className="board__score board__score--big">{ranked[0].score}</span>
-                </a>
-                <ol className="board__list">
-                  {ranked.slice(1, 6).map((w, i) => (
-                    <li key={w.id}>
-                      <a href={w.src} target="_blank" rel="noreferrer">
-                        <span className="board__rank">{pad2(i + 2)}</span>
-                        <span className="board__id"><b>{modelMain(w.model)}</b><i>《{w.title}》</i></span>
-                        <span className="board__bar" aria-hidden="true"><i style={{ width: `${w.score}%` }} /></span>
-                        <span className="board__score">{w.score}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ol>
-                <button type="button" className="board__more" onClick={() => go('works')}>
-                  看全部 {works.length} 件作品 <span aria-hidden="true">→</span>
-                </button>
-              </aside>
-            )}
+            <Board zone={boardZone} isNewZone={boardZone === newZone} total={works.length} onMore={() => go('works')} onShow={showOnBoard} />
+          </div>
+
+          <div className="wrap">
+            <Duel pool={ranked} isNewZone={boardZone === newZone} onOpen={setOpen} />
           </div>
 
           {/* 怎麼評：三步說完整個評測流程 */}
