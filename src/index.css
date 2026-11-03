@@ -158,6 +158,16 @@ button { font: inherit; color: inherit; }
   font-size: 1.12em; line-height: 0.8; color: var(--red); letter-spacing: -0.03em;
   padding: 0 0.04em;
 }
+/* 紅筆圈住「AI」：載入時畫一次，之後停在畫好的狀態 */
+.hero__ai { position: relative; display: inline-block; margin-inline: 0.1em 0.14em; }
+.pen {
+  position: absolute; left: -18%; top: -12%; width: 136%; height: 124%; overflow: visible; pointer-events: none;
+}
+.pen path {
+  fill: none; stroke: var(--red); stroke-width: 2.6; stroke-linecap: round; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: pen 1.1s cubic-bezier(0.6, 0, 0.3, 1) 1s forwards;
+}
+@keyframes pen { to { stroke-dashoffset: 0; } }
 .hero__line { display: block; white-space: nowrap; animation: rise 1.2s var(--ease) both; }
 .hero__line:nth-child(2) { animation-delay: 0.08s; }
 .hero__line--accent { color: var(--red); animation-delay: 0.16s; }
@@ -187,18 +197,41 @@ button { font: inherit; color: inherit; }
 .board__champ {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "thumb thumb" "id score";
   align-items: end; gap: 22px 18px;
-  padding: 22px 0 20px; border-bottom: 1px solid var(--line-2); text-decoration: none;
+  padding: 14px 0 20px; border-bottom: 1px solid var(--line-2); text-decoration: none;
 }
+/* 名次刻度：目前預覽的那一格隨停留時間填滿，點一下直接跳過去 */
+.board__rail { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; padding-top: 6px; }
+.board__seg {
+  display: grid; gap: 5px; min-height: 36px; padding: 8px 0 6px; background: none; border: 0; cursor: pointer; text-align: left;
+}
+.board__seg-no { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; line-height: 1; color: var(--faint-text); transition: color 0.3s; }
+.board__seg-line { position: relative; display: block; height: 2px; background: var(--line); overflow: hidden; transition: background-color 0.4s; }
+.board__seg-line i { position: absolute; inset: 0; background: var(--red); transform-origin: 0 50%; }
+.board__seg-line i.is-run { animation: fill linear both; }
+.board__seg.is-past .board__seg-line { background: var(--line-2); }
+.board__seg.is-on .board__seg-no, .board__seg:hover .board__seg-no { color: var(--red); }
+.board__seg:hover .board__seg-line { background: var(--line-2); }
+@keyframes fill { from { transform: scaleX(0); } }
 /* 冠軍裱框：白卡紙 + 內細框，和下方作品區的裱框是同一套語言 */
 .board__thumb {
   grid-area: thumb; position: relative; display: block; padding: clamp(8px, 1vw, 12px); background: #fff;
   box-shadow: var(--shadow-frame); transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
 }
 .board__thumb::after {
-  content: ""; position: absolute; inset: clamp(8px, 1vw, 12px);
+  content: ""; position: absolute; inset: clamp(8px, 1vw, 12px); z-index: 1;
   box-shadow: inset 0 0 0 1px rgba(21, 19, 15, 0.1); pointer-events: none;
 }
-.board__thumb img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; background: var(--paper-2); }
+/* 同一格疊放各名次的截圖，換名次時交叉淡入 */
+.board__thumb { display: grid; }
+.board__thumb img {
+  grid-area: 1 / 1; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; background: var(--paper-2);
+  opacity: 0; transition: opacity 0.8s var(--ease);
+}
+.board__thumb img.is-on { opacity: 1; animation: pan 9s ease-in-out infinite alternate; }
+/* 截圖比 16:10 高，慢慢由上往下帶過，預覽框不再是一張死圖 */
+@keyframes pan { from { object-position: 50% 0; } to { object-position: 50% 100%; } }
+.board__champ-id { animation: swap 0.7s var(--ease) both; }
+@keyframes swap { from { opacity: 0; transform: translateY(10px); } }
 .board__champ:hover .board__thumb {
   transform: translateY(-4px);
   box-shadow: 0 0 0 1px rgba(21, 19, 15, 0.06), 0 4px 8px rgba(21, 19, 15, 0.06), 0 40px 70px -30px rgba(21, 19, 15, 0.5);
@@ -215,11 +248,19 @@ button { font: inherit; color: inherit; }
   padding: 11px 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: background-color 0.3s;
 }
 .board__list a:hover { background: color-mix(in srgb, var(--paper-2) 60%, transparent); }
-.board__list .board__rank { font-family: var(--mono); font-size: 11px; color: var(--faint-text); letter-spacing: 0.1em; padding-left: 4px; }
+.board__list .board__rank { font-family: var(--mono); font-size: 11px; color: var(--faint-text); letter-spacing: 0.1em; padding-left: 4px; transition: color 0.3s; }
+.board__list li.is-sel a { background: color-mix(in srgb, var(--paper-2) 60%, transparent); box-shadow: inset 2px 0 0 var(--red); }
+.board__list li.is-sel .board__rank { color: var(--red); }
+.board__list li.is-sel .board__bar i { background: var(--red); }
 .board__id { display: grid; min-width: 0; }
 .board__id b { font-family: var(--display); font-weight: 400; font-size: 22px; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .board__bar { display: block; height: 3px; background: var(--line); }
-.board__bar i { display: block; height: 100%; background: var(--ink); }
+/* 長條在卡片進場後依名次逐條拉開 */
+.board__bar i {
+  display: block; height: 100%; background: var(--ink); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 1.3s var(--ease) calc(0.45s + var(--i, 0) * 110ms), background-color 0.3s;
+}
+.board.in .board__bar i { transform: none; }
 .board__more {
   display: flex; justify-content: space-between; align-items: center; width: 100%;
   margin-top: 14px; padding: 12px 0 2px; background: none; border: 0; cursor: pointer;
@@ -228,6 +269,135 @@ button { font: inherit; color: inherit; }
 .board__more span { transition: transform 0.4s var(--ease); }
 .board__more:hover { color: var(--red); }
 .board__more:hover span { transform: translateX(6px); }
+
+/* 捲動影帶：6 欄 × 12 列的格狀雪碧圖（scripts/reels-sprite.py），用 steps() 逐格播放。
+   x 每列跑一遍、y 整段跑一遍；百分比 = 格數 / (格數 - 1)，最後一步剛好落在最後一格。 */
+.reel {
+  position: absolute; inset: var(--reel-inset, 0); z-index: 1; pointer-events: none;
+  background-repeat: no-repeat; background-size: 600% 1200%; background-position: 0 0;
+  opacity: 0; transition: opacity 0.35s;
+}
+.reel.is-on { opacity: 1; }
+.reel.is-play { animation: reel-x 500ms steps(6) infinite, reel-y 6000ms steps(12) infinite; }
+@keyframes reel-x { from { background-position-x: 0%; } to { background-position-x: 120%; } }
+@keyframes reel-y { from { background-position-y: 0%; } to { background-position-y: 109.0909%; } }
+.reel__tag {
+  position: absolute; left: 8px; top: 8px; padding: 3px 8px;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; line-height: 1.5;
+}
+.reel.is-play .reel__tag { background: var(--red); color: #fff; }
+.reel__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: 0 50%; }
+.reel.is-play .reel__bar { animation: reel-bar linear infinite; }
+@keyframes reel-bar { to { transform: scaleX(1); } }
+.mat__frame .reel { --reel-inset: clamp(10px, 1.2vw, 16px); }
+.board__thumb .reel { --reel-inset: clamp(8px, 1vw, 12px); z-index: 2; }
+.duel__frame .reel { --reel-inset: clamp(8px, 1vw, 12px); }
+.duel__stamp { z-index: 2; }
+.peek .reel { --reel-inset: 8px; }
+.peek .reel__tag { display: none; }
+
+/* 接觸印樣：全部作品縮在一張紙上；榜單卡正在預覽的那一件以紅框標出 */
+.sheet {
+  max-width: 560px; margin-top: clamp(40px, 7vh, 64px); padding-top: 14px; border-top: 1px solid var(--ink);
+  animation: rise 1.2s var(--ease) 0.42s both;
+}
+.sheet__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.sheet__head .label:first-child { color: var(--ink); font-weight: 700; }
+.sheet__hint { color: var(--faint-text); }
+.sheet__grid {
+  list-style: none; margin: 14px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
+}
+.sheet__grid li { animation: tile 0.8s var(--ease) both; animation-delay: calc(0.55s + var(--i) * 35ms); }
+@keyframes tile { from { opacity: 0; transform: translateY(10px) scale(0.96); } }
+.sheet__tile {
+  position: relative; display: block; width: 100%; padding: 3px; background: #fff; border: 0; cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(21, 19, 15, 0.08), 0 8px 16px -12px rgba(21, 19, 15, 0.45);
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), opacity 0.35s;
+}
+.sheet__tile img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--paper-2); }
+.sheet__tile.is-on {
+  transform: translateY(-4px); z-index: 1;
+  box-shadow: 0 0 0 1px rgba(21, 19, 15, 0.08), 0 16px 26px -14px rgba(21, 19, 15, 0.55);
+}
+.sheet__grid:has(.sheet__tile.is-on) .sheet__tile:not(.is-on) { opacity: 0.42; }
+.sheet__tile.is-shown::after {
+  content: ""; position: absolute; inset: -3px; border: 1.5px solid var(--red); pointer-events: none;
+  animation: ring 0.6s var(--ease) both;
+}
+@keyframes ring { from { opacity: 0; transform: scale(1.18); } }
+.sheet__no {
+  position: absolute; left: 3px; bottom: 3px; padding: 1px 4px;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; line-height: 1.4;
+  transition: background-color 0.3s;
+}
+.sheet__tile.is-shown .sheet__no { background: var(--red); }
+.sheet__cap { min-height: 46px; margin-top: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); overflow: hidden; }
+.sheet__cap > span { display: flex; align-items: baseline; gap: 10px; min-width: 0; white-space: nowrap; animation: swap 0.45s var(--ease) both; font-family: var(--display); font-size: 24px; line-height: 1.3; }
+.sheet__cap b { flex: none; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; color: var(--red); }
+.sheet__cap i { min-width: 0; overflow: hidden; text-overflow: ellipsis; font-style: normal; font-family: var(--serif); font-size: 14px; color: var(--muted); }
+.sheet__cap em { margin-left: auto; font-style: normal; color: var(--red); }
+.sheet__cap > .sheet__idle { padding-top: 8px; font-family: var(--sans); font-size: 13px; letter-spacing: 0.06em; color: var(--muted); }
+
+/* 盲猜對決：兩張作品並排，猜完才翻出模型與分數 */
+.duel {
+  position: relative; margin-top: clamp(80px, 13vh, 130px);
+  padding: clamp(26px, 3.4vw, 48px); background: var(--card); box-shadow: var(--shadow-frame);
+}
+.duel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--red); }
+.duel__head { display: flex; justify-content: space-between; align-items: end; gap: 16px 32px; flex-wrap: wrap; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.duel__kicker { color: var(--red); }
+.duel__title { margin-top: 10px; font-family: var(--serif); font-weight: 900; font-size: clamp(28px, 3.2vw, 46px); line-height: 1.2; text-wrap: balance; }
+.duel__title em { font-style: normal; color: var(--red); }
+.duel__tally b { font-family: var(--display); font-size: 26px; font-weight: 400; color: var(--red); letter-spacing: 0; vertical-align: -3px; }
+.duel__ring { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(36px, 6vw, 96px); padding-top: clamp(26px, 4vh, 40px); }
+.duel__vs {
+  position: absolute; left: 50%; top: calc(clamp(26px, 4vh, 40px) + 22%); translate: -50% -50%;
+  font-family: var(--display); font-style: italic; font-size: clamp(40px, 5vw, 76px); line-height: 1; color: var(--red);
+  transition: opacity 0.4s, scale 0.6s var(--ease);
+}
+.duel__ring.is-done .duel__vs { opacity: 0.25; scale: 0.8; }
+.duel__side { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "art art" "id score"; gap: 18px 16px; align-items: end; transition: opacity 0.5s; }
+.duel__side.is-lose { opacity: 0.55; }
+.duel__art { grid-area: art; position: relative; display: block; padding: 0; background: none; border: 0; cursor: pointer; text-align: left; }
+.duel__art:disabled { cursor: default; }
+.duel__frame {
+  position: relative; display: block; padding: clamp(8px, 1vw, 12px); background: #fff; box-shadow: var(--shadow-frame);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.duel__frame img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--paper-2); }
+.duel__art:not(:disabled):hover .duel__frame, .duel__art:focus-visible .duel__frame {
+  transform: translateY(-6px) rotate(-0.6deg);
+  box-shadow: 0 0 0 2px var(--red), 0 40px 70px -30px rgba(21, 19, 15, 0.5);
+}
+.duel__side:nth-child(2) .duel__art:not(:disabled):hover .duel__frame { transform: translateY(-6px) rotate(0.6deg); }
+.duel__side.is-win .duel__frame { box-shadow: 0 0 0 2px var(--red), var(--shadow-frame); }
+.duel__cta {
+  position: absolute; left: 50%; bottom: -14px; translate: -50% 0; padding: 6px 14px; white-space: nowrap;
+  background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 500; letter-spacing: 0.12em;
+  opacity: 0; transition: opacity 0.3s, translate 0.4s var(--ease);
+}
+.duel__art:hover .duel__cta, .duel__art:focus-visible .duel__cta { opacity: 1; translate: -50% -6px; background: var(--red); }
+.duel__stamp {
+  position: absolute; top: 14%; right: 8%; padding: 6px 14px;
+  border: 3px solid var(--red); color: var(--red); background: rgba(255, 255, 255, 0.88);
+  font-family: var(--serif); font-weight: 900; font-size: clamp(22px, 2.6vw, 36px); letter-spacing: 0.1em;
+  rotate: -8deg; animation: stamp 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+.duel__stamp.is-miss { border-color: var(--ink); color: var(--ink); rotate: 6deg; }
+@keyframes stamp { from { opacity: 0; scale: 2.2; } }
+.duel__id { grid-area: id; min-width: 0; }
+.duel__id .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.duel__model { margin-top: 6px; font-family: var(--display); font-weight: 400; font-size: clamp(26px, 2.6vw, 40px); line-height: 1.05; animation: swap 0.6s var(--ease) both; }
+.duel__hidden { color: var(--faint); letter-spacing: 0.04em; }
+.duel__score { grid-area: score; font-family: var(--display); font-size: clamp(54px, 5vw, 84px); line-height: 0.85; font-variant-numeric: tabular-nums; }
+.duel__side.is-win .duel__score { color: var(--red); }
+.duel__q { color: var(--faint); }
+.duel__foot { display: flex; justify-content: space-between; align-items: center; gap: 16px 28px; flex-wrap: wrap; margin-top: clamp(26px, 4vh, 40px); padding-top: 20px; border-top: 1px solid var(--line); }
+.duel__note { color: var(--muted); font-size: 15px; }
+.duel__actions { display: flex; align-items: center; gap: 12px 22px; flex-wrap: wrap; }
 
 /* 三步驟：題目、交卷、評分 */
 .how {
@@ -379,6 +549,45 @@ button { font: inherit; color: inherit; }
 .gauge { display: block; height: 2px; margin-top: 12px; background: var(--line); }
 .gauge i { display: block; height: 100%; background: var(--ink); transform-origin: 0 50%; }
 .feature:first-child .gauge i { background: var(--red); }
+
+/* ---------- stage：前三名的暗色展廳 ---------- */
+/* 換掉色票就整區反白；卡紙維持白色，像掛在暗牆上的作品。 */
+.stage {
+  --paper: #15130f; --paper-2: #1f1c17; --card: #1b1814;
+  --ink: #f3eee3; --ink-2: #d9d3c6; --muted: #a39b8b; --faint: #7d7566; --faint-text: #a39b8b;
+  --line: rgba(245, 241, 232, 0.12); --line-2: rgba(245, 241, 232, 0.26); --red: #e0583b;
+  position: relative;
+  margin-inline: calc(50% - 50vw);
+  padding: clamp(64px, 10vh, 112px) calc(50vw - 50%) clamp(110px, 16vh, 170px);
+  background: var(--paper); color: var(--ink);
+  overflow-x: clip; /* 打光的暈開超出左右邊界時，手機不會被撐寬 */
+}
+.stage__head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap;
+  padding-bottom: 16px; margin-bottom: clamp(72px, 11vh, 120px); border-bottom: 1px solid var(--line-2);
+}
+.stage__note { letter-spacing: 0.12em; }
+.stage + .index__head { margin-top: clamp(90px, 13vh, 140px); }
+
+/* 打光：作品主色在卡紙後方暈開，進場時亮起。 */
+.stage .feature__art { isolation: isolate; }
+.stage .feature__art::before {
+  content: ""; position: absolute; inset: -16% -12% -4%; z-index: -1; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--tone, #b9a27a) 62%, transparent), transparent 100%);
+  filter: blur(36px); opacity: 0; transform: scale(0.85);
+  transition: opacity 1.8s var(--ease) 0.5s, transform 2.2s var(--ease) 0.5s, background 0.8s;
+}
+.stage .feature.in .feature__art::before { opacity: 0.9; transform: none; }
+.stage .mat__frame {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 36px 80px -34px rgba(0, 0, 0, 0.85);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.3s var(--ease) 0.1s, box-shadow 0.5s var(--ease);
+}
+.stage .mat:hover .mat__frame { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 48px 100px -36px rgba(0, 0, 0, 0.9); }
+.stage .mat__frame img { transform: scale(1.12); transition: transform 2.4s var(--ease) 0.1s; }
+.stage .feature.in .mat__frame { clip-path: inset(-120px); }
+.stage .feature.in .mat__frame img { transform: none; }
+.stage .pip { box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.9); }
 
 .verdictbox { margin-top: 24px; }
 .verdictbox__text {
@@ -579,6 +788,28 @@ button { font: inherit; color: inherit; }
   .hero__sub { font-size: 16px; }
   .board__list a { grid-template-columns: 30px minmax(0, 1fr) 40px; }
   .board__bar { display: none; }
+  /* 手機：印樣改成兩列橫向滑動，格子放大到好點的尺寸 */
+  .sheet { max-width: none; }
+  .sheet__grid {
+    grid-template-columns: none; grid-template-rows: repeat(2, auto); grid-auto-flow: column; grid-auto-columns: 112px;
+    margin: 14px calc(-1 * var(--gutter)) 0; padding: 4px var(--gutter) 12px;
+    overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--gutter); scrollbar-width: none;
+  }
+  .sheet__grid::-webkit-scrollbar { display: none; }
+  .sheet__grid li { scroll-snap-align: start; }
+  .sheet__no { font-size: 10px; }
+  .duel { padding: 22px 18px 24px; margin-inline: calc(-1 * var(--gutter) + 8px); }
+  .duel__ring { gap: 14px; }
+  .duel__side { grid-template-columns: minmax(0, 1fr); grid-template-areas: "art" "id" "score"; gap: 10px; }
+  .duel__frame { padding: 5px; }
+  .duel__frame .reel { --reel-inset: 5px; }
+  .duel__vs { font-size: 30px; top: calc(clamp(26px, 4vh, 40px) + 13%); }
+  .duel__model { font-size: 20px; }
+  .duel__score { font-size: 44px; }
+  .duel__stamp { font-size: 16px; padding: 3px 8px; border-width: 2px; }
+  .duel__cta { display: none; }
+  .duel__foot .btn { width: 100%; }
+  .duel__actions { width: 100%; }
   .how { grid-template-columns: minmax(0, 1fr); }
   .how li { padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line-2); display: grid; grid-template-columns: 56px 1fr; column-gap: 12px; }
   .how__no { grid-row: span 2; font-size: 38px; }
@@ -617,9 +848,17 @@ button { font: inherit; color: inherit; }
   .overlay__side { max-height: 34vh; border-top: 1px solid var(--line-2); padding: 18px 20px; }
 }
 
+/* 觸控裝置沒有滑過，說明列改由點擊預覽取代 */
+@media (hover: none) {
+  .sheet__cap { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition-duration: 0.001s !important; }
   .rv { opacity: 1; transform: none; }
+  .stage .mat__frame { clip-path: none; }
+  .stage .mat__frame img { transform: none; }
+  .stage .feature__art::before { opacity: 0.9; transform: none; }
   .ticker__track { animation: none; }
 }

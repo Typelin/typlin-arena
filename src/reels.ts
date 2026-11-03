@@ -1,0 +1,23 @@
+// 由 scripts/reels.mjs 產生：有捲動影帶（public/reels/<id>.webp）的作品。
+export const REELS = new Set<string>([
+  "claude-haiku-5-5",
+  "claude-opus-4-6",
+  "claude-opus-5-5",
+  "claude-opus-5-5-r2",
+  "claude-sonnet-5-5",
+  "claude-sonnet-5-5-r2",
+  "deepseek-v4-1-flash-r2",
+  "gemini-3-8-flash-high",
+  "gemini-4-argon",
+  "glm-5-3",
+  "glm-5-3-flash",
+  "gpt-5-6-sol",
+  "gpt-6-1-sol",
+  "gpt-6-astra",
+  "grok-4-6",
+  "kimi-k3",
+  "mimo-v2.6-flash",
+  "muse-spark-1-3",
+  "qwen-3-8-27b-local",
+  "qwen-3-8-flash"
+]);
