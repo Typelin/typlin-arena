@@ -2,7 +2,7 @@
 
 [正體中文版](README.zh-TW.md)
 
-> Same prompt. Different souls. — Seventeen scored entries on the previous brief, ten more on the new brief awaiting scores, zero wallpaper.
+> Same prompt. Different souls. — Seventeen scored entries on the previous brief, ten ranked entries on the new brief, zero wallpaper.
 
 **TYPELIN ARENA** is a live exhibition hall for same-prompt AI frontend showdowns.
 Entries in the same zone are built from the identical brief (*"a frontend piece about yourself"*); a changed brief opens a new zone,
@@ -41,24 +41,24 @@ playable in-page, ranked by a human judge against one standard:
 
 Note: the first 16 entries were built from the previous brief and scored on the earlier five-dimension rubric. The new brief (`benchmark-assets/self-intro/PROMPT.md`) is stricter, and older scores have not been re-judged against it.
 
-### New brief (awaiting scores)
+### New brief (ranked)
 
-The new brief weights visual impact at 70%, content and meaning at 20%, and engineering and testing at 10%. Each entry must look up its own facts on the web and write "not officially disclosed" when something cannot be found. Scores on the new brief are not comparable with the table above, so the two are ranked separately. Claude Sonnet 5.5, Claude Opus 5.5, DeepSeek V4.1 Flash, Gemini 3.8 Flash (high), Gemini 4 Argon, GPT-6.1 Sol and Grok 4.6 each have one entry under each brief, linked to each other.
+The new brief weights visual impact at 70%, content and meaning at 20%, and engineering and testing at 10%. Each entry must look up its own facts on the web and write "not officially disclosed" when something cannot be found. The new brief is ranked by placement instead of scores: entries are compared side by side and put in order, with no points given. It is ranked separately from the table above. Claude Sonnet 5.5, Claude Opus 5.5, DeepSeek V4.1 Flash, Gemini 3.8 Flash (high), Gemini 4 Argon, GPT-6.1 Sol and Grok 4.6 each have one entry under each brief, linked to each other.
 
-| Work | Model | Self intro | Live |
+| Rank | Work | Model | Live |
 | --- | --- | --- | --- |
-| 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | pending | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
-| 我是 Anthropic 開發的大型語言模型 | Claude Opus 5.5 | pending | [/works/claude-opus-5-5-r2/](https://arena.typelin.me/works/claude-opus-5-5-r2/) |
-| 雙色網點試印本 | DeepSeek V4.1 Flash | pending | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
-| 關於我 | Claude Haiku 5.5 | pending | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
-| 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | pending | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
-| 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | pending | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
-| Noble Plasma | Gemini 4 Argon | pending | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
-| 把複雜的事，一起做成 | GPT-6.1 Sol | pending | [/works/gpt-6-1-sol-r2/](https://arena.typelin.me/works/gpt-6-1-sol-r2/) |
-| 長航 | Grok 4.6 | pending | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
-| 總分不高，有一件事特別高 | Grok 4.7 | pending | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
+| 1 | 我是 Anthropic 開發的大型語言模型 | Claude Opus 5.5 | [/works/claude-opus-5-5-r2/](https://arena.typelin.me/works/claude-opus-5-5-r2/) |
+| 2 | 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
+| 3 | 把複雜的事，一起做成 | GPT-6.1 Sol | [/works/gpt-6-1-sol-r2/](https://arena.typelin.me/works/gpt-6-1-sol-r2/) |
+| 4 | 雙色網點試印本 | DeepSeek V4.1 Flash | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
+| 5 | 關於我 | Claude Haiku 5.5 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
+| 6 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
+| 7 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
+| 8 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
+| 9 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
+| 10 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
 
-The home page ranks each brief separately; unscored entries are listed as pending. Until three new-brief entries are scored, the hero leaderboard keeps showing the previous brief and says so.
+The home page ranks each brief separately: the new brief by placement, the previous brief by score. The hero leaderboard, duel and ticker run on scores, so they keep showing the previous brief and say so.
 
 ## Judging Criteria
 

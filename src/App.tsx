@@ -23,6 +23,10 @@ const modelMain = (m: string) => m.split(' · ')[0];
 const modelNote = (m: string) => m.split(' · ').slice(1).join(' · ');
 const reduced = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isNew = (p: Plate) => p.era === 'new';
+/** 新題目只排名次不打分；舊題目看分數。 */
+const isRanked = (p: Plate) => (isNew(p) ? p.place != null : p.score != null);
+/** 卡片上的成績文字：新題目寫名次，舊題目寫分數。 */
+const markOf = (p: Plate) => (isNew(p) ? (p.place != null ? `第 ${p.place} 名` : '待排名') : p.score ?? '待評');
 /** 首屏印樣用的小圖（scripts/shots-mini.py 產生），保留原圖的版本參數。 */
 const miniOf = (src: string) => src.replace('/shots/', '/shots/mini/').replace(/\.png(?=\?|$)/, '.webp');
 
@@ -356,7 +360,7 @@ function Sheet({ works, rankOf, shownId, onOpen }: {
         {cur ? (
           <span key={cur.id}>
             <b>{isNew(cur) ? '新題目' : '舊題目'} · {capRank != null ? `No.${capRank}` : '待評'}</b>
-            {modelMain(cur.model)}<i>《{cur.title}》</i><em>{cur.score ?? '—'}</em>
+            {modelMain(cur.model)}<i>《{cur.title}》</i>{!isNew(cur) && <em>{cur.score ?? '—'}</em>}
           </span>
         ) : (
           <span key="idle" className="sheet__idle">滑過任一格，看是哪個模型交的卷</span>
@@ -433,7 +437,7 @@ function Mat({ pl, eager, size = 'l' }: { pl: Plate; eager?: boolean; size?: 'l'
     <a className={`mat mat--${size}`} href={pl.src} target="_blank" rel="noreferrer" aria-label={`直接開啟 ${pl.model} 的作品《${pl.title}》`}>
       <span className="mat__frame">
         <img src={pl.thumb} alt={`${pl.model} 作品《${pl.title}》實機畫面`} loading={eager ? 'eager' : 'lazy'} width={960} height={600} />
-        {size === 'l' && <Reel key={pl.id} pl={pl} />}
+        <Reel key={pl.id} pl={pl} />
         <Stamp kind={pl.visual} />
       </span>
       {size === 'l' && <span className="mat__hint">開啟作品 ↗</span>}
@@ -478,13 +482,16 @@ function Twin({ pl }: { pl: Plate }) {
     <div className="attempts" aria-label={`${pl.model} 在另一個題目下的作品`}>
       <span className="label">同一模型</span>
       <a href={other.src} target="_blank" rel="noreferrer">
-        {isNew(other) ? '新題目' : '舊題目'} · 《{other.title}》 · {other.score ?? '待評'} ↗
+        {isNew(other) ? '新題目' : '舊題目'} · 《{other.title}》 · {markOf(other)} ↗
       </a>
     </div>
   );
 }
 
 function Scores({ pl }: { pl: Plate }) {
+  if (isNew(pl)) {
+    return <p className="label rankonly">名次制 · 新題目只排先後，不打分</p>;
+  }
   return (
     <dl className="scores">
       <div>
@@ -595,17 +602,17 @@ function Feature({ pl, rank, onPreview }: { pl: Plate; rank: number; onPreview: 
 }
 
 /** 第四名之後：目錄式索引，一列一件，點開看評語。 */
-function Row({ pl, rank, logo, onPreview, onHover }: {
+function Row({ pl, rank, logo, scored, onPreview }: {
   pl: Plate;
   rank: number | null;
   logo: boolean;
+  scored: boolean;
   onPreview: (pl: Plate) => void;
-  onHover: (pl: Plate | null) => void;
 }) {
   const [open, setOpen] = useState(false);
   const id = `row-${pl.id}`;
   return (
-    <li className={`row${open ? ' is-open' : ''}${rank == null ? ' row--pending' : ''}`} onPointerEnter={() => onHover(pl)} onPointerLeave={() => onHover(null)}>
+    <li className={`row${open ? ' is-open' : ''}${rank == null ? ' row--pending' : ''}`}>
       <div className="row__main">
         <span className="row__rank" aria-hidden="true">{rank != null ? pad2(rank) : '—'}</span>
         <Mat pl={pl} size="s" />
@@ -613,9 +620,11 @@ function Row({ pl, rank, logo, onPreview, onHover }: {
           <h3><a href={pl.src} target="_blank" rel="noreferrer">{modelMain(pl.model)}</a></h3>
           <p>作品《{pl.title}》{modelNote(pl.model) ? ` · ${modelNote(pl.model)}` : ''}</p>
         </div>
-        <span className="row__score" aria-label={`自我介紹 ${pl.score ?? '待評'}`}>
-          <small>自我介紹</small>{pl.score ?? '—'}
-        </span>
+        {scored && (
+          <span className="row__score" aria-label={`自我介紹 ${pl.score ?? '待評'}`}>
+            <small>自我介紹</small>{pl.score ?? '—'}
+          </span>
+        )}
         {logo && (
           <span className="row__score row__score--logo" aria-label={`LOGO 落地 ${pl.logoSrc ? pl.score2 ?? '待評' : '無'}`}>
             <small>LOGO</small>{pl.logoSrc ? pl.score2 ?? '—' : '—'}
@@ -639,51 +648,19 @@ function Row({ pl, rank, logo, onPreview, onHover }: {
   );
 }
 
-/** 滑過索引列時，作品大圖跟著游標浮出（僅桌面精準指標）。 */
-function HoverPeek({ pl }: { pl: Plate | null }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [fine] = useState(() => typeof matchMedia !== 'undefined' && matchMedia('(pointer: fine)').matches);
-  useEffect(() => {
-    if (!fine) return;
-    let x = 0, y = 0, tx = 0, ty = 0, raf = 0;
-    const loop = () => {
-      x += (tx - x) * 0.18;
-      y += (ty - y) * 0.18;
-      if (ref.current) ref.current.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
-      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(loop) : 0;
-    };
-    const on = (e: PointerEvent) => {
-      tx = e.clientX + 28;
-      ty = e.clientY - 120;
-      if (!raf) raf = requestAnimationFrame(loop);
-    };
-    addEventListener('pointermove', on, { passive: true });
-    return () => {
-      removeEventListener('pointermove', on);
-      cancelAnimationFrame(raf);
-    };
-  }, [fine]);
-  if (!fine) return null;
-  return (
-    <div className={`peek${pl ? ' is-on' : ''}`} ref={ref} aria-hidden="true">
-      {pl && <img src={pl.thumb} alt="" />}
-      {pl && <Reel key={pl.id} pl={pl} active />}
-    </div>
-  );
-}
-
 type ZoneData = { ranked: Plate[]; pending: Plate[] };
 
 /** 一種題目一區：自己的前三名跨頁、索引與待評，名次只在區內計算。 */
-function Zone({ zone, tag, title, desc, logo, rankOf, onPreview, onHover }: {
+function Zone({ zone, tag, title, desc, logo, scored, rankOf, onPreview }: {
   zone: ZoneData;
   tag: string;
   title: string;
   desc: string;
   logo: boolean;
+  /** false = 名次制（新題目），索引列不顯示分數欄。 */
+  scored: boolean;
   rankOf: (pl: Plate) => number | null;
   onPreview: (pl: Plate) => void;
-  onHover: (pl: Plate | null) => void;
 }) {
   const podium = zone.ranked.slice(0, 3);
   const rest = zone.ranked.slice(3);
@@ -711,10 +688,10 @@ function Zone({ zone, tag, title, desc, logo, rankOf, onPreview, onHover }: {
         <>
           <div className="index__head rv">
             <p className="label">THE INDEX · 第 4 名起</p>
-            <p className={`label index__cols${logo ? '' : ' index__cols--nologo'}`} aria-hidden="true"><span>自我介紹</span>{logo && <span>LOGO</span>}</p>
+            {scored && <p className={`label index__cols${logo ? '' : ' index__cols--nologo'}`} aria-hidden="true"><span>自我介紹</span>{logo && <span>LOGO</span>}</p>}
           </div>
-          <ol className={`index${logo ? '' : ' index--nologo'}`}>
-            {rest.map((pl) => <Row key={pl.id} pl={pl} rank={rankOf(pl)} logo={logo} onPreview={onPreview} onHover={onHover} />)}
+          <ol className={`index${logo ? '' : ' index--nologo'}${scored ? '' : ' index--rankonly'}`}>
+            {rest.map((pl) => <Row key={pl.id} pl={pl} rank={rankOf(pl)} logo={logo} scored={scored} onPreview={onPreview} />)}
           </ol>
         </>
       )}
@@ -722,11 +699,11 @@ function Zone({ zone, tag, title, desc, logo, rankOf, onPreview, onHover }: {
       {zone.pending.length > 0 && (
         <>
           <div className="index__head rv">
-            <p className="label">PENDING · 已收件，待評分</p>
-            <p className="section__desc">作品已經可以操作，分數還沒打，所以不排名次。</p>
+            <p className="label">PENDING · 已收件，{scored ? '待評分' : '待排名'}</p>
+            <p className="section__desc">{scored ? '作品已經可以操作，分數還沒打，所以不排名次。' : '作品已經可以操作，還沒排進名次。'}</p>
           </div>
-          <ol className={`index${logo ? '' : ' index--nologo'}`}>
-            {zone.pending.map((pl) => <Row key={pl.id} pl={pl} rank={null} logo={logo} onPreview={onPreview} onHover={onHover} />)}
+          <ol className={`index${logo ? '' : ' index--nologo'}${scored ? '' : ' index--rankonly'}`}>
+            {zone.pending.map((pl) => <Row key={pl.id} pl={pl} rank={null} logo={logo} scored={scored} onPreview={onPreview} />)}
           </ol>
         </>
       )}
@@ -738,7 +715,6 @@ export default function App() {
   const progress = useProgress();
   const [open, setOpen] = useState<Plate | null>(null);
   const [itemSel, setItemSel] = useState<'self' | 'logo'>('self');
-  const [hover, setHover] = useState<Plate | null>(null);
   const [shown, setShown] = useState<string | null>(null);
   const showOnBoard = useCallback((pl: Plate) => setShown(pl.id), []);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -759,17 +735,16 @@ export default function App() {
     return () => io.disconnect();
   }, []);
 
-  const sorted = [...PLATES].sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
-  const zoneOf = (list: Plate[]): ZoneData => ({ ranked: list.filter((w) => w.score != null), pending: list.filter((w) => w.score == null) });
-  const newZone = zoneOf(sorted.filter(isNew));
-  const oldZone = zoneOf(sorted.filter((w) => !isNew(w)));
+  const zoneOf = (list: Plate[]): ZoneData => ({ ranked: list.filter(isRanked), pending: list.filter((w) => !isRanked(w)) });
+  const newZone = zoneOf(PLATES.filter(isNew).sort((a, b) => (a.place ?? Infinity) - (b.place ?? Infinity)));
+  const oldZone = zoneOf(PLATES.filter((w) => !isNew(w)).sort((a, b) => (b.score ?? -1) - (a.score ?? -1)));
   const works = [...newZone.ranked, ...newZone.pending, ...oldZone.ranked, ...oldZone.pending];
-  /** 首屏榜單：新題目有 3 件以上打分前，先顯示舊題目榜並標明。 */
-  const boardZone = newZone.ranked.length >= 3 ? newZone : oldZone;
+  /** 首屏榜單、對決與跑馬燈都靠分數運作；新題目採名次制沒有分數，所以首屏固定用舊題目榜並標明。 */
+  const boardZone = oldZone;
   const ranked = boardZone.ranked;
   const modelCount = PLATES.length - PLATES.filter((p) => p.twin).length / 2;
   const scoredCount = works.filter((w) => w.score != null).length;
-  const rankOf = (w: Plate) => (w.score != null ? (isNew(w) ? newZone : oldZone).ranked.indexOf(w) + 1 : null);
+  const rankOf = (w: Plate) => (isRanked(w) ? (isNew(w) ? newZone : oldZone).ranked.indexOf(w) + 1 : null);
   const openIdx = open ? works.findIndex((w) => w.id === open.id) : -1;
 
   const step = (d: number) => {
@@ -897,18 +872,18 @@ export default function App() {
             <header className="section__head rv">
               <p className="label section__no">01 — RANKING</p>
               <h2 id="works-title">題目不同，<em>分開排名。</em></h2>
-              <p className="section__desc">作品名稱與題型按鈕直達獨立分頁；「站內預覽」在 Arena 內展開互動視窗，可左右切換。新題目與舊題目的分數不能直接比較，所以各排各的名次。</p>
+              <p className="section__desc">作品名稱與題型按鈕直達獨立分頁；「站內預覽」在 Arena 內展開互動視窗，可左右切換。新題目只排名次、舊題目看分數，兩區不能直接比較，所以各排各的。</p>
             </header>
 
             <Zone
               zone={newZone}
               tag="NEW BRIEF · 新題目"
               title="新題目"
-              desc="視覺表現力佔七成、內容與寓意兩成、工程與測試一成。作品要先上網查證自己的資料，查不到的參數就照實寫「官方未公開」。"
+              desc="採名次制：把作品並排比較，只排先後、不打分。視覺表現力最重，其次是內容與寓意、工程與測試。作品要先上網查證自己的資料，查不到的參數就照實寫「官方未公開」。"
               logo={false}
+              scored={false}
               rankOf={rankOf}
               onPreview={setOpen}
-              onHover={setHover}
             />
             <Zone
               zone={oldZone}
@@ -916,12 +891,11 @@ export default function App() {
               title="舊題目"
               desc="以更早的題目作答，前 16 件用舊的五維尺規評分，尚未用新題目重評。"
               logo
+              scored
               rankOf={rankOf}
               onPreview={setOpen}
-              onHover={setHover}
             />
           </div>
-          <HoverPeek pl={hover} />
         </section>
 
         {/* 尺規 */}
@@ -990,7 +964,7 @@ export default function App() {
                     type="button"
                     role="tab"
                     aria-selected={w.id === open.id}
-                    title={`${w.title} · ${w.score ?? '—'}分`}
+                    title={`${w.title} · ${isNew(w) ? markOf(w) : `${w.score ?? '—'}分`}`}
                     className={`otab${w.id === open.id ? ' active' : ''}`}
                     onClick={() => setOpen(w)}
                   >

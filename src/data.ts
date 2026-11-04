@@ -32,6 +32,8 @@ export type Plate = {
   attempts?: Attempt[];
   /** 作答的題目：'new' = 新題目；未填 = 舊題目。兩種題目各自排名，不混排。 */
   era?: 'new';
+  /** 新題目採名次制：評審親排的名次（1 = 第一名），不打分；未填 = 尚未排名。 */
+  place?: number;
   /** 同一模型在另一個題目下的作品 id（兩張卡互指）。 */
   twin?: string;
 };
@@ -341,6 +343,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-5-5-r2',
     era: 'new',
+    place: 2,
     twin: 'claude-sonnet-5-5',
     no: '18',
     short: 'SONNET 5.5',
@@ -358,6 +361,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-opus-5-5-r2',
     era: 'new',
+    place: 1,
     twin: 'claude-opus-5-5',
     no: '19',
     short: 'OPUS 5.5',
@@ -375,6 +379,7 @@ export const PLATES: Plate[] = [
   {
     id: 'deepseek-v4-1-flash-r2',
     era: 'new',
+    place: 4,
     twin: 'deepseek-v4-1-flash',
     no: '20',
     short: 'DSV4.1F',
@@ -392,6 +397,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-haiku-5-5',
     era: 'new',
+    place: 5,
     no: '21',
     short: 'HAIKU 5.5',
     model: 'CLAUDE HAIKU 5.5 · 新題目',
@@ -408,6 +414,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-4-6',
     era: 'new',
+    place: 6,
     no: '22',
     short: 'SONNET 4.6',
     model: 'CLAUDE SONNET 4.6 · 新題目',
@@ -424,6 +431,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-3-8-flash-high-r2',
     era: 'new',
+    place: 10,
     twin: 'gemini-3-8-flash-high',
     no: '23',
     short: 'GEMINI 3.8',
@@ -441,6 +449,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-argon-r2',
     era: 'new',
+    place: 8,
     twin: 'gemini-4-argon',
     no: '24',
     short: 'ARGON',
@@ -458,6 +467,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gpt-6-1-sol-r2',
     era: 'new',
+    place: 3,
     twin: 'gpt-6-1-sol',
     no: '25',
     short: 'SOL 6.1',
@@ -475,6 +485,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-6-r2',
     era: 'new',
+    place: 7,
     twin: 'grok-4-6',
     no: '26',
     short: 'GROK 4.6',
@@ -492,6 +503,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-7',
     era: 'new',
+    place: 9,
     no: '27',
     short: 'GROK 4.7',
     model: 'GROK 4.7 · 新題目',
