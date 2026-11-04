@@ -1,0 +1,198 @@
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #060b1a 0%, #04050d 100%);
+  overflow: hidden;
+}
+
+.bgRight {
+  position: absolute;
+  right: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(192, 132, 252, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 3rem;
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.container.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 1.2rem;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skillItem {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+}
+
+.skillLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  font-family: var(--font-display);
+}
+
+.skillBar {
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skillFill {
+  height: 100%;
+  background: linear-gradient(90deg, #c084fc, #818cf8);
+  border-radius: 2px;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skillFill {
+    transition: none;
+    width: var(--target-width);
+  }
+}
+
+.skillVal {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.radarLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.radarLabels span {
+  position: absolute;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.achieveBadge {
+  position: absolute;
+  bottom: -1rem;
+  right: -1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(192,132,252,0.15), rgba(56,189,248,0.1));
+  border: 1px solid rgba(192,132,252,0.3);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  backdrop-filter: blur(8px);
+  animation: achievePulse 3s ease-in-out infinite;
+}
+
+.achieveNum {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #c084fc;
+  line-height: 1;
+}
+
+.achieveLabel {
+  font-size: 0.6rem;
+  text-align: center;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+}
+
+@keyframes achievePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(192,132,252,0); }
+  50% { box-shadow: 0 0 20px 4px rgba(192,132,252,0.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achieveBadge { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 4rem 1.5rem;
+    gap: 2.5rem;
+  }
+  .right {
+    max-width: 300px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .radarLabels {
+    display: none;
+  }
+}

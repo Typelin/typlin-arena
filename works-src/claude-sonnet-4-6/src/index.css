@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/Inter-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/Inter-Bold.woff2') format('woff2');
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #04050d;
+  --bg2: #070a1a;
+  --accent: #c084fc;
+  --accent2: #818cf8;
+  --accent3: #38bdf8;
+  --warm: #fb923c;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --text-muted: #475569;
+  --border: rgba(192, 132, 252, 0.15);
+  --glow: rgba(192, 132, 252, 0.3);
+  --font-display: 'Space Grotesk', 'Inter', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-body: 'Inter', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(192, 132, 252, 0.3);
+  color: #fff;
+}
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .canvas-bg {
+    display: none;
+  }
+  .reduced-bg {
+    display: block !important;
+  }
+}
