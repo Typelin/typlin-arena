@@ -1,0 +1,37 @@
+{
+  "deploymentPath": "/works/gpt-6-1-sol-r2/",
+  "viewports": [
+    {
+      "label": "1440×900",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "horizontalOverflow": false,
+      "fontLoaded": true,
+      "canvasCount": 2,
+      "brokenImages": 0,
+      "outside": []
+    },
+    {
+      "label": "390×844",
+      "width": 390,
+      "scrollWidth": 390,
+      "horizontalOverflow": false,
+      "fontLoaded": true,
+      "canvasCount": 2,
+      "brokenImages": 0,
+      "outside": []
+    }
+  ],
+  "consoleErrors": [],
+  "interaction": {
+    "phaseButton": true,
+    "reset": true,
+    "keyboardSlider": true
+  },
+  "reducedMotion": {
+    "matches": true,
+    "allSections": 6,
+    "interaction": true
+  },
+  "passed": true
+}

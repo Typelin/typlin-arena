@@ -1,0 +1,115 @@
+{
+  "queriedOn": "2026-11-04",
+  "subject": "GPT-6.1 Sol",
+  "developer": "OpenAI",
+  "researchMethod": "Read primary web pages. Artificial Analysis chart payload and OpenAI system-card tables were also read directly from the same public HTML; no proxy or secondary source values were used.",
+  "sources": {
+    "aaModel": "https://artificialanalysis.ai/models/gpt-6-1-sol",
+    "aaLeaderboard": "https://artificialanalysis.ai/leaderboards/models",
+    "aaAstraMaxComparison": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-vs-gpt-6-astra",
+    "aaAstraHighComparison": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-vs-gpt-6-astra-high",
+    "aaSonnetComparison": "https://artificialanalysis.ai/models/comparisons/gpt-6-1-sol-vs-claude-sonnet-5-5",
+    "aaAstraHigh": "https://artificialanalysis.ai/models/gpt-6-astra-high",
+    "aaAstraMax": "https://artificialanalysis.ai/models/gpt-6-astra",
+    "aaSonnet": "https://artificialanalysis.ai/models/claude-sonnet-5-5",
+    "openaiAnnouncement": "https://openai.com/index/introducing-gpt-6-1-sol/",
+    "openaiModel": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "openaiSystemCard": "https://deploymentsafety.openai.com/gpt-6-1-sol",
+    "openaiMentalHealthTable": "https://deploymentsafety.openai.com/gpt-6-1-sol/mentalhealthbench/tbl-9"
+  },
+  "artificialAnalysis": {
+    "model": "GPT-6.1 Sol (Max)",
+    "indexVersion": "5.0.1",
+    "queriedOn": "2026-11-04",
+    "visibleScore": 55,
+    "visibleRank": 8,
+    "visibleRankDenominator": 62,
+    "rankNote": "Keep the page's order. Adjacent models all display 55 after rounding; do not describe them as tied for eighth.",
+    "speedTokensPerSecond": 74.1,
+    "costPerIndexTaskUSD": 1.27,
+    "contextTokensAsReportedByAA": 1000000,
+    "inputUSDPerMillionTokens": 2,
+    "outputUSDPerMillionTokens": 10,
+    "cachedInputUSDPerMillionTokens": 0.1,
+    "inputModalities": ["text", "image"],
+    "outputModalities": ["text"],
+    "openWeights": false,
+    "benchmarks": [
+      {"name": "AA-Briefcase", "version": "1.1", "score": 1555, "unit": "Elo"},
+      {"name": "AutomationBench-AA", "version": "not stated on the page", "score": 65, "unit": "%"},
+      {"name": "Terminal-Bench", "version": "4.0", "score": 56, "unit": "%"},
+      {"name": "FrontierCode", "version": "2.0", "score": 41, "unit": "%"},
+      {"name": "AA-Omniscience Net Score", "version": "1.1", "score": 42, "unit": "net score"},
+      {"name": "GDP.pdf", "version": "not stated on the page", "score": 31, "unit": "%"},
+      {"name": "HLE-Diamond", "version": "not stated on the page", "score": 59, "unit": "%"},
+      {"name": "CritPt Hard Subset", "version": "2", "score": 70, "unit": "%"},
+      {"name": "Terminal-Bench-Science", "version": "0.1", "score": 58, "unit": "%"}
+    ],
+    "capabilityIndexes": {
+      "model": "GPT-6.1 Sol (Max)",
+      "queriedOn": "2026-11-04",
+      "version": "No independent numerical version stated on the capability-index pages",
+      "readingMethod": "Raw numeric values in the public model-page HTML hydration payload, not visible chart labels. Preserve the distinction if used.",
+      "financeAndAccounting": 56.2277560783758,
+      "strategyAndOps": 57.6134804164691,
+      "legal": 53.6635002700218,
+      "healthcareAndMedical": 52.0336299039313,
+      "engineering": 59.3526158549784,
+      "economics": 57.423675
+    },
+    "comparisons": [
+      {"model": "GPT-6 Astra (High)", "relation": "immediately preceding ranked configuration", "indexVersion": "5.0.1", "queriedOn": "2026-11-04", "rank": 7, "rankDenominator": 62, "score": 55, "speedTokensPerSecond": 55.8, "costPerIndexTaskUSD": 3.24, "inputUSDPerMillionTokens": 10, "outputUSDPerMillionTokens": 50, "contextTokensAsReportedByAA": 1000000},
+      {"model": "Claude Sonnet 5.5 (Max, Default Fallback)", "relation": "immediately following ranked configuration", "indexVersion": "5.0.1", "queriedOn": "2026-11-04", "rank": 9, "rankDenominator": 62, "score": 55, "speedTokensPerSecond": 139.3, "costPerIndexTaskUSD": 10.02, "inputUSDPerMillionTokens": 2, "outputUSDPerMillionTokens": 10, "contextTokensAsReportedByAA": 1000000, "priceNote": "These are the prices actually shown on the queried AA model and comparison pages; do not replace from memory."},
+      {"model": "GPT-6 Astra (Max)", "relation": "another model from the same developer", "indexVersion": "5.0.1", "queriedOn": "2026-11-04", "rank": 5, "rankDenominator": 62, "score": 57, "speedTokensPerSecond": 67.1, "costPerIndexTaskUSD": 6.24, "inputUSDPerMillionTokens": 10, "outputUSDPerMillionTokens": 50, "contextTokensAsReportedByAA": 1000000}
+    ]
+  },
+  "openai": {
+    "cardPublishedOn": "2026-09-29",
+    "queriedOn": "2026-11-04",
+    "mentalHealthBench": {
+      "model": "GPT-6.1 Sol (maximum reasoning effort)",
+      "evaluation": "MentalHealthBench",
+      "version": "No numerical benchmark version stated; GPT-6.1 Sol system-card addendum dated 2026-09-29, section 5.3, Table 9",
+      "evaluator": "OpenAI",
+      "unit": "percent, mean plus or minus one standard error",
+      "readingMethod": "Exact table cells in public official system-card HTML",
+      "overall": {"score": 57.9, "standardError": 1.0},
+      "nonAcute": {"score": 57.3, "standardError": 1.3},
+      "highAcuity": {"score": 59.1, "standardError": 2.2},
+      "emergent": {"score": 58.0, "standardError": 1.9},
+      "limitation": "Not a clinical qualification or an estimate of performance in ordinary use. Numerical benchmark version is not stated."
+    },
+    "healthBench": {
+      "model": "GPT-6.1 Sol (reasoning effort not stated in Table 7)",
+      "version": "No numerical benchmark version stated; 2026-09-29 system-card addendum section 5.1, Table 7",
+      "evaluator": "OpenAI",
+      "metric": "length-adjusted score",
+      "professional": 64.2,
+      "overall": 58.5,
+      "hard": 36.2,
+      "consensus": 96.0,
+      "limitation": "Do not label as Max: the table does not state reasoning effort."
+    },
+    "terminalBenchScience": {
+      "model": "GPT-6.1 Sol (maximum reasoning effort)",
+      "version": "0.1",
+      "evaluator": "OpenAI",
+      "meanCostPerTaskUSD": 5.47,
+      "absoluteSolScore": null,
+      "status": "Not found in the accessible official announcement text. Direct HTML fetch of openai.com was blocked by HTTP 403. No score estimated from a chart and no AA score substituted for OpenAI's run."
+    },
+    "factuality": {
+      "model": "GPT-6.1 Sol (low reasoning effort)",
+      "version": "No numerical version stated; 2026-09-29 announcement internal factuality evaluation",
+      "evaluator": "OpenAI",
+      "responsesWithAtLeastOneFactualErrorPercent": 7.7,
+      "limitation": "Difficult de-identified conversations where users flagged a prior model error; not representative of typical usage."
+    }
+  },
+  "unverifiedOrUnavailable": [
+    "No official parameter count or model size disclosed, confirmed by AA FAQ.",
+    "No architecture specifics verified; do not infer MoE or parameter scale.",
+    "No numerical independent version published on the six AA capability-index pages examined.",
+    "No absolute OpenAI Terminal-Bench Science 0.1 score for Sol read from the accessible official announcement text."
+  ]
+}
