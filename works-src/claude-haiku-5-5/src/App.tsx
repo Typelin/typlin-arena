@@ -1,4 +1,5 @@
-import { ContextWindow, Dial, Hero, Identity, Ledger, Limits, Price } from './scenes'
+import { ContextWindow, Dial, Hero, Identity, Ledger, Price } from './scenes'
+import { AAPanel, Compare, Coding, Scorecard, Work } from './chapters'
 import './App.css'
 
 function App() {
@@ -8,7 +9,11 @@ function App() {
       <Identity />
       <ContextWindow />
       <Price />
-      <Limits />
+      <Scorecard />
+      <AAPanel />
+      <Coding />
+      <Work />
+      <Compare />
       <Dial />
       <Ledger />
     </main>

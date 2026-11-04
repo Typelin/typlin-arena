@@ -1,5 +1,6 @@
 import { Renderer, type Frame } from './gl/renderer'
 import { bbChroma, bbCss } from './color'
+import { effortStore } from './effort'
 
 type V3 = [number, number, number]
 type Sp = { x: number; v: number }
@@ -51,6 +52,10 @@ const LOOKS: Record<string, Look> = {
   paste: look({ temp: 2500, crust: 0.04, glow: 0.95, bg: [0.013, 0.008, 0.01], sparks: 760, orb2: 1, attract: 1 }),
   together: look({ temp: 2350, crust: 0.08, glow: 1.0, bg: [0.022, 0.01, 0.006], sparks: 900, ring: 1 }),
   sources: look({ temp: 1700, crust: 0.55, glow: 0.5, bg: [0.008, 0.006, 0.005], sparks: 40 }),
+  scores: look({ temp: 2400, vis: 0, glow: 0, bg: [0.013, 0.0105, 0.009], sparks: 0 }),
+  aa: look({ temp: 2600, vis: 0, glow: 0, bg: [0.005, 0.007, 0.012], sparks: 0 }),
+  domains: look({ temp: 3600, crust: 0, glow: 0.62, bg: [0.009, 0.006, 0.005], sparks: 0 }),
+  versus: look({ temp: 3300, crust: 0, glow: 1.05, bg: [0.016, 0.008, 0.005], sparks: 620 }),
 }
 
 export const EFFORT_LOOK = [
@@ -71,6 +76,15 @@ const smooth = (a: number, b: number, x: number) => {
   return t * t * (3 - 2 * t)
 }
 const ease = (t: number) => t * t * t * (t * (t * 6 - 15) + 10)
+// Overshoots slightly before settling, like a drop of metal landing.
+const backOut = (t: number) => {
+  const c = 1.9
+  return t <= 0 ? 0 : 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2)
+}
+const nearView = (el: HTMLElement, vh: number) => {
+  const b = el.getBoundingClientRect()
+  return b.bottom > -vh * 0.25 && b.top < vh * 1.25
+}
 
 function step(s: Sp, target: number, omega: number, zeta: number, dt: number) {
   const n = Math.max(1, Math.ceil(dt / 0.008))
@@ -138,6 +152,9 @@ type Sec = {
   clear: HTMLElement | null
   glyph: HTMLElement | null
   ring: HTMLElement | null
+  bars: HTMLElement[]
+  beads: HTMLElement[]
+  chart: HTMLElement | null
 }
 
 type Tokens = { cell: number; anchor: [number, number]; out: number; clear: DOMRect | null }
@@ -166,6 +183,15 @@ export class Engine {
   private hooks: Record<string, HTMLElement | null> = {}
   private lastCount = ''
   private lost = false
+  private rev: Record<string, Sp> = {}
+  private trig: Record<string, number> = {}
+  private vars = new Map<HTMLElement, Record<string, string>>()
+  private byKey: Record<string, Sec> = {}
+  private barBuf = new Float32Array(40)
+  private barVBuf = new Float32Array(40)
+  private beadBuf = new Float32Array(48)
+  private beadVBuf = new Float32Array(48)
+  private wide = window.matchMedia('(min-width: 761px)')
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
@@ -206,7 +232,11 @@ export class Engine {
       clear: el.querySelector<HTMLElement>('[data-clear]'),
       glyph: el.querySelector<HTMLElement>('[data-glyph]'),
       ring: el.querySelector<HTMLElement>('[data-ring]'),
+      bars: Array.from(el.querySelectorAll<HTMLElement>('[data-bar]')),
+      beads: Array.from(el.querySelectorAll<HTMLElement>('[data-bead]')),
+      chart: el.querySelector<HTMLElement>('[data-chart]'),
     }))
+    this.byKey = Object.fromEntries(this.secs.map((s) => [s.key, s]))
     if (this.r) {
       document.documentElement.classList.add('gl')
       const fam = '"Opus Serif TC", "PingFang TC", "Microsoft JhengHei", serif'
@@ -237,6 +267,7 @@ export class Engine {
   }
 
   setEffort(i: number) {
+    if (this.dragging) return
     if (i !== this.effTarget) this.kick = 1
     this.effTarget = i
   }
@@ -262,7 +293,130 @@ export class Engine {
     return dpr
   }
 
-  private sectionLook(s: Sec, vh: number, effL: ReturnType<typeof effortLook>, tokens: { v: Tokens | null }): { L: Look; orb: Orb } {
+  // Entry trigger with hysteresis: on once el's top rises past `line` of the
+  // viewport, off again only after it drops clearly below.
+  private entered(key: string, el: Element, vh: number, line: number) {
+    const top = el.getBoundingClientRect().top
+    let on = this.trig[key] ?? 0
+    if (top < vh * line) on = 1
+    else if (top > vh * Math.min(1.02, line + 0.14)) on = 0
+    this.trig[key] = on
+    return on
+  }
+
+  // Linear clock toward the trigger, for sequences that need even pacing.
+  private ramp(key: string, el: Element | null, vh: number, dt: number, dur: number, line = 0.78) {
+    if (!el) return 0
+    const on = this.entered(key, el, vh, line)
+    const sp = (this.rev[key] ??= { x: 0, v: 0 })
+    sp.x = this.reduced ? on : clamp(sp.x + (on ? dt / dur : -dt / (dur * 0.4)))
+    return sp.x
+  }
+
+  private setVar(el: HTMLElement, name: string, v: number) {
+    const s = v.toFixed(3)
+    let rec = this.vars.get(el)
+    if (!rec) this.vars.set(el, (rec = {}))
+    if (rec[name] === s) return
+    rec[name] = s
+    el.style.setProperty(name, s)
+  }
+
+  // Score channels: each bar pours after the one above it has started, so
+  // a fast scroll still reads as a cascade instead of a batch.
+  private scores(vh: number, dpr: number, dt: number) {
+    const s = this.byKey.scores
+    if (!s || !nearView(s.el, vh)) return 0
+    let prev = 1
+    const n = Math.min(10, s.bars.length)
+    for (let i = 0; i < n; i++) {
+      const tr = s.bars[i]
+      const on = this.entered(`bar${i}`, tr, vh, 0.9)
+      const sp = (this.rev[`bar${i}`] ??= { x: 0, v: 0 })
+      if (this.reduced) sp.x = on
+      else if (on && prev > 0.14) sp.x = clamp(sp.x + dt / 1.15)
+      else if (!on) sp.x = clamp(sp.x - dt / 0.5)
+      prev = sp.x
+      const f = 1 - Math.pow(1 - sp.x, 3)
+      if (tr.parentElement) this.setVar(tr.parentElement, '--f', f)
+      const b = tr.getBoundingClientRect()
+      this.barBuf.set([b.left * dpr, (vh - b.top - b.height / 2) * dpr, b.width * dpr, b.height * dpr], i * 4)
+      this.barVBuf.set([(Number(tr.dataset.me) / 100) * f, Number(tr.dataset.rv) / 100, 1, smooth(0, 0.22, sp.x)], i * 4)
+    }
+    return n
+  }
+
+  // Chart beads. Set 0 (slots 0-4) is the AA cost/intelligence line, one bead
+  // per effort level; set 1 (slots 5-10) is the domain radar.
+  private beads(vh: number, dpr: number, dt: number) {
+    const out = { n: 0, box: [1e9, 1e9, -1e9, -1e9] as [number, number, number, number], hub: [0, 0] as [number, number], setA: [0, 0] as [number, number] }
+    const B = this.beadBuf
+    const V = this.beadVBuf
+    B.fill(0)
+    V.fill(0)
+    const grow = (x: number, y: number, r: number) => {
+      out.box[0] = Math.min(out.box[0], x - r)
+      out.box[1] = Math.min(out.box[1], y - r)
+      out.box[2] = Math.max(out.box[2], x + r)
+      out.box[3] = Math.max(out.box[3], y + r)
+    }
+    const small = this.wide.matches ? 1 : 0.85
+    const aa = this.byKey.aa
+    if (aa && nearView(aa.el, vh) && aa.chart) {
+      out.setA[0] = 1
+      // One wipe runs left to right along the cost axis. Rival lines are
+      // unmasked by it (CSS --p) and each bead lands as the wipe reaches it,
+      // so the molten thread grows at the same pace as the reveal.
+      const P = this.ramp('aa', aa.chart, vh, dt, 2.4, 0.7)
+      this.setVar(aa.chart, '--p', P)
+      const W = P * 1.12
+      const cr = aa.chart.getBoundingClientRect()
+      const sel = effortStore.get()
+      let fxPrev = 0
+      aa.beads.slice(0, 5).forEach((el, i) => {
+        const b = el.getBoundingClientRect()
+        const cx = b.left + b.width / 2
+        const x = cx * dpr
+        const y = (vh - b.top - b.height / 2) * dpr
+        const fx = (cx - cr.left) / Math.max(1, cr.width)
+        const sp = (this.rev[`sel${i}`] ??= { x: i === sel ? 1 : 0, v: 0 })
+        if (this.reduced) sp.x = i === sel ? 1 : 0
+        else step(sp, i === sel ? 1 : 0, 9, 0.6, dt)
+        const R = 6.5 * small * (1 + 0.8 * sp.x) * dpr
+        B.set([x, y, R, EFFORT_LOOK[i].temp], i * 4)
+        V.set([backOut(clamp((W - fx) / 0.1)), 0, 0, i ? clamp((W - fxPrev) / Math.max(0.01, fx - fxPrev)) : 0], i * 4)
+        fxPrev = fx
+        grow(x, y, R * 14)
+      })
+    }
+    const dm = this.byKey.domains
+    if (dm && nearView(dm.el, vh) && dm.chart) {
+      out.setA[1] = 1
+      const P = this.ramp('dm', dm.chart, vh, dt, 2.6, 0.72)
+      this.setVar(dm.chart, '--p', P)
+      const p = P * 2.6
+      const hub = orbOf(dm.orb)
+      out.hub = [hub.x * dpr, (vh - hub.y) * dpr]
+      const k6 = dm.beads.slice(0, 6)
+      k6.forEach((el, k) => {
+        const b = el.getBoundingClientRect()
+        const x = (b.left + b.width / 2) * dpr
+        const y = (vh - b.top - b.height / 2) * dpr
+        const v = Number(el.dataset.v)
+        const R = 5.5 * small * dpr
+        const j = 5 + k
+        B.set([x, y, R, mired(2300, 7200, clamp((v - 57) / 8))], j * 4)
+        const close = clamp((p - 1.45 - (k6.length - 1) * 0.13) / 0.22)
+        V.set([backOut(clamp((p - 0.45 - k * 0.16) / 0.4)), 1, ease(clamp((p - k * 0.16) / 0.55)), k ? clamp((p - 1.45 - (k - 1) * 0.13) / 0.22) : close], j * 4)
+        grow(x, y, R * 14)
+      })
+      grow(out.hub[0], out.hub[1], 4)
+    }
+    out.n = out.setA[0] || out.setA[1] ? 11 : 0
+    return out
+  }
+
+  private sectionLook(s: Sec, vh: number, effL: ReturnType<typeof effortLook>, tokens: { v: Tokens | null }): { L: Look; orb: Orb | null } {
     const orb = orbOf(s.orb)
     if (s.key === 'think') {
       const c = bbChroma(effL.temp)
@@ -315,7 +469,8 @@ export class Engine {
       }
     }
     const base = LOOKS[s.key] ?? LOOKS.hero
-    return { L: { ...base, bg: [...base.bg] as V3 }, orb }
+    // Chapters without an orb keep it where it was and only fade it.
+    return { L: { ...base, bg: [...base.bg] as V3 }, orb: s.orb ? orb : null }
   }
 
   private tick = (now: number) => {
@@ -340,9 +495,10 @@ export class Engine {
     this.kick *= Math.exp(-dt * 5)
 
     const tokens: { v: Tokens | null } = { v: null }
-    let cur = this.sectionLook(this.secs[0], ch, effL, tokens)
+    const cur = this.sectionLook(this.secs[0], ch, effL, tokens)
     let L = cur.L
-    let orb = cur.orb
+    let orb = cur.orb ?? { x: cw * 0.5, y: ch * 0.5, r: 1 }
+    let split = 0
     let o2: Orb | null = null
     let tokW = this.secs[0].key === 'tokens' ? 1 : 0
     let glyphBox: DOMRect | null = null
@@ -364,7 +520,8 @@ export class Engine {
       const next = this.sectionLook(s, ch, effL, tokens)
       if (t <= 0.0005) continue
       L = mixLook(L, next.L, t)
-      orb = { x: lerp(orb.x, next.orb.x, t), y: lerp(orb.y, next.orb.y, t), r: lerp(orb.r, next.orb.r, t) }
+      if (next.orb) orb = { x: lerp(orb.x, next.orb.x, t), y: lerp(orb.y, next.orb.y, t), r: lerp(orb.r, next.orb.r, t) }
+      split = s.key === 'versus' ? lerp(split, 1, t) : split * (1 - t)
       tokW = s.key === 'tokens' ? lerp(tokW, 1, t) : tokW * (1 - t)
       if (s.orb2 && t > 0.001) o2 = orbOf(s.orb2)
       if (s.glyph && t > 0.001) glyphBox = s.glyph.getBoundingClientRect()
@@ -455,7 +612,13 @@ export class Engine {
       }
     }
 
+    // Runs without WebGL too: it drives the DOM fill (--f) of the score bars
+    // and the order the versus entries arrive in.
+    const barN = this.scores(ch, dpr, dt)
+    const vs = this.byKey.versus
+    if (vs?.chart && nearView(vs.el, ch)) this.setVar(vs.chart, '--p', this.ramp('vs', vs.chart, ch, dt, 1.8, 0.78))
     if (!this.r || this.lost) return
+    const bd = this.beads(ch, dpr, dt)
 
     let glyph: [number, number, number, number] = [0, 0, 1, 1]
     if (glyphBox) {
@@ -471,6 +634,11 @@ export class Engine {
       ring = [(ringBox.left + ringBox.width / 2) * dpr, (ch - ringBox.top - ringBox.height / 2) * dpr, rr, clamp(L.ring)]
       bound = L.ring > 0.5 ? rr : 0
     }
+
+    // Versus: the seam is vertical on wide screens (hot left, cold right) and
+    // horizontal on narrow ones (hot above, cold below).
+    const seam: [number, number] = this.wide.matches ? [1, 0] : [0, -1]
+    const splitV: [number, number, number, number] = [seam[0], seam[1], this.wide.matches ? 0.35 : 0.9, clamp(split)]
 
     const frame: Frame = {
       w: this.canvas.width,
@@ -504,6 +672,18 @@ export class Engine {
       glyph,
       glyphA: clamp(L.glyph),
       ring,
+      bar: this.barBuf,
+      barV: this.barVBuf,
+      barN,
+      barA: barN ? 1 : 0,
+      bead: this.beadBuf,
+      beadV: this.beadVBuf,
+      beadN: bd.n,
+      beadA: bd.n ? 1 : 0,
+      beadBox: bd.box,
+      hub: bd.hub,
+      setA: bd.setA,
+      split: splitV,
     }
     this.r.draw(frame)
   }

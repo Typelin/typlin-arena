@@ -34,7 +34,7 @@ export default function Work() {
     <section className="chapter work" id="ch-work">
       <div className="pad">
         <div className="ch-head">
-          <span className="ch-no mono-sm">05</span>
+          <span className="ch-no mono-sm">06</span>
           <span className="ch-tag mono-sm">一起工作 / IN THE HARNESS</span>
         </div>
 

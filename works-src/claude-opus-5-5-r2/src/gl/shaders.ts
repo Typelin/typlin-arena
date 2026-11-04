@@ -113,9 +113,36 @@ uniform sampler2D uGlyphTex; // R: sharp glyph mask, G: blurred mask
 uniform vec4 uGlyph;    // glyph box: x, y, w, h (px, gl coords)
 uniform float uGlyphA;
 uniform vec4 uRing;     // scope ring: x, y, r (px), alpha
+uniform float uDpr;
+uniform vec4 uBar[10];  // score track: left x, centre y, w, h (px, gl coords)
+uniform vec4 uBarV[10]; // fill (0..1 of track), rival mark (0..1), row alpha, rival mark alpha
+uniform float uBarN;
+uniform float uBarA;
+uniform vec4 uBead[12]; // bead: x, y, r (px), temperature
+// x: bead reveal; y: set (0 = open chart line, 1 = closed radar);
+// z: spoke progress (set 1); w: progress of the thread arriving at this bead
+// (for the first bead of set 1, the segment that closes the loop).
+uniform vec4 uBeadV[12];
+uniform float uBeadN;
+uniform float uBeadA;
+uniform vec4 uBeadBox;  // px bounds that contain every bead and its halo
+uniform vec2 uSetA;     // alpha of bead set 0 and set 1
+uniform vec2 uHub;      // radar centre that set-1 spokes start from
+uniform vec4 uSplit;    // seam through the orb: normal xy, hairline falloff, strength
 out vec4 outColor;
 ${BLACKBODY}
 ${NOISE}
+
+vec2 segDH(vec2 p, vec2 a, vec2 b) {
+  vec2 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-4), 0.0, 1.0);
+  return vec2(length(pa - ba * h), h);
+}
+float sdSeg(vec2 p, vec2 a, vec2 b) { return segDH(p, a, b).x; }
+vec3 threadLight(float d, float T, float w) {
+  float core = exp(-pow(d / w, 2.0)) * 0.8 + 0.08 / (1.0 + pow(d / (7.0 * w), 2.0));
+  return bbChroma(T) * min(bbPower(T), 1.6) * core;
+}
 
 vec3 tonemap(vec3 x) {
   const float a = 2.51, b = 0.03, c = 2.43, d = 0.59, e = 0.14;
@@ -137,6 +164,13 @@ void main() {
   float shimmer = snoise(vec3(sp * 1.6, t * 0.035)) * 0.6 + snoise(vec3(sp * 4.1, t * 0.05 + 9.0)) * 0.4;
   col *= 0.9 + 0.14 * shimmer;
 
+  // Split: one side of the orb stays molten (where it leads), the other has
+  // cooled to rock (where it trails).
+  float side = dot(q, uSplit.xy);
+  float cold = uSplit.w > 0.001 ? uSplit.w * smoothstep(-0.04, 0.04, side) : 0.0;
+  float coldBg = uSplit.w > 0.001 ? uSplit.w * smoothstep(-1.2, 1.2, side) : 0.0;
+  col = mix(col, vec3(0.004, 0.007, 0.014) * (0.8 + 0.4 * uv.y), coldBg * 0.85);
+
   // Halo light spills from the orb into the room. Its power is capped so a
   // white-hot orb doesn't wash out the type around it.
   vec3 chroma = bbChroma(uTemp);
@@ -144,14 +178,20 @@ void main() {
   float rr = max(d - 0.92, 0.0);
   float halo = uGlow / (1.0 + rr * rr * 7.0 + rr * 1.6);
   float wide = uGlow * 0.07 / (1.0 + pow(length(fc - uOrb.xy) / (minDim * 0.6), 2.0) * 5.0);
-  col += chroma * (halo * 0.16 * min(pw, 4.0) + wide * min(pw, 1.4)) * uVis;
+  col += chroma * (halo * 0.16 * min(pw, 4.0) + wide * min(pw, 1.4)) * uVis * (1.0 - 0.8 * cold);
+  if (uSplit.w > 0.001) {
+    // The seam continues past the orb as a hairline dividing the two columns.
+    float hair = exp(-pow(side * uOrb.z / (0.75 * uDpr), 2.0));
+    float reach = 1.0 / (1.0 + pow(max(d - 1.0, 0.0) * uSplit.z, 2.0));
+    col += bbChroma(uTemp) * hair * reach * 0.5 * uSplit.w * uVis;
+  }
 
   // Licking flames just outside the limb.
   if (uVis > 0.001 && d > 0.9 && d < 2.4) {
     vec2 dir = q / max(d, 1e-4);
     float n = fbm(vec3(dir * 2.4, t * 0.22 - d * 1.3));
     float edge = smoothstep(1.0 + 0.35 * (1.0 - uCrust) * (0.6 + n), 0.96, d);
-    col += blackbody(uTemp * 0.82) * edge * (0.55 + 0.45 * n) * (1.0 - uCrust * 0.85) * uGlow * uVis;
+    col += blackbody(uTemp * 0.82) * edge * (0.55 + 0.45 * n) * (1.0 - uCrust * 0.85) * uGlow * uVis * (1.0 - cold);
   }
 
   if (uVis > 0.001 && d < 1.0 && uOrb.z > 1.5) {
@@ -165,19 +205,24 @@ void main() {
     float f = fbm(p + w * 0.75) * 0.5 + 0.5;
 
     // Crust forms where the field is coolest; cracks glow where it breaks.
-    float level = mix(-0.05, 0.92, uCrust);
+    float crustL = mix(uCrust, 0.86, cold);
+    float level = mix(-0.05, 0.92, crustL);
     float molten = smoothstep(level - 0.015, level + 0.05, f);
-    float crack = exp(-abs(f - level) * 38.0) * step(0.02, uCrust);
+    float crack = exp(-abs(f - level) * 38.0) * step(0.02, crustL);
 
     float lean = 0.5 + 0.5 * dot(normalize(vec3(uLook, 1.2)), vec3(q, z));
-    float T = uTemp * (0.56 + 0.66 * f * f) * mix(0.88, 1.1, lean);
+    float T = uTemp * (0.56 + 0.66 * f * f) * mix(0.88, 1.1, lean) * mix(1.0, 0.82, cold);
     vec3 hot = blackbody(T) * mix(0.3, 1.0, pow(z, 0.6));
 
     vec3 rock = vec3(0.020, 0.015, 0.013) * (0.6 + 0.8 * fbm(p * 6.0) * 0.5 + 0.4);
     rock += blackbody(uTemp * 0.55) * 0.05 * (1.0 - z);
     rock += vec3(0.05, 0.035, 0.03) * pow(max(dot(normalize(vec3(-0.4, 0.6, 0.7)), vec3(q, z)), 0.0), 6.0) * 0.6;
+    // Cold side: a steel-blue rim light instead of ember glow.
+    rock = mix(rock, vec3(0.018, 0.022, 0.03) + vec3(0.05, 0.08, 0.14) * pow(1.0 - z, 3.0), cold * 0.85);
 
     vec3 surf = mix(rock, hot, molten) + blackbody(uTemp * 1.05) * crack * 0.9;
+    // The seam itself stays white-hot.
+    surf += blackbody(uTemp * 1.15) * exp(-pow(side * uOrb.z / (2.2 * uDpr), 2.0)) * uSplit.w * 0.8;
     float aa = smoothstep(1.0, 1.0 - 2.0 / uOrb.z, d);
     col = mix(col, surf, aa * uVis);
   }
@@ -200,35 +245,135 @@ void main() {
     col = mix(col, metal, core * inY * uPour.z);
   }
 
-  // The glyph 字, cast in the same molten material as the orb.
+  // The glyph 字 as a line engraving: hairlines swell where the strokes are and
+  // rise over them like a relief. A hot write head passes down the plate, line
+  // by line, the way a reply streams out, and each line cools behind it.
   if (uGlyphA > 0.001) {
     vec2 gv = (fc - uGlyph.xy) / uGlyph.zw;
-    if (gv.x > -0.2 && gv.x < 1.2 && gv.y > -0.2 && gv.y < 1.2) {
+    if (gv.x > -0.02 && gv.x < 1.02 && gv.y > -0.02 && gv.y < 1.02) {
+      const float N = 92.0;
+      float pitch = uGlyph.w / N;
       vec2 tv = clamp(gv, 0.0, 1.0);
-      float inBox = step(0.0, gv.x) * step(gv.x, 1.0) * step(0.0, gv.y) * step(gv.y, 1.0);
-      vec4 tx = texture(uGlyphTex, tv) * inBox;
-      float m = tx.r;
-      float b = tx.g;
-      vec2 e = vec2(1.5 / 512.0, 0.0);
-      float bx = texture(uGlyphTex, tv + e.xy).g - texture(uGlyphTex, tv - e.xy).g;
-      float by = texture(uGlyphTex, tv + e.yx).g - texture(uGlyphTex, tv - e.yx).g;
-      vec3 nrm = normalize(vec3(-bx * 9.0, -by * 9.0, 1.0));
-      float height = smoothstep(0.35, 1.0, b);
-      // Metal flows downward through the strokes.
-      vec3 gp = vec3(gv * vec2(3.2, 2.4) + vec2(0.0, t * 0.12), t * 0.05);
-      float wv = fbm(gp * 1.3);
-      float fl = fbm(gp + wv * 0.8) * 0.5 + 0.5;
-      float T = uTemp * (0.5 + 0.55 * fl) * mix(0.72, 1.06, height);
-      vec3 metal = blackbody(T);
-      float lit = pow(max(dot(nrm, normalize(vec3(-0.35, 0.55, 0.76))), 0.0), 24.0);
-      metal += bbChroma(uTemp * 1.2) * lit * 0.9 * height;
-      // Thin cooled skin along the stroke edges, broken by cracks.
-      float skin = smoothstep(0.62, 0.18, height) * smoothstep(0.42, 0.62, fl);
-      vec3 cool = vec3(0.03, 0.018, 0.014) + blackbody(uTemp * 0.55) * 0.12;
-      metal = mix(metal, cool, skin * 0.75);
-      float halo = b * (1.0 - m) * 0.55 + pow(b, 3.0) * 0.25;
-      col += bbChroma(uTemp) * halo * min(bbPower(uTemp), 2.5) * uGlyphA;
-      col = mix(col, metal, m * uGlyphA);
+      float m = texture(uGlyphTex, tv).r;
+      float b = texture(uGlyphTex, tv).g;
+      float lift = b * 2.4 + b * 0.35 * sin(gv.x * 11.0 + t * 0.5);
+      float yl = gv.y * N - lift;
+      float row = floor(yl + 0.5);
+      float fy = yl - row;
+      float halfW = mix(0.045, 0.36, smoothstep(0.08, 0.92, m));
+      float aa = 0.85 / max(pitch, 1.0);
+      float ink = smoothstep(halfW + aa, halfW - aa, abs(fy));
+      float frame = smoothstep(0.0, 0.07, gv.x) * smoothstep(1.0, 0.93, gv.x) *
+                    smoothstep(0.0, 0.05, gv.y) * smoothstep(1.0, 0.95, gv.y);
+      frame = max(frame, m);
+      float fromTop = N - row;
+      float head = fract(t / 9.0) * (N + 46.0) - 8.0;
+      float since = head - fromTop;
+      float heat = uStill > 0.5 ? 0.0 : exp(-max(since, 0.0) * 0.16) * smoothstep(-1.2, 0.0, since);
+      heat *= mix(0.35, 1.0, m);
+      vec3 cooled = mix(vec3(0.075, 0.052, 0.04), vec3(0.78, 0.6, 0.45), smoothstep(0.1, 0.9, m));
+      vec3 hotL = blackbody(mix(1400.0, 4300.0, heat)) * (0.45 + 0.9 * heat);
+      vec3 lineCol = mix(cooled, hotL, smoothstep(0.02, 0.5, heat));
+      col = mix(col, lineCol, ink * frame * uGlyphA);
+      // Heat bleeds a little light into the gaps around freshly written lines.
+      col += bbChroma(mix(1800.0, 4300.0, heat)) * heat * heat * 0.025 * exp(-fy * fy * 6.0) * frame * uGlyphA;
+    }
+  }
+
+  // Score channels: each test is a groove cast into the floor. Molten metal
+  // runs along it to the score; a cold steel tick marks the best rival.
+  if (uBarA > 0.001) {
+    for (int i = 0; i < 10; i++) {
+      if (float(i) >= uBarN) break;
+      vec4 B = uBar[i];
+      vec4 V = uBarV[i];
+      float a = uBarA * V.z;
+      float hr = B.w * 0.5;
+      vec2 p = fc - B.xy;
+      if (a < 0.002 || p.x < -B.w * 4.0 || p.x > B.z + B.w * 4.0 || abs(p.y) > B.w * 5.0) continue;
+      float dG = sdSeg(p, vec2(hr, 0.0), vec2(B.z - hr, 0.0)) - hr;
+      float groove = smoothstep(0.8, -0.8, dG);
+      col = mix(col, vec3(0.004, 0.0035, 0.004), groove * 0.9 * a);
+      // Lit lower lip of the groove, as if light falls in from above.
+      col += vec3(0.06, 0.05, 0.045) * exp(-pow(dG / (0.9 * uDpr), 2.0)) * step(p.y, 0.0) * 0.5 * a;
+      float L = B.z * V.x;
+      if (L > 1.0) {
+        float r = hr * 0.74;
+        float dF = sdSeg(p, vec2(r, 0.0), vec2(max(r, L - r), 0.0)) - r;
+        float u = clamp(p.x / L, 0.0, 1.0);
+        float lip = exp(-pow((p.x - L + r) / (B.w * 1.4), 2.0));
+        float T = mix(1450.0, 3000.0, pow(u, 1.6)) + lip * 1500.0;
+        // Windowed so the glow reaches zero before the early-out box edge.
+        float win = smoothstep(4.8, 2.6, abs(p.y) / B.w) * smoothstep(-3.8, -1.8, p.x / B.w) * smoothstep(3.8, 1.8, (p.x - B.z) / B.w);
+        float halo = 0.07 / (1.0 + pow(max(dF, 0.0) / B.w, 2.0) * 1.3) * win;
+        col += bbChroma(T) * halo * min(bbPower(T), 2.5) * a;
+        if (dF < 1.0) {
+          float n = fbm(vec3(p.x / (B.w * 2.6) - t * 0.7, p.y / B.w * 1.4, t * 0.06 + float(i) * 3.7)) * 0.5 + 0.5;
+          float zz = sqrt(max(0.0, 1.0 - pow(p.y / r, 2.0)));
+          vec3 metal = blackbody(T * (0.8 + 0.34 * n)) * mix(0.42, 1.0, pow(zz, 0.7));
+          col = mix(col, metal, smoothstep(0.8, -0.8, dF) * a);
+        }
+      }
+      float rx = B.z * V.y;
+      float tick = exp(-pow((p.x - rx) / (0.85 * uDpr), 2.0)) * smoothstep(hr * 2.1, hr * 1.7, abs(p.y));
+      col = mix(col, bbChroma(11500.0) * 0.82, tick * a * V.w);
+    }
+  }
+
+  // Beads on a molten thread: chart points cast in the orb's material.
+  // Set 0 is an open line through consecutive beads; set 1 is a closed radar
+  // with spokes from uHub. Each segment draws on as its end bead is revealed.
+  if (uBeadA > 0.001 && uBeadN > 0.5 &&
+      fc.x > uBeadBox.x && fc.y > uBeadBox.y && fc.x < uBeadBox.z && fc.y < uBeadBox.w) {
+    int n = int(uBeadN + 0.5);
+    float w = 1.1 * uDpr;
+    vec3 acc = vec3(0.0);
+    int first1 = -1;
+    int last1 = -1;
+    for (int i = 0; i < 12; i++) {
+      if (i >= n) break;
+      vec4 P = uBead[i];
+      vec4 V = uBeadV[i];
+      float sa = V.y > 0.5 ? uSetA.y : uSetA.x;
+      if (V.y > 0.5) {
+        if (first1 < 0) first1 = i;
+        last1 = i;
+        vec2 sh = segDH(fc, uHub, P.xy);
+        float sv = V.z > 0.001 ? step(sh.y, V.z) : 0.0;
+        sv *= smoothstep(uOrb.z * 1.05, uOrb.z * 1.4, length(fc - uHub));
+        acc += threadLight(sh.x, 1900.0, 0.6 * uDpr) * 0.45 * sv * sa;
+      }
+      if (i + 1 < n && abs(uBeadV[i + 1].y - V.y) < 0.5) {
+        float e = uBeadV[i + 1].w;
+        vec2 dh = segDH(fc, P.xy, uBead[i + 1].xy);
+        float T = mix(P.w, uBead[i + 1].w, dh.y) * 0.85;
+        acc += threadLight(dh.x, T, w) * (e > 0.001 ? step(dh.y, e) : 0.0) * sa;
+      }
+    }
+    if (first1 >= 0 && last1 > first1 + 1) {
+      float e = uBeadV[first1].w;
+      vec2 dh = segDH(fc, uBead[last1].xy, uBead[first1].xy);
+      float T = mix(uBead[last1].w, uBead[first1].w, dh.y) * 0.85;
+      acc += threadLight(dh.x, T, w) * (e > 0.001 ? step(dh.y, e) : 0.0) * uSetA.y;
+    }
+    col += acc * uBeadA;
+    for (int i = 0; i < 12; i++) {
+      if (i >= n) break;
+      vec4 P = uBead[i];
+      float rv = uBeadV[i].x * (uBeadV[i].y > 0.5 ? uSetA.y : uSetA.x);
+      if (rv < 0.01) continue;
+      float R = max(P.z * (0.35 + 0.65 * rv), 0.5);
+      vec2 bq = (fc - P.xy) / R;
+      float bd = length(bq);
+      if (bd > 14.0) continue;
+      float br = max(bd - 0.9, 0.0);
+      col += bbChroma(P.w) * 0.2 * min(bbPower(P.w), 3.0) / (1.0 + br * br * 2.2 + br * 1.6) * rv * uBeadA;
+      if (bd < 1.0) {
+        float bz = sqrt(1.0 - bd * bd);
+        float f = fbm(vec3(bq * 1.3 + float(i) * 7.0, t * 0.12)) * 0.5 + 0.5;
+        vec3 s = blackbody(P.w * (0.72 + 0.42 * f)) * mix(0.42, 1.0, pow(bz, 0.6));
+        col = mix(col, s, smoothstep(1.0, 1.0 - 1.6 / R, bd) * uBeadA * smoothstep(0.0, 0.3, rv));
+      }
     }
   }
 
@@ -282,6 +427,7 @@ uniform float uScale;
 uniform float uBound;   // px radius sparks stay inside; 0 = unbounded
 uniform float uFade;
 uniform vec3 uAttract;  // px target that half the sparks arc toward, strength
+uniform vec4 uSplit;    // sparks die on the cold side of the seam
 out vec3 vCol;
 out float vA;
 ${BLACKBODY}
@@ -316,6 +462,7 @@ void main() {
     if (L > uBound * 0.97) pos = uOrb.xy + off / L * uBound * 0.97;
     vA *= 1.0 - smoothstep(uBound * 0.9, uBound * 0.97, L) * 0.7;
   }
+  if (uSplit.w > 0.0) vA *= 1.0 - uSplit.w * smoothstep(-4.0 * uScale, 10.0 * uScale, dot(pos - uOrb.xy, uSplit.xy));
   gl_PointSize = mix(3.2, 1.2, age) * uScale;
   gl_Position = vec4(pos / uRes * 2.0 - 1.0, 0.0, 1.0);
 }

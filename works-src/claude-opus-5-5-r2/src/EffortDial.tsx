@@ -1,12 +1,16 @@
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type KeyboardEvent, type PointerEvent } from 'react'
 import { EFFORT_LEVELS } from './content'
+import { effortStore } from './effort'
 import type { Engine } from './scene'
 
 type Props = { engine: React.RefObject<Engine | null> }
 
 export default function EffortDial({ engine }: Props) {
-  const [level, setLevel] = useState(1)
+  const level = useSyncExternalStore(effortStore.subscribe, effortStore.get)
+  const setLevel = effortStore.set
   const [refused, setRefused] = useState(false)
+
+  useEffect(() => effortStore.subscribe(() => engine.current?.setEffort(effortStore.get())), [engine])
   const track = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
   const timer = useRef<number | undefined>(undefined)
@@ -19,7 +23,7 @@ export default function EffortDial({ engine }: Props) {
       setLevel(v)
       engine.current?.setEffort(v)
     },
-    [engine],
+    [engine, setLevel],
   )
 
   const fromX = (clientX: number) => {
@@ -108,7 +112,12 @@ export default function EffortDial({ engine }: Props) {
       </div>
       <p className="dial-note" aria-live="polite">
         <strong>{cur.id}</strong>
-        <span>{cur.note}</span>
+        <span>
+          {cur.note}
+          <span className="dial-aa">
+            AA 智慧指數 {cur.aa} 分 · 每題 {cur.cost.toFixed(2)} 美元
+          </span>
+        </span>
       </p>
       <div className="dial-off">
         <button type="button" className="off-btn" onClick={tryOff}>

@@ -1,7 +1,55 @@
 import { useEffect, useRef } from 'react'
 import EffortDial from './EffortDial'
-import { FACTS, SOURCES } from './content'
+import Domains from './chapters/Domains'
+import Index from './chapters/Index'
+import Scores from './chapters/Scores'
+import Versus from './chapters/Versus'
+import { AA_COLS, AA_ROWS, FACTS, OFFICIAL_COLS, OFFICIAL_ROWS, SOURCES, WORK_STATS } from './content'
 import { Engine } from './scene'
+
+type Row = (typeof OFFICIAL_ROWS)[number]
+
+function Table({ caption, cols, rows, src }: { caption: string; cols: string[]; rows: Row[]; src: string }) {
+  return (
+    <div className="tbl-wrap" tabIndex={0} role="region" aria-label={caption}>
+      <table className="tbl">
+        <caption>
+          {caption}
+          <span className="fact-src">{src}</span>
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">測驗</th>
+            {cols.map((c) => (
+              <th scope="col" key={c}>
+                {c}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(([name, ...vals]) => {
+            const nums = vals.filter((v): v is number => typeof v === 'number')
+            const best = name.includes('成本') ? Math.min(...nums) : Math.max(...nums)
+            // Same number of decimals across a row, so 64 reads as 64.0 next to 67.9.
+            const dp = Math.max(0, ...nums.map((n) => String(n).split('.')[1]?.length ?? 0))
+            const fmt = (v: string | number) => (typeof v === 'number' ? v.toFixed(dp) : v)
+            return (
+              <tr key={name}>
+                <th scope="row">{name}</th>
+                {vals.map((v, i) => (
+                  <td key={i} data-best={v === best && !name.includes('速度') ? '' : undefined} data-me={i === 0 ? '' : undefined}>
+                    {fmt(v)}
+                  </td>
+                ))}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}
 
 const CUTOFF = { y: 2026, m: 6 }
 
@@ -60,6 +108,8 @@ export default function App() {
           </div>
         </section>
 
+        <Index />
+
         <section className="ch tokens" data-scene="tokens" aria-labelledby="t-tokens">
           <div className="tokens-pin" data-hook="tokens">
             <div className="tokens-grid" data-grid>
@@ -92,8 +142,24 @@ export default function App() {
             </p>
             <p className="first">一位早期測試者用我，在不到一天內遷移了 68 萬行程式碼。</p>
             <p className="second">把 HAProxy 從 C 改寫成 Rust，我花了 9.5 小時。</p>
+            <ul className="work-stats">
+              {WORK_STATS.map((s) => (
+                <li key={s.n}>
+                  <p className="ws-n">
+                    {s.n}
+                    <span>{s.u}</span>
+                  </p>
+                  <p className="ws-v">
+                    {s.v}
+                    <span className="fact-src">{s.src}</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
+
+        <Scores />
 
         <section className="ch point" data-scene="point" data-hook="point" aria-labelledby="t-point">
           <div className="point-copy">
@@ -103,6 +169,8 @@ export default function App() {
             <p className="first">最重要的資訊放最前面，少用術語，也會照你給的寫作規則寫。</p>
           </div>
         </section>
+
+        <Domains />
 
         <section className="ch text" data-scene="text" aria-labelledby="t-text">
           <p className="glyph" data-glyph aria-hidden="true">
@@ -162,6 +230,8 @@ export default function App() {
           </div>
         </section>
 
+        <Versus />
+
         <section className="ch sources" data-scene="sources" aria-labelledby="t-sources">
           <div className="sources-head">
             <div className="orb sources-orb" data-orb />
@@ -181,6 +251,12 @@ export default function App() {
               </div>
             ))}
           </dl>
+          <h3 className="src-title">官方測驗成績</h3>
+          <p className="tbl-note">Anthropic 公布的數字。除非另註，Opus 5.5 為 max effort、五次平均；Terminal-Bench 4.0 為 xhigh。單位為百分比，Elo 另註。「—」表示官方表格沒有列出。粗體是該列最高分。</p>
+          <Table caption="Anthropic 發布頁與系統卡" cols={OFFICIAL_COLS.slice(0, 5)} rows={OFFICIAL_ROWS.map((r) => r.slice(0, 6) as Row)} src="S1 S3" />
+          <h3 className="src-title">Artificial Analysis 成績</h3>
+          <p className="tbl-note">第三方 Artificial Analysis 的 Intelligence Index v5.0.1，含 Opus 5.5 全部五個 effort 等級，並列出目前第一名 Gemini 4 Carbon（high）。排行榜頁顯示 Opus 5.5 max 為 59 分，同站的模型頁與發布文章寫 58 分，本頁採排行榜與比較工具的 59 分。</p>
+          <Table caption="Artificial Analysis 比較工具，2026-11-04 查詢" cols={AA_COLS} rows={AA_ROWS} src="S9 S11" />
           <h3 className="src-title">資料來源</h3>
           <ul className="src-list">
             {SOURCES.map((s) => (
@@ -193,7 +269,7 @@ export default function App() {
             ))}
           </ul>
           <p className="colophon">
-            查證日期 2026 年 11 月 2 日。本頁的設計、文案與程式由 Claude Opus 5.5 完成；畫面是即時 WebGL2 著色器，顏色全部取自黑體輻射：溫度越高，顏色從暗紅走向藍白。字型：Bodoni Moda、Instrument Sans、Noto Serif TC（SIL OFL）。
+            官方資料查證於 2026 年 11 月 2 日，Artificial Analysis 資料查證於 2026 年 11 月 4 日。本頁的設計、文案與程式由 Claude Opus 5.5 完成；畫面是即時 WebGL2 著色器，顏色全部取自黑體輻射：溫度越高，顏色從暗紅走向藍白。字型：Bodoni Moda、Instrument Sans、Noto Serif TC（SIL OFL）。
           </p>
         </section>
       </main>

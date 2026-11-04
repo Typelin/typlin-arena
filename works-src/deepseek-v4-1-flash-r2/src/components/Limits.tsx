@@ -57,7 +57,7 @@ export default function Limits() {
     <section className="chapter limits" id="ch-limits">
       <div className="pad">
         <div className="ch-head">
-          <span className="ch-no mono-sm">03</span>
+          <span className="ch-no mono-sm">04</span>
           <span className="ch-tag mono-sm">短處 / WHAT I MISS</span>
         </div>
 
