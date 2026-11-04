@@ -25,7 +25,13 @@ $works = @(
   @{ Source = 'claude-sonnet-5-5-r2';  Slug = 'claude-sonnet-5-5-r2';  Legacy = 'claude-sonnet-5-5-r2' },
   @{ Source = 'claude-opus-5-5-r2';    Slug = 'claude-opus-5-5-r2';    Legacy = 'claude-opus-5-5-r2' },
   @{ Source = 'deepseek-v4-1-flash-r2'; Slug = 'deepseek-v4-1-flash-r2'; Legacy = 'deepseek-v4-1-flash-r2' },
-  @{ Source = 'claude-haiku-5-5';      Slug = 'claude-haiku-5-5';      Legacy = 'claude-haiku-5-5' }
+  @{ Source = 'claude-haiku-5-5';      Slug = 'claude-haiku-5-5';      Legacy = 'claude-haiku-5-5' },
+  @{ Source = 'claude-sonnet-4-6';     Slug = 'claude-sonnet-4-6';     Legacy = 'claude-sonnet-4-6' },
+  @{ Source = 'gemini-3-8-flash-high-r2'; Slug = 'gemini-3-8-flash-high-r2'; Legacy = 'gemini-3-8-flash-high-r2' },
+  @{ Source = 'gemini-4-argon-r2';     Slug = 'gemini-4-argon-r2';     Legacy = 'gemini-4-argon-r2' },
+  @{ Source = 'gpt-6-1-sol-r2';        Slug = 'gpt-6-1-sol-r2';        Legacy = 'gpt-6-1-sol-r2' },
+  @{ Source = 'grok-4-6-r2';           Slug = 'grok-4-6-r2';           Legacy = 'grok-4-6-r2' },
+  @{ Source = 'grok-4-7';              Slug = 'grok-4-7';              Legacy = 'grok-4-7' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {
