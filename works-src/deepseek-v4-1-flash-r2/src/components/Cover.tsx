@@ -85,6 +85,28 @@ export default function Cover() {
           </h1>
           <p className="cover-zh">兩塊墨版，<br />把世界壓成點。</p>
           <p className="cover-lede">{COVER.lede}</p>
+
+          <dl className="cover-stats">
+            <div>
+              <dt className="mono-sm">AA INDEX</dt>
+              <dd>
+                33<span>／同級中位 23</span>
+              </dd>
+            </div>
+            <div>
+              <dt className="mono-sm">TERMINAL-BENCH 2.1</dt>
+              <dd>
+                90.6<span>／19 條裡第一</span>
+              </dd>
+            </div>
+            <div>
+              <dt className="mono-sm">DEEPSWE v1.1</dt>
+              <dd>
+                74.2<span>／贏 Opus 74.0</span>
+              </dd>
+            </div>
+          </dl>
+
           <div className="cover-fnum">
             <span className="cfn-k mono-sm">光圈</span>
             <span className="cfn-v">

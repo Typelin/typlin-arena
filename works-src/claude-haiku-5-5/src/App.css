@@ -370,7 +370,8 @@ h2 {
 
 .knob {
   position: relative;
-  width: min(60vw, 340px);
+  --d: min(60vw, 340px);
+  width: var(--d);
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 32%, #3d342d, #181411 68%);
@@ -413,20 +414,23 @@ h2 {
   mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
 }
 
-.knob-tick {
+.knob-tick,
+.knob-pointer {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
   pointer-events: none;
 }
 
 .knob-tick::before {
   content: '';
   position: absolute;
-  left: 50%;
-  top: 12%;
+  left: -1px;
+  top: calc(var(--d) * -0.38);
   width: 2px;
-  height: 4%;
-  margin-left: -1px;
+  height: calc(var(--d) * 0.04);
   border-radius: 1px;
   background: rgba(242, 235, 221, 0.25);
 }
@@ -435,24 +439,20 @@ h2 {
   background: var(--paper);
 }
 
+.knob-pointer {
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 .knob-pointer::after {
   content: '';
   position: absolute;
-  left: 50%;
-  top: calc(5% - 7px);
+  left: -7px;
+  top: calc(var(--d) * -0.45 - 7px);
   width: 14px;
   height: 14px;
-  margin-left: -7px;
   border-radius: 50%;
   background: var(--clay);
   box-shadow: 0 0 0 5px rgba(217, 119, 87, 0.22);
-}
-
-.knob-pointer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .knob-center {

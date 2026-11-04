@@ -9,7 +9,7 @@ export default function Colophon() {
     <section className="chapter colophon" id="ch-colophon">
       <div className="pad">
         <div className="ch-head">
-          <span className="ch-no mono-sm">06</span>
+          <span className="ch-no mono-sm">08</span>
           <span className="ch-tag mono-sm">資料 / COLOPHON</span>
         </div>
 
@@ -20,8 +20,7 @@ export default function Colophon() {
             每一個數字，都查得到。
           </h2>
           <p className="colo-lede">
-            規格與評測取自 DeepSeek 官方發布公告、Hugging Face 模型卡與技術報告。
-            查不到的就不寫——這頁沒有推測值。
+            規格與評測取自 DeepSeek 官方發布公告、Hugging Face 模型卡與技術報告；獨立分數取自 Artificial Analysis。查不到的就不寫——這頁沒有推測值。
           </p>
         </div>
 
@@ -49,7 +48,8 @@ export default function Colophon() {
             </ol>
 
             <p className="src-caveat mono-sm">
-              查證時間 2026-11-02；數字以官方公告與模型卡為準，未公布的一律標「官方未公開」。
+              查證時間 2026-11-04；官方數字以發布公告、模型卡與技術報告為準，未公布的一律標「官方未公開」。
+              Artificial Analysis 的獨立評測另計，兩邊不互相加總。
             </p>
           </div>
         </div>

@@ -28,7 +28,7 @@ export default function Effort() {
     <section className="chapter effort" id="ch-effort">
       <div className="pad">
         <div className="ch-head">
-          <span className="ch-no mono-sm">04</span>
+          <span className="ch-no mono-sm">05</span>
           <span className="ch-tag mono-sm">推理強度 / EFFORT</span>
         </div>
 

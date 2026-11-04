@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type RefObject } from 'react'
-import { makeDots, makeGrid, paintSpark, paintWindow } from './dotfield'
+import { makeDots, paintSpark, paintWindow } from './dotfield'
 
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -29,7 +29,7 @@ function useInView(ref: RefObject<HTMLElement | null>) {
 export function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
-    if (canvasRef.current) paintSpark(makeGrid(canvasRef.current))
+    if (canvasRef.current) paintSpark(makeDots(canvasRef.current))
   }, [])
   return (
     <section className="hero" aria-labelledby="hero-title">
@@ -166,50 +166,6 @@ export function Price() {
   )
 }
 
-const BENCHMARKS = [
-  { name: 'Terminal-Bench 4.0', me: 39.2, sonnet: 70.6 },
-  { name: 'OSWorld 2.1（離線子集）', me: 72.4, sonnet: 83.9 },
-  { name: 'Humanity’s Last Exam（無工具）', me: 45.9, sonnet: 56.9 },
-  { name: 'Humanity’s Last Exam（有工具）', me: 57.4, sonnet: 64.5 },
-  { name: 'FrontierCode 1.1（主要）', me: 46.4, sonnet: 52.1 },
-  { name: 'Chartography（無工具）', me: 46.4, sonnet: 61.6 },
-]
-
-export function Limits() {
-  const [idx, setIdx] = useState(0)
-  const b = BENCHMARKS[idx]
-  return (
-    <section className="limits" aria-labelledby="limits-title">
-      <p className="kicker">第四章 · 我做不到的事</p>
-      <h2 id="limits-title">公告的六項百分比基準，Sonnet 5.5 都比我高</h2>
-      <p className="lede">我在多步驟終端機任務上明顯弱於 Sonnet 5.5：Terminal-Bench 4.0 我拿 39.2%，Sonnet 5.5 拿 70.6%。</p>
-      <div className="bench-tabs" role="group" aria-label="選擇基準">
-        {BENCHMARKS.map((item, i) => (
-          <button key={item.name} type="button" aria-pressed={i === idx} onClick={() => setIdx(i)}>
-            {item.name}
-          </button>
-        ))}
-      </div>
-      <div className="duel" aria-live="polite">
-        <div className="duel-row">
-          <span>Haiku 5.5</span>
-          <span className="duel-track"><span className="duel-fill is-me" style={{ width: `${b.me}%` }} /></span>
-          <span className="mono">{b.me.toFixed(1)}%</span>
-        </div>
-        <div className="duel-row">
-          <span>Sonnet 5.5</span>
-          <span className="duel-track"><span className="duel-fill" style={{ width: `${b.sonnet}%` }} /></span>
-          <span className="mono">{b.sonnet.toFixed(1)}%</span>
-        </div>
-      </div>
-      <ul className="limit-list">
-        <li>官方建議複雜的 agentic coding 交給 Sonnet 5.5 或 Opus 5.5。</li>
-        <li>網路安全防護會擋下滲透測試類的請求。</li>
-      </ul>
-    </section>
-  )
-}
-
 const LEVELS = [
   { zh: '低', en: 'Low', text: '思考最少，回應最快。' },
   { zh: '中', en: 'Medium', text: '預設值。在回應品質、速度與成本之間取捨。' },
@@ -249,7 +205,7 @@ export function Dial() {
   return (
     <section className="dial" aria-labelledby="dial-title" style={{ '--heat': frac } as CSSProperties}>
       <div className="dial-copy">
-        <p className="kicker">第五章 · 和大模型一起工作</p>
+        <p className="kicker">第九章 · 和大模型一起工作</p>
         <h2 id="dial-title">我適合當 Opus 5.5 或 Sonnet 5.5 的子代理</h2>
         <p className="lede">大模型負責主要判斷，我接手摘要、上下文壓縮這類範圍小的工作。</p>
         <div className="dial-body">
@@ -302,6 +258,7 @@ export function Dial() {
               ))}
             </div>
             <p className="level-text">{current.text}</p>
+            <p className="note">思考 token 計入 max_tokens。上限設太小時，回覆可能只剩思考、沒有文字。</p>
           </div>
         </div>
       </div>
@@ -316,7 +273,7 @@ const FACTS = [
   { item: '輸入與輸出', value: '文字與圖片進，文字出', src: 'A' },
   { item: '上下文與最大輸出', value: '1M tokens；128K tokens', src: 'A' },
   { item: '上一代 Haiku 4.5', value: '上下文 200K；最大輸出 64K', src: 'C' },
-  { item: '知識截止', value: '2026 年 6 月', src: 'A' },
+  { item: '知識截止', value: '2026 年 6 月', src: 'A, E' },
   { item: '最早退役日', value: '2027-10-07', src: 'A' },
   { item: '價格（每百萬 token）', value: '輸入 0.10 美元、輸出 0.50 美元；超過 10 萬 token 時為 0.50 與 2.50 美元', src: 'A, D' },
   { item: '相對 Haiku 4.5', value: '10 萬 token 以內的請求便宜約 90%', src: 'B' },
@@ -325,28 +282,38 @@ const FACTS = [
   { item: '限制：思考區塊', value: '只能在產生它的帳號或連結帳號內重送', src: 'C' },
   { item: '限制：網路安全', value: '防護會擋下滲透測試等攻擊者較常用的技術', src: 'B' },
   { item: '限制：複雜編碼', value: '官方建議複雜的 agentic coding 交給 Sonnet 5.5、Opus 5.5', src: 'B' },
-  { item: '參數數量、架構、訓練資料比例', value: '已查的官方頁面未公開；系統卡 PDF 未能開啟', src: 'A, B' },
+  { item: 'AA 智慧指數', value: '36（max，指數 v5.0.1）；Sonnet 5.5 為 55，Opus 5.5 為 59，GPT-6 Luna 為 28', src: 'F' },
+  { item: 'ProgramBench', value: '82.0%（166 題，不限時）；Sonnet 5.5 為 79.7%，Opus 5.5 為 91.2%', src: 'E' },
+  { item: 'SWE-Bench Pro', value: '64.8%；系統卡未標明版本。Sonnet 5.5 為 81.3%', src: 'E' },
+  { item: 'Terminal-Bench-Science', value: '20.6%（含安全防護，未使用備援模型）', src: 'E' },
+  { item: '第三方寫程式測試', value: '12 個真實 TypeScript 議題：我高強度通過 11 個，GPT-6 Luna 通過 12 個', src: 'G' },
+  { item: '參數數量與架構', value: '官方未公開。系統卡文字中沒有參數量與架構的數字', src: 'A, E, F' },
+  { item: '訓練資料比例', value: '官方未公開。系統卡只描述來源類型，沒有比例', src: 'E' },
 ]
 
 const SOURCES = [
-  { id: 'A', url: 'https://platform.claude.com/docs/en/models/haiku-5-5/overview', label: 'Claude Haiku 5.5 模型總覽（ID、規格、價格、退役日）' },
-  { id: 'B', url: 'https://www.anthropic.com/claude-haiku-5-5', label: 'Anthropic 發布公告（2026-10-07；基準、價格比較、安全說明）' },
-  { id: 'C', url: 'https://platform.claude.com/docs/en/models/haiku-5-5/whats-new-haiku-5-5', label: '與 Haiku 4.5 的差異（上下文、採樣參數、思考區塊）' },
-  { id: 'D', url: 'https://platform.claude.com/docs/en/about-claude/pricing', label: 'Anthropic 定價頁（各模型價格與 10 萬 token 分界）' },
+  { id: 'A', url: 'https://platform.claude.com/docs/en/models/haiku-5-5/overview', label: '模型總覽：ID、規格、價格、退役日、知識截止' },
+  { id: 'B', url: 'https://www.anthropic.com/claude-haiku-5-5', label: 'Anthropic 發布公告（2026-10-07）：基準、價格比較、安全說明' },
+  { id: 'C', url: 'https://platform.claude.com/docs/en/models/haiku-5-5/whats-new-haiku-5-5', label: '與 Haiku 4.5 的差異：上下文、採樣參數、思考區塊' },
+  { id: 'D', url: 'https://platform.claude.com/docs/en/about-claude/pricing', label: '定價頁：各模型價格與 10 萬 token 分界' },
+  { id: 'E', url: 'https://assets.claude.com/e1080d6bf5ae2018ea3c2f414064be03232f5be5.pdf', label: 'Haiku 5.5 系統卡（PDF，2026-10-07），第 8 節的評測表與分數' },
+  { id: 'F', url: 'https://artificialanalysis.ai/models/claude-haiku-5-5', label: 'Artificial Analysis 模型頁與文章（Haiku、Sonnet、Opus、GPT-6 Luna）' },
+  { id: 'G', url: 'https://stormeval.com/blog/claude-haiku-5-5-against-gpt-6-luna', label: 'StormEval（第三方，2026-10-08）：12 個真實議題的寫程式測試' },
+  { id: 'H', url: 'https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-haiku-5-5', label: 'Anthropic 提示詞指南：各強度的行為傾向' },
 ]
 
 export function Ledger() {
   return (
     <section className="ledger" aria-labelledby="ledger-title">
-      <p className="kicker">第六章 · 完整事實與來源</p>
-      <h2 id="ledger-title">參數、架構與訓練資料比例，查到的官方頁面都沒有公開</h2>
-      <p className="lede">我的規模和內部結構，Anthropic 在已查的頁面裡沒有公開。下表列出我查到的事實與出處。</p>
+      <p className="kicker">第十章 · 完整事實與來源</p>
+      <h2 id="ledger-title">規模與架構查到的官方資料都沒有公開，其餘事實都有出處</h2>
+      <p className="lede">下表是我查到的事實與來源代號。來源清單在表後。</p>
       <table className="facts-table">
         <thead>
           <tr>
             <th scope="col">項目</th>
             <th scope="col">內容</th>
-            <th scope="col">出處</th>
+            <th scope="col">來源</th>
           </tr>
         </thead>
         <tbody>

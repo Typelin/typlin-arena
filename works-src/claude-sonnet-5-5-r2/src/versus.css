@@ -1,0 +1,403 @@
+.vs {
+  background: var(--cream);
+  color: var(--ink);
+  padding: clamp(72px, 11vh, 140px) var(--pad);
+  overflow: hidden;
+}
+.vs::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 50% at 10% 0%, rgba(255, 255, 255, 0.4), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(23, 17, 14, 0.028) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+.vs-grid {
+  position: relative;
+  max-width: 1280px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(28px, 5vw, 84px);
+  align-items: start;
+}
+.vs-copy .kicker {
+  color: var(--clay-deep);
+}
+.vs-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+.vs-pick button {
+  appearance: none;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.35s cubic-bezier(0.2, 0.9, 0.2, 1.6), box-shadow 0.3s;
+}
+.vs-pick button:hover {
+  transform: translateY(-2px);
+}
+.vs-pick button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--cream);
+  transform: translateY(-3px);
+  box-shadow: 4px 4px 0 var(--clay);
+}
+.vs-pick button:focus-visible,
+.vs-tabs button:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 2px;
+}
+.vs-tally {
+  display: flex;
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: 34px;
+  align-items: flex-end;
+}
+.vs-tally span {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--f-zh-serif);
+  font-weight: 700;
+  font-size: 15px;
+}
+.vs-tally b {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1;
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(72px, 8.4vw, 130px);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  min-width: 1.1ch;
+}
+.vs-tally .w b {
+  color: var(--clay);
+  text-shadow: 0.015em 0.025em 0 var(--clay-deep);
+}
+.vs-tally .l b {
+  color: var(--ink);
+}
+.vs-note {
+  margin-top: 26px;
+  font-family: var(--f-zh-serif);
+  font-weight: 500;
+  font-size: clamp(15px, 1.3vw, 17.5px);
+  line-height: 1.8;
+  min-height: 8.5em;
+}
+
+.vs-ledger {
+  position: relative;
+  background: #fbf3e2;
+  padding: 0 clamp(14px, 2vw, 28px) 20px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 34px 54px -26px rgba(60, 30, 10, 0.55),
+    0 3px 0 rgba(23, 17, 14, 0.12),
+    0 0 0 1.5px var(--ink);
+  transform: rotate(-0.35deg);
+}
+.vs-tabs {
+  display: flex;
+  margin: 0 calc(-1 * clamp(14px, 2vw, 28px));
+  border-bottom: 1.5px solid var(--ink);
+}
+.vs-tabs button {
+  appearance: none;
+  flex: 1 1 auto;
+  border: 0;
+  border-right: 1.5px solid var(--ink);
+  background: var(--cream-2);
+  color: var(--ink);
+  font-family: var(--f-zh-serif);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.3;
+  padding: 13px 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.vs-tabs button:last-child {
+  border-right: 0;
+}
+.vs-tabs button:hover {
+  background: #f3e6c9;
+}
+.vs-tabs button[aria-pressed="true"] {
+  background: #fbf3e2;
+  box-shadow: inset 0 4px 0 var(--clay);
+  margin-bottom: -1.5px;
+}
+.vs-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+.vs-stamp {
+  margin-top: auto;
+  align-self: flex-end;
+  padding: 22px 4px 4px;
+}
+.vs-stamp p {
+  display: block;
+  max-width: none;
+  padding: 9px 16px 10px;
+  border: 2.5px solid var(--clay);
+  outline: 1px solid var(--clay);
+  outline-offset: 3px;
+  color: var(--clay-deep);
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+  text-align: center;
+  transform: rotate(-2.4deg);
+  transform-origin: 80% 60%;
+  mix-blend-mode: multiply;
+}
+.vs-stamp b {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-variation-settings: "opsz" 60, "SOFT" 0, "WONK" 0;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  vertical-align: -2px;
+  margin: 0 2px;
+}
+.vs-stamp.hit p {
+  animation: stamp 0.5s cubic-bezier(0.2, 1.3, 0.3, 1) both;
+}
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(-9deg) scale(1.9);
+  }
+  55% {
+    opacity: 1;
+    transform: rotate(-1.4deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-2.4deg) scale(1);
+  }
+}
+.vs-row {
+  display: grid;
+  grid-template-columns: minmax(0, 11.5em) minmax(0, 1fr) 4.4em;
+  gap: 6px 18px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px dashed rgba(23, 17, 14, 0.3);
+}
+.vs-name b {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.vs-name small {
+  display: block;
+  margin-top: 3px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(23, 17, 14, 0.66);
+}
+.vs-bars {
+  display: grid;
+  gap: 6px;
+}
+.vs-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3.9em;
+  gap: 8px;
+  align-items: center;
+}
+.vs-bar .trk {
+  position: relative;
+  background: rgba(23, 17, 14, 0.07);
+  height: 16px;
+}
+.vs-bar.them .trk {
+  height: 10px;
+}
+.vs-bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--w, 0) * 100%);
+  transition: width 0.95s cubic-bezier(0.2, 0.9, 0.2, 1) var(--d, 0s);
+}
+.vs-bar.me i {
+  background: var(--clay);
+  box-shadow: inset 0 -3px 0 var(--clay-deep);
+}
+.vs-bar.them i {
+  background: var(--ink);
+}
+.vs-bar .trk.na {
+  background: repeating-linear-gradient(135deg, rgba(23, 17, 14, 0.2) 0 2px, transparent 2px 6px);
+}
+.vs-bar span {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.vs-bar.them span {
+  color: rgba(23, 17, 14, 0.7);
+}
+.vs-delta {
+  text-align: right;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-variation-settings: "opsz" 30, "SOFT" 0, "WONK" 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.vs-row.win .vs-delta {
+  color: var(--clay);
+}
+.vs-row.lose .vs-delta {
+  color: rgba(23, 17, 14, 0.62);
+}
+.vs-row.na .vs-delta {
+  color: rgba(23, 17, 14, 0.35);
+}
+.vs-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 16px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+.vs-legend .sw {
+  display: inline-block;
+  width: 22px;
+  height: 10px;
+  margin-right: 8px;
+  vertical-align: baseline;
+}
+.vs-legend .sw.me {
+  background: var(--clay);
+}
+.vs-legend .sw.them {
+  background: var(--ink);
+}
+.vs-legend .sw.na {
+  background: repeating-linear-gradient(135deg, rgba(23, 17, 14, 0.4) 0 2px, transparent 2px 5px);
+  box-shadow: 0 0 0 1px rgba(23, 17, 14, 0.25) inset;
+}
+.vs-delta em {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--f-mono);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: rgba(23, 17, 14, 0.6);
+}
+.vs-row.win .vs-delta em {
+  color: var(--clay-deep);
+}
+.ch.vs .vs-ledger p.vs-foot,
+.ch.vs .vs-ledger p.vs-legend {
+  max-width: none;
+}
+.vs-foot {
+  margin-top: 12px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: rgba(23, 17, 14, 0.7);
+  min-height: 5.2em;
+}
+
+@media (max-width: 980px) {
+  .vs-grid {
+    grid-template-columns: 1fr;
+  }
+  .vs-note {
+    min-height: 0;
+  }
+  .vs-rows {
+    min-height: 0;
+  }
+  .vs-foot {
+    min-height: 0;
+  }
+  .vs-stamp {
+    align-self: stretch;
+    padding-top: 18px;
+  }
+}
+@media (max-width: 560px) {
+  .vs-tabs {
+    flex-wrap: wrap;
+  }
+  .vs-tabs button {
+    flex: 1 1 33%;
+    border-bottom: 1.5px solid var(--ink);
+    padding: 11px 6px;
+  }
+  .vs-tabs button:nth-child(3) {
+    border-right: 0;
+  }
+  .vs-tabs button[aria-pressed="true"] {
+    margin-bottom: 0;
+  }
+  .vs-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name delta"
+      "bars bars";
+    gap: 10px 10px;
+    padding: 14px 0 16px;
+  }
+  .vs-name {
+    grid-area: name;
+  }
+  .vs-bars {
+    grid-area: bars;
+  }
+  .vs-delta {
+    grid-area: delta;
+    align-self: start;
+  }
+  .vs-ledger {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vs-bar i,
+  .vs-pick button {
+    transition: none;
+  }
+  .vs-stamp.hit p {
+    animation: none;
+  }
+}

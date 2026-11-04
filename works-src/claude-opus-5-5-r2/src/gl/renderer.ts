@@ -32,6 +32,18 @@ export type Frame = {
   glyph: [number, number, number, number]
   glyphA: number
   ring: [number, number, number, number]
+  bar: Float32Array
+  barV: Float32Array
+  barN: number
+  barA: number
+  bead: Float32Array
+  beadV: Float32Array
+  beadN: number
+  beadA: number
+  beadBox: [number, number, number, number]
+  hub: [number, number]
+  setA: [number, number]
+  split: [number, number, number, number]
 }
 
 type Program = { prog: WebGLProgram; loc: Map<string, WebGLUniformLocation | null> }
@@ -147,6 +159,11 @@ export class Renderer {
     else gl.uniform4f(l, v[0], v[1], v[2], v[3])
   }
 
+  private v4(p: Program, name: string, v: Float32Array) {
+    const l = this.u(p, `${name}[0]`) ?? this.u(p, name)
+    if (l) this.gl.uniform4fv(l, v)
+  }
+
   draw(fr: Frame) {
     const gl = this.gl
     gl.viewport(0, 0, fr.w, fr.h)
@@ -174,6 +191,19 @@ export class Renderer {
     this.f(o, 'uGlyph', ...fr.glyph)
     this.f(o, 'uGlyphA', fr.glyphA)
     this.f(o, 'uRing', ...fr.ring)
+    this.f(o, 'uDpr', fr.scale)
+    this.v4(o, 'uBar', fr.bar)
+    this.v4(o, 'uBarV', fr.barV)
+    this.f(o, 'uBarN', fr.barN)
+    this.f(o, 'uBarA', fr.barA)
+    this.v4(o, 'uBead', fr.bead)
+    this.v4(o, 'uBeadV', fr.beadV)
+    this.f(o, 'uBeadN', fr.beadN)
+    this.f(o, 'uBeadA', fr.beadA)
+    this.f(o, 'uBeadBox', ...fr.beadBox)
+    this.f(o, 'uHub', ...fr.hub)
+    this.f(o, 'uSetA', ...fr.setA)
+    this.f(o, 'uSplit', ...fr.split)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.glyphTex)
     const tl = this.u(o, 'uGlyphTex')
@@ -223,6 +253,7 @@ export class Renderer {
       this.f(s, 'uBound', fr.bound)
       this.f(s, 'uFade', fr.sparkFade * fr.vis)
       this.f(s, 'uAttract', ...fr.attract)
+      this.f(s, 'uSplit', ...fr.split)
       gl.drawArrays(gl.POINTS, 0, MAX_SPARKS)
     }
   }

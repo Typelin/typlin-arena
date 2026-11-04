@@ -4,6 +4,9 @@ import './who.css'
 import './speed.css'
 import './effort.css'
 import './context.css'
+import './domains.css'
+import './versus.css'
+import './aa.css'
 import './limits.css'
 import './sources.css'
 
@@ -13,10 +16,13 @@ import { initWho } from './scenes/who'
 import { initSpeed } from './scenes/speed'
 import { initEffort } from './scenes/effort'
 import { initContext } from './scenes/context'
+import { initDomains } from './scenes/domains'
+import { initVersus } from './scenes/versus'
+import { initAA } from './scenes/aa'
 import { initLimits } from './scenes/limits'
 
-const chapters = ['top', 'who', 'speed', 'effort', 'context', 'limits', 'sources']
-const tones = ['#f6ead3', '#17110e', '#17110e', '#f6ead3', '#f6ead3', '#f6ead3', '#17110e']
+const chapters = ['top', 'who', 'speed', 'effort', 'context', 'domains', 'versus', 'aa', 'limits', 'sources']
+const tones = ['#f6ead3', '#17110e', '#17110e', '#f6ead3', '#f6ead3', '#f6ead3', '#17110e', '#f6ead3', '#f6ead3', '#17110e']
 
 function initStrip() {
   const strip = document.getElementById('strip')!
@@ -53,6 +59,9 @@ initWho()
 initSpeed()
 initEffort()
 initContext()
+initDomains()
+initVersus()
+initAA()
 initLimits()
 
 startLoop()

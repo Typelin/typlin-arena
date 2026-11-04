@@ -334,6 +334,50 @@ canvas {
   color: rgba(236, 231, 219, 0.64);
 }
 
+/* 首屏的三個硬數字：讓人在三秒內知道我不只會講漂亮話 */
+.cover-stats {
+  margin-top: clamp(12px, 2vh, 20px);
+  display: grid;
+  gap: 5px;
+  max-width: 30em;
+}
+
+.cover-stats > div {
+  display: grid;
+  grid-template-columns: 12.6em minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(236, 231, 219, 0.14);
+}
+
+.cover-stats dt {
+  color: rgba(236, 231, 219, 0.34);
+  letter-spacing: 0.12em;
+}
+
+.cover-stats dd {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(15px, 1.34vw, 20px);
+  line-height: 1.4;
+  color: #f4f0e5;
+  font-variant-numeric: lining-nums;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 12;
+}
+
+.cover-stats dd span {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 8.5px;
+  letter-spacing: 0.06em;
+  color: rgba(236, 231, 219, 0.34);
+  text-transform: none;
+  margin-top: 1px;
+}
+
 /* 光圈讀數：放到文字這邊，不壓在圖上 */
 .cover-fnum {
   margin-top: clamp(12px, 2vh, 22px);
@@ -797,7 +841,362 @@ canvas {
   font-size: 9.5px;
 }
 
-/* ── 03 短處 ─────────────────────────────────────────────── */
+/* ── 03 考卷 ─────────────────────────────────────────────── */
+
+.exam {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.exam .ch-head {
+  color: rgba(236, 231, 219, 0.44);
+  border-color: rgba(236, 231, 219, 0.22);
+}
+
+.exam-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: clamp(24px, 5vw, 76px);
+  align-items: end;
+  padding-top: clamp(18px, 3vh, 34px);
+}
+
+.exam .ch-title {
+  color: #f4f0e5;
+}
+
+.exam .ch-first {
+  margin-top: clamp(10px, 1.8vh, 18px);
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.9;
+  color: rgba(236, 231, 219, 0.9);
+  max-width: 40ch;
+}
+
+.exam .ch-body {
+  margin-top: 8px;
+  color: rgba(236, 231, 219, 0.56);
+  max-width: 40ch;
+}
+
+/* 十九條的輸贏，先壓成一條條碼 */
+.exam-tally {
+  padding-bottom: clamp(4px, 1vh, 10px);
+}
+
+.tally-bar {
+  display: flex;
+  gap: 3px;
+  height: clamp(46px, 7vh, 74px);
+  align-items: flex-end;
+}
+
+.tally-bar i {
+  flex: 1 1 0;
+  display: block;
+  border-radius: 1px;
+}
+
+.tally-bar i.is-win {
+  height: 100%;
+  background: var(--orange);
+}
+
+.tally-bar i.is-tie {
+  height: 58%;
+  background: rgba(240, 138, 68, 0.5);
+}
+
+.tally-bar i.is-loss {
+  height: 22%;
+  background: rgba(236, 231, 219, 0.2);
+}
+
+.tally-key {
+  display: flex;
+  gap: clamp(14px, 2.4vw, 28px);
+  margin-top: 10px;
+  color: rgba(236, 231, 219, 0.44);
+}
+
+.tally-key b {
+  font-weight: 500;
+  color: #f4f0e5;
+  margin-right: 4px;
+  font-size: 13px;
+}
+
+.tally-note {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(236, 231, 219, 0.16);
+  font-size: clamp(11.5px, 0.9vw, 13px);
+  line-height: 1.9;
+  color: rgba(236, 231, 219, 0.5);
+  max-width: 42ch;
+}
+
+/* 一條一條的尺 */
+.exam-list {
+  margin-top: clamp(22px, 3.6vh, 40px);
+  border-top: 1px solid rgba(236, 231, 219, 0.26);
+}
+
+.exam-row {
+  display: grid;
+  grid-template-columns: 4.4em minmax(9.4em, 1.02fr) minmax(0, 1.7fr) minmax(7.4em, auto);
+  gap: clamp(8px, 1.4vw, 18px);
+  align-items: center;
+  padding: clamp(7px, 1.1vh, 10px) 0;
+  border-bottom: 1px solid rgba(236, 231, 219, 0.1);
+}
+
+.ex-band {
+  color: rgba(236, 231, 219, 0.32);
+  letter-spacing: 0.1em;
+}
+
+.ex-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  flex-wrap: wrap;
+  font-size: clamp(12.5px, 0.96vw, 14px);
+  color: rgba(236, 231, 219, 0.86);
+  line-height: 1.5;
+}
+
+.ex-name em {
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  color: rgba(236, 231, 219, 0.3);
+  font-style: normal;
+}
+
+/* 尺：灰底 → 空心圈＝全表最高 → 實心橘點＝我 */
+.ex-track {
+  position: relative;
+  display: block;
+  height: 12px;
+  background: rgba(236, 231, 219, 0.07);
+  border-radius: 6px;
+}
+
+.ex-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(236, 231, 219, 0.14), rgba(236, 231, 219, 0.3));
+}
+
+.exam-row[data-kind='win'] .ex-fill {
+  background: linear-gradient(90deg, rgba(226, 87, 31, 0.24), rgba(226, 87, 31, 0.5));
+}
+
+.exam-row[data-kind='tie'] .ex-fill {
+  background: linear-gradient(90deg, rgba(240, 138, 68, 0.2), rgba(240, 138, 68, 0.4));
+}
+
+.ex-mine {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: rgba(236, 231, 219, 0.82);
+}
+
+.exam-row[data-kind='win'] .ex-mine,
+.exam-row[data-kind='tie'] .ex-mine {
+  background: var(--orange);
+  box-shadow: 0 0 0 3px rgba(226, 87, 31, 0.16);
+}
+
+.exam-row[data-kind='loss'] .ex-mine {
+  background: rgba(236, 231, 219, 0.78);
+}
+
+.ex-num {
+  justify-self: end;
+  text-align: right;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.3;
+  color: #f4f0e5;
+  font-variant-numeric: lining-nums;
+  letter-spacing: -0.01em;
+}
+
+.exam-row[data-kind='win'] .ex-num {
+  color: var(--orange-lt);
+}
+
+.ex-num em {
+  display: block;
+  margin-top: 1px;
+  font-style: normal;
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  color: rgba(236, 231, 219, 0.34);
+  text-transform: none;
+}
+
+.exam-source {
+  margin-top: 10px;
+  color: rgba(236, 231, 219, 0.3);
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+  text-transform: none;
+  max-width: 78ch;
+}
+
+/* AA 區塊：灰色敘事，把獨立評測跟官方評測分開 */
+.aa-block {
+  margin-top: clamp(26px, 4.4vh, 50px);
+  padding-top: clamp(18px, 2.8vh, 28px);
+  border-top: 1px solid rgba(236, 231, 219, 0.26);
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(22px, 4.4vw, 68px);
+  align-items: end;
+  padding-bottom: clamp(40px, 6.4vh, 78px);
+}
+
+.aa-kicker {
+  color: rgba(236, 231, 219, 0.4);
+  letter-spacing: 0.16em;
+}
+
+.aa-big {
+  display: flex;
+  align-items: baseline;
+  gap: 0.14em;
+  margin-top: 6px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(64px, 8.6vw, 132px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: #f4f0e5;
+  font-variant-numeric: lining-nums;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 12;
+}
+
+.aa-of {
+  font-size: 0.2em;
+  letter-spacing: 0.14em;
+  color: rgba(236, 231, 219, 0.36);
+}
+
+.aa-cap {
+  margin-top: 10px;
+  font-size: clamp(12px, 0.94vw, 13.5px);
+  line-height: 1.9;
+  color: rgba(236, 231, 219, 0.58);
+  max-width: 34ch;
+}
+
+.aa-scale {
+  position: relative;
+  height: 10px;
+  background: rgba(236, 231, 219, 0.1);
+  border-radius: 5px;
+}
+
+.aa-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgba(226, 87, 31, 0.42), var(--orange));
+}
+
+.aa-median {
+  position: absolute;
+  top: -7px;
+  width: 1px;
+  height: 24px;
+  background: rgba(236, 231, 219, 0.44);
+}
+
+.aa-median em {
+  position: absolute;
+  top: -18px;
+  left: 0;
+  transform: translateX(-50%);
+  font-style: normal;
+  white-space: nowrap;
+  color: rgba(236, 231, 219, 0.42);
+  font-size: 8.5px;
+}
+
+.aa-now {
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: 22px;
+  margin-top: -11px;
+  background: #f4f0e5;
+}
+
+.aa-now em {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  transform: translateX(-50%);
+  font-style: normal;
+  white-space: nowrap;
+  color: #f4f0e5;
+  font-size: 8.5px;
+}
+
+.aa-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.8vw, 24px);
+  margin-top: clamp(34px, 5vh, 46px);
+  border-top: 1px solid rgba(236, 231, 219, 0.14);
+  padding-top: 12px;
+}
+
+.aa-facts dt {
+  color: rgba(236, 231, 219, 0.36);
+  letter-spacing: 0.1em;
+}
+
+.aa-facts dd {
+  margin-top: 4px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(20px, 1.9vw, 27px);
+  line-height: 1.2;
+  color: #f4f0e5;
+  font-variant-numeric: lining-nums;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 12;
+}
+
+.aa-facts dd span {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: rgba(236, 231, 219, 0.34);
+}
+
+.aa-warn {
+  margin-top: 12px;
+  color: rgba(240, 138, 68, 0.8);
+  letter-spacing: 0.04em;
+  line-height: 1.9;
+  text-transform: none;
+}
+
+/* ── 04 短處 ─────────────────────────────────────────────── */
 
 .limits {
   background: var(--orange);
@@ -1485,7 +1884,262 @@ input[type='range'].dial:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
-/* ── 06 資料 ─────────────────────────────────────────────── */
+/* ── 07 手感 ─────────────────────────────────────────────── */
+
+.practice {
+  background: var(--paper);
+  color: var(--ink);
+  border-top: 1px solid rgba(10, 10, 10, 0.14);
+}
+
+.practice .ch-head {
+  color: rgba(10, 10, 10, 0.44);
+  border-color: rgba(10, 10, 10, 0.18);
+}
+
+.pr-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+  gap: clamp(22px, 4.6vw, 70px);
+  align-items: end;
+  padding-top: clamp(18px, 3vh, 34px);
+  padding-bottom: clamp(16px, 2.6vh, 26px);
+}
+
+.pr-lede p {
+  font-size: clamp(12.5px, 0.98vw, 14px);
+  line-height: 2;
+  letter-spacing: 0.02em;
+  color: rgba(10, 10, 10, 0.62);
+  max-width: 42ch;
+}
+
+.pr-lede p + p {
+  margin-top: 8px;
+  color: rgba(10, 10, 10, 0.44);
+}
+
+.pr-list {
+  border-top: 1px solid rgba(10, 10, 10, 0.26);
+}
+
+.pr-item {
+  display: grid;
+  grid-template-columns: 2.4em minmax(0, 1fr) minmax(0, 0.3fr);
+  gap: clamp(12px, 2.2vw, 30px);
+  align-items: start;
+  padding: clamp(16px, 2.6vh, 26px) 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.12);
+}
+
+.pr-no {
+  color: rgba(10, 10, 10, 0.3);
+  letter-spacing: 0.1em;
+  padding-top: 3px;
+}
+
+.pr-main {
+  min-width: 0;
+}
+
+.pr-top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  flex-wrap: wrap;
+}
+
+.pr-label {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(16px, 1.35vw, 20px);
+  line-height: 1.4;
+  color: #0a0a0a;
+}
+
+.pr-en {
+  color: rgba(10, 10, 10, 0.32);
+  letter-spacing: 0.12em;
+}
+
+.pr-headline {
+  margin-top: 4px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(15px, 1.22vw, 19px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--blue);
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 12;
+}
+
+.pr-item[data-kind='lead'] .pr-headline {
+  color: #c0430f;
+}
+
+.pr-item[data-kind='na'] .pr-headline {
+  color: rgba(10, 10, 10, 0.45);
+}
+
+.pr-best {
+  margin-top: 3px;
+  color: rgba(10, 10, 10, 0.4);
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+  text-transform: none;
+}
+
+.pr-note {
+  margin-top: 7px;
+  font-size: clamp(12px, 0.94vw, 13.5px);
+  line-height: 1.95;
+  color: rgba(10, 10, 10, 0.66);
+  max-width: 50ch;
+}
+
+.pr-gauge {
+  padding-top: 4px;
+  text-align: right;
+}
+
+.pr-verdict {
+  display: block;
+  color: rgba(10, 10, 10, 0.42);
+  letter-spacing: 0.16em;
+}
+
+.pr-item[data-kind='lead'] .pr-verdict {
+  color: #c0430f;
+}
+
+.pr-item[data-kind='na'] .pr-verdict {
+  color: rgba(10, 10, 10, 0.24);
+}
+
+.pr-axis {
+  position: relative;
+  display: block;
+  height: 3px;
+  margin-top: 10px;
+  background: rgba(10, 10, 10, 0.16);
+}
+
+.pr-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: rgba(10, 10, 10, 0.26);
+}
+
+.pr-item[data-kind='lead'] .pr-fill {
+  background: linear-gradient(90deg, rgba(226, 87, 31, 0.18), rgba(226, 87, 31, 0.5));
+}
+
+.pr-item[data-kind='na'] .pr-fill {
+  background: transparent;
+}
+
+.pr-tick {
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 9px;
+  background: rgba(10, 10, 10, 0.2);
+}
+
+.pr-tick:nth-of-type(1) {
+  left: 33.3%;
+}
+
+.pr-tick:nth-of-type(2) {
+  left: 66.6%;
+}
+
+.pr-axis b {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.42);
+}
+
+.pr-item[data-kind='lead'] .pr-axis b {
+  background: var(--orange);
+  box-shadow: 0 0 0 3px rgba(226, 87, 31, 0.14);
+}
+
+.pr-item[data-kind='na'] .pr-axis b {
+  background: transparent;
+  border: 1px solid rgba(10, 10, 10, 0.3);
+}
+
+.pr-ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  color: rgba(10, 10, 10, 0.28);
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+
+.pr-ends em {
+  font-style: normal;
+}
+
+.pr-ends em:nth-child(2) {
+  transform: translateX(0.1em);
+}
+
+.pr-foot {
+  padding-top: clamp(26px, 4.4vh, 48px);
+  padding-bottom: clamp(42px, 6.4vh, 76px);
+  border-top: 2px solid rgba(10, 10, 10, 0.5);
+  margin-top: clamp(10px, 1.6vh, 16px);
+}
+
+.pr-foot-lead {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: clamp(9px, 0.72vw, 10.5px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.36);
+}
+
+.pr-foot-big {
+  margin-top: clamp(12px, 2vh, 18px);
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(26px, 3.6vw, 54px);
+  line-height: 1.55;
+  letter-spacing: 0.015em;
+  color: var(--blue);
+  max-width: 26ch;
+}
+
+.pr-foot-big .ln {
+  display: block;
+  color: var(--blue);
+}
+
+.pr-foot-big .ln-2 {
+  color: #c0430f;
+}
+
+.pr-foot-note {
+  margin-top: clamp(16px, 2.4vh, 24px);
+  padding-top: 12px;
+  border-top: 1px solid rgba(10, 10, 10, 0.16);
+  color: rgba(10, 10, 10, 0.44);
+  letter-spacing: 0.04em;
+  line-height: 1.95;
+  text-transform: none;
+  max-width: 56ch;
+}
+
+/* ── 08 資料 ─────────────────────────────────────────────── */
 
 .colophon {
   background: #d9d2c1;
@@ -1732,9 +2386,13 @@ input[type='range'].dial:focus-visible {
   }
   .scale-copy,
   .context-top,
+  .exam-top,
   .limits-grid,
   .effort-grid,
   .work-grid,
+  .pr-head,
+  .pr-foot,
+  .aa-block,
   .colo-head,
   .colo-body {
     grid-template-columns: minmax(0, 1fr);
@@ -1763,7 +2421,7 @@ input[type='range'].dial:focus-visible {
     grid-template-rows: auto auto auto;
     padding-top: 20px;
     row-gap: 2px;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
   }
   .cover-stage {
     grid-template-columns: minmax(0, 1fr);
@@ -1772,8 +2430,8 @@ input[type='range'].dial:focus-visible {
   }
   .lens {
     order: -1;
-    min-height: 36vh;
-    max-height: 46vh;
+    min-height: 30vh;
+    max-height: 38vh;
     margin-bottom: 4px;
   }
   .cover-copy {
@@ -1791,7 +2449,21 @@ input[type='range'].dial:focus-visible {
     max-width: 32ch;
     margin-top: 9px;
     font-size: 12.5px;
-    line-height: 2;
+    line-height: 1.95;
+  }
+  .cover-stats {
+    margin-top: 10px;
+    gap: 3px;
+  }
+  .cover-stats > div {
+    grid-template-columns: 11.4em minmax(0, 1fr);
+    padding-bottom: 4px;
+  }
+  .cover-stats dd {
+    font-size: 16px;
+  }
+  .cover-stats dd span {
+    font-size: 8px;
   }
   .cover-bar-mid {
     display: none;
@@ -1828,6 +2500,91 @@ input[type='range'].dial:focus-visible {
   }
   .tape-box {
     height: clamp(96px, 17vh, 130px);
+  }
+  /* 03 考卷：手機上把尺收窄，數值換到下一行 */
+  .exam-top {
+    row-gap: clamp(16px, 2.6vh, 24px);
+  }
+  .tally-bar {
+    height: 46px;
+  }
+  .exam-row {
+    grid-template-columns: 3.6em minmax(0, 1fr) 5.6em;
+    grid-template-areas:
+      'band name num'
+      'band track track';
+    row-gap: 6px;
+    padding: 10px 0;
+  }
+  .ex-band {
+    grid-area: band;
+    padding-top: 3px;
+  }
+  .ex-name {
+    grid-area: name;
+    font-size: 13px;
+  }
+  .ex-track {
+    grid-area: track;
+    height: 9px;
+  }
+  .ex-num {
+    grid-area: num;
+    font-size: 17px;
+  }
+  .ex-num em {
+    font-size: 8px;
+    letter-spacing: 0.04em;
+  }
+  .exam-source {
+    font-size: 9px;
+    line-height: 1.9;
+  }
+  .aa-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 14px;
+  }
+  .aa-big {
+    font-size: clamp(56px, 15vw, 84px);
+  }
+  .aa-median em,
+  .aa-now em {
+    font-size: 8px;
+  }
+  /* 07 手感：手機上刻度尺改到標題底下，靠左 */
+  .pr-item {
+    grid-template-columns: 2.2em minmax(0, 1fr);
+    grid-template-areas:
+      'no main'
+      'gauge gauge';
+    row-gap: 10px;
+  }
+  .pr-no {
+    grid-area: no;
+  }
+  .pr-main {
+    grid-area: main;
+  }
+  .pr-gauge {
+    grid-area: gauge;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 10px;
+    text-align: left;
+  }
+  .pr-verdict {
+    display: inline;
+  }
+  .pr-axis {
+    margin-top: 0;
+  }
+  .pr-ends {
+    display: none;
+  }
+  .pr-foot-big {
+    font-size: clamp(21px, 6.2vw, 30px);
+    line-height: 1.7;
   }
   .score-row {
     grid-template-columns: minmax(0, 1fr);

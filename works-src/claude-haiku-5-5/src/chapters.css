@@ -1,0 +1,391 @@
+.scorecard {
+  background: var(--ink-2);
+}
+
+.scorecard .duel {
+  margin-top: 36px;
+  max-width: 980px;
+}
+
+.scorecard .duel-row {
+  grid-template-columns: 124px minmax(0, 1fr) 84px;
+}
+
+.scorecard .note,
+.coding .note {
+  margin-top: 28px;
+}
+
+.bench-desc {
+  margin-top: 28px;
+  font-size: clamp(16px, 1.5vw, 19px);
+}
+
+/* AA: paper page with a cost-vs-index plot */
+
+.aa {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.aa .kicker {
+  color: var(--clay-deep);
+}
+
+.aa .lede {
+  color: #2d2823;
+}
+
+.aa .note {
+  color: #5c554b;
+}
+
+.plot-caption {
+  margin-top: 48px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #5c554b;
+}
+
+.plot {
+  position: relative;
+  margin: 28px 0 0 56px;
+  max-width: 880px;
+  aspect-ratio: 16 / 9.5;
+  border-left: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.plot-h,
+.plot-v {
+  position: absolute;
+  background: rgba(18, 17, 16, 0.12);
+}
+
+.plot-h {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.plot-v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.plot-yt,
+.plot-xt {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #5c554b;
+}
+
+.plot-yt {
+  left: -48px;
+  transform: translateY(-50%);
+}
+
+.plot-xt {
+  top: calc(100% + 10px);
+  transform: translateX(-50%);
+}
+
+.plot-dot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.plot-dot.is-me {
+  background: var(--clay);
+}
+
+.plot-dot.is-hollow {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 2px var(--clay);
+}
+
+.plot-label {
+  position: absolute;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.plot-label.is-me {
+  color: var(--clay-deep);
+  font-weight: 500;
+}
+
+.aa-table {
+  margin-top: 56px;
+}
+
+.aa-table .mono {
+  white-space: nowrap;
+}
+
+/* Coding: terminal-style table on ink */
+
+.coding {
+  background: #0d0c0b;
+}
+
+.coding .kicker {
+  color: var(--clay);
+}
+
+.coding .lede {
+  color: #d8cfbf;
+}
+
+.coding .note {
+  color: var(--muted);
+}
+
+.term {
+  width: 100%;
+  margin-top: 44px;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  border: 1px solid rgba(242, 235, 221, 0.16);
+}
+
+.term th,
+.term td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(242, 235, 221, 0.1);
+}
+
+.term thead th {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.term tbody th {
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.term td {
+  color: #d8cfbf;
+}
+
+.term tbody tr:last-child th,
+.term tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px;
+  margin-top: 56px;
+}
+
+.two h3 {
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--clay);
+}
+
+.bullets li {
+  position: relative;
+  margin-bottom: 14px;
+  padding-left: 22px;
+  line-height: 1.75;
+}
+
+.bullets li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--clay);
+}
+
+/* Work: dark cards with large figures */
+
+.work {
+  background: #241d18;
+}
+
+.work .kicker {
+  color: var(--clay);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 40px;
+  margin-top: 48px;
+}
+
+.card {
+  padding: 28px 0 32px;
+  border-top: 1px solid rgba(242, 235, 221, 0.22);
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.card-v {
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--clay);
+}
+
+.card p:last-child {
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.work .card-v {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 3.2vw, 48px);
+  line-height: 1.05;
+  color: var(--paper);
+}
+
+/* Compare: light page with two-column statements */
+
+.compare {
+  background: #e6dccb;
+  color: var(--ink);
+}
+
+.compare .kicker {
+  color: var(--clay-deep);
+}
+
+.compare .lede {
+  color: #2d2823;
+}
+
+.compare .cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 56px;
+}
+
+.work .card:last-child:nth-child(3n + 1) {
+  grid-column: 1 / -1;
+}
+
+.compare .card {
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--ink);
+}
+
+.compare .card h3 {
+  margin-bottom: 14px;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.compare .card-v {
+  color: var(--clay-deep);
+}
+
+.compare .card p:last-child {
+  color: #2d2823;
+}
+
+@media (max-width: 1100px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .scorecard .duel-row {
+    grid-template-columns: 92px minmax(0, 1fr) 60px;
+    gap: 12px;
+  }
+
+  .plot {
+    margin: 24px 0 0 40px;
+    aspect-ratio: 1 / 1.1;
+  }
+
+  .plot-yt {
+    left: -40px;
+    font-size: 11px;
+  }
+
+  .plot-xt {
+    font-size: 11px;
+  }
+
+  .plot-label {
+    font-size: 11px;
+  }
+
+  .aa-table thead {
+    display: none;
+  }
+
+  .aa-table,
+  .aa-table tbody,
+  .aa-table tr,
+  .aa-table th,
+  .aa-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .aa-table tr {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(18, 17, 16, 0.2);
+  }
+
+  .aa-table td {
+    padding: 2px 0;
+    border: 0;
+  }
+
+  .aa-table td::before {
+    content: attr(data-label) '：';
+    margin-right: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: #5c554b;
+  }
+
+  .term {
+    font-size: 0.8rem;
+  }
+
+  .term th,
+  .term td {
+    padding: 10px 8px;
+  }
+
+  .two,
+  .cards,
+  .compare .cards {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
