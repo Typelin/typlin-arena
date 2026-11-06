@@ -17,10 +17,10 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ thinkingLevel, classNa
     const width = container.clientWidth || 400;
     const height = container.clientHeight || 400;
 
-    // Scene, Camera, Renderer
+    // Scene, Camera, High-Precision WebGL Renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width / Math.max(height, 1), 0.1, 1000);
-    camera.position.z = 7.0;
+    const camera = new THREE.PerspectiveCamera(42, width / Math.max(height, 1), 0.1, 1000);
+    camera.position.set(0, 0, 7.8);
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -29,147 +29,153 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ thinkingLevel, classNa
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
 
-    // Root Group
-    const coreGroup = new THREE.Group();
-    scene.add(coreGroup);
+    // Root Monolith Group
+    const monolithGroup = new THREE.Group();
+    scene.add(monolithGroup);
 
-    // 1. Central Icosahedron Wireframe
-    const innerGeo = new THREE.IcosahedronGeometry(1.65, 2);
-    const innerMat = new THREE.MeshBasicMaterial({
+    // 1. Central Prismatic Crystal (Faceted Refractor)
+    // Using a faceted Dodecahedron & Icosahedron hybrid
+    const prismGeo = new THREE.DodecahedronGeometry(1.7, 1);
+    const prismMat = new THREE.MeshPhysicalMaterial({
+      color: 0x111622,
+      emissive: 0x050811,
+      roughness: 0.15,
+      metalness: 0.2,
+      transmission: 0.85,
+      ior: 1.52,
+      thickness: 1.2,
+      wireframe: false,
+      transparent: true,
+      opacity: 0.88,
+    });
+    const prismMesh = new THREE.Mesh(prismGeo, prismMat);
+    monolithGroup.add(prismMesh);
+
+    // Facet Wireframe Overlay (Laser-etched precision edges)
+    const wireGeo = new THREE.WireframeGeometry(prismGeo);
+    const wireMat = new THREE.LineBasicMaterial({
       color: 0x38bdf8,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.45,
-    });
-    const innerMesh = new THREE.Mesh(innerGeo, innerMat);
-    coreGroup.add(innerMesh);
-
-    // 2. High-Energy Nucleus (Glowing core)
-    const nucleusGeo = new THREE.SphereGeometry(0.72, 32, 32);
-    const nucleusMat = new THREE.MeshBasicMaterial({
-      color: 0xe09f3e,
-      transparent: true,
-      opacity: 0.9,
-    });
-    const nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
-    coreGroup.add(nucleusMesh);
-
-    // 3. Outer Octahedral Resonator
-    const outerGeo = new THREE.OctahedronGeometry(2.45, 1);
-    const outerMat = new THREE.MeshBasicMaterial({
-      color: 0xa855f7,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.28,
-    });
-    const outerMesh = new THREE.Mesh(outerGeo, outerMat);
-    coreGroup.add(outerMesh);
-
-    // 4. Dual Gyroscopic Orbital Rings
-    const ringGeo = new THREE.RingGeometry(2.85, 2.9, 64);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
-      side: THREE.DoubleSide,
       transparent: true,
       opacity: 0.4,
+      blending: THREE.AdditiveBlending,
     });
-    const ring1 = new THREE.Mesh(ringGeo, ringMat);
-    ring1.rotation.x = Math.PI / 2.8;
-    coreGroup.add(ring1);
+    const wireframe = new THREE.LineSegments(wireGeo, wireMat);
+    monolithGroup.add(wireframe);
 
-    const ring2 = new THREE.Mesh(ringGeo, ringMat.clone());
-    ring2.rotation.x = -Math.PI / 3.2;
-    ring2.rotation.y = Math.PI / 4;
-    coreGroup.add(ring2);
+    // 2. High-Temperature Reasoning Plasma Core (The 60,000 reasoning tokens source)
+    const coreGeo = new THREE.IcosahedronGeometry(0.72, 2);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xf59e0b,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.95,
+    });
+    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    monolithGroup.add(coreMesh);
 
-    // 5. Dynamic Synaptic Plexus (Neural Thought Nodes + Interconnecting Filaments)
-    const nodeCount = 90;
-    const nodePositions = new Float32Array(nodeCount * 3);
-    const nodeVelocities: { x: number; y: number; z: number }[] = [];
+    // 3. Spectral Chromatic Dispersion Sheets (Rainbow Caustic Rays)
+    const spectralGroup = new THREE.Group();
+    monolithGroup.add(spectralGroup);
 
-    for (let i = 0; i < nodeCount; i++) {
-      const radius = 2.0 + Math.random() * 1.8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = (Math.random() - 0.5) * Math.PI;
+    const rayColors = [0xf43f5e, 0xf59e0b, 0xeab308, 0x10b981, 0x06b6d4, 0x3b82f6, 0x8b5cf6];
+    const rayCount = rayColors.length;
 
-      nodePositions[i * 3] = radius * Math.cos(theta) * Math.cos(phi);
-      nodePositions[i * 3 + 1] = radius * Math.sin(phi);
-      nodePositions[i * 3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
-
-      nodeVelocities.push({
-        x: (Math.random() - 0.5) * 0.008,
-        y: (Math.random() - 0.5) * 0.008,
-        z: (Math.random() - 0.5) * 0.008,
+    for (let r = 0; r < rayCount; r++) {
+      const rayGeo = new THREE.PlaneGeometry(0.12, 5.2);
+      const rayMat = new THREE.MeshBasicMaterial({
+        color: rayColors[r],
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.35,
+        blending: THREE.AdditiveBlending,
       });
+      const rayMesh = new THREE.Mesh(rayGeo, rayMat);
+      const angle = (r / rayCount) * Math.PI * 2;
+      rayMesh.rotation.z = angle;
+      rayMesh.rotation.x = Math.PI / 4;
+      rayMesh.position.set(Math.cos(angle) * 0.8, Math.sin(angle) * 0.8, 0);
+      spectralGroup.add(rayMesh);
     }
 
-    const nodeGeo = new THREE.BufferGeometry();
-    nodeGeo.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
-    const nodeMat = new THREE.PointsMaterial({
-      color: 0x38bdf8,
-      size: 0.08,
-      transparent: true,
-      opacity: 0.9,
-      blending: THREE.AdditiveBlending,
-    });
-    const nodePoints = new THREE.Points(nodeGeo, nodeMat);
-    coreGroup.add(nodePoints);
-
-    // Synaptic Connecting Filaments
-    const maxLines = 160;
-    const linePositions = new Float32Array(maxLines * 6);
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
-    const lineMat = new THREE.LineBasicMaterial({
-      color: 0x38bdf8,
+    // 4. Precision Vernier Micrometric Rings (Gimbal Coordinates)
+    const vernierGeo1 = new THREE.RingGeometry(2.7, 2.72, 80);
+    const vernierMat1 = new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      side: THREE.DoubleSide,
       transparent: true,
       opacity: 0.25,
-      blending: THREE.AdditiveBlending,
     });
-    const lineSegments = new THREE.LineSegments(lineGeo, lineMat);
-    coreGroup.add(lineSegments);
+    const vernierRing1 = new THREE.Mesh(vernierGeo1, vernierMat1);
+    vernierRing1.rotation.x = Math.PI / 2.3;
+    monolithGroup.add(vernierRing1);
 
-    // 6. Ambient Particle Dust (Token Galaxy)
-    const dustCount = 420;
-    const dustGeo = new THREE.BufferGeometry();
-    const dustPos = new Float32Array(dustCount * 3);
-    const dustColors = new Float32Array(dustCount * 3);
+    const vernierGeo2 = new THREE.RingGeometry(2.95, 2.97, 80);
+    const vernierMat2 = new THREE.MeshBasicMaterial({
+      color: 0xf59e0b,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.35,
+    });
+    const vernierRing2 = new THREE.Mesh(vernierGeo2, vernierMat2);
+    vernierRing2.rotation.y = Math.PI / 3;
+    monolithGroup.add(vernierRing2);
 
-    for (let i = 0; i < dustCount; i++) {
-      const radius = 2.8 + Math.random() * 3.5;
+    // 5. Quantum Logic Sparks (Tokens in Flight)
+    const sparkCount = 280;
+    const sparkGeo = new THREE.BufferGeometry();
+    const sparkPos = new Float32Array(sparkCount * 3);
+    const sparkColors = new Float32Array(sparkCount * 3);
+
+    for (let i = 0; i < sparkCount; i++) {
+      const radius = 2.2 + Math.random() * 2.8;
       const theta = Math.random() * Math.PI * 2;
       const phi = (Math.random() - 0.5) * Math.PI;
 
-      dustPos[i * 3] = radius * Math.cos(theta) * Math.cos(phi);
-      dustPos[i * 3 + 1] = radius * Math.sin(phi);
-      dustPos[i * 3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
+      sparkPos[i * 3] = radius * Math.cos(theta) * Math.cos(phi);
+      sparkPos[i * 3 + 1] = radius * Math.sin(phi);
+      sparkPos[i * 3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
 
-      const cType = Math.random();
-      if (cType < 0.5) {
-        dustColors[i * 3] = 0.22; dustColors[i * 3 + 1] = 0.74; dustColors[i * 3 + 2] = 0.97;
-      } else if (cType < 0.8) {
-        dustColors[i * 3] = 0.98; dustColors[i * 3 + 1] = 0.75; dustColors[i * 3 + 2] = 0.14;
+      // Amber, bone-white, and cyan sparks
+      const rnd = Math.random();
+      if (rnd < 0.6) {
+        sparkColors[i * 3] = 0.96; sparkColors[i * 3 + 1] = 0.62; sparkColors[i * 3 + 2] = 0.04; // Amber #f59e0b
+      } else if (rnd < 0.85) {
+        sparkColors[i * 3] = 0.95; sparkColors[i * 3 + 1] = 0.95; sparkColors[i * 3 + 2] = 0.98; // Bone white
       } else {
-        dustColors[i * 3] = 0.66; dustColors[i * 3 + 1] = 0.33; dustColors[i * 3 + 2] = 0.97;
+        sparkColors[i * 3] = 0.22; sparkColors[i * 3 + 1] = 0.74; sparkColors[i * 3 + 2] = 0.97; // Cyan
       }
     }
 
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-    dustGeo.setAttribute('color', new THREE.BufferAttribute(dustColors, 3));
+    sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
+    sparkGeo.setAttribute('color', new THREE.BufferAttribute(sparkColors, 3));
 
-    const dustMat = new THREE.PointsMaterial({
-      size: 0.05,
+    const sparkMat = new THREE.PointsMaterial({
+      size: 0.048,
       vertexColors: true,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.9,
       blending: THREE.AdditiveBlending,
     });
-    const dust = new THREE.Points(dustGeo, dustMat);
-    coreGroup.add(dust);
+    const sparks = new THREE.Points(sparkGeo, sparkMat);
+    monolithGroup.add(sparks);
 
-    // Mouse coordinates interaction with inertia
+    // Ambient and Point Lights for physical dielectric material
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.PointLight(0xf59e0b, 4.5, 18);
+    keyLight.position.set(4, 3, 5);
+    scene.add(keyLight);
+
+    const fillLight = new THREE.PointLight(0x38bdf8, 3.0, 16);
+    fillLight.position.set(-4, -2, -3);
+    scene.add(fillLight);
+
+    // Mouse tracking with fluid inertia
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -179,8 +185,8 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ thinkingLevel, classNa
       const rect = container.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      targetX = x * 0.5;
-      targetY = y * 0.5;
+      targetX = x * 0.65;
+      targetY = y * 0.65;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -210,105 +216,47 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ thinkingLevel, classNa
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const speedMultiplier = prefersReducedMotion ? 0.08 : 1.0;
 
+      // Dynamics based on thinkingLevel
       let rotSpeed = 0.35 * speedMultiplier;
-      let pulseSpeed = 2.0;
+      let pulseSpeed = 2.4;
 
       if (thinkingLevel === 'high') {
-        rotSpeed = 0.85 * speedMultiplier;
-        pulseSpeed = 4.2;
-        nucleusMat.color.setHex(0xe09f3e);
-        innerMat.color.setHex(0x38bdf8);
-        nodeMat.color.setHex(0xfbbf24);
-        lineMat.color.setHex(0x38bdf8);
+        rotSpeed = 0.75 * speedMultiplier;
+        pulseSpeed = 4.8;
+        keyLight.intensity = 6.0;
+        coreMat.color.setHex(0xf59e0b);
+        wireMat.color.setHex(0xfbbf24);
       } else if (thinkingLevel === 'medium') {
-        rotSpeed = 0.45 * speedMultiplier;
-        pulseSpeed = 2.5;
-        nucleusMat.color.setHex(0x38bdf8);
-        innerMat.color.setHex(0x818cf8);
-        nodeMat.color.setHex(0x38bdf8);
-        lineMat.color.setHex(0x818cf8);
+        rotSpeed = 0.42 * speedMultiplier;
+        pulseSpeed = 2.6;
+        keyLight.intensity = 3.5;
+        coreMat.color.setHex(0x38bdf8);
+        wireMat.color.setHex(0x38bdf8);
       } else {
-        rotSpeed = 0.22 * speedMultiplier;
+        rotSpeed = 0.2 * speedMultiplier;
         pulseSpeed = 1.2;
-        nucleusMat.color.setHex(0x64748b);
-        innerMat.color.setHex(0x38bdf8);
-        nodeMat.color.setHex(0x94a3b8);
-        lineMat.color.setHex(0x475569);
+        keyLight.intensity = 1.5;
+        coreMat.color.setHex(0x64748b);
+        wireMat.color.setHex(0x475569);
       }
 
       // Smooth inertia
-      mouseX += (targetX - mouseX) * 0.05;
-      mouseY += (targetY - mouseY) * 0.05;
+      mouseX += (targetX - mouseX) * 0.045;
+      mouseY += (targetY - mouseY) * 0.045;
 
-      coreGroup.rotation.y += rotSpeed * delta;
-      coreGroup.rotation.x = mouseY * 0.65;
-      coreGroup.rotation.z = mouseX * 0.45;
+      monolithGroup.rotation.y += rotSpeed * delta;
+      monolithGroup.rotation.x = mouseY * 0.75;
+      monolithGroup.rotation.z = mouseX * 0.55;
 
-      ring1.rotation.z += 0.4 * speedMultiplier * delta;
-      ring2.rotation.z -= 0.5 * speedMultiplier * delta;
-      outerMesh.rotation.y -= 0.22 * speedMultiplier * delta;
-      dust.rotation.y += 0.12 * speedMultiplier * delta;
+      // Vernier counter-rotations
+      vernierRing1.rotation.z += 0.35 * speedMultiplier * delta;
+      vernierRing2.rotation.z -= 0.45 * speedMultiplier * delta;
+      spectralGroup.rotation.z -= 0.6 * speedMultiplier * delta;
+      sparks.rotation.y += 0.15 * speedMultiplier * delta;
 
-      // Nucleus breathing
-      const scale = 1.0 + Math.sin(time * pulseSpeed) * 0.15;
-      nucleusMesh.scale.set(scale, scale, scale);
-
-      // Update Synaptic Node positions & compute line filaments
-      const posAttr = nodeGeo.attributes.position as THREE.BufferAttribute;
-      const positions = posAttr.array as Float32Array;
-      const linePosAttr = lineGeo.attributes.position as THREE.BufferAttribute;
-      const lPositions = linePosAttr.array as Float32Array;
-
-      let lineCount = 0;
-      const connectionDist = 1.15;
-
-      for (let i = 0; i < nodeCount; i++) {
-        // Subtle drift
-        positions[i * 3] += nodeVelocities[i].x * speedMultiplier;
-        positions[i * 3 + 1] += nodeVelocities[i].y * speedMultiplier;
-        positions[i * 3 + 2] += nodeVelocities[i].z * speedMultiplier;
-
-        // Bounce within spherical shell
-        const dist = Math.sqrt(
-          positions[i * 3] ** 2 +
-          positions[i * 3 + 1] ** 2 +
-          positions[i * 3 + 2] ** 2
-        );
-        if (dist > 3.6 || dist < 1.8) {
-          nodeVelocities[i].x *= -1;
-          nodeVelocities[i].y *= -1;
-          nodeVelocities[i].z *= -1;
-        }
-
-        // Connect adjacent nodes
-        if (lineCount < maxLines) {
-          for (let j = i + 1; j < nodeCount; j++) {
-            const dx = positions[i * 3] - positions[j * 3];
-            const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
-            const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
-            const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            if (d < connectionDist) {
-              lPositions[lineCount * 6] = positions[i * 3];
-              lPositions[lineCount * 6 + 1] = positions[i * 3 + 1];
-              lPositions[lineCount * 6 + 2] = positions[i * 3 + 2];
-              lPositions[lineCount * 6 + 3] = positions[j * 3];
-              lPositions[lineCount * 6 + 4] = positions[j * 3 + 1];
-              lPositions[lineCount * 6 + 5] = positions[j * 3 + 2];
-              lineCount++;
-              if (lineCount >= maxLines) break;
-            }
-          }
-        }
-      }
-
-      // Zero out unused lines
-      for (let k = lineCount * 6; k < maxLines * 6; k++) {
-        lPositions[k] = 0;
-      }
-
-      posAttr.needsUpdate = true;
-      linePosAttr.needsUpdate = true;
+      // Plasma Core breathing
+      const scale = 1.0 + Math.sin(time * pulseSpeed) * 0.18;
+      coreMesh.scale.set(scale, scale, scale);
 
       renderer.render(scene, camera);
     };
@@ -323,20 +271,18 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ thinkingLevel, classNa
         container.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      innerGeo.dispose();
-      innerMat.dispose();
-      nucleusGeo.dispose();
-      nucleusMat.dispose();
-      outerGeo.dispose();
-      outerMat.dispose();
-      ringGeo.dispose();
-      ringMat.dispose();
-      nodeGeo.dispose();
-      nodeMat.dispose();
-      lineGeo.dispose();
-      lineMat.dispose();
-      dustGeo.dispose();
-      dustMat.dispose();
+      prismGeo.dispose();
+      prismMat.dispose();
+      wireGeo.dispose();
+      wireMat.dispose();
+      coreGeo.dispose();
+      coreMat.dispose();
+      vernierGeo1.dispose();
+      vernierMat1.dispose();
+      vernierGeo2.dispose();
+      vernierMat2.dispose();
+      sparkGeo.dispose();
+      sparkMat.dispose();
     };
   }, [thinkingLevel]);
 
@@ -345,7 +291,7 @@ export const ThreeCanvas: React.FC<ThreeCanvasProps> = ({ thinkingLevel, classNa
       ref={mountRef}
       className={`relative w-full h-full overflow-hidden pointer-events-auto ${className}`}
       style={{ touchAction: 'pan-y' }}
-      aria-label="Gemini 3.8 Flash 3D 量子神經思維核心視覺"
+      aria-label="Gemini 3.8 Flash 光學稜鏡與超驗思維核心 3D 視覺"
     />
   );
 };

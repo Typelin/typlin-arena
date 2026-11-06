@@ -13,8 +13,8 @@ async function capture() {
   // 1. Hero Desktop 1440x900
   const page1 = await browser.newPage();
   await page1.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
-  await page1.goto('http://localhost:5199/', { waitUntil: 'networkidle0' });
-  await sleep(2200); // Wait for Three.js Plexus render
+  await page1.goto('http://localhost:5211/', { waitUntil: 'networkidle0' });
+  await sleep(2200);
   await page1.screenshot({ path: 'screenshot-hero.png' });
   console.log('screenshot-hero.png captured');
 
@@ -30,7 +30,7 @@ async function capture() {
   // 3. Mobile 390x844
   const page2 = await browser.newPage();
   await page2.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
-  await page2.goto('http://localhost:5199/', { waitUntil: 'networkidle0' });
+  await page2.goto('http://localhost:5211/', { waitUntil: 'networkidle0' });
   await sleep(2200);
   await page2.screenshot({ path: 'screenshot-mobile.png' });
   console.log('screenshot-mobile.png captured');
