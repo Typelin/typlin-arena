@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ArgonHeroCanvas, type ExcitationMode } from './components/ArgonHeroCanvas';
 import { ScaleContrastCanvas } from './components/ScaleContrastCanvas';
 import { MoePrismCanvas } from './components/MoePrismCanvas';
@@ -19,41 +19,114 @@ import {
 
 type BenchmarkFilter =
   | 'ALL'
-  | 'DEEPMIND'
-  | 'AA'
-  | 'VALS_ARENA'
-  | 'ARGON_LEADS'
-  | 'RIVAL_LEADS';
+  | 'DeepMind Official'
+  | 'Artificial Analysis'
+  | 'Vals AI & Design Arena'
+  | 'LEADS_ONLY'
+  | 'TRAILS_ONLY';
+
+const CLIMAX_HORIZON_BARS = [
+  {
+    name: 'IOI 國際資訊奧林匹亞',
+    sub: '演算法滿分並列第一',
+    argon: 100.0,
+    rival: 100.0,
+    rivalLabel: 'GPT-6 Astra 100.0%',
+    win: true,
+  },
+  {
+    name: 'Vibe Code Bench v1.1',
+    sub: '全棧應用與互動介面生成 (#1)',
+    argon: 91.9,
+    rival: 90.3,
+    rivalLabel: 'Opus 5.5 / Fable 90.3%',
+    win: true,
+  },
+  {
+    name: 'LVBench 長影片多模態',
+    sub: '小時級時序理解 (#1)',
+    argon: 91.7,
+    rival: 87.5,
+    rivalLabel: 'GPT-6 Astra 87.5%',
+    win: true,
+  },
+  {
+    name: 'LABBench 2 實驗室生物',
+    sub: '科學文獻與實驗推理 (#1)',
+    argon: 88.8,
+    rival: 85.4,
+    rivalLabel: 'Astra 85.4% · Opus 73.1%',
+    win: true,
+  },
+  {
+    name: 'GraphWalks 256K–1M',
+    sub: '百萬級長上下文圖譜推理 (#1)',
+    argon: 84.2,
+    rival: 71.8,
+    rivalLabel: 'Astra 71.8% · Opus 66.8%',
+    win: true,
+  },
+  {
+    name: 'DeepSWE v1.1 軟體工程',
+    sub: '真實長程軟體架構修復 (#1)',
+    argon: 77.9,
+    rival: 74.2,
+    rivalLabel: 'Claude Opus 5.5 74.2%',
+    win: true,
+  },
+  {
+    name: 'Vals Index 企業知識總榜',
+    sub: '金融、法律、稅務、程式 GDP 加權 (#1)',
+    argon: 68.9,
+    rival: 67.0,
+    rivalLabel: 'Opus 5.5 67.0% · Astra 63.1%',
+    win: true,
+  },
+  {
+    name: 'Terminal-bench 4.0',
+    sub: '純終端機 Shell 代理（誠實列示落後項）',
+    argon: 57.4,
+    rival: 66.4,
+    rivalLabel: 'Claude Opus 5.5 66.4% 領先',
+    win: false,
+  },
+  {
+    name: "Harvey's Legal Agent",
+    sub: '高複雜度法律研究（Opus 的 5.1 倍）',
+    argon: 19.6,
+    rival: 5.4,
+    rivalLabel: 'Astra 5.4% · Opus 3.8%',
+    win: true,
+  },
+] as const;
 
 export function App() {
   const [reducedMotion, setReducedMotion] = useState(false);
-
-  // Hero Poster interactive state
   const [heroMode, setHeroMode] = useState<ExcitationMode>('IONIZED_420V');
 
-  // Ch.01 Scale & Unified 1,048,576 Token state
-  const [inputTokens, setInputTokens] = useState(420_000);
-  const [thinkingTokens, setThinkingTokens] = useState(228_576);
-  const [macroView, setMacroView] = useState(true);
+  // Ch.01 Unified 1,048,576 Token Pool
+  const [inputTokens, setInputTokens] = useState<number>(420000);
+  const [thinkingTokens, setThinkingTokens] = useState<number>(280000);
+  const [zoomMacro, setZoomMacro] = useState<boolean>(false);
 
-  // Ch.02 Sparse MoE & Multimodal state
-  const [activeModalities, setActiveModalities] = useState<string[]>([
-    'text',
-    'image',
-    'video',
-    'audio',
-    'pdf',
-  ]);
+  // Ch.02 Sparse MoE Modalities
+  const [activeModalities, setActiveModalities] = useState<Record<string, boolean>>({
+    text: true,
+    image: true,
+    video: true,
+    audio: false,
+    pdf: true,
+  });
 
-  // Ch.03 Visual Climax Thinking Level state
+  // Ch.03 Visual Climax Thinking Level
   const [thinkingLevel, setThinkingLevel] = useState<ThinkingLevelKey>('HIGH');
   const [longDecode, setLongDecode] = useState<boolean>(true);
-  const [pulseTrigger, setPulseTrigger] = useState<number>(0);
+  const [pulseCount, setPulseCount] = useState<number>(0);
 
-  // Ch.04 Mechanical Boundary Oscilloscope state
-  const [inspectedBoundary, setInspectedBoundary] = useState<string>('limit-01');
+  // Ch.04 Hard Boundaries
+  const [focusedBoundary, setFocusedBoundary] = useState<string>('limit-01');
 
-  // Ch.05 Dossier Benchmark Filter
+  // Ch.05 Dossier Filter & Active Domain Tab
   const [benchFilter, setBenchFilter] = useState<BenchmarkFilter>('ALL');
 
   useEffect(() => {
@@ -64,639 +137,628 @@ export function App() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  const totalUnified = 1_048_576;
-  const outputTokens = Math.max(0, totalUnified - inputTokens - thinkingTokens);
+  const maxAllowedThinking = Math.max(0, 1048576 - inputTokens - 32768);
+  const safeThinkingTokens = Math.min(thinkingTokens, maxAllowedThinking);
+  const remainingOutputTokens = Math.max(0, 1048576 - inputTokens - safeThinkingTokens);
 
-  const handleInputSlider = (val: number) => {
-    const clampedInput = Math.min(val, totalUnified - 65_536);
-    const remaining = totalUnified - clampedInput;
-    const adjustedThinking = Math.min(thinkingTokens, Math.floor(remaining * 0.5));
-    setInputTokens(clampedInput);
-    setThinkingTokens(adjustedThinking);
-  };
+  const activeExpertCount = useMemo(() => {
+    const s = new Set<number>();
+    MODALITY_SPECS.forEach((m) => {
+      if (activeModalities[m.id]) {
+        m.activeExperts.forEach((idx) => s.add(idx));
+      }
+    });
+    return s.size;
+  }, [activeModalities]);
 
-  const applyTokenPreset = (inp: number, think: number) => {
+  const filteredBenchmarks = useMemo(() => {
+    return BENCHMARKS.filter((b) => {
+      if (benchFilter === 'ALL') return true;
+      if (benchFilter === 'LEADS_ONLY') return b.argonLeads;
+      if (benchFilter === 'TRAILS_ONLY') return !b.argonLeads;
+      return b.source === benchFilter;
+    });
+  }, [benchFilter]);
+
+  const applyTokenPreset = (inp: number, thk: number) => {
     setInputTokens(inp);
-    setThinkingTokens(think);
+    setThinkingTokens(thk);
   };
 
   const toggleModality = (id: string) => {
     setActiveModalities((prev) => {
-      if (prev.includes(id)) {
-        if (prev.length === 1) return prev;
-        return prev.filter((item) => item !== id);
+      const next = { ...prev, [id]: !prev[id] };
+      if (!Object.values(next).some(Boolean)) {
+        next[id] = true;
       }
-      return [...prev, id];
+      return next;
     });
   };
 
-  const activeExpertSet = new Set<number>();
-  MODALITY_SPECS.forEach((m) => {
-    if (activeModalities.includes(m.id)) {
-      m.activeExperts.forEach((e) => activeExpertSet.add(e));
-    }
-  });
-
-  const currentThinkingSpec = THINKING_LEVELS[thinkingLevel];
-
-  const filteredBenchmarks = BENCHMARKS.filter((b) => {
-    if (benchFilter === 'DEEPMIND') return b.source === 'DeepMind Official';
-    if (benchFilter === 'AA') return b.source === 'Artificial Analysis';
-    if (benchFilter === 'VALS_ARENA') return b.source === 'Vals AI & Design Arena';
-    if (benchFilter === 'ARGON_LEADS') return b.argonLeads;
-    if (benchFilter === 'RIVAL_LEADS') return !b.argonLeads;
-    return true;
-  });
+  const activeLevelInfo = THINKING_LEVELS[thinkingLevel];
 
   return (
-    <div className="argon-page-shell" data-thinking-level={thinkingLevel}>
-      {/* Top Floating Optical Navigation Rail */}
-      <header className="optical-topbar" aria-label="模型導覽列">
-        <div className="topbar-brand">
-          <span className="element-badge">Ar¹⁸</span>
-          <div className="brand-meta">
-            <span className="brand-model">GEMINI 4 ARGON</span>
-            <span className="brand-maker">Google DeepMind · Oct 13, 2026</span>
+    <div className="argon-monograph">
+      {/* Right-Edge Minimalist Archival Folio Strip */}
+      <nav className="folio-rail" aria-label="章節快速導覽">
+        <a href="#top" className="rail-tick" title="首屏 · Gemini 4 Argon">
+          <span>00</span>
+        </a>
+        <a href="#ch01" className="rail-tick" title="第一章 · 百萬記憶池">
+          <span>01</span>
+        </a>
+        <a href="#ch02" className="rail-tick" title="第二章 · 五感與稀疏專家">
+          <span>02</span>
+        </a>
+        <a href="#ch03" className="rail-tick" title="第三章 · 思考刻度與評測高潮">
+          <span>03</span>
+        </a>
+        <a href="#ch04" className="rail-tick" title="第四章 · 能力邊界">
+          <span>04</span>
+        </a>
+        <a href="#ch05" className="rail-tick" title="第五章 · 規格誌與完整數據">
+          <span>05</span>
+        </a>
+      </nav>
+
+      {/* =====================================================================
+          HERO (Ch.00) — FULL-WIDTH ARCHITECTURAL MONOGRAPH & 18-PRISM COLONNADE
+          ===================================================================== */}
+      <header id="top" className="hero-vellum-stage">
+        <div className="hero-masthead-rule">
+          <div className="hm-left">
+            <span className="hm-element-index">Ar · 18</span>
+            <span className="hm-divider">/</span>
+            <span>GOOGLE DEEPMIND · FLAGSHIP REASONING MODEL</span>
+          </div>
+          <div className="hm-center">
+            <code>gemini-4-argon</code> · GA 2026.10.13 · [Ne] 3s² 3p⁶
+          </div>
+          <nav className="hm-links" aria-label="頁面章節跳轉">
+            <a href="#ch01">I. 百萬視窗</a>
+            <a href="#ch02">II. 稀疏專家</a>
+            <a href="#ch03">III. 思考刻度</a>
+            <a href="#ch04">IV. 邊界</a>
+            <a href="#ch05">V. 規格誌</a>
+          </nav>
+        </div>
+
+        {/* Top Architectural Title & Manifesto Spread */}
+        <div className="hero-top-monograph">
+          <div className="htm-title-side">
+            <p className="hero-overline">
+              ELEMENT 18 · TWIN-CORE INTERFEROMETER &amp; SPARSE MoE
+            </p>
+            <h1 className="hero-monumental-title">
+              <span className="ht-gemini">Gemini 4</span>
+              <span className="ht-argon-line">
+                <span className="ht-argon">Argon</span>
+                <sup className="ht-atomic">18</sup>
+              </span>
+            </h1>
+          </div>
+
+          <div className="htm-manifesto-side">
+            <p className="hero-chinese-manifesto">
+              我是 Google DeepMind 的旗艦推理模型。在百萬 Token
+              的惰性密封腔裡，對未知寧可誠實拒答也不編造幻覺；面對五萬行巨型專案重構、跨國法務契約與三維空間生成，則傾注六萬八千顆思考
+              Token 深度推演。
+            </p>
+            <div className="htm-meta-stamps">
+              <span>TPU PODS · JAX &amp; ML PATHWAYS</span>
+              <span>DESIGN ARENA · BLENDER 3D 1409 ELO</span>
+            </div>
           </div>
         </div>
-        <nav className="topbar-nav" aria-label="章節跳轉">
-          <a href="#hero">00 海報</a>
-          <a href="#ch01">01 百萬記憶</a>
-          <a href="#ch02">02 稀疏專家</a>
-          <a href="#ch03">03 思考調諧</a>
-          <a href="#ch04">04 能力邊界</a>
-          <a href="#ch05">05 完整規格與評測</a>
-        </nav>
+
+        {/* Middle Panoramic 18-Column 3D Kinetic Prism Wave-Organ */}
+        <div className="hero-panorama-stage">
+          <div className="hps-control-rail" role="group" aria-label="切換 18 階雙子分光稜柱陣列諧波">
+            <span className="hps-rail-label">
+              FIG 0.1 — 18-COLUMN TWIN-STAR PRISM INTERFEROMETER (DRAG 3D COLONNADE TO ROTATE)
+            </span>
+            <div className="hps-mode-switches">
+              <button
+                type="button"
+                className={heroMode === 'INERT_18V' ? 'is-active' : ''}
+                onClick={() => setHeroMode('INERT_18V')}
+              >
+                <span className="htl-roman">I</span> 常溫封存 (LOW)
+              </button>
+              <button
+                type="button"
+                className={heroMode === 'IONIZED_420V' ? 'is-active' : ''}
+                onClick={() => setHeroMode('IONIZED_420V')}
+              >
+                <span className="htl-roman">II</span> 諧波平衡 (MEDIUM)
+              </button>
+              <button
+                type="button"
+                className={heroMode === 'SUPERCRITICAL_1048V' ? 'is-active' : ''}
+                onClick={() => setHeroMode('SUPERCRITICAL_1048V')}
+              >
+                <span className="htl-roman">III</span> 臨界推演 (HIGH · 68k)
+              </button>
+            </div>
+          </div>
+
+          <ArgonHeroCanvas mode={heroMode} reducedMotion={reducedMotion} />
+        </div>
+
+        {/* Bottom Open Hairline Monumental Numerals Ledger */}
+        <div className="hero-ledger-strip">
+          <div className="hl-cell">
+            <span className="hl-index">01 / UNIFIED HORIZON</span>
+            <strong className="hl-giant-num">1,048,576</strong>
+            <span className="hl-desc">輸入、思考與長程輸出共用百萬 Token 池</span>
+          </div>
+          <div className="hl-cell">
+            <span className="hl-index">02 / AA-OMNISCIENCE v1.1</span>
+            <strong className="hl-giant-num">95.7%</strong>
+            <span className="hl-desc">非幻覺率全場第一（幻覺率僅 4.26%）</span>
+          </div>
+          <div className="hl-cell">
+            <span className="hl-index">03 / OFFICIAL BENCHMARKS</span>
+            <strong className="hl-giant-num">14 / 19</strong>
+            <span className="hl-desc">官方評測第一（含 DeepSWE 77.9% · IOI 100%）</span>
+          </div>
+          <div className="hl-cell">
+            <span className="hl-index">04 / VALS INDEX &amp; LEGAL</span>
+            <strong className="hl-giant-num">68.9%</strong>
+            <span className="hl-desc">企業總榜第一 · Harvey 法律達 Opus 5.1 倍</span>
+          </div>
+        </div>
       </header>
 
       <main>
-        {/* =====================================================================
-            HERO POSTER (Ch.00): HIGH-PRESSURE ARGON-18 SPECTRAL CHAMBER
-           ===================================================================== */}
-        <section id="hero" className="hero-poster-section">
-          <div className="hero-ambient-grid" aria-hidden="true" />
+        {/* ===================================================================
+            CHAPTER 01 — DEEP ESPRESSO OBSIDIAN: EXTREME SCALE CONTRAST
+            1 Token (1px) vs. 1,048,576 Shared Context Horizon
+            =================================================================== */}
+        <section id="ch01" className="chapter-stage stage-espresso">
+          <div className="editorial-wrap">
+            <div className="chapter-rubric-bar">
+              <span>CHAPTER I · EXTREME SCALE CONTRAST (1 : 1,048,576)</span>
+              <span>SHARED INPUT + THINKING + LONG DECODE</span>
+            </div>
 
-          {/* Central Volumetric Plasma Chamber */}
-          <div className="hero-stage-wrapper">
-            <ArgonHeroCanvas mode={heroMode} reducedMotion={reducedMotion} />
-          </div>
-
-          <div className="hero-poster-layout">
-            <div className="hero-poster-header">
-              <div className="poster-classification">
-                <span className="status-dot" />
-                <span>ATOMIC Z=18 // [Ne] 3s² 3p⁶ // SPARSE MoE TRANSFORMER</span>
+            <div className="ch01-top-split">
+              <div className="ch01-heading-col">
+                <h2 className="editorial-h2">{CHAPTER_NARRATIVES[0].title}</h2>
+                <p className="editorial-first-sentence">{CHAPTER_NARRATIVES[0].firstSentence}</p>
               </div>
-              <div className="poster-developer-stamp">
-                DEVELOPED BY <strong>GOOGLE DEEPMIND</strong> · MODEL ID:{' '}
-                <code>gemini-4-argon</code>
+
+              <div className="ch01-monument-ratio" aria-label="1 比 1,048,576 極端尺度對比">
+                <div className="cmr-micro">
+                  <span className="cmr-pin" aria-hidden="true" />
+                  <span className="cmr-num-small">1</span>
+                  <span className="cmr-unit">TOKEN (1 PX)</span>
+                </div>
+                <span className="cmr-colon">:</span>
+                <div className="cmr-macro">
+                  <span className="cmr-num-giant">1,048,576</span>
+                  <span className="cmr-unit">UNIFIED CONTEXT &amp; v1beta1 LONG DECODE</span>
+                </div>
               </div>
             </div>
 
-            <div className="hero-title-cluster">
-              <p className="hero-kicker">GOOGLE DEEPMIND · FRONTIER REASONING MODEL</p>
-              <h1 className="hero-display-title">
-                <span className="title-gemini">GEMINI 4</span>
-                <span className="title-argon-row">
-                  <span className="title-argon">ARGON</span>
-                  <span className="title-serif-tag">Noble Plasma</span>
-                </span>
-              </h1>
-              <p className="hero-lead-statement">
-                Google DeepMind 2026 旗艦推理模型。常壓下如惰性氬氣般沉靜；面對五萬行大型程式庫與三千頁法規財報時，點燃百萬統一記憶與高壓思維鏈。
-              </p>
-            </div>
-
-            <div className="hero-bottom-console">
-              <div
-                className="excitation-control-panel"
-                role="group"
-                aria-label="高壓電離腔激發電壓切換"
-              >
-                <span className="console-prompt">
-                  <span className="prompt-pulse" />
-                  互動激發電場（移動游標牽引電漿・點擊切換電壓）：
-                </span>
-                <div className="excitation-buttons">
-                  <button
-                    type="button"
-                    className={heroMode === 'INERT_18V' ? 'active' : ''}
-                    onClick={() => setHeroMode('INERT_18V')}
-                  >
-                    18V 惰性基態
-                  </button>
-                  <button
-                    type="button"
-                    className={heroMode === 'IONIZED_420V' ? 'active' : ''}
-                    onClick={() => setHeroMode('IONIZED_420V')}
-                  >
-                    420V 紫藍電離
-                  </button>
-                  <button
-                    type="button"
-                    className={heroMode === 'SUPERCRITICAL_1048V' ? 'active' : ''}
-                    onClick={() => setHeroMode('SUPERCRITICAL_1048V')}
-                  >
-                    1048V 臨界白熾
-                  </button>
-                </div>
-              </div>
-
-              <div className="hero-poster-metrics">
-                <div className="poster-metric-item">
-                  <span className="pm-val">1,048,576</span>
-                  <span className="pm-lbl">UNIFIED TOKENS (IN + THINK + OUT)</span>
-                </div>
-                <div className="poster-metric-item">
-                  <span className="pm-val">#1 · 68.9%</span>
-                  <span className="pm-lbl">VALS INDEX (FINANCE / LEGAL / CODE)</span>
-                </div>
-                <div className="poster-metric-item">
-                  <span className="pm-val">77.9% / 91.9%</span>
-                  <span className="pm-lbl">DEEPSWE v1.1 (#1) / VIBE CODE (#1)</span>
-                </div>
-                <div className="poster-metric-item">
-                  <span className="pm-val">95.7%</span>
-                  <span className="pm-lbl">AA-OMNISCIENCE NON-HALLUCINATION</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =====================================================================
-            CHAPTER 01: EXTREME SCALE CONTRAST (1 TOKEN vs 1,048,576 TOKENS)
-            Dual-Chamber Optical Scale Comparator (Unobstructed 1px Loupe vs 1M Ring)
-           ===================================================================== */}
-        <section id="ch01" className="chapter-section ch01-scale-section">
-          <div className="chapter-container ch01-dual-chamber">
-            {/* Left Control & Narrative Column */}
-            <div className="chapter-narrative-card ch01-card">
-              <div className="chapter-eyebrow">{CHAPTER_NARRATIVES[0].code}</div>
-              <h2 className="chapter-title">{CHAPTER_NARRATIVES[0].title}</h2>
-              <p className="chapter-first-sentence">{CHAPTER_NARRATIVES[0].firstSentence}</p>
-
-              <div className="scale-ratio-banner">
-                <div className="scale-micro-box">
-                  <span className="micro-dot" />
-                  <div>
-                    <strong>1 TOKEN (1px)</strong>
-                    <span>4 CHARS MICRO ORIGIN</span>
+            <div className="ch01-instrument-grid">
+              <div className="ch01-controls-col">
+                <div className="open-preset-strip">
+                  <span className="ops-label">REAL-WORLD WORKLOAD PRESETS</span>
+                  <div className="ops-buttons">
+                    <button
+                      type="button"
+                      className={inputTokens === 420000 ? 'is-active' : ''}
+                      onClick={() => applyTokenPreset(420000, 280000)}
+                    >
+                      50,000 行 Chromium 重構
+                    </button>
+                    <button
+                      type="button"
+                      className={inputTokens === 680000 ? 'is-active' : ''}
+                      onClick={() => applyTokenPreset(680000, 220000)}
+                    >
+                      3,000 頁併購契約審閱
+                    </button>
+                    <button
+                      type="button"
+                      className={inputTokens === 120000 ? 'is-active' : ''}
+                      onClick={() => applyTokenPreset(120000, 180000)}
+                    >
+                      v1beta1 百萬長程解碼
+                    </button>
                   </div>
                 </div>
-                <div className="scale-vs-divider">1 : 1,048,576</div>
-                <div className="scale-macro-box">
-                  <div>
-                    <strong>1,048,576 TOKENS</strong>
-                    <span>50K LOC / 8 NOVELS / 8.4H AUDIO</span>
+
+                <div className="open-slider-group">
+                  <label className="osg-row">
+                    <span className="osg-title">
+                      <i className="swatch-dot sw-ivory" /> 輸入讀取 (Input Context)
+                    </span>
+                    <strong className="osg-val">{inputTokens.toLocaleString()} tok</strong>
+                  </label>
+                  <input
+                    type="range"
+                    min={16384}
+                    max={850000}
+                    step={8192}
+                    value={inputTokens}
+                    onChange={(e) => setInputTokens(Number(e.target.value))}
+                    className="hairline-slider"
+                    aria-label="調整輸入 Token 數量"
+                  />
+                </div>
+
+                <div className="open-slider-group">
+                  <label className="osg-row">
+                    <span className="osg-title">
+                      <i className="swatch-dot sw-vermilion" /> 內部思考鏈 (Thinking Chain)
+                    </span>
+                    <strong className="osg-val">{safeThinkingTokens.toLocaleString()} tok</strong>
+                  </label>
+                  <input
+                    type="range"
+                    min={4096}
+                    max={Math.max(4096, maxAllowedThinking)}
+                    step={4096}
+                    value={safeThinkingTokens}
+                    onChange={(e) => setThinkingTokens(Number(e.target.value))}
+                    className="hairline-slider"
+                    aria-label="調整思考 Token 數量"
+                  />
+                </div>
+
+                <div className="open-output-readout">
+                  <div className="oor-head">
+                    <span className="osg-title">
+                      <i className="swatch-dot sw-gold" /> 剩餘可輸出空間 (Long Decode Available)
+                    </span>
+                    <strong className="oor-giant">
+                      {remainingOutputTokens.toLocaleString()} <small>tok</small>
+                    </strong>
+                  </div>
+                  <div className="oor-bar">
+                    <span
+                      className="oor-seg seg-in"
+                      style={{ width: `${(inputTokens / 1048576) * 100}%` }}
+                    />
+                    <span
+                      className="oor-seg seg-th"
+                      style={{ width: `${(safeThinkingTokens / 1048576) * 100}%` }}
+                    />
+                    <span
+                      className="oor-seg seg-out"
+                      style={{ width: `${(remainingOutputTokens / 1048576) * 100}%` }}
+                    />
+                  </div>
+                  <div className="oor-foot">
+                    <span>預設同步輸出上限：65,536 tok（非串流 32,768）</span>
+                    <button
+                      type="button"
+                      className="text-link-btn"
+                      onClick={() => setZoomMacro((z) => !z)}
+                    >
+                      {zoomMacro ? '切換標準晶圓間距' : '放大檢視 32×32 記憶晶圓'}
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <div className="token-partition-widget">
-                <div className="widget-header-row">
-                  <span className="widget-tag">INTERACTIVE // UNIFIED 1M POOL ALLOCATOR</span>
-                  <button
-                    type="button"
-                    className="zoom-toggle-btn"
-                    onClick={() => setMacroView((v) => !v)}
-                  >
-                    {macroView ? 'SCALE: 1:1M MACRO' : 'SCALE: 1:1 MICRO'}
-                  </button>
-                </div>
-
-                <div className="preset-pill-row">
-                  <button
-                    type="button"
-                    className={inputTokens === 420_000 ? 'active' : ''}
-                    onClick={() => applyTokenPreset(420_000, 228_576)}
-                  >
-                    420K / 228K / 400K
-                  </button>
-                  <button
-                    type="button"
-                    className={inputTokens === 850_000 ? 'active' : ''}
-                    onClick={() => applyTokenPreset(850_000, 133_040)}
-                  >
-                    850K IN (50K LOC)
-                  </button>
-                  <button
-                    type="button"
-                    className={inputTokens === 48_576 ? 'active' : ''}
-                    onClick={() => applyTokenPreset(48_576, 200_000)}
-                  >
-                    800K LONG DECODE
-                  </button>
-                </div>
-
-                <label className="slider-control-label" htmlFor="unified-token-slider">
-                  <span>UNIFIED CONTEXT ALLOCATION</span>
-                  <code>INPUT: {inputTokens.toLocaleString()}</code>
-                </label>
-                <input
-                  id="unified-token-slider"
-                  type="range"
-                  min={20_000}
-                  max={920_000}
-                  step={10_000}
-                  value={inputTokens}
-                  onChange={(e) => handleInputSlider(Number(e.target.value))}
-                  className="argon-range-slider"
+              <div className="ch01-canvas-col">
+                <ScaleContrastCanvas
+                  inputTokens={inputTokens}
+                  thinkingTokens={safeThinkingTokens}
+                  outputTokens={remainingOutputTokens}
+                  zoomMacro={zoomMacro}
+                  reducedMotion={reducedMotion}
                 />
-
-                <div className="unified-bar-meter" aria-label="統一視窗配置比例條">
-                  <div
-                    className="ub-segment ub-input"
-                    style={{ width: `${(inputTokens / totalUnified) * 100}%` }}
-                  />
-                  <div
-                    className="ub-segment ub-think"
-                    style={{ width: `${(thinkingTokens / totalUnified) * 100}%` }}
-                  />
-                  <div
-                    className="ub-segment ub-output"
-                    style={{ width: `${(outputTokens / totalUnified) * 100}%` }}
-                  />
-                </div>
-
-                <div className="unified-legend-row">
-                  <span className="ul-item ul-in">
-                    <i>●</i> IN: {(inputTokens / 1000).toFixed(0)}K
-                  </span>
-                  <span className="ul-item ul-th">
-                    <i>●</i> THINK: {(thinkingTokens / 1000).toFixed(0)}K
-                  </span>
-                  <span className="ul-item ul-out">
-                    <i>●</i> LONG DECODE: {(outputTokens / 1000).toFixed(0)}K
-                  </span>
-                </div>
               </div>
-            </div>
-
-            {/* Right Unobstructed Comparator Stage: 1px Micro Loupe vs 1,048,576 Ring */}
-            <div className="ch01-comparator-stage">
-              <ScaleContrastCanvas
-                inputTokens={inputTokens}
-                thinkingTokens={thinkingTokens}
-                outputTokens={outputTokens}
-                macroView={macroView}
-                reducedMotion={reducedMotion}
-              />
             </div>
           </div>
         </section>
 
-        {/* =====================================================================
-            CHAPTER 02: SPARSE MoE & NATIVE MULTIMODAL DICHROIC PRISM
-           ===================================================================== */}
-        <section id="ch02" className="chapter-section ch02-moe-section">
-          <div className="chapter-container ch02-layout">
-            <div className="ch02-header-row">
-              <div className="ch02-narrative-block">
-                <div className="chapter-eyebrow">{CHAPTER_NARRATIVES[1].code}</div>
-                <h2 className="chapter-title">{CHAPTER_NARRATIVES[1].title}</h2>
-                <p className="chapter-first-sentence">{CHAPTER_NARRATIVES[1].firstSentence}</p>
+        {/* ===================================================================
+            CHAPTER 02 — WARM ARCHIVAL LINEN: 5 NATIVE MODALITIES & SPARSE MoE
+            Copperplate Optical Routing Diagram
+            =================================================================== */}
+        <section id="ch02" className="chapter-stage stage-linen">
+          <div className="editorial-wrap">
+            <div className="chapter-rubric-bar rubric-dark">
+              <span>CHAPTER II · NATIVE MULTIMODALITY &amp; SPARSE MoE ROUTING</span>
+              <span>TPU PODS · JAX &amp; ML PATHWAYS</span>
+            </div>
+
+            <div className="ch02-editorial-head">
+              <div className="ch02-title-col">
+                <h2 className="editorial-h2 ink-dark">{CHAPTER_NARRATIVES[1].title}</h2>
+                <p className="editorial-first-sentence ink-dark-muted">
+                  {CHAPTER_NARRATIVES[1].firstSentence}
+                </p>
               </div>
 
-              <div className="ch02-telemetry-box">
-                <div className="moe-stat-pill">
-                  <span className="msp-num">{activeModalities.length} / 5</span>
-                  <span className="msp-lbl">ACTIVE INPUT MODALITIES</span>
+              <div className="ch02-sparse-tally">
+                <div className="cst-item">
+                  <span className="cst-label">ROUTED EXPERTS</span>
+                  <strong className="cst-num">{activeExpertCount} / 64</strong>
                 </div>
-                <div className="moe-stat-pill">
-                  <span className="msp-num">{activeExpertSet.size} / 64</span>
-                  <span className="msp-lbl">SPARSE EXPERTS ROUTED</span>
-                </div>
-                <div className="moe-stat-pill">
-                  <span className="msp-num">84.2%</span>
-                  <span className="msp-lbl">GRAPHWALKS (256K–1M #1)</span>
+                <div className="cst-item">
+                  <span className="cst-label">PARAMETER COUNT</span>
+                  <strong className="cst-num cst-undisclosed">官方未公開</strong>
                 </div>
               </div>
             </div>
 
-            <div className="ch02-workbench-grid">
-              <div className="modality-switchboard" role="group" aria-label="多模態輸入光束開關">
-                <div className="switchboard-caption">
-                  TOGGLE NATIVE MULTIMODAL BEAMS (CLICK TO ROUTE):
-                </div>
+            <div className="ch02-copperplate-grid">
+              <div className="modality-press-list" role="group" aria-label="切換五種原生輸入模態">
+                <p className="mpl-instruction">
+                  點擊下方任一輸入通道，觀察光束經分光稜鏡後喚醒的稀疏專家子集：
+                </p>
                 {MODALITY_SPECS.map((mod) => {
-                  const isOn = activeModalities.includes(mod.id);
+                  const isOn = Boolean(activeModalities[mod.id]);
                   return (
                     <button
                       key={mod.id}
                       type="button"
-                      className={`modality-emitter-btn ${isOn ? 'is-on' : 'is-off'}`}
+                      className={`modality-press-row ${isOn ? 'is-on' : 'is-off'}`}
                       onClick={() => toggleModality(mod.id)}
-                      style={{ '--mod-color': mod.color } as React.CSSProperties}
                     >
-                      <div className="meb-top">
-                        <span className="meb-code">
-                          <i className="meb-led" /> {mod.code} · {mod.nameEn}
-                        </span>
-                        <span className="meb-wave">{mod.wavelength}</span>
+                      <div className="mpr-left">
+                        <span className="mpr-code">{mod.code}</span>
+                        <strong className="mpr-zh">{mod.nameZh}</strong>
+                        <span className="mpr-sub">{mod.subMetric}</span>
                       </div>
-                      <div className="meb-main">
-                        <strong>{mod.nameEn}</strong>
-                        <span className="meb-quota">{mod.limitMetric}</span>
+                      <div className="mpr-right">
+                        <strong className="mpr-bignum">{mod.bigNum}</strong>
+                        <span className="mpr-unit">{mod.unit}</span>
                       </div>
-                      <div className="meb-sub">{mod.subMetric}</div>
                     </button>
                   );
                 })}
               </div>
 
-              <div className="moe-prism-stage">
+              <div className="moe-copperplate-stage">
                 <MoePrismCanvas
                   activeModalities={activeModalities}
                   reducedMotion={reducedMotion}
                 />
-                <div className="prism-stage-footer">
-                  <span>INPUT BEAMS (TEXT / IMAGE / VIDEO / AUDIO / PDF)</span>
-                  <span>SPARSE MoE CONDITIONAL ROUTING →</span>
-                  <span>64-EXPERT CRYSTAL LATTICE</span>
-                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* =====================================================================
-            CHAPTER 03 (VISUAL CLIMAX & CORE INTERACTION):
-            THINKING LEVEL PHASE-TRANSITION & FRONTIER BENCHMARK IGNITION
-           ===================================================================== */}
+        {/* ===================================================================
+            CHAPTER 03 (VISUAL CLIMAX) — FULL-BLEED MINERAL VERMILION
+            Three-Stage Thinking Ignition & Open Benchmark Horizon
+            =================================================================== */}
         <section
           id="ch03"
-          className={`chapter-section ch03-climax-section climax-level-${thinkingLevel.toLowerCase()}`}
+          className={`chapter-stage stage-vermilion-climax climax-${thinkingLevel.toLowerCase()}`}
         >
-          <div className="chapter-container ch03-climax-layout">
-            <div className="ch03-top-banner">
-              <div className="ch03-narrative">
-                <div className="chapter-eyebrow">{CHAPTER_NARRATIVES[2].code}</div>
-                <h2 className="chapter-title">{CHAPTER_NARRATIVES[2].title}</h2>
-                <p className="chapter-first-sentence">{CHAPTER_NARRATIVES[2].firstSentence}</p>
+          <div className="editorial-wrap">
+            <div className="chapter-rubric-bar rubric-cream">
+              <span>CHAPTER III · VISUAL CLIMAX &amp; TUNABLE REASONING HORIZON</span>
+              <span>14 OF 19 OFFICIAL BENCHMARK WINS · #1 VALS INDEX &amp; DEEPSWE</span>
+            </div>
+
+            <div className="climax-header-grid">
+              <div className="climax-title-block">
+                <h2 className="editorial-h2 ink-cream">{CHAPTER_NARRATIVES[2].title}</h2>
+                <p className="editorial-first-sentence ink-cream-Soft">
+                  {CHAPTER_NARRATIVES[2].firstSentence}
+                </p>
               </div>
 
-              <div className="climax-ignition-deck">
-                <div className="ignition-deck-header">
-                  <span className="ignition-badge">
-                    <span className="live-spark" /> CORE INTERACTION // THINKING LEVEL TUNER
-                  </span>
-                  <span className="kelvin-readout">
-                    {currentThinkingSpec.voltage} · {currentThinkingSpec.kelvin}
-                  </span>
+              {/* Physical 3-Position Thinking Level Dial */}
+              <div className="climax-effort-dial" role="group" aria-label="切換思考刻度">
+                <div className="ced-top-meta">
+                  <span>API PARAMETER · <code>{activeLevelInfo.apiParam}</code></span>
+                  <span>AA 實測思考投入：{activeLevelInfo.reasoningTokens} TOKENS</span>
                 </div>
-
-                <div className="thinking-level-selector" role="radiogroup" aria-label="思考深度刻度">
+                <div className="ced-buttons">
                   {(['LOW', 'MEDIUM', 'HIGH'] as ThinkingLevelKey[]).map((lvl) => {
-                    const spec = THINKING_LEVELS[lvl];
+                    const info = THINKING_LEVELS[lvl];
                     const active = thinkingLevel === lvl;
                     return (
                       <button
                         key={lvl}
                         type="button"
-                        role="radio"
-                        aria-checked={active}
-                        className={`thinking-lvl-btn lvl-${lvl.toLowerCase()} ${
-                          active ? 'active' : ''
-                        }`}
+                        className={`ced-btn ${active ? 'is-active' : ''}`}
                         onClick={() => setThinkingLevel(lvl)}
                       >
-                        <span className="tlb-key">{spec.label}</span>
-                        <span className="tlb-nodes">{spec.depthNodes} NODES</span>
+                        <span className="ced-lvl">{info.label}</span>
+                        <strong className="ced-nodes">{info.depthNodes} 節點</strong>
+                        <span className="ced-zh">{info.labelZh}</span>
                       </button>
                     );
                   })}
                 </div>
-
-                <div className="climax-sub-controls">
+                <div className="ced-sub-actions">
                   <button
                     type="button"
-                    className={`decode-mode-toggle ${longDecode ? 'is-long' : ''}`}
+                    className={`ced-sub-btn ${longDecode ? 'is-on' : ''}`}
                     onClick={() => setLongDecode((v) => !v)}
                   >
-                    <span>DECODE:</span>
-                    <strong>
-                      {longDecode ? '1,048,576 LONG DECODE' : '65,536 SYNC DEFAULT'}
-                    </strong>
+                    {longDecode
+                      ? 'v1beta1 Long Decode：已開啟 1,048,576 上限'
+                      : '預設同步輸出：65,536 Tokens'}
                   </button>
-
                   <button
                     type="button"
-                    className="pulse-burst-btn"
-                    onClick={() => setPulseTrigger((p) => p + 1)}
+                    className="ced-sub-btn ced-pulse-trigger"
+                    onClick={() => setPulseCount((c) => c + 1)}
                   >
-                    ⚡ IGNITE PULSE
+                    觸發多步驗證光脈衝 ↗
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className="ch03-reactor-grid">
-              <div className="climax-canvas-frame">
+            <div className="climax-main-spread">
+              {/* Left: 3D Geodesic Reasoning Astrolabe */}
+              <div className="climax-sphere-column">
                 <ClimaxReasoningCanvas
                   level={thinkingLevel}
                   longDecode={longDecode}
-                  pulseTrigger={pulseTrigger}
+                  pulseCount={pulseCount}
                   reducedMotion={reducedMotion}
                 />
-                <div className="canvas-drag-hint">
-                  ✥ DRAG 3D GEODESIC LATTICE TO ROTATE · API PARAM:{' '}
-                  <code>{currentThinkingSpec.apiParam}</code>
-                </div>
+                <p className="climax-sphere-caption">
+                  直接按住拖曳上方 5 層階梯推演驗證塔旋轉視角 · HIGH 模式下單題平均投入 68,000
+                  思考 Tokens（總輸出 116,000 Tokens）
+                </p>
               </div>
 
-              <div className="climax-benchmark-panel">
-                <div className="cbp-header">
-                  <h3>FRONTIER SOTA TELEMETRY (OCT 2026)</h3>
-                  <span>Gemini 4 Argon vs. Claude Opus 5.5 &amp; GPT-6 Astra</span>
+              {/* Right: Open Hairline Benchmark Horizon (Zero Boxed Cards!) */}
+              <div className="climax-horizon-column">
+                <div className="chc-legend">
+                  <span>實心金線＝Gemini 4 Argon 得分</span>
+                  <span>垂直刻線＝該項最強競品（Opus 5.5 / GPT-6 Astra）</span>
                 </div>
 
-                <div className="cbp-bars-list">
-                  {[
-                    {
-                      name: 'IOI Olympiad',
-                      argon: 100.0,
-                      opus: null,
-                      astra: 100.0,
-                      tag: '#1 PERFECT',
-                    },
-                    {
-                      name: 'Vibe Code Bench',
-                      argon: 91.9,
-                      opus: 90.3,
-                      astra: 89.6,
-                      tag: '#1 FULL-STACK',
-                    },
-                    {
-                      name: 'LVBench Video',
-                      argon: 91.7,
-                      opus: 83.7,
-                      astra: 87.5,
-                      tag: '#1 MULTIMODAL',
-                    },
-                    {
-                      name: 'LABBench 2 Bio',
-                      argon: 88.8,
-                      opus: 73.1,
-                      astra: 85.4,
-                      tag: '+15.7% vs OPUS',
-                    },
-                    {
-                      name: 'GraphWalks 1M',
-                      argon: 84.2,
-                      opus: 66.8,
-                      astra: 71.8,
-                      tag: '+17.4% vs OPUS',
-                    },
-                    {
-                      name: 'DeepSWE v1.1',
-                      argon: 77.9,
-                      opus: 74.2,
-                      astra: 74.1,
-                      tag: '#1 SOTA SWE',
-                    },
-                    {
-                      name: 'Vals Index GDP',
-                      argon: 68.9,
-                      opus: 67.0,
-                      astra: 63.1,
-                      tag: '#1 OF 49',
-                    },
-                    {
-                      name: 'Harvey Legal',
-                      argon: 19.6,
-                      opus: 3.8,
-                      astra: 5.4,
-                      tag: '5.1× OPUS',
-                    },
-                  ].map((item) => (
-                    <div key={item.name} className="telemetry-bar-card">
-                      <div className="tbc-title-row">
-                        <span className="tbc-name">{item.name}</span>
-                        <span className="tbc-badge">{item.tag}</span>
+                <ol className="open-horizon-list">
+                  {CLIMAX_HORIZON_BARS.map((item) => (
+                    <li
+                      key={item.name}
+                      className={`horizon-row ${item.win ? 'is-win' : 'is-trail'}`}
+                    >
+                      <div className="hr-meta">
+                        <div className="hr-title-group">
+                          <strong className="hr-name">{item.name}</strong>
+                          <span className="hr-sub">{item.sub}</span>
+                        </div>
+                        <div className="hr-numbers">
+                          <strong className="hr-argon-num">{item.argon.toFixed(1)}%</strong>
+                          <span className="hr-rival-lbl">{item.rivalLabel}</span>
+                        </div>
                       </div>
-                      <div className="tbc-track">
+                      <div className="hr-track">
                         <div
-                          className="tbc-fill-argon"
+                          className="hr-fill"
                           style={{ width: `${Math.min(100, item.argon)}%` }}
                         />
+                        <span
+                          className="hr-rival-tick"
+                          style={{ left: `${Math.min(100, item.rival)}%` }}
+                          title={item.rivalLabel}
+                        />
                       </div>
-                      <div className="tbc-scores-row">
-                        <strong className="score-argon">Argon: {item.argon}%</strong>
-                        {item.astra !== null && (
-                          <span className="score-rival">Astra: {item.astra}%</span>
-                        )}
-                        {item.opus !== null && (
-                          <span className="score-rival">Opus 5.5: {item.opus}%</span>
-                        )}
-                      </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </div>
             </div>
           </div>
         </section>
 
-        {/* =====================================================================
-            CHAPTER 04: HARD BOUNDARIES & ANODIZED OSCILLOSCOPE DARKROOM
-            Concise ~54-char Mandarin lead sentence + Interactive Hardware Oscilloscope
-           ===================================================================== */}
-        <section id="ch04" className="chapter-section ch04-boundary-section">
-          <div className="chapter-container">
-            <div className="ch04-header-block">
-              <div className="chapter-eyebrow">{CHAPTER_NARRATIVES[3].code}</div>
-              <h2 className="chapter-title">{CHAPTER_NARRATIVES[3].title}</h2>
-              <p className="chapter-first-sentence">{CHAPTER_NARRATIVES[3].firstSentence}</p>
+        {/* ===================================================================
+            CHAPTER 04 — DEEP MINERAL SLATE: HARD BOUNDARIES & HONEST REFUSALS
+            =================================================================== */}
+        <section id="ch04" className="chapter-stage stage-slate">
+          <div className="editorial-wrap">
+            <div className="chapter-rubric-bar">
+              <span>CHAPTER IV · HARD BOUNDARIES, KERNEL REFUSALS &amp; RIVAL GAPS</span>
+              <span>HONEST DISCLOSURE · ZERO FABRICATION</span>
             </div>
 
-            <div className="ch04-oscilloscope-workbench">
-              {/* Left: 4 Tactile Hardware Boundary Selector Switches */}
-              <div className="boundary-switch-list" role="tablist" aria-label="能力邊界診斷切換">
+            <div className="ch04-top-header">
+              <h2 className="editorial-h2">{CHAPTER_NARRATIVES[3].title}</h2>
+              <p className="editorial-first-sentence">{CHAPTER_NARRATIVES[3].firstSentence}</p>
+            </div>
+
+            <div className="ch04-shutter-grid">
+              <div className="shutter-selector-list" role="group" aria-label="檢視四項硬性限制">
                 {HARD_BOUNDARIES.map((b) => {
-                  const isSelected = inspectedBoundary === b.id;
+                  const active = focusedBoundary === b.id;
                   return (
                     <button
                       key={b.id}
                       type="button"
-                      role="tab"
-                      aria-selected={isSelected}
-                      className={`boundary-shutter-btn ${isSelected ? 'is-focused' : ''}`}
-                      onClick={() => setInspectedBoundary(b.id)}
+                      className={`shutter-row-btn ${active ? 'is-active' : ''}`}
+                      onClick={() => setFocusedBoundary(b.id)}
                     >
-                      <div className="bsc-top-bar">
-                        <span className="bsc-code">{b.code}</span>
-                        <span className="bsc-warning-pill">{b.shortTag}</span>
+                      <div className="srb-top">
+                        <span className="srb-code">{b.code}</span>
+                        <span className="srb-tag">{b.shortTag}</span>
                       </div>
-                      <div className="bsc-diagnostic-line">
-                        <code>{b.diagnosticCode}</code>
-                      </div>
+                      <strong className="srb-title">{b.title}</strong>
+                      <code className="srb-diag">{b.diagnosticCode}</code>
                     </button>
                   );
                 })}
               </div>
 
-              {/* Right: Live Hardware Rejection & Boundary Oscilloscope Canvas */}
-              <div className="boundary-oscilloscope-frame">
-                <div className="bof-header">
-                  <span>KERNEL BOUNDARY OSCILLOSCOPE // LIVE SIGNAL INSPECTION</span>
-                  <code>MODE: {inspectedBoundary.toUpperCase()}</code>
+              <div className="shutter-trace-stage">
+                <div className="sts-head">
+                  <span>KERNEL BOUNDARY TRACE · INTERACTIVE INSPECTION</span>
+                  <code>{HARD_BOUNDARIES.find((b) => b.id === focusedBoundary)?.shortTag}</code>
                 </div>
                 <BoundaryOscilloscopeCanvas
-                  selectedBoundary={inspectedBoundary}
+                  focusedId={focusedBoundary}
                   reducedMotion={reducedMotion}
                 />
+                <p className="sts-fact-note">
+                  {HARD_BOUNDARIES.find((b) => b.id === focusedBoundary)?.fact}
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* =====================================================================
-            CHAPTER 05 (FINAL CHAPTER): SWISS ARCHIVAL ALABASTER DOSSIER
-            Full Facts, AA Scores, Coding & Domain Comparisons, 35 Benchmarks & Sources
-           ===================================================================== */}
-        <section id="ch05" className="chapter-section ch05-dossier-section">
-          <div className="chapter-container">
-            <div className="dossier-masthead">
-              <div className="dossier-eyebrow">{CHAPTER_NARRATIVES[4].code}</div>
-              <h2 className="dossier-main-title">{CHAPTER_NARRATIVES[4].title}</h2>
-              <p className="dossier-lead-sentence">{CHAPTER_NARRATIVES[4].firstSentence}</p>
+        {/* ===================================================================
+            CHAPTER 05 — MUSEUM CATALOGUE IVORY: FULL BENCHMARKS, AA TELEMETRY,
+            DOMAIN COMPARISONS, COLLABORATION & SPECIFICATION COLOPHON
+            =================================================================== */}
+        <section id="ch05" className="chapter-stage stage-catalogue">
+          <div className="editorial-wrap">
+            <div className="chapter-rubric-bar rubric-dark">
+              <span>CHAPTER V · ARCHIVAL SPECIFICATION COLOPHON &amp; VERIFIED SOURCES</span>
+              <span>GOOGLE DEEPMIND · ARTIFICIAL ANALYSIS · VALS AI · DESIGN ARENA</span>
             </div>
 
-            {/* 5.1 Domain & Coding Deep-Dive vs. Other Frontier Models */}
-            <div className="dossier-block">
-              <div className="dossier-section-head">
-                <span className="dsh-index">SECTION 01</span>
-                <h3>對程式碼與各專業領域的理解：我與 Claude Opus 5.5、GPT-6 Astra 的核心差異</h3>
+            <div className="catalogue-masthead">
+              <h2 className="editorial-h2 ink-dark">{CHAPTER_NARRATIVES[4].title}</h2>
+              <p className="editorial-first-sentence ink-dark-muted">
+                {CHAPTER_NARRATIVES[4].firstSentence}
+              </p>
+            </div>
+
+            {/* § 01. Four Domain Deep-Dive vs. Claude Opus 5.5 & GPT-6 Astra */}
+            <div className="catalogue-section">
+              <div className="cs-section-header">
+                <span className="cs-num">§ 01</span>
+                <h3>程式碼理解與四大專業領域：我與 Claude Opus 5.5、GPT-6 Astra 的真實分野</h3>
               </div>
 
-              <div className="domain-analysis-grid">
+              <div className="domain-editorial-list">
                 {DOMAIN_COMPARISONS.map((dom) => (
-                  <article key={dom.id} className="domain-card">
-                    <div className="dc-header">
-                      <span className="dc-code">{dom.code}</span>
-                      <span className="dc-en">{dom.domainEn}</span>
-                    </div>
-                    <h4 className="dc-title">{dom.domainZh}</h4>
-                    <p className="dc-headline">{dom.headline}</p>
-
-                    <ul className="dc-strength-list">
-                      {dom.argonStrengths.map((s, idx) => (
-                        <li key={idx}>{s}</li>
-                      ))}
-                    </ul>
-
-                    <div className="dc-diff-box">
-                      <strong>與其他旗艦模型的決策分水嶺：</strong>
-                      <p>{dom.competitorDiff}</p>
+                  <article key={dom.id} className="domain-editorial-row">
+                    <div className="der-left">
+                      <span className="der-code">{dom.code}</span>
+                      <h4 className="der-title">{dom.domainZh}</h4>
+                      <p className="der-headline">{dom.headline}</p>
+                      <ul className="der-points">
+                        {dom.argonStrengths.map((pt, i) => (
+                          <li key={i}>{pt}</li>
+                        ))}
+                      </ul>
+                      <p className="der-diff">
+                        <strong>與競品核心差異：</strong>
+                        {dom.competitorDiff}
+                      </p>
                     </div>
 
-                    <div className="dc-mini-table">
-                      {dom.keyMetrics.map((km) => (
-                        <div key={km.label} className="dc-metric-row">
-                          <span className="dcm-lbl">{km.label}</span>
-                          <span className={`dcm-argon win-${km.winner}`}>Argon: {km.argon}</span>
-                          <span className="dcm-rival">{km.rival}</span>
+                    <div className="der-right">
+                      <div className="der-ledger-head">
+                        <span>代表評測指標</span>
+                        <span>Argon</span>
+                        <span>最強競品對照</span>
+                      </div>
+                      {dom.keyMetrics.map((m) => (
+                        <div key={m.label} className="der-metric-line">
+                          <span className="dml-name">{m.label}</span>
+                          <strong className={`dml-argon is-${m.winner}`}>{m.argon}</strong>
+                          <span className="dml-rival">{m.rival}</span>
                         </div>
                       ))}
                     </div>
@@ -705,205 +767,88 @@ export function App() {
               </div>
             </div>
 
-            {/* 5.2 Artificial Analysis (AA) Independent Leaderboard Breakdown */}
-            <div className="dossier-block">
-              <div className="dossier-section-head">
-                <span className="dsh-index">SECTION 02</span>
-                <h3>Artificial Analysis (AA) 獨立評測剖析：智力指數、非幻覺率、推理話量與真實成本</h3>
+            {/* § 02. Artificial Analysis (AA) Independent Evaluation & Token Economics */}
+            <div className="catalogue-section">
+              <div className="cs-section-header">
+                <span className="cs-num">§ 02</span>
+                <h3>Artificial Analysis (AA) 獨立評測、95.7% 非幻覺率與 Token 經濟學</h3>
               </div>
 
-              <div className="aa-highlights-grid">
+              <div className="aa-editorial-columns">
                 {AA_TELEMETRY_HIGHLIGHTS.map((item) => (
-                  <div key={item.metric} className="aa-highlight-card">
-                    <div className="aah-metric">{item.metric}</div>
-                    <div className="aah-value">{item.argonValue}</div>
-                    <div className="aah-comp">{item.comparison}</div>
-                    <p className="aah-insight">{item.insight}</p>
+                  <div key={item.metric} className="aa-editorial-col">
+                    <span className="aec-metric">{item.metric}</span>
+                    <strong className="aec-val">{item.argonValue}</strong>
+                    <span className="aec-comp">{item.comparison}</span>
+                    <p className="aec-insight">{item.insight}</p>
                   </div>
                 ))}
               </div>
-
-              <div className="dossier-table-wrapper">
-                <table className="dossier-table aa-comparison-table">
-                  <thead>
-                    <tr>
-                      <th>獨立評測維度 (Artificial Analysis v5.0 / v4.3.2)</th>
-                      <th className="col-argon">Gemini 4 Argon (High)</th>
-                      <th>Claude Opus 5.5 (High)</th>
-                      <th>GPT-6 Astra (Xhigh)</th>
-                      <th>GPT-6.1 Sol (Medium)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>AA Intelligence Index (v5.0 / v4.3.2)</td>
-                      <td className="col-argon">
-                        <strong>50.4 (v5.0) / 53 (v4.3.2)</strong>
-                      </td>
-                      <td>52.0 (Max 為 58)</td>
-                      <td>55.0 (v4.3.2 為 53)</td>
-                      <td>46.0 (v4.3.2 為 52)</td>
-                    </tr>
-                    <tr>
-                      <td>AA-Omniscience v1.1 (知識可靠性指數)</td>
-                      <td className="col-argon">
-                        <strong>46.1 (#1 領先)</strong>
-                      </td>
-                      <td>42.0</td>
-                      <td>44.0</td>
-                      <td>40.0</td>
-                    </tr>
-                    <tr>
-                      <td>AA-Omniscience 非幻覺率 / 幻覺率</td>
-                      <td className="col-argon">
-                        <strong>非幻覺 95.7% (幻覺 4.26% / v1.0 為 15%)</strong>
-                      </td>
-                      <td>未單獨列示</td>
-                      <td>v1.0 幻覺率 51%</td>
-                      <td>v1.0 幻覺率 54%</td>
-                    </tr>
-                    <tr>
-                      <td>AutomationBench-AA (商務流程自動化)</td>
-                      <td className="col-argon">
-                        <strong>78% (#1 領先)</strong>
-                      </td>
-                      <td>63%</td>
-                      <td>67%</td>
-                      <td>63%</td>
-                    </tr>
-                    <tr>
-                      <td>HLE-Diamond (Humanity&apos;s Last Exam)</td>
-                      <td className="col-argon">
-                        <strong>57%</strong>
-                      </td>
-                      <td>56%</td>
-                      <td>62%</td>
-                      <td>46%</td>
-                    </tr>
-                    <tr>
-                      <td>單題平均輸出 Tokens / 其中思考 Tokens</td>
-                      <td className="col-argon">
-                        <strong>116k tokens (含 68k 思考)</strong>
-                      </td>
-                      <td>60k tokens (含 32k 思考)</td>
-                      <td>27k tokens (含 15k 思考)</td>
-                      <td>14k tokens (含 5k 思考)</td>
-                    </tr>
-                    <tr>
-                      <td>跑完 AA 指標總輸出 Tokens (Verbosity)</td>
-                      <td className="col-argon">
-                        <strong>110M – 113M tokens</strong>
-                      </td>
-                      <td>56M tokens</td>
-                      <td>32M tokens</td>
-                      <td>15M tokens</td>
-                    </tr>
-                    <tr>
-                      <td>輸出速度 (Output Speed) / 首字時間 (TTFT)</td>
-                      <td className="col-argon">
-                        <strong>81.4 – 83 tok/s</strong> (TTFT 40.5–47.7s)
-                      </td>
-                      <td>79 tok/s (TTFT 47.5s)</td>
-                      <td>68 tok/s (TTFT 202.7s)</td>
-                      <td>57 tok/s (TTFT 8.2s)</td>
-                    </tr>
-                    <tr>
-                      <td>官方牌價 (每 1M 輸入 / 輸出) vs 單題實測成本</td>
-                      <td className="col-argon">
-                        <strong>$2/$10 體驗 ($4/$20 正式)｜單題 $7.68</strong>
-                      </td>
-                      <td>$4 / $20｜單題 $3.46</td>
-                      <td>$10 / $50｜單題 $3.66</td>
-                      <td>$2 / $10｜單題 $0.36</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
 
-            {/* 5.3 Complete 35-Benchmark Evaluation Matrix */}
-            <div className="dossier-block">
-              <div className="dossier-section-head">
-                <span className="dsh-index">SECTION 03</span>
-                <h3>35 項完整基準評測對照表（Google DeepMind 官方 + Artificial Analysis + Vals AI &amp; Design Arena）</h3>
+            {/* § 03. Complete 35-Benchmark Filterable Print Ledger */}
+            <div className="catalogue-section">
+              <div className="cs-section-header">
+                <span className="cs-num">§ 03</span>
+                <h3>35 項完整基準評測總表（DeepMind 官方 19 項 · AA 獨立評測 · Vals AI · Design Arena）</h3>
               </div>
 
-              <div className="benchmark-filter-bar" role="tablist" aria-label="評測資料來源篩選">
-                {[
-                  { key: 'ALL', label: `全部評測 (${BENCHMARKS.length})` },
-                  {
-                    key: 'DEEPMIND',
-                    label: `DeepMind 官方模型卡 (${
-                      BENCHMARKS.filter((b) => b.source === 'DeepMind Official').length
-                    })`,
-                  },
-                  {
-                    key: 'AA',
-                    label: `Artificial Analysis (${
-                      BENCHMARKS.filter((b) => b.source === 'Artificial Analysis').length
-                    })`,
-                  },
-                  {
-                    key: 'VALS_ARENA',
-                    label: `Vals AI & Design Arena (${
-                      BENCHMARKS.filter((b) => b.source === 'Vals AI & Design Arena').length
-                    })`,
-                  },
-                  {
-                    key: 'ARGON_LEADS',
-                    label: `Argon 領先或並列第一 (${BENCHMARKS.filter((b) => b.argonLeads).length})`,
-                  },
-                  {
-                    key: 'RIVAL_LEADS',
-                    label: `對手領先項目 (${BENCHMARKS.filter((b) => !b.argonLeads).length})`,
-                  },
-                ].map((tab) => (
+              <div className="print-filter-strip" role="group" aria-label="篩選基準評測表格">
+                {(
+                  [
+                    ['ALL', `全部評測 (${BENCHMARKS.length})`],
+                    ['DeepMind Official', 'DeepMind 官方模型卡 (19)'],
+                    ['Artificial Analysis', 'Artificial Analysis 獨立評測 (9)'],
+                    ['Vals AI & Design Arena', 'Vals AI 與 3D/前端榜 (7)'],
+                    ['LEADS_ONLY', 'Argon 領先／並列第一 (27)'],
+                    ['TRAILS_ONLY', '競品領先項目 (8)'],
+                  ] as Array<[BenchmarkFilter, string]>
+                ).map(([key, label]) => (
                   <button
-                    key={tab.key}
+                    key={key}
                     type="button"
-                    role="tab"
-                    aria-selected={benchFilter === tab.key}
-                    className={`bench-filter-btn ${benchFilter === tab.key ? 'active' : ''}`}
-                    onClick={() => setBenchFilter(tab.key as BenchmarkFilter)}
+                    className={`pfs-btn ${benchFilter === key ? 'is-active' : ''}`}
+                    onClick={() => setBenchFilter(key)}
                   >
-                    {tab.label}
+                    {label}
                   </button>
                 ))}
               </div>
 
-              <div className="dossier-table-wrapper">
-                <table className="dossier-table benchmark-master-table">
+              <div className="print-table-scroll" tabIndex={0} role="region" aria-label="基準評測完整對照表">
+                <table className="print-ledger-table">
                   <thead>
                     <tr>
-                      <th>來源</th>
-                      <th>領域</th>
+                      <th>來源與領域</th>
                       <th>評測項目 (Benchmark)</th>
-                      <th>說明與排名備註</th>
-                      <th className="col-argon">Gemini 4 Argon</th>
+                      <th className="col-highlight">Gemini 4 Argon</th>
+                      <th>Claude Opus 5.5</th>
                       <th>GPT-6 Astra</th>
                       <th>Claude Fable 5.1</th>
-                      <th>Claude Opus 5.5</th>
+                      <th>評測說明與勝負解析</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredBenchmarks.map((b) => (
-                      <tr key={b.id} className={b.argonLeads ? 'row-argon-leads' : 'row-rival-leads'}>
+                    {filteredBenchmarks.map((row) => (
+                      <tr key={row.id}>
                         <td>
-                          <span className="src-pill">{b.source}</span>
+                          <span className="plt-src">{row.source}</span>
+                          <span className="plt-cat">{row.categoryZh}</span>
                         </td>
-                        <td>{b.categoryZh}</td>
                         <td>
-                          <strong>{b.benchmark}</strong>
+                          <strong className="plt-bench">{row.benchmark}</strong>
                         </td>
-                        <td className="note-cell">{b.note}</td>
-                        <td className="col-argon">
-                          <span className={`score-chip ${b.argonLeads ? 'is-win' : 'is-trail'}`}>
-                            {b.argon}
-                          </span>
+                        <td className="col-highlight">
+                          <strong
+                            className={`plt-score ${row.argonLeads ? 'score-win' : 'score-trail'}`}
+                          >
+                            {row.argon}
+                          </strong>
                         </td>
-                        <td>{b.gpt6Astra}</td>
-                        <td>{b.claudeFable51}</td>
-                        <td>{b.claudeOpus55}</td>
+                        <td className="plt-mono">{row.claudeOpus55}</td>
+                        <td className="plt-mono">{row.gpt6Astra}</td>
+                        <td className="plt-mono">{row.claudeFable51}</td>
+                        <td className="plt-note">{row.note}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -911,60 +856,54 @@ export function App() {
               </div>
             </div>
 
-            {/* 5.4 Collaboration Protocol, Hard Limitations Details & 14-Row Spec Matrix */}
-            <div className="dossier-block">
-              <div className="dossier-section-head">
-                <span className="dsh-index">SECTION 04</span>
-                <h3>人機協作四大原則、四大能力限制詳解與完整查證硬體／API 技術規格表</h3>
+            {/* § 04. Human-AI Collaboration Protocols */}
+            <div className="catalogue-section">
+              <div className="cs-section-header">
+                <span className="cs-num">§ 04</span>
+                <h3>與人類工程師協作的四項工作契約</h3>
               </div>
 
-              <div className="collab-protocol-grid">
-                {COLLABORATION_PROTOCOLS.map((c) => (
-                  <div key={c.step} className="collab-card">
-                    <span className="collab-step">PROTOCOL // {c.step}</span>
-                    <h4>{c.title}</h4>
-                    <p>{c.desc}</p>
+              <div className="collab-editorial-grid">
+                {COLLABORATION_PROTOCOLS.map((p) => (
+                  <div key={p.step} className="collab-editorial-item">
+                    <span className="cei-step">PROTOCOL {p.step}</span>
+                    <h4>{p.title}</h4>
+                    <p>{p.desc}</p>
                   </div>
                 ))}
               </div>
+            </div>
 
-              <div className="collab-protocol-grid" style={{ marginBottom: '1.5rem' }}>
-                {HARD_BOUNDARIES.map((b) => (
-                  <div key={b.id} className="collab-card boundary-detail-dossier-card">
-                    <span className="collab-step" style={{ color: '#b91c1c' }}>
-                      {b.code} · {b.shortTag}
-                    </span>
-                    <h4>{b.title}</h4>
-                    <p>{b.fact}</p>
-                  </div>
-                ))}
+            {/* § 05. 14-Item Verified Technical Specification Table */}
+            <div className="catalogue-section">
+              <div className="cs-section-header">
+                <span className="cs-num">§ 05</span>
+                <h3>Gemini 4 Argon 完整硬體、架構與 API 規格表（未公開項目嚴格標註「官方未公開」）</h3>
               </div>
 
-              <div className="dossier-table-wrapper">
-                <table className="dossier-table spec-master-table">
+              <div className="print-table-scroll" tabIndex={0} role="region" aria-label="技術規格表">
+                <table className="print-ledger-table">
                   <thead>
                     <tr>
-                      <th>規格項目</th>
-                      <th>查證數值與官方設定</th>
-                      <th>技術細節與限制說明</th>
+                      <th style={{ width: '24%' }}>規格項目</th>
+                      <th style={{ width: '34%' }}>查證數值／官方規格</th>
+                      <th>工程細節與限制說明</th>
                     </tr>
                   </thead>
                   <tbody>
                     {VERIFIED_SPEC_TABLE.map((row) => (
                       <tr key={row.label}>
-                        <td className="spec-lbl-cell">
+                        <td>
                           <strong>{row.label}</strong>
                         </td>
-                        <td className="spec-val-cell">
-                          <span
-                            className={
-                              row.value === '官方未公開' ? 'undisclosed-badge' : 'verified-val'
-                            }
-                          >
-                            {row.value}
-                          </span>
+                        <td>
+                          {row.value === '官方未公開' ? (
+                            <span className="stamp-undisclosed">官方未公開</span>
+                          ) : (
+                            <strong className="plt-mono">{row.value}</strong>
+                          )}
                         </td>
-                        <td className="spec-detail-cell">{row.detail}</td>
+                        <td className="plt-note">{row.detail}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -972,27 +911,30 @@ export function App() {
               </div>
             </div>
 
-            {/* 5.5 Official & Independent Verification Sources */}
-            <footer className="dossier-sources-block" aria-label="資料來源">
-              <div className="dossier-section-head">
-                <span className="dsh-index">SECTION 05 // SOURCES</span>
-                <h3>資料來源（Official &amp; Independent Verification Sources）</h3>
+            {/* § 06. Centralized Primary Sources Colophon */}
+            <footer className="catalogue-section catalogue-colophon">
+              <div className="cs-section-header">
+                <span className="cs-num">§ 06</span>
+                <h3>查證資料來源與出處索引（Sources &amp; Verification Index）</h3>
               </div>
-              <div className="sources-list-grid">
+
+              <div className="sources-editorial-list">
                 {OFFICIAL_SOURCES.map((src) => (
-                  <div key={src.id} className="source-item-card">
-                    <div className="sic-meta">
-                      <span className="sic-id">{src.id}</span>
-                      <span className="sic-pub">{src.publisher}</span>
-                      <span className="sic-date">{src.date}</span>
+                  <div key={src.id} className="source-editorial-row">
+                    <div className="ser-left">
+                      <span className="ser-id">{src.id}</span>
+                      <span className="ser-pub">{src.publisher}</span>
+                      <span className="ser-date">{src.date}</span>
                     </div>
-                    <h4 className="sic-title">
-                      <a href={src.url} target="_blank" rel="noreferrer">
-                        {src.title} ↗
-                      </a>
-                    </h4>
-                    <code className="sic-url">{src.url}</code>
-                    <p className="sic-summary">{src.summary}</p>
+                    <div className="ser-right">
+                      <h4 className="ser-title">
+                        <a href={src.url} target="_blank" rel="noreferrer">
+                          {src.title} ↗
+                        </a>
+                      </h4>
+                      <code className="ser-url">{src.url}</code>
+                      <p className="ser-sum">{src.summary}</p>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 export type ExcitationMode = 'INERT_18V' | 'IONIZED_420V' | 'SUPERCRITICAL_1048V';
 
@@ -7,437 +9,330 @@ interface ArgonHeroCanvasProps {
   reducedMotion: boolean;
 }
 
-interface Filament {
-  baseAngle: number;
-  speed: number;
-  phase: number;
-  freq: number;
-  amp: number;
-  secondaryPhase: number;
-}
-
-const FILAMENT_COUNT = 18; // Argon Atomic Number Z = 18
-const SPECTRAL_LINES = [
-  { label: '415.8nm Ar-I', angle: -Math.PI * 0.32 },
-  { label: '420.0nm Ar-I', angle: Math.PI * 0.16 },
-  { label: '451.1nm Ar-II', angle: Math.PI * 0.34 },
-  { label: '488.0nm Ar-II', angle: Math.PI * 0.66 },
-  { label: '750.3nm Ar-I', angle: Math.PI * 0.84 },
-  { label: '811.5nm Ar-I', angle: -Math.PI * 0.68 },
-];
-
 export const ArgonHeroCanvas: React.FC<ArgonHeroCanvasProps> = ({ mode, reducedMotion }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const pointerRef = useRef<{ x: number; y: number; active: boolean; smoothX: number; smoothY: number }>({
-    x: 0,
-    y: 0,
-    active: false,
-    smoothX: 0,
-    smoothY: 0,
-  });
+  const hostRef = useRef<HTMLDivElement | null>(null);
+  const modeRef = useRef<ExcitationMode>(mode);
+  modeRef.current = mode;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const host = hostRef.current;
+    if (!host) return;
 
-    let animationFrameId = 0;
-    let width = 0;
-    let height = 0;
-    let dpr = 1;
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance',
+      });
+    } catch {
+      host.classList.add('webgl-fallback');
+      return;
+    }
 
-    const filaments: Filament[] = Array.from({ length: FILAMENT_COUNT }, (_, i) => ({
-      baseAngle: (i / FILAMENT_COUNT) * Math.PI * 2,
-      speed: 0.55 + (i % 5) * 0.14,
-      phase: i * 1.17,
-      freq: 2.2 + (i % 3) * 0.65,
-      amp: 0.16 + (i % 4) * 0.045,
-      secondaryPhase: i * 0.73,
-    }));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.12;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    renderer.domElement.className = 'argon-hero-webgl';
+    renderer.domElement.setAttribute('aria-hidden', 'true');
+    host.innerHTML = '';
+    host.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(25, 1, 0.1, 80);
+    camera.position.set(0, 1.4, 9.15);
+    camera.lookAt(0, 0.26, 0);
+
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const room = new RoomEnvironment();
+    const envTarget = pmrem.fromScene(room, 0.04);
+    scene.environment = envTarget.texture;
+    scene.environmentIntensity = 0.88;
+    room.dispose();
+    pmrem.dispose();
+
+    // Studio lighting
+    const keyLight = new THREE.DirectionalLight(0xfff6e5, 3.1);
+    keyLight.position.set(-5, 8, 6);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.set(1024, 1024);
+    keyLight.shadow.camera.left = -9;
+    keyLight.shadow.camera.right = 9;
+    keyLight.shadow.camera.top = 5;
+    keyLight.shadow.camera.bottom = -5;
+    keyLight.shadow.normalBias = 0.02;
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xdce6f7, 2.3);
+    rimLight.position.set(6, 3, -5);
+    scene.add(rimLight);
+
+    const warmFill = new THREE.PointLight(0xd96b27, 3.6, 16, 1.5);
+    warmFill.position.set(0, 0.8, 3.5);
+    scene.add(warmFill);
+
+    // Custom Materials: Anodized Obsidian Slate, Burnished Champagne Brass, Prussian Cobalt, Cinnabar Crystal
+    const matObsidian = new THREE.MeshStandardMaterial({
+      color: 0x191d23,
+      metalness: 0.9,
+      roughness: 0.24,
+    });
+    const matBrass = new THREE.MeshStandardMaterial({
+      color: 0xc99e56,
+      metalness: 0.96,
+      roughness: 0.2,
+    });
+    const matPrussian = new THREE.MeshStandardMaterial({
+      color: 0x1e3b68,
+      metalness: 0.84,
+      roughness: 0.26,
+    });
+    const matCinnabar = new THREE.MeshPhysicalMaterial({
+      color: 0xc8431c,
+      metalness: 0.14,
+      roughness: 0.18,
+      clearcoat: 0.88,
+      clearcoatRoughness: 0.1,
+    });
+    const matAlabaster = new THREE.MeshPhysicalMaterial({
+      color: 0xf4efe6,
+      metalness: 0.08,
+      roughness: 0.2,
+      clearcoat: 0.65,
+    });
+
+    const stageGroup = new THREE.Group();
+    scene.add(stageGroup);
+
+    // 4 Horizontal Interferometer Datum Rails (Gemini 4) spanning full width
+    const railGroup = new THREE.Group();
+    stageGroup.add(railGroup);
+    for (let r = 0; r < 4; r++) {
+      const zOff = (r - 1.5) * 0.56;
+      const railBar = new THREE.Mesh(
+        new THREE.BoxGeometry(11.6, 0.048, 0.07),
+        r % 2 === 0 ? matBrass : matObsidian
+      );
+      railBar.position.set(0, -1.08 + (r % 2) * 0.42, zOff);
+      railBar.castShadow = true;
+      railBar.receiveShadow = true;
+      railGroup.add(railBar);
+    }
+
+    // 18 Hexagonal Kinetic Prism Columns (Argon Atomic Number Z = 18)
+    interface PrismColumn {
+      group: THREE.Group;
+      shaft: THREE.Mesh;
+      collar: THREE.Mesh;
+      crown: THREE.Mesh;
+      index: number;
+      normX: number;
+      rank: number;
+    }
+
+    const columns: PrismColumn[] = [];
+    const TOTAL_COLUMNS = 18;
+
+    for (let i = 0; i < TOTAL_COLUMNS; i++) {
+      const normX = (i / (TOTAL_COLUMNS - 1)) * 2 - 1; // -1 to +1
+      const rank = i % 2; // 0 = Castor (Front), 1 = Pollux (Back)
+      const baseX = normX * 5.25;
+      const baseZ = (rank === 0 ? 0.42 : -0.42) + Math.cos(normX * Math.PI * 0.5) * 0.25;
+
+      const colGroup = new THREE.Group();
+      colGroup.position.set(baseX, 0, baseZ);
+
+      // 1. Hexagonal Machined Prism Shaft
+      const shaftGeom = new THREE.CylinderGeometry(0.235, 0.235, 2.35, 6);
+      const shaftMat = i % 3 === 0 ? matObsidian : i % 3 === 1 ? matPrussian : matAlabaster;
+      const shaft = new THREE.Mesh(shaftGeom, shaftMat);
+      shaft.castShadow = true;
+      shaft.receiveShadow = true;
+      colGroup.add(shaft);
+
+      // 2. Brushed-Brass Vernier Collar
+      const collarGeom = new THREE.CylinderGeometry(0.275, 0.275, 0.16, 6);
+      const collar = new THREE.Mesh(collarGeom, matBrass);
+      collar.position.y = 0.68;
+      collar.castShadow = true;
+      colGroup.add(collar);
+
+      // 3. Lower Brass Plinth Ring
+      const plinth = new THREE.Mesh(new THREE.CylinderGeometry(0.265, 0.285, 0.14, 6), matBrass);
+      plinth.position.y = -1.12;
+      colGroup.add(plinth);
+
+      // 4. Faceted Dichroic Crystal Crown Finial
+      const crownGeom = new THREE.OctahedronGeometry(0.23, 0);
+      const crown = new THREE.Mesh(crownGeom, i % 2 === 0 ? matCinnabar : matBrass);
+      crown.position.y = 1.48;
+      crown.castShadow = true;
+      colGroup.add(crown);
+
+      stageGroup.add(colGroup);
+      columns.push({
+        group: colGroup,
+        shaft,
+        collar,
+        crown,
+        index: i,
+        normX,
+        rank,
+      });
+    }
+
+    // Soft elongated architectural floor shadow
+    const shadowCanvas = document.createElement('canvas');
+    shadowCanvas.width = 512;
+    shadowCanvas.height = 256;
+    const sCtx = shadowCanvas.getContext('2d');
+    if (sCtx) {
+      const grad = sCtx.createRadialGradient(256, 128, 22, 256, 128, 248);
+      grad.addColorStop(0, 'rgba(18, 19, 22, 0.26)');
+      grad.addColorStop(0.6, 'rgba(18, 19, 22, 0.09)');
+      grad.addColorStop(1, 'rgba(18, 19, 22, 0)');
+      sCtx.fillStyle = grad;
+      sCtx.fillRect(0, 0, 512, 256);
+    }
+    const floorShadow = new THREE.Mesh(
+      new THREE.PlaneGeometry(13.5, 4.4),
+      new THREE.MeshBasicMaterial({
+        map: new THREE.CanvasTexture(shadowCanvas),
+        transparent: true,
+        depthWrite: false,
+      })
+    );
+    floorShadow.rotation.x = -Math.PI / 2;
+    floorShadow.position.set(0, -1.72, 0);
+    scene.add(floorShadow);
 
     const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      width = Math.max(rect.width, 280);
-      height = Math.max(rect.height, 260);
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const w = Math.max(host.clientWidth, 280);
+      const h = Math.max(host.clientHeight, 220);
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.position.z = w < 600 ? 15.2 : w < 960 ? 11.4 : 9.15;
+      camera.updateProjectionMatrix();
     };
-
+    const ro = new ResizeObserver(resize);
+    ro.observe(host);
     resize();
-    window.addEventListener('resize', resize);
 
-    const handlePointerMove = (e: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-      pointerRef.current.x = nx;
-      pointerRef.current.y = ny;
-      pointerRef.current.active = Math.abs(nx) <= 1.2 && Math.abs(ny) <= 1.2;
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
+    let userYaw = -0.12;
+    let userPitch = 0.06;
+    let curYaw = -0.12;
+    let curPitch = 0.06;
+    let pointerNormX = 0;
+
+    const onDown = (e: PointerEvent) => {
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      host.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      const rect = host.getBoundingClientRect();
+      pointerNormX = ((e.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1;
+      if (!dragging) return;
+      userYaw += (e.clientX - lastX) * 0.007;
+      userPitch = Math.max(-0.32, Math.min(0.42, userPitch + (e.clientY - lastY) * 0.005));
+      lastX = e.clientX;
+      lastY = e.clientY;
+    };
+    const onUp = () => {
+      dragging = false;
     };
 
-    const handlePointerLeave = () => {
-      pointerRef.current.active = false;
-    };
+    host.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
-    canvas.addEventListener('pointerleave', handlePointerLeave);
+    let visible = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+      },
+      { rootMargin: '150px' }
+    );
+    io.observe(host);
 
+    let waveAmp = 0.48;
+    let twistFactor = 0.55;
+    let frameId = 0;
     const startTime = performance.now();
 
-    const render = (now: number) => {
-      const elapsed = reducedMotion ? 2.4 : (now - startTime) * 0.001;
+    const animate = (now: number) => {
+      frameId = window.requestAnimationFrame(animate);
+      if (!visible || document.hidden) return;
 
-      const ptr = pointerRef.current;
-      const targetX = ptr.active ? ptr.x : Math.cos(elapsed * 0.35) * 0.18;
-      const targetY = ptr.active ? ptr.y : Math.sin(elapsed * 0.28) * 0.18;
-      ptr.smoothX += (targetX - ptr.smoothX) * 0.07;
-      ptr.smoothY += (targetY - ptr.smoothY) * 0.07;
+      const elapsed = reducedMotion ? 1.6 : (now - startTime) * 0.001;
+      const curMode = modeRef.current;
 
-      ctx.clearRect(0, 0, width, height);
+      const targetAmp =
+        curMode === 'INERT_18V' ? 0.14 : curMode === 'SUPERCRITICAL_1048V' ? 0.85 : 0.48;
+      const targetTwist =
+        curMode === 'INERT_18V' ? 0.18 : curMode === 'SUPERCRITICAL_1048V' ? 1.3 : 0.65;
+      const speed =
+        curMode === 'INERT_18V' ? 0.45 : curMode === 'SUPERCRITICAL_1048V' ? 1.55 : 0.95;
 
-      const cx = width * 0.5;
-      const cy = height * 0.5;
-      const minDim = Math.min(width, height);
-      const chamberRadius = minDim * 0.33;
-      const outerRingRadius = minDim * 0.405;
+      waveAmp += (targetAmp - waveAmp) * (reducedMotion ? 1 : 0.07);
+      twistFactor += (targetTwist - twistFactor) * (reducedMotion ? 1 : 0.07);
 
-      const modeConfig =
-        mode === 'INERT_18V'
-          ? {
-              activeCount: 9,
-              turbulence: 0.55,
-              coreScale: 0.88,
-              primaryRgb: '99, 102, 241',
-              secondaryRgb: '56, 189, 248',
-              accentRgb: '129, 140, 248',
-              coreHex: '#E0E7FF',
-              outerGlowRgb: '79, 70, 229',
-              ringSpeed: 0.12,
-            }
-          : mode === 'SUPERCRITICAL_1048V'
-            ? {
-                activeCount: 18,
-                turbulence: 1.45,
-                coreScale: 1.22,
-                primaryRgb: '245, 158, 11',
-                secondaryRgb: '236, 72, 153',
-                accentRgb: '56, 232, 255',
-                coreHex: '#FFFBEB',
-                outerGlowRgb: '217, 70, 239',
-                ringSpeed: 0.42,
-              }
-            : {
-                activeCount: 18,
-                turbulence: 1.0,
-                coreScale: 1.05,
-                primaryRgb: '139, 92, 246',
-                secondaryRgb: '56, 232, 255',
-                accentRgb: '244, 114, 182',
-                coreHex: '#F8FAFC',
-                outerGlowRgb: '124, 58, 237',
-                ringSpeed: 0.24,
-              };
+      curYaw += (userYaw + pointerNormX * 0.1 - curYaw) * 0.08;
+      curPitch += (userPitch - curPitch) * 0.08;
 
-      // 1. Deep Atmospheric Back-Glow & Chromatic Caustic Halo
-      const bgRadial = ctx.createRadialGradient(
-        cx + ptr.smoothX * 28,
-        cy + ptr.smoothY * 28,
-        chamberRadius * 0.05,
-        cx,
-        cy,
-        outerRingRadius * 1.38
-      );
-      bgRadial.addColorStop(0, `rgba(${modeConfig.primaryRgb}, 0.38)`);
-      bgRadial.addColorStop(0.36, `rgba(${modeConfig.outerGlowRgb}, 0.20)`);
-      bgRadial.addColorStop(0.68, `rgba(${modeConfig.secondaryRgb}, 0.08)`);
-      bgRadial.addColorStop(1, 'rgba(5, 6, 11, 0)');
-      ctx.fillStyle = bgRadial;
-      ctx.fillRect(0, 0, width, height);
+      stageGroup.rotation.y = curYaw + (reducedMotion ? 0 : Math.sin(elapsed * 0.22) * 0.05);
+      stageGroup.rotation.x = curPitch;
 
-      // 2. Precision Optical Bezel & Graduated Vernier Ring
-      ctx.save();
-      ctx.translate(cx, cy);
+      columns.forEach((col) => {
+        const phase = col.normX * Math.PI * 1.45 + (col.rank === 0 ? 0 : Math.PI * 0.38);
+        const wave = Math.sin(elapsed * 1.25 * speed - phase) * waveAmp;
+        const arch = Math.cos(col.normX * Math.PI * 0.5) * 0.34 * waveAmp;
 
-      // Equatorial crosshair axes
-      ctx.beginPath();
-      ctx.moveTo(-outerRingRadius * 1.12, 0);
-      ctx.lineTo(-chamberRadius * 1.04, 0);
-      ctx.moveTo(chamberRadius * 1.04, 0);
-      ctx.lineTo(outerRingRadius * 1.12, 0);
-      ctx.moveTo(0, -outerRingRadius * 1.12);
-      ctx.lineTo(0, -chamberRadius * 1.04);
-      ctx.moveTo(0, chamberRadius * 1.04);
-      ctx.lineTo(0, outerRingRadius * 1.12);
-      ctx.strokeStyle = `rgba(${modeConfig.secondaryRgb}, 0.35)`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
+        col.group.position.y = wave * 0.46 + arch - 0.08;
+        col.group.rotation.y = col.normX * twistFactor * 0.65 + elapsed * 0.25 * speed;
+        col.group.rotation.z = Math.sin(col.normX * Math.PI) * 0.08 * twistFactor;
 
-      // Outer brushed metallic track
-      ctx.beginPath();
-      ctx.arc(0, 0, outerRingRadius, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(148, 163, 184, 0.24)';
-      ctx.lineWidth = 1.4;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(0, 0, outerRingRadius * 1.06, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(${modeConfig.primaryRgb}, 0.22)`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      // Graduated ticks (180 ticks around perimeter, 18 major Argon shell markers)
-      const tickRotation = elapsed * modeConfig.ringSpeed * 0.35;
-      for (let i = 0; i < 180; i++) {
-        const angle = (i / 180) * Math.PI * 2 + tickRotation;
-        const isShell = i % 10 === 0;
-        const isMid = i % 5 === 0;
-        const innerR = outerRingRadius - (isShell ? 11 : isMid ? 6 : 3);
-        const outerR = outerRingRadius + (isShell ? 4 : 0);
-
-        const cosA = Math.cos(angle);
-        const sinA = Math.sin(angle);
-        ctx.beginPath();
-        ctx.moveTo(cosA * innerR, sinA * innerR);
-        ctx.lineTo(cosA * outerR, sinA * outerR);
-        ctx.strokeStyle = isShell
-          ? `rgba(${modeConfig.secondaryRgb}, 0.85)`
-          : isMid
-            ? 'rgba(203, 213, 225, 0.36)'
-            : 'rgba(148, 163, 184, 0.15)';
-        ctx.lineWidth = isShell ? 1.8 : 0.8;
-        ctx.stroke();
-      }
-
-      // Spectral wavelength callouts positioned safely within canvas bounds
-      if (minDim >= 360) {
-        ctx.font = '600 9.5px "JetBrains Mono", monospace';
-        ctx.fillStyle = 'rgba(203, 213, 225, 0.78)';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        SPECTRAL_LINES.forEach((item) => {
-          const lx = Math.cos(item.angle) * (outerRingRadius * 1.115);
-          const ly = Math.sin(item.angle) * (outerRingRadius * 1.115);
-          ctx.fillText(item.label, lx, ly);
-        });
-      }
-
-      // 3. Electron Shell Orbital Rings (2 - 8 - 8 Argon Configuration: [Ne] 3s2 3p6)
-      const shellRadii = [chamberRadius * 0.28, chamberRadius * 0.62, chamberRadius * 1.0];
-      const shellCounts = [2, 8, 8];
-      shellRadii.forEach((r, sIdx) => {
-        ctx.beginPath();
-        ctx.arc(0, 0, r, 0, Math.PI * 2);
-        ctx.strokeStyle =
-          sIdx === 2
-            ? `rgba(${modeConfig.secondaryRgb}, 0.55)`
-            : `rgba(${modeConfig.primaryRgb}, ${0.22 + sIdx * 0.08})`;
-        ctx.lineWidth = sIdx === 2 ? 2.2 : 1.1;
-        if (sIdx === 1) {
-          ctx.setLineDash([4, 6]);
-        } else {
-          ctx.setLineDash([]);
-        }
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        const count = shellCounts[sIdx];
-        const dir = sIdx % 2 === 0 ? 1 : -1;
-        for (let eIdx = 0; eIdx < count; eIdx++) {
-          const eAngle =
-            (eIdx / count) * Math.PI * 2 + elapsed * modeConfig.ringSpeed * dir * (1.5 - sIdx * 0.3);
-          const ex = Math.cos(eAngle) * r;
-          const ey = Math.sin(eAngle) * r;
-
-          ctx.beginPath();
-          ctx.arc(ex, ey, sIdx === 2 ? 3.0 : 2.2, 0, Math.PI * 2);
-          ctx.fillStyle = sIdx === 2 ? '#38E8FF' : '#C4B5FD';
-          ctx.fill();
-        }
+        const scaleY = Math.max(0.58, 0.9 + (wave + 0.5) * 0.28);
+        col.shaft.scale.set(1, scaleY, 1);
+        col.collar.position.y = 0.68 * scaleY;
+        col.crown.position.y = 1.16 * scaleY + 0.28 + Math.abs(wave) * 0.16;
+        col.crown.rotation.y = -elapsed * 1.1 * speed + col.index * 0.4;
       });
 
-      ctx.restore();
-
-      // 4. Quartz Containment Vessel Shadow & Inner Caustic Base
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, chamberRadius, 0, Math.PI * 2);
-      const vesselGrad = ctx.createRadialGradient(
-        cx - chamberRadius * 0.25,
-        cy - chamberRadius * 0.25,
-        chamberRadius * 0.05,
-        cx,
-        cy,
-        chamberRadius
-      );
-      vesselGrad.addColorStop(0, 'rgba(17, 20, 38, 0.32)');
-      vesselGrad.addColorStop(0.68, 'rgba(7, 9, 19, 0.72)');
-      vesselGrad.addColorStop(0.92, `rgba(${modeConfig.primaryRgb}, 0.28)`);
-      vesselGrad.addColorStop(1, `rgba(${modeConfig.secondaryRgb}, 0.58)`);
-      ctx.fillStyle = vesselGrad;
-      ctx.fill();
-      ctx.restore();
-
-      // 5. High-Voltage Plasma Discharge Filaments (Additive Blending)
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-
-      const pointerWorldX = cx + ptr.smoothX * chamberRadius * 0.78;
-      const pointerWorldY = cy + ptr.smoothY * chamberRadius * 0.78;
-
-      for (let i = 0; i < modeConfig.activeCount; i++) {
-        const f = filaments[i];
-        const baseA =
-          f.baseAngle +
-          elapsed * 0.16 * (i % 2 === 0 ? 1 : -1) +
-          Math.sin(elapsed * 0.7 + f.phase) * 0.14;
-
-        const rawEndX = cx + Math.cos(baseA) * chamberRadius * 0.985;
-        const rawEndY = cy + Math.sin(baseA) * chamberRadius * 0.985;
-
-        const dxPtr = pointerWorldX - rawEndX;
-        const dyPtr = pointerWorldY - rawEndY;
-        const distPtr = Math.hypot(dxPtr, dyPtr);
-        const pullFactor = Math.max(0, 1 - distPtr / (chamberRadius * 1.45)) * (ptr.active ? 0.48 : 0.2);
-
-        const targetAngle = Math.atan2(
-          rawEndY + dyPtr * pullFactor - cy,
-          rawEndX + dxPtr * pullFactor - cx
-        );
-
-        const endX = cx + Math.cos(targetAngle) * (chamberRadius - 2);
-        const endY = cy + Math.sin(targetAngle) * (chamberRadius - 2);
-
-        const perpX = -Math.sin(targetAngle);
-        const perpY = Math.cos(targetAngle);
-
-        const wave1 =
-          Math.sin(elapsed * f.speed * 3.2 + f.phase) *
-          chamberRadius *
-          f.amp *
-          modeConfig.turbulence;
-        const wave2 =
-          Math.cos(elapsed * f.speed * 2.5 - f.secondaryPhase) *
-          chamberRadius *
-          (f.amp * 0.85) *
-          modeConfig.turbulence;
-
-        const cp1x = cx + Math.cos(targetAngle) * chamberRadius * 0.33 + perpX * wave1;
-        const cp1y = cy + Math.sin(targetAngle) * chamberRadius * 0.33 + perpY * wave1;
-        const cp2x = cx + Math.cos(targetAngle) * chamberRadius * 0.68 - perpX * wave2;
-        const cp2y = cy + Math.sin(targetAngle) * chamberRadius * 0.68 - perpY * wave2;
-
-        // Outer ionized violet sheath
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
-        ctx.strokeStyle = `rgba(${modeConfig.primaryRgb}, 0.28)`;
-        ctx.lineWidth = 9.5;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-
-        // Mid spectral cyan/magenta stream
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
-        ctx.strokeStyle =
-          i % 3 === 0
-            ? `rgba(${modeConfig.secondaryRgb}, 0.58)`
-            : i % 3 === 1
-              ? `rgba(${modeConfig.primaryRgb}, 0.62)`
-              : `rgba(${modeConfig.accentRgb}, 0.52)`;
-        ctx.lineWidth = 3.5;
-        ctx.stroke();
-
-        // Incandescent white-gold filament core
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
-        ctx.strokeStyle = 'rgba(255, 252, 245, 0.92)';
-        ctx.lineWidth = 1.25;
-        ctx.stroke();
-
-        // Anode contact flare on the inner quartz glass wall
-        const spotGlow = ctx.createRadialGradient(endX, endY, 0.5, endX, endY, 16);
-        spotGlow.addColorStop(0, '#FFFFFF');
-        spotGlow.addColorStop(0.38, `rgba(${modeConfig.secondaryRgb}, 0.9)`);
-        spotGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = spotGlow;
-        ctx.beginPath();
-        ctx.arc(endX, endY, 16, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // 6. Central High-Pressure Argon-18 Core Sphere
-      const coreR = chamberRadius * 0.20 * modeConfig.coreScale;
-      const coreGlow = ctx.createRadialGradient(cx, cy, coreR * 0.1, cx, cy, coreR * 2.8);
-      coreGlow.addColorStop(0, modeConfig.coreHex);
-      coreGlow.addColorStop(0.3, `rgba(${modeConfig.secondaryRgb}, 0.92)`);
-      coreGlow.addColorStop(0.65, `rgba(${modeConfig.primaryRgb}, 0.48)`);
-      coreGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = coreGlow;
-      ctx.beginPath();
-      ctx.arc(cx, cy, coreR * 2.8, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.restore();
-
-      // 7. Optical Lens Specular Reflection Arcs (Glass Surface Realism)
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, chamberRadius * 0.93, -Math.PI * 0.78, -Math.PI * 0.28);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.lineWidth = 2.4;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(cx, cy, chamberRadius * 0.93, Math.PI * 0.22, Math.PI * 0.62);
-      ctx.strokeStyle = `rgba(${modeConfig.secondaryRgb}, 0.32)`;
-      ctx.lineWidth = 1.8;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-
-      // Central crisp Ar-18 Core Emblem Badge (Sized with generous padding on all viewports)
-      const badgeR = Math.max(19, chamberRadius * 0.145);
-      ctx.beginPath();
-      ctx.arc(cx, cy, badgeR, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(6, 8, 17, 0.9)';
-      ctx.fill();
-      ctx.lineWidth = 1.8;
-      ctx.strokeStyle = `rgba(${modeConfig.secondaryRgb}, 0.92)`;
-      ctx.stroke();
-
-      ctx.fillStyle = '#F8FAFC';
-      const fontPx = Math.max(11, Math.round(badgeR * 0.62));
-      ctx.font = `800 ${fontPx}px "Syne", "Space Grotesk", sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('Ar¹⁸', cx, cy);
-      ctx.restore();
-
-      if (!reducedMotion) {
-        animationFrameId = window.requestAnimationFrame(render);
-      }
+      renderer.render(scene, camera);
     };
 
-    animationFrameId = window.requestAnimationFrame(render);
+    frameId = window.requestAnimationFrame(animate);
 
     return () => {
-      window.cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('pointermove', handlePointerMove);
-      canvas.removeEventListener('pointerleave', handlePointerLeave);
+      window.cancelAnimationFrame(frameId);
+      ro.disconnect();
+      io.disconnect();
+      host.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+      renderer.dispose();
+      envTarget.dispose();
     };
-  }, [mode, reducedMotion]);
+  }, [reducedMotion]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="argon-hero-canvas"
-      aria-label="Gemini 4 Argon 高壓氬氣電離光譜球體互動視覺"
+    <div
+      ref={hostRef}
+      className="argon-hero-sculpture"
+      role="img"
+      aria-label="Gemini 4 Argon 十八階雙子六角分光稜柱陣列 3D 實體雕塑（可拖曳旋轉）"
     />
   );
 };
