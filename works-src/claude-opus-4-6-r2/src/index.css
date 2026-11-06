@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --amber-50: #fffbeb;
+  --amber-100: #fef3c7;
+  --amber-200: #fde68a;
+  --amber-300: #fcd34d;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --amber-700: #b45309;
+  --amber-800: #92400e;
+  --amber-900: #78350f;
+
+  --dark-950: #0a0908;
+  --dark-900: #1c1917;
+  --dark-800: #292524;
+  --dark-700: #44403c;
+  --dark-600: #57534e;
+  --dark-500: #78716c;
+  --dark-400: #a8a29e;
+  --dark-300: #d6d3d1;
+
+  --cream: #fef7ee;
+
+  --font-display: 'Playfair Display Variable', 'PingFang TC', 'Microsoft JhengHei', serif;
+  --font-heading: 'Space Grotesk Variable', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-body: 'Inter Variable', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'Menlo', 'Consolas', monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  font-family: var(--font-body);
+  color: var(--cream);
+  background: var(--dark-950);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
