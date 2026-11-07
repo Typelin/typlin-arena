@@ -2,6 +2,7 @@
 export const REELS = new Set<string>([
   "claude-haiku-5-5",
   "claude-opus-4-6",
+  "claude-opus-4-6-r2",
   "claude-opus-5-5",
   "claude-opus-5-5-r2",
   "claude-sonnet-4-6",
@@ -17,7 +18,9 @@ export const REELS = new Set<string>([
   "gpt-5-6-sol",
   "gpt-6-1-sol",
   "gpt-6-1-sol-r2",
+  "gpt-6-1-terra",
   "gpt-6-astra",
+  "gpt-6-astra-r2",
   "grok-4-6",
   "grok-4-6-r2",
   "grok-4-7",

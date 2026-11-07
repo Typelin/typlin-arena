@@ -47,6 +47,7 @@ export const LOGO_PROMPT = '同一道題：用同一張 LOGO 做完整品牌落�
 export const PLATES: Plate[] = [
   {
     id: 'claude-opus-4-6',
+    twin: 'claude-opus-4-6-r2',
     no: '01',
     short: 'OPUS',
     model: 'CLAUDE OPUS 4.6',
@@ -219,6 +220,7 @@ export const PLATES: Plate[] = [
   },
   {
     id: 'gpt-6-astra',
+    twin: 'gpt-6-astra-r2',
     no: '11',
     short: 'ASTRA',
     model: 'GPT-6 ASTRA',
@@ -379,7 +381,7 @@ export const PLATES: Plate[] = [
   {
     id: 'deepseek-v4-1-flash-r2',
     era: 'new',
-    place: 4,
+    place: 5,
     twin: 'deepseek-v4-1-flash',
     no: '20',
     short: 'DSV4.1F',
@@ -397,7 +399,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-haiku-5-5',
     era: 'new',
-    place: 5,
+    place: 7,
     no: '21',
     short: 'HAIKU 5.5',
     model: 'CLAUDE HAIKU 5.5 · 新題目',
@@ -414,7 +416,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-4-6',
     era: 'new',
-    place: 6,
+    place: 8,
     no: '22',
     short: 'SONNET 4.6',
     model: 'CLAUDE SONNET 4.6 · 新題目',
@@ -431,7 +433,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-3-8-flash-high-r2',
     era: 'new',
-    place: 10,
+    place: 13,
     twin: 'gemini-3-8-flash-high',
     no: '23',
     short: 'GEMINI 3.8',
@@ -449,7 +451,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-argon-r2',
     era: 'new',
-    place: 8,
+    place: 10,
     twin: 'gemini-4-argon',
     no: '24',
     short: 'ARGON',
@@ -467,7 +469,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gpt-6-1-sol-r2',
     era: 'new',
-    place: 3,
+    place: 4,
     twin: 'gpt-6-1-sol',
     no: '25',
     short: 'SOL 6.1',
@@ -485,7 +487,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-6-r2',
     era: 'new',
-    place: 7,
+    place: 9,
     twin: 'grok-4-6',
     no: '26',
     short: 'GROK 4.6',
@@ -503,7 +505,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-7',
     era: 'new',
-    place: 9,
+    place: 11,
     no: '27',
     short: 'GROK 4.7',
     model: 'GROK 4.7 · 新題目',
@@ -515,6 +517,59 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/grok-4-7/',
     thumb: '/shots/grok-4-7.png',
+    score: null,
+  },
+  {
+    id: 'claude-opus-4-6-r2',
+    era: 'new',
+    place: 12,
+    twin: 'claude-opus-4-6',
+    no: '28',
+    short: 'OPUS 4.6',
+    model: 'CLAUDE OPUS 4.6 · 新題目',
+    title: '琥珀裡的思考者',
+    prompt: NEW_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D 流場', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。六段：我是誰、自己決定想多深、寫程式讀長文做研究、做不到的事、和對手比一次數字、事實與資料來源。',
+    visual: 'current',
+    src: '/works/claude-opus-4-6-r2/',
+    thumb: '/shots/claude-opus-4-6-r2.png',
+    score: null,
+  },
+  {
+    id: 'gpt-6-astra-r2',
+    era: 'new',
+    place: 3,
+    twin: 'gpt-6-astra',
+    no: '29',
+    short: 'ASTRA',
+    model: 'GPT-6 ASTRA · 新題目',
+    title: '把問題展開',
+    prompt: NEW_PROMPT,
+    spec: ['VITE + TS', 'THREE.JS', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。六段：自我介紹、放得下很多仍要找到重點、條件會改變答案、同樣的分數不同的代價、能讀什麼也有邊界、把依據留給你。',
+    visual: 'current',
+    src: '/works/gpt-6-astra-r2/',
+    thumb: '/shots/gpt-6-astra-r2.png',
+    score: null,
+  },
+  {
+    id: 'gpt-6-1-terra',
+    era: 'new',
+    place: 6,
+    no: '30',
+    short: 'TERRA',
+    model: 'GPT-6.1 TERRA · 新題目',
+    title: '從你的問題開始',
+    prompt: NEW_PROMPT,
+    spec: ['VITE', 'CANVAS 2D', 'REDUCED MOTION', 'AI 生成背景圖'],
+    verdict:
+      '新題目作答。背景用了兩張 AI 生成的圖，提示詞存於原始碼 art-prompts.txt。八段：我是誰、回應逐漸成形、讀很多但不等於全記住、給我一件事、能接收什麼又能給什麼、能力不只一個分數、你給方向我往前推、資料。',
+    visual: 'current',
+    src: '/works/gpt-6-1-terra/',
+    thumb: '/shots/gpt-6-1-terra.png',
     score: null,
   },
 ];
