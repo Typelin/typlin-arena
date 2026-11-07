@@ -13,10 +13,9 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@fontsource-variable/inter": "^5.2.5",
+    "@fontsource-variable/cormorant": "^5.2.5",
+    "@fontsource-variable/plus-jakarta-sans": "^5.2.5",
     "@fontsource-variable/jetbrains-mono": "^5.2.5",
-    "@fontsource-variable/playfair-display": "^5.2.5",
-    "@fontsource-variable/space-grotesk": "^5.2.5",
     "@vitejs/plugin-react": "^6.1.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
