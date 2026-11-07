@@ -1,62 +1,241 @@
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --amber-50: #fffbeb;
-  --amber-100: #fef3c7;
-  --amber-200: #fde68a;
-  --amber-300: #fcd34d;
-  --amber-400: #fbbf24;
-  --amber-500: #f59e0b;
-  --amber-600: #d97706;
-  --amber-700: #b45309;
-  --amber-800: #92400e;
-  --amber-900: #78350f;
+  --bg: #0d0906;
+  --ink: #f4e4ce;
+  --ink-soft: rgba(244,228,206,0.55);
+  --ink-faint: rgba(244,228,206,0.2);
+  --accent: #c47d3b;
+  --accent-bright: #f0a848;
+  --danger: #c44b3b;
 
-  --dark-950: #0a0908;
-  --dark-900: #1c1917;
-  --dark-800: #292524;
-  --dark-700: #44403c;
-  --dark-600: #57534e;
-  --dark-500: #78716c;
-  --dark-400: #a8a29e;
-  --dark-300: #d6d3d1;
-
-  --cream: #fef7ee;
-
-  --font-display: 'Playfair Display Variable', 'PingFang TC', 'Microsoft JhengHei', serif;
-  --font-heading: 'Space Grotesk Variable', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-  --font-body: 'Inter Variable', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --font-display: 'Cormorant Variable', 'Songti TC', 'DFSongStd', 'PingFang TC', 'Microsoft JhengHei', serif;
+  --font-body: 'Plus Jakarta Sans Variable', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
   --font-mono: 'JetBrains Mono Variable', 'Menlo', 'Consolas', monospace;
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-
   font-family: var(--font-body);
-  color: var(--cream);
-  background: var(--dark-950);
+  color: var(--ink);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; line-height: 1.7; font-size: clamp(15px, 1.1vw, 17px); }
 
-html {
-  scroll-behavior: smooth;
+::selection { background: rgba(196,125,59,0.35); color: var(--ink); }
+
+/* ── Scroll progress strip ── */
+.progress-strip {
+  position: fixed; left: 0; top: 0; width: 2px; height: 0%;
+  background: var(--accent); z-index: 100; transition: height 0.1s linear;
 }
 
-body {
-  overflow-x: hidden;
-  line-height: 1.65;
+/* ── Canvas layer ── */
+.flow-canvas {
+  position: fixed; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+/* ── Content layer ── */
+.content { position: relative; z-index: 1; }
+
+/* ── Section base ── */
+.sec {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: clamp(80px,14vh,160px) clamp(24px,6vw,88px);
+}
+.sec-inner { max-width: 640px; width: 100%; }
+
+/* ── Reveal system ── */
+.reveal {
+  opacity: 0;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+              clip-path 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.vis {
+  opacity: 1;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.reveal.d1 { transition-delay: 0.1s; }
+.reveal.d2 { transition-delay: 0.22s; }
+.reveal.d3 { transition-delay: 0.36s; }
+.reveal.d4 { transition-delay: 0.52s; }
+.reveal.d5 { transition-delay: 0.7s; }
+
+/* ── Typography ── */
+.kicker {
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+  display: inline-block; padding: 3px 0;
+  border-bottom: 1px solid rgba(196,125,59,0.3);
+}
+.kicker-danger { color: var(--danger); border-color: rgba(196,75,59,0.3); }
+
+.heading {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(28px, 5vw, 48px); line-height: 1.15;
+  letter-spacing: -0.01em; color: var(--ink); margin-bottom: 18px;
+}
+
+.body-text {
+  font-size: inherit; line-height: 1.8;
+  color: var(--ink-soft); max-width: 540px;
+}
+
+.hero-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(64px, 14vw, 180px); line-height: 0.88;
+  letter-spacing: -0.025em;
+  color: var(--accent-bright);
+  text-shadow: 0 0 80px rgba(196,125,59,0.25);
+}
+.hero-title em {
+  font-weight: 400; font-style: italic;
+  color: var(--accent);
+}
+.hero-sub {
+  font-family: var(--font-mono); font-size: clamp(10px,1.1vw,13px);
+  letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--accent); opacity: 0.65; margin-bottom: 24px;
+}
+.hero-tag {
+  font-family: var(--font-display); font-size: clamp(14px,1.8vw,19px);
+  font-weight: 400; font-style: italic;
+  color: var(--ink-soft); opacity: 0.5; margin-top: 18px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Spec grid ── */
+.spec-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+  gap: 10px; margin-top: 36px;
+}
+.spec-card {
+  padding: 14px; border: 1px solid var(--ink-faint); border-radius: 2px;
+}
+.spec-label {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); opacity: 0.7; margin-bottom: 4px;
+}
+.spec-value {
+  font-family: var(--font-display); font-size: clamp(18px,2.8vw,26px);
+  font-weight: 700; color: var(--ink); line-height: 1.2;
+}
+.spec-unit { font-size: 0.45em; font-weight: 400; opacity: 0.4; margin-left: 3px; }
+
+/* ── Big number layout ── */
+.big-row {
+  display: grid; grid-template-columns: clamp(72px,18vw,180px) 1fr;
+  gap: clamp(12px,3vw,32px); align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--ink-faint);
+}
+.big-num {
+  font-family: var(--font-display); font-weight: 700; font-style: italic;
+  font-size: clamp(42px,10vw,100px); line-height: 1; text-align: right;
+  color: var(--accent-bright);
+  text-shadow: 0 0 30px rgba(196,125,59,0.15);
+}
+.big-pct { font-size: 0.28em; font-style: normal; font-weight: 400; opacity: 0.45; vertical-align: super; }
+.big-title {
+  font-family: var(--font-display); font-size: clamp(15px,1.8vw,19px);
+  font-weight: 600; color: var(--ink); margin-bottom: 3px;
+}
+.big-desc { font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
+
+/* ── Effort buttons ── */
+.effort-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 28px; }
+.effort-btn {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em;
+  padding: 8px 18px; border-radius: 2px; cursor: pointer;
+  border: 1px solid; transition: all 0.2s ease; background: transparent;
+}
+.effort-btn.on {
+  color: var(--bg); font-weight: 700;
+}
+
+/* ── Limit items ── */
+.limit-item {
+  padding: 16px 20px; border-left: 2px solid;
+  margin-bottom: 4px;
+}
+.limit-title {
+  font-family: var(--font-display); font-size: clamp(15px,1.8vw,18px);
+  font-weight: 600; color: var(--ink); margin-bottom: 3px;
+}
+
+/* ── Radar chart section ── */
+.radar-wrap {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,300px),1fr));
+  gap: clamp(20px,4vw,56px); align-items: center;
+}
+
+/* ── Data tables ── */
+.dtable { overflow-x: auto; margin-top: 10px; }
+.dtable table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--font-mono); font-size: clamp(10px,1.1vw,12px);
+}
+.dtable th {
+  text-align: left; padding: 7px 8px; color: var(--accent); font-weight: 600;
+  border-bottom: 1px solid rgba(196,125,59,0.2); white-space: nowrap;
+}
+.dtable td {
+  padding: 5px 8px; border-bottom: 1px solid var(--ink-faint); white-space: nowrap;
+}
+.dtable td:first-child { white-space: normal; color: var(--ink-soft); }
+.dtable td:not(:first-child) { text-align: right; color: var(--ink); }
+
+.dt-heading {
+  font-family: var(--font-display); font-size: clamp(16px,2vw,20px);
+  font-weight: 600; color: var(--ink); margin-top: 40px; margin-bottom: 4px;
+}
+.dt-sub {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--ink-faint); margin-bottom: 8px; line-height: 1.4;
+}
+
+.sources-list {
+  font-family: var(--font-mono); font-size: 11px;
+  line-height: 2; color: var(--ink-soft); padding-left: 18px; margin-top: 12px;
+}
+
+.footer-note {
+  margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--ink-faint);
+  text-align: center; font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-faint); line-height: 1.9;
+}
+
+/* ── Depth meter ── */
+.depth-track {
+  width: 100%; height: 4px; background: rgba(244,228,206,0.06);
+  border-radius: 2px; overflow: hidden; margin-bottom: 20px;
+}
+.depth-fill {
+  height: 100%; border-radius: 2px; transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ── Scroll indicator ── */
+.scroll-hint {
+  position: absolute; bottom: clamp(24px,4vh,48px); left: 50%;
+  transform: translateX(-50%); display: flex; flex-direction: column;
+  align-items: center; gap: 8px; opacity: 0.25;
+}
+.scroll-line {
+  width: 1px; height: 28px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+}
+.scroll-label {
+  font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: 0.25em; color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; clip-path: none; transition: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
