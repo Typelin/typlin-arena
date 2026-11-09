@@ -26,3 +26,13 @@ dist-ssr
 # Generated TypeScript / per-entry QA artifacts
 *.tsbuildinfo
 **/qa-artifacts/
+
+# Per-work temp output: QA screenshots, generated previews, local verify scripts
+works-src/**/qa/screenshots/
+works-src/*/preview.html
+works-src/*/serve-preview.cmd
+works-src/*/desktop-*.png
+works-src/*/mobile-*.png
+works-src/*/v2-*.png
+works-src/*/verify*.cjs
+works-src/*/audit*.cjs
