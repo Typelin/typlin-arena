@@ -34,6 +34,7 @@ $works = @(
   @{ Source = 'grok-4-7';              Slug = 'grok-4-7';              Legacy = 'grok-4-7' },
   @{ Source = 'claude-opus-4-6-r2';    Slug = 'claude-opus-4-6-r2';    Legacy = 'claude-opus-4-6-r2' },
   @{ Source = 'gpt-6-astra';           Slug = 'gpt-6-astra-r2';        Legacy = 'gpt-6-astra-r2' },
+  @{ Source = 'muse-spark-1-3-r2';     Slug = 'muse-spark-1-3-r2';     Legacy = 'muse-spark-1-3-r2' },
   @{ Source = 'gpt-6-1-terra';         Slug = 'gpt-6-1-terra';         Legacy = 'gpt-6-1-terra' }
 )
 

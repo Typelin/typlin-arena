@@ -1,0 +1,140 @@
+.finale {
+  position: relative;
+  z-index: 2;
+  background: var(--paper-dim);
+  border-top: 1.5px solid var(--ink);
+  margin-top: clamp(4rem, 10vh, 7rem);
+}
+
+.finale-inner {
+  padding: clamp(5rem, 12vh, 9rem) clamp(1.25rem, 6vw, 6rem) clamp(4rem, 9vh, 6rem);
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+.fin-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  margin-top: clamp(2.6rem, 7vh, 4.5rem);
+}
+
+.fin-block-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.7rem;
+}
+
+.fin-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 170px) 1fr;
+  gap: 1rem;
+  padding: 0.62rem 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.fin-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  padding-top: 0.15rem;
+}
+
+.fin-row dd {
+  margin: 0;
+  color: var(--ink);
+}
+
+.fin-row dd strong {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.fin-footnote {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--ink-faint);
+}
+
+.fin-wide {
+  margin-top: clamp(2.6rem, 7vh, 4rem);
+}
+
+.fin-sources,
+.fin-assumptions {
+  margin: 1.1rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.fin-assumptions {
+  margin-top: 1rem;
+  color: var(--ink-faint);
+}
+
+.fin-end {
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.fin-knot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--spark);
+  box-shadow: 0 0 0 7px rgba(217, 54, 23, 0.15);
+}
+
+.fin-end-text {
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.fin-end-sub {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+
+.fin-top-link {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  color: var(--spark-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--spark);
+  padding-bottom: 0.2rem;
+}
+
+.fin-top-link:hover {
+  color: var(--spark);
+}
+
+@media (max-width: 900px) {
+  .fin-cols {
+    grid-template-columns: 1fr;
+  }
+  .fin-row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

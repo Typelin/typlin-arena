@@ -1,0 +1,223 @@
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('./assets/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('./assets/fonts/NotoSansTC-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('./assets/fonts/NotoSansTC-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('./assets/fonts/NotoSansTC-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('./assets/fonts/NotoSansTC-900.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./assets/fonts/IBMPlexMono-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./assets/fonts/IBMPlexMono-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('./assets/fonts/IBMPlexMono-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f5f1ea;
+  --paper-dim: #ece5d8;
+  --ink: #171208;
+  --ink-soft: #4c463c;
+  --ink-faint: #8a8172;
+  --spark: #d93617;
+  --spark-deep: #a8270f;
+  --night: #131009;
+  --night-2: #1e190f;
+  --cream: #f2ead9;
+  --hair: rgba(23, 18, 8, 0.16);
+
+  /* Latin leads with the self-hosted display/mono fonts; Chinese renders
+     in the self-hosted Noto Sans TC subset everywhere, with named system
+     TC fonts (PingFang TC / Microsoft JhengHei) as fallback — the page
+     never lands on a browser default face. */
+  --font-display: 'Space Grotesk', 'Noto Sans TC', 'PingFang TC',
+    'Microsoft JhengHei', sans-serif;
+  --font-body: 'Space Grotesk', 'Noto Sans TC', 'PingFang TC',
+    'Microsoft JhengHei', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Noto Sans TC', 'PingFang TC',
+    'Microsoft JhengHei', monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.4, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* clip (unlike hidden) creates no scroll container, so the sticky
+     climax stage keeps sticking; unsupported browsers keep `hidden` */
+  overflow-x: clip;
+  background: var(--paper);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--spark);
+  color: var(--paper);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+/* ---------- shared chapter layout ---------- */
+
+.chapter {
+  position: relative;
+  z-index: 2;
+  padding: clamp(6rem, 15vh, 11rem) clamp(1.25rem, 6vw, 6rem);
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+.chapter-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--spark);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.chapter-tag::after {
+  content: '';
+  height: 1px;
+  width: 4.5rem;
+  background: var(--spark);
+  opacity: 0.55;
+}
+
+.chapter-title {
+  font-weight: 900;
+  font-size: clamp(2rem, 5.2vw, 4.2rem);
+  line-height: 1.14;
+  letter-spacing: 0.01em;
+  margin-top: 1.4rem;
+  max-width: 15em;
+}
+
+.chapter-lede {
+  margin-top: 1.4rem;
+  font-size: clamp(1.02rem, 1.55vw, 1.28rem);
+  line-height: 1.8;
+  color: var(--ink-soft);
+  max-width: 33em;
+}
+
+.fact-note {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.75;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+
+/* entrance choreography: elements swing in along the thread and settle
+   with weight, rather than a uniform fade-up batch */
+.rv {
+  opacity: 0;
+  transform: translateY(3rem) rotate(0.7deg);
+  transform-origin: left top;
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 1.15s var(--ease-out);
+  transition-delay: var(--rv-delay, 0s);
+}
+
+.rv.is-in {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

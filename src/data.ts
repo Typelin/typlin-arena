@@ -65,6 +65,7 @@ export const PLATES: Plate[] = [
   },
   {
     id: 'muse-spark-1-3',
+    twin: 'muse-spark-1-3-r2',
     no: '02',
     short: 'SPARK',
     model: 'MUSE SPARK 1.3 · CONTRIBUTOR FREE',
@@ -381,7 +382,7 @@ export const PLATES: Plate[] = [
   {
     id: 'deepseek-v4-1-flash-r2',
     era: 'new',
-    place: 5,
+    place: 7,
     twin: 'deepseek-v4-1-flash',
     no: '20',
     short: 'DSV4.1F',
@@ -399,7 +400,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-haiku-5-5',
     era: 'new',
-    place: 7,
+    place: 8,
     no: '21',
     short: 'HAIKU 5.5',
     model: 'CLAUDE HAIKU 5.5 · 新題目',
@@ -416,7 +417,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-4-6',
     era: 'new',
-    place: 8,
+    place: 11,
     no: '22',
     short: 'SONNET 4.6',
     model: 'CLAUDE SONNET 4.6 · 新題目',
@@ -433,7 +434,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-3-8-flash-high-r2',
     era: 'new',
-    place: 13,
+    place: 14,
     twin: 'gemini-3-8-flash-high',
     no: '23',
     short: 'GEMINI 3.8',
@@ -487,7 +488,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-6-r2',
     era: 'new',
-    place: 9,
+    place: 12,
     twin: 'grok-4-6',
     no: '26',
     short: 'GROK 4.6',
@@ -505,7 +506,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-7',
     era: 'new',
-    place: 11,
+    place: 13,
     no: '27',
     short: 'GROK 4.7',
     model: 'GROK 4.7 · 新題目',
@@ -522,7 +523,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-opus-4-6-r2',
     era: 'new',
-    place: 12,
+    place: 9,
     twin: 'claude-opus-4-6',
     no: '28',
     short: 'OPUS 4.6',
@@ -570,6 +571,24 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/gpt-6-1-terra/',
     thumb: '/shots/gpt-6-1-terra.png',
+    score: null,
+  },
+  {
+    id: 'muse-spark-1-3-r2',
+    era: 'new',
+    place: 5,
+    twin: 'muse-spark-1-3',
+    no: '31',
+    short: 'SPARK',
+    model: 'MUSE SPARK 1.3 · 新題目',
+    title: '一線到底',
+    prompt: NEW_PROMPT,
+    spec: ['REACT 19', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。一條線貫穿整頁：首屏可以拉動線頭，接著是自我介紹、六級推理強度、一百萬個 token 的上下文、做不到的事和成績，最後一章列出全部事實、出處與假設。',
+    visual: 'current',
+    src: '/works/muse-spark-1-3-r2/',
+    thumb: '/shots/muse-spark-1-3-r2.png',
     score: null,
   },
 ];

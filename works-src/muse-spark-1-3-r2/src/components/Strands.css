@@ -1,0 +1,142 @@
+.st-stage {
+  margin-top: clamp(2rem, 6vh, 3.6rem);
+}
+
+.st-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.st-main,
+.st-strand {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+}
+
+.st-main {
+  stroke: var(--spark);
+  stroke-width: 4;
+}
+
+.st-strand {
+  stroke-width: 3;
+}
+
+.st-strand.is-red {
+  stroke: var(--spark);
+}
+
+.st-strand.is-ink {
+  stroke: var(--ink);
+}
+
+.st-strand.is-red-soft {
+  stroke: var(--spark);
+  stroke-opacity: 0.55;
+}
+
+.st-strand.is-ink-soft {
+  stroke: var(--ink);
+  stroke-opacity: 0.5;
+}
+
+.st-node {
+  fill: var(--paper);
+  stroke: var(--spark);
+  stroke-width: 3;
+  transition: opacity 0.3s ease;
+}
+
+.st-label {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  fill: var(--ink-soft);
+  transition: opacity 0.3s ease;
+}
+
+.st-caption {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  color: var(--ink-faint);
+  margin-top: 0.4rem;
+}
+
+.st-evidence {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.6rem, 5vw, 4.5rem);
+  margin-top: clamp(2.6rem, 7vh, 4.5rem);
+}
+
+.st-group-title {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.3em;
+  color: var(--spark);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 0.8rem;
+}
+
+.st-list {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.1rem;
+}
+
+.st-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.st-num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--ink);
+  min-width: 4.6ch;
+  font-variant-numeric: tabular-nums;
+}
+
+.st-desc {
+  margin-top: 1.2rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  /* label sizes are in viewBox units: the whole 1200-wide scene scales
+     down on small screens, so the units must grow to stay readable */
+  .st-label {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 760px) {
+  .st-evidence {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .st-label {
+    font-size: 44px;
+  }
+  .st-main {
+    stroke-width: 6;
+  }
+  .st-strand {
+    stroke-width: 5;
+  }
+}

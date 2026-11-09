@@ -1,0 +1,114 @@
+.limits-break {
+  width: 100%;
+  height: 3rem;
+  margin-top: 1.6rem;
+  overflow: visible;
+}
+
+.limits-break path {
+  fill: none;
+  stroke: var(--spark);
+  stroke-width: 2.5;
+  stroke-dasharray: 7 8;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.limits-break circle {
+  fill: var(--paper);
+  stroke: var(--spark);
+  stroke-width: 2;
+}
+
+.limits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  margin-top: clamp(1.6rem, 4vh, 2.6rem);
+}
+
+.limit-card {
+  border: 1px solid var(--hair);
+  background: rgba(255, 255, 255, 0.32);
+  padding: clamp(1.3rem, 2.6vw, 2rem);
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.limit-card h3 {
+  font-size: 1.28rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-top: auto;
+  padding-top: 1.2rem;
+}
+
+.limit-card p {
+  margin-top: 0.6rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.limit-viz {
+  width: 100%;
+  height: 44px;
+}
+
+.limit-wave {
+  fill: none;
+  stroke: var(--ink-faint);
+  stroke-width: 2;
+  opacity: 0.5;
+}
+
+.limit-flat {
+  fill: none;
+  stroke: var(--spark);
+  stroke-width: 2;
+}
+
+.limit-lock-body {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+}
+
+.limit-lock-shackle {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+}
+
+.limit-card .limit-big {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.4rem;
+  line-height: 44px;
+  color: var(--ink-faint);
+  margin-top: 0;
+}
+
+.limit-card .limit-big-num {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.limit-big-unit {
+  font-size: 1rem;
+  font-family: var(--font-body);
+  color: var(--ink-faint);
+  margin-left: 0.3rem;
+}
+
+@media (max-width: 760px) {
+  .limits-grid {
+    grid-template-columns: 1fr;
+  }
+  .limit-card {
+    min-height: 0;
+  }
+}

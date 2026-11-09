@@ -1,0 +1,144 @@
+.sc-group {
+  margin-top: clamp(2.6rem, 7vh, 4.2rem);
+  max-width: 960px;
+}
+
+.sc-group-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sc-group-sub {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+}
+
+.sc-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 250px) 1fr 3.2rem;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.15rem;
+}
+
+.sc-label {
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.sc-track {
+  height: 26px;
+  background: rgba(23, 18, 8, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.sc-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.5s var(--ease-out) 0.3s;
+}
+
+.rv.is-in .sc-fill {
+  transform: scaleX(var(--fill, 0));
+}
+
+.sc-fill.is-ink {
+  background: var(--ink);
+}
+
+.sc-fill.is-spark {
+  background: var(--spark);
+}
+
+.sc-fill.is-ghost {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(23, 18, 8, 0.4) 0 6px,
+    rgba(23, 18, 8, 0.12) 6px 12px
+  );
+}
+
+.sc-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.25rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--ink-faint);
+  max-width: 40em;
+}
+
+.sc-prices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: clamp(2.6rem, 7vh, 4.2rem);
+  max-width: 960px;
+}
+
+.sc-price {
+  border: 1.5px solid var(--ink);
+  padding: clamp(1.3rem, 2.6vw, 2rem);
+  background: #fbf8f2;
+}
+
+.sc-price h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.sc-price-nums {
+  font-family: var(--font-mono);
+  margin-top: 0.9rem;
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+
+.sc-price-nums span {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.sc-price-note {
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 760px) {
+  .sc-row {
+    grid-template-columns: 1fr 3.2rem;
+    grid-template-rows: auto auto;
+  }
+  .sc-label {
+    grid-column: 1 / -1;
+  }
+  .sc-track {
+    grid-column: 1;
+  }
+  .sc-prices {
+    grid-template-columns: 1fr;
+  }
+}

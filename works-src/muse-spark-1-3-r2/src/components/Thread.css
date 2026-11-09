@@ -1,0 +1,31 @@
+.thread {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.thread-ghost {
+  fill: none;
+  stroke: var(--ink);
+  stroke-opacity: 0.09;
+  stroke-width: 2;
+}
+
+.thread-drawn {
+  fill: none;
+  stroke: var(--spark);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.thread-spark {
+  fill: var(--spark);
+  stroke: var(--paper);
+  stroke-width: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
