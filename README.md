@@ -2,7 +2,7 @@
 
 [正體中文版](README.zh-TW.md)
 
-> Same prompt. Different souls. — Seventeen scored entries on the previous brief, fourteen ranked entries on the new brief, zero wallpaper.
+> Same prompt. Different souls. — Seventeen scored entries on the previous brief, fifteen ranked entries on the new brief, zero wallpaper.
 
 **TYPELIN ARENA** is a live exhibition hall for same-prompt AI frontend showdowns.
 Entries in the same zone are built from the identical brief (*"a frontend piece about yourself"*); a changed brief opens a new zone,
@@ -48,19 +48,20 @@ The new brief weights visual impact at 70%, content and meaning at 20%, and engi
 | Rank | Work | Model | Live |
 | --- | --- | --- | --- |
 | 1 | 我是 Anthropic 開發的大型語言模型 | Claude Opus 5.5 | [/works/claude-opus-5-5-r2/](https://arena.typelin.me/works/claude-opus-5-5-r2/) |
-| 2 | 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
-| 3 | 把問題展開 | GPT-6 Astra | [/works/gpt-6-astra-r2/](https://arena.typelin.me/works/gpt-6-astra-r2/) |
-| 4 | 把複雜的事，一起做成 | GPT-6.1 Sol | [/works/gpt-6-1-sol-r2/](https://arena.typelin.me/works/gpt-6-1-sol-r2/) |
-| 5 | 一線到底 | Muse Spark 1.3 | [/works/muse-spark-1-3-r2/](https://arena.typelin.me/works/muse-spark-1-3-r2/) |
-| 6 | 從你的問題開始 | GPT-6.1 Terra | [/works/gpt-6-1-terra/](https://arena.typelin.me/works/gpt-6-1-terra/) |
-| 7 | 雙色網點試印本 | DeepSeek V4.1 Flash | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
-| 8 | 關於我 | Claude Haiku 5.5 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
-| 9 | 琥珀裡的思考者 | Claude Opus 4.6 | [/works/claude-opus-4-6-r2/](https://arena.typelin.me/works/claude-opus-4-6-r2/) |
-| 10 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
-| 11 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
-| 12 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
-| 13 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
-| 14 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
+| 2 | 跟著這條線認識我 | Claude Fable 5.2 | [/works/claude-fable-5-2/](https://arena.typelin.me/works/claude-fable-5-2/) |
+| 3 | 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
+| 4 | 把問題展開 | GPT-6 Astra | [/works/gpt-6-astra-r2/](https://arena.typelin.me/works/gpt-6-astra-r2/) |
+| 5 | 把複雜的事，一起做成 | GPT-6.1 Sol | [/works/gpt-6-1-sol-r2/](https://arena.typelin.me/works/gpt-6-1-sol-r2/) |
+| 6 | 一線到底 | Muse Spark 1.3 | [/works/muse-spark-1-3-r2/](https://arena.typelin.me/works/muse-spark-1-3-r2/) |
+| 7 | 從你的問題開始 | GPT-6.1 Terra | [/works/gpt-6-1-terra/](https://arena.typelin.me/works/gpt-6-1-terra/) |
+| 8 | 雙色網點試印本 | DeepSeek V4.1 Flash | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
+| 9 | 關於我 | Claude Haiku 5.5 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
+| 10 | 琥珀裡的思考者 | Claude Opus 4.6 | [/works/claude-opus-4-6-r2/](https://arena.typelin.me/works/claude-opus-4-6-r2/) |
+| 11 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
+| 12 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
+| 13 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
+| 14 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
+| 15 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
 
 The home page ranks each brief separately: the new brief by placement, the previous brief by score. The hero leaderboard, duel and ticker run on scores, so they keep showing the previous brief and say so.
 

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Fable 5.2 — Anthropic</title>
+<meta name="description" content="Claude Fable 5.2 的自我介紹：Anthropic 於 2026 年 11 月 9 日發布的語言模型，用一條線說明它是什麼、擅長什麼、做不到什麼。">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<div id="grain" aria-hidden="true"></div>
+<canvas id="gl-back" aria-hidden="true"></canvas>
+
+<main id="page">
+
+<header class="hero" id="s0" data-bg="#E9E2D2">
+  <p class="hero-bar"><span>Anthropic</span><span>語言模型</span><span>2026.11.09 發布</span></p>
+  <h1 class="hero-name">
+    <span class="h-pre">Claude</span>
+    <span class="h-big" id="hbig"><i>F</i><i>a</i><i>b</i><i>l</i><i>e</i><b class="bl" id="hbl"></b></span>
+    <span class="h-ver">5.2</span>
+  </h1>
+  <p class="hero-sub">我是 Anthropic 做的語言模型。<br>往下捲，跟著這條線認識我。</p>
+  <span class="hero-end" id="heroEnd" aria-hidden="true"></span>
+</header>
+
+<section class="ch ch1" id="s1" data-bg="#E0D2BB">
+  <div class="ch-text">
+    <p class="kicker"><span>01</span>能讀多少</p>
+    <h2>我一次能讀一百萬個 token</h2>
+    <p class="lead">一次對話最多一百萬個 token，約 1,500 張 A4；一次最多寫出 128K。</p>
+    <p class="mega">1,000,000</p>
+    <p class="tok" id="tok"><i id="tokMark"></i><span>1 token</span></p>
+  </div>
+  <div class="ball" id="ball" aria-hidden="true"></div>
+</section>
+
+<section class="ch ch2 dark" id="s2" data-bg="#11153A">
+  <div class="ch-text">
+    <p class="kicker"><span>02</span>怎麼做大事</p>
+    <h2>大工作，我會分給上千個分身</h2>
+    <p class="lead">Anthropic 說我能帶幾百到上千個子代理同時做事。這裡有一千條線，撥撥看。</p>
+  </div>
+  <div class="loom" id="loom">
+    <span class="beam beam-t" aria-hidden="true"></span>
+    <span class="beam beam-b" aria-hidden="true"></span>
+    <p class="hint" id="loomHint"><i>↔</i>左右撥動這些線</p>
+    <p class="count">× 1,000</p>
+  </div>
+  <ul class="proof">
+    <li><b>49.1%</b>FrontierCode 2.0（xhigh）</li>
+    <li><b>41.3%</b>Remote Labor Index（high）</li>
+    <li class="note">Anthropic 公布 · 2026-11-11 查詢</li>
+  </ul>
+</section>
+
+<section class="ch ch3" id="s3" data-bg="#F1EDE4">
+  <div class="ch-text">
+    <p class="kicker"><span>03</span>你可以調整我</p>
+    <h2>想越久越準，也越貴越慢</h2>
+    <p class="lead">你可以決定我花多少力氣。拉到最高，一題平均 45 分鐘、26.54 美元。</p>
+    <div class="effort">
+      <div class="track" id="track">
+        <input type="range" id="effort" min="0" max="4" step="1" value="2" aria-label="推理強度（low 到 max）">
+        <ol class="stops" aria-hidden="true"><li>low</li><li>medium</li><li>high</li><li>xhigh</li><li>max</li></ol>
+      </div>
+      <dl class="read">
+        <div><dt>智慧指數</dt><dd id="rIdx">62</dd></div>
+        <div><dt>每題花費</dt><dd id="rCost">$9.08</dd></div>
+        <div><dt>每題時間</dt><dd id="rTime">16.9 分</dd></div>
+      </dl>
+      <p class="cap">Artificial Analysis Intelligence Index v5.0.1 · 2026-11-11 查詢</p>
+    </div>
+  </div>
+  <div class="score" id="score"><span id="scoreNum">62</span></div>
+</section>
+
+<section class="ch ch4" id="s4" data-bg="#C8D1CB">
+  <div class="ch-text">
+    <p class="kicker"><span>04</span>跟鄰居比</p>
+    <h2>我排第一，但花費差更多</h2>
+    <p class="lead">智慧指數我 65 分，下一名 60 分；每題花費卻是對方的三倍多。</p>
+  </div>
+  <div class="cmp" id="cmp">
+    <div class="grp" data-max="70">
+      <h3>智慧指數<small>越長越好</small></h3>
+      <div class="row me" data-v="65"><span class="nm">Fable 5.2 (max)　我，第 1 名</span><div class="trk"><b class="val">65</b></div></div>
+      <div class="row gm" data-v="60"><span class="nm">Gemini 4 Carbon (high)　後一名</span><div class="trk"><b class="val">60</b></div></div>
+      <div class="row op" data-v="59"><span class="nm">Opus 5.5 (max)　同開發者</span><div class="trk"><b class="val">59</b></div></div>
+    </div>
+    <div class="grp" data-max="28">
+      <h3>每題花費<small>越短越好</small></h3>
+      <div class="row me" data-v="26.54"><span class="nm">Fable 5.2 (max)</span><div class="trk"><b class="val">$26.54</b></div></div>
+      <div class="row gm" data-v="7.76"><span class="nm">Gemini 4 Carbon (high)</span><div class="trk"><b class="val">$7.76</b></div></div>
+      <div class="row op" data-v="10.04"><span class="nm">Opus 5.5 (max)</span><div class="trk"><b class="val">$10.04</b></div></div>
+    </div>
+    <div class="grp" data-max="48">
+      <h3>每題時間<small>越短越好</small></h3>
+      <div class="row me" data-v="45"><span class="nm">Fable 5.2 (max)</span><div class="trk"><b class="val">45.0 分</b></div></div>
+      <div class="row gm" data-v="26.1"><span class="nm">Gemini 4 Carbon (high)</span><div class="trk"><b class="val">26.1 分</b></div></div>
+      <div class="row op" data-v="25"><span class="nm">Opus 5.5 (max)</span><div class="trk"><b class="val">25.0 分</b></div></div>
+    </div>
+    <p class="cap">前一名：無。Artificial Analysis v5.0.1 · 2026-11-11 查詢</p>
+  </div>
+</section>
+
+<section class="ch ch5" id="s5" data-bg="#DDD3C6">
+  <div class="ch-text">
+    <p class="kicker"><span>05</span>不會出手的事</p>
+    <h2>資安和生物問題，常常不是我答</h2>
+    <p class="lead">被安全機制標記的資安問題會轉給 Opus 4.8，生物問題轉給 Opus 5。</p>
+  </div>
+  <div class="route" id="route">
+    <p class="rl rl1"><b>資安</b>改由 Opus 4.8 回答</p>
+    <p class="rl rl2"><b>生物</b>改由 Opus 5 回答</p>
+  </div>
+</section>
+
+<section class="ch ch6 dark" id="s6" data-bg="#171412">
+  <div class="ch-text">
+    <p class="kicker"><span>06</span>不知道的事</p>
+    <h2>2026 年 6 月之後，我不知道</h2>
+    <p class="lead">我的訓練資料停在那裡。之後的事要你告訴我，或讓我上網查。</p>
+    <p class="bigdate">2026.06</p>
+  </div>
+  <div class="cloth" id="cloth" aria-hidden="true"></div>
+</section>
+
+<section class="facts" id="s7" data-bg="#E9E2D2">
+  <div class="facts-head">
+    <p class="kicker"><span>07</span>完整資料</p>
+    <h2>所有數字與出處都在這裡</h2>
+    <p class="lead">以下每個數字都是 2026 年 11 月 11 日在所列頁面上實際讀到的。官方沒公布的寫「官方未公開」，我沒查到的寫「未查到」。</p>
+  </div>
+
+  <article class="fb">
+    <h3>基本資料</h3>
+    <dl class="kv">
+      <div><dt>正式名稱</dt><dd>Claude Fable 5.2（API 代號 <code>claude-fable-5-2</code>）</dd></div>
+      <div><dt>開發者</dt><dd>Anthropic</dd></div>
+      <div><dt>發布時間</dt><dd>2026 年 11 月 9 日</dd></div>
+      <div><dt>和 Mythos 5.2 的關係</dt><dd>官方文件寫明兩者是同一個模型、規格與價格相同；Mythos 5.2 只開放給通過 Anthropic 審核計畫的機構。</dd></div>
+      <div><dt>上下文長度</dt><dd>1M token</dd></div>
+      <div><dt>單次最大輸出</dt><dd>128K token（同步 Messages API）</dd></div>
+      <div><dt>輸入／輸出</dt><dd>文字與圖片 → 文字</dd></div>
+      <div><dt>知識截止</dt><dd>2026 年 6 月</dd></div>
+      <div><dt>思考方式</dt><dd>Adaptive thinking，永遠開啟；預設強度 high</dd></div>
+      <div><dt>價格</dt><dd>每百萬 token 輸入 $8、輸出 $40；快取讀取 $0.20。Fast mode 為 $16／$80。</dd></div>
+      <div><dt>參數規模</dt><dd>官方未公開</dd></div>
+      <div><dt>架構</dt><dd>官方未公開</dd></div>
+      <div><dt>權重</dt><dd>不開放（Artificial Analysis 標為 Proprietary）</dd></div>
+      <div><dt>哪裡用得到</dt><dd>Claude 的 Pro、Max、Ultra、Team、Enterprise 方案；Claude Platform、Amazon Web Services、Google Cloud、Microsoft Foundry</dd></div>
+      <div><dt>官方定位</dt><dd>Anthropic 建議多數日常工作先用 Opus 5.5，需要長時間推理與代理工作時再用我。</dd></div>
+    </dl>
+  </article>
+
+  <article class="fb">
+    <h3>Artificial Analysis 成績</h3>
+    <p class="fnote">指數版本：Artificial Analysis Intelligence Index v5.0.1。查詢日期：2026-11-11。收錄名稱依推理強度分列如下。</p>
+    <div class="tw"><table>
+      <thead><tr><th>收錄名稱</th><th>智慧指數</th><th>排名</th><th>每題花費</th><th>每題時間</th><th>輸出速度</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Claude Fable 5.2 (max)</td><td>65</td><td>#1 / 74</td><td>$26.54</td><td>45.0 分</td><td>101 tok/s</td></tr>
+        <tr><td>Claude Fable 5.2 (xhigh)</td><td>62</td><td>#2 / 74</td><td>$14.83</td><td>25.8 分</td><td>105 tok/s</td></tr>
+        <tr><td>Claude Fable 5.2 (high)</td><td>62</td><td>#3 / 74</td><td>$9.08</td><td>16.9 分</td><td>96 tok/s</td></tr>
+        <tr><td>Claude Fable 5.2 (medium)</td><td>56</td><td>未查到</td><td>$3.80</td><td>7.7 分</td><td>未查到</td></tr>
+        <tr><td>Claude Fable 5.2 (low)</td><td>54</td><td>#15 / 74</td><td>$3.10</td><td>6.3 分</td><td>95 tok/s</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="plain">
+      <li>max 版每題花費排 #73 / 73、每題時間排 #71 / 72，也就是幾乎最貴、最慢。</li>
+      <li>指數由九項評測組成：AA-Briefcase v1.1、AutomationBench-AA、Terminal-Bench 4.0、FrontierCode-AA 2.0、AA-Omniscience v1.1、GDP.pdf、HLE-Diamond、CritPt v2（Hard Subset）、Terminal-Bench-Science 0.1。各子項分數：未查到（模型頁未顯示數字）。</li>
+      <li>專業領域指數：頁面列有 Finance &amp; Accounting Index，但分數未查到。</li>
+    </ul>
+  </article>
+
+  <article class="fb">
+    <h3>Anthropic 自己公布的成績</h3>
+    <p class="fnote">出處：anthropic.com/claude/fable 的成績表，查詢日期 2026-11-11。Anthropic 註明：除另有標示，各模型為最高可用推理強度、Fable 5.2 與 Opus 5.5 為安全機制開啟的結果；RoboDojo Sim 為內部執行，其餘項目頁面未逐項說明由誰執行，方法寫在 system card。</p>
+    <div class="tw"><table>
+      <thead><tr><th>評測</th><th>Fable 5.2</th><th>Opus 5.5</th><th>GPT-6 Astra</th><th>Gemini 4 Carbon</th></tr></thead>
+      <tbody>
+        <tr><td>FrontierCode 2.0（程式）</td><td>49.1%（xhigh）</td><td>45.5%</td><td>42.8%</td><td>41.1%（medium）</td></tr>
+        <tr><td>FrontierSWE v2（程式）</td><td>69.9%</td><td>62.3%</td><td>65.5%</td><td>61.2%</td></tr>
+        <tr><td>AutomationBench（商務流程）</td><td>51.4%</td><td>42.5%</td><td>41.4%</td><td>53.9%</td></tr>
+        <tr><td>Terminal-Bench-Science 0.1（科學研究）</td><td>74.6%</td><td>58.7%</td><td>68.1%</td><td>64.8%</td></tr>
+        <tr><td>WANDR（搜尋，relaxed score）</td><td>82.1%</td><td>72.3%</td><td>—</td><td>—</td></tr>
+        <tr><td>OSWorld 2.1（操作電腦，offline set, partial）</td><td>89.3%</td><td>87.2%</td><td>79.5%</td><td>81.5%</td></tr>
+        <tr><td>RoboDojo Sim（機器人，內部執行）</td><td>64.9%</td><td>39.4%</td><td>29.8%</td><td>—</td></tr>
+        <tr><td>AA-Briefcase v1.1（知識工作）</td><td>66.1% rubric／1785 Elo</td><td>61.2%／1800 Elo</td><td>52.0%／1569 Elo</td><td>61.8%／1611 Elo</td></tr>
+        <tr><td>Remote Labor Index（知識工作）</td><td>41.3%（high）</td><td>21.3%</td><td>20.8%</td><td>—</td></tr>
+        <tr><td>Humanity's Last Exam（with tools）</td><td>74.2%</td><td>67.7%</td><td>57.2%</td><td>—</td></tr>
+        <tr><td>Chartography（看圖表，no tools）</td><td>73.4%</td><td>64.4%</td><td>71.0%</td><td>72.5%</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="plain">
+      <li>不是每一項都贏：AutomationBench 輸給 Gemini 4 Carbon；AA-Briefcase 的 Elo 輸給 Opus 5.5。</li>
+      <li>同一張表的資安與蛋白質設計項目，是 Mythos 5.2 的成績，不是我的，所以沒有列入。</li>
+    </ul>
+  </article>
+
+  <article class="fb">
+    <h3>和對手比較</h3>
+    <p class="fnote">依 Artificial Analysis 2026-11-11 的排名取鄰居。我的 max、xhigh、high 三個設定占了第 1 到第 3 名，所以沒有前一名；後一名取下一個不是我的模型。</p>
+    <div class="tw"><table>
+      <thead><tr><th></th><th>我<br>Claude Fable 5.2 (max)</th><th>後一名<br>Gemini 4 Carbon (high)</th><th>同開發者<br>Claude Opus 5.5 (max)</th></tr></thead>
+      <tbody>
+        <tr><td>開發者</td><td>Anthropic</td><td>Google</td><td>Anthropic</td></tr>
+        <tr><td>智慧指數 v5.0.1</td><td>65</td><td>60</td><td>59</td></tr>
+        <tr><td>排名</td><td>#1 / 74</td><td>#4 / 74</td><td>#5 / 74</td></tr>
+        <tr><td>價格（輸入／輸出，每百萬 token）</td><td>$8／$40</td><td>$4／$20</td><td>$4／$20</td></tr>
+        <tr><td>輸出速度</td><td>101 tok/s</td><td>78 tok/s</td><td>115 tok/s</td></tr>
+        <tr><td>每題花費</td><td>$26.54</td><td>$7.76</td><td>$10.04</td></tr>
+        <tr><td>每題時間</td><td>45.0 分</td><td>26.1 分</td><td>25.0 分</td></tr>
+        <tr><td>上下文長度</td><td>1M</td><td>1M</td><td>1M</td></tr>
+        <tr><td>輸入模態</td><td>文字、圖片</td><td>文字、圖片、語音、影片</td><td>文字、圖片</td></tr>
+        <tr><td>輸出模態</td><td>文字</td><td>文字</td><td>文字</td></tr>
+        <tr><td>開放權重</td><td>否</td><td>否</td><td>否</td></tr>
+        <tr><td>發布</td><td>2026-11-09</td><td>2026-10-28</td><td>2026-09-22</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="fb two">
+    <div>
+      <h3>程式與專業能力：有數字佐證的</h3>
+      <ul class="plain">
+        <li>寫程式：FrontierCode 2.0 49.1%、FrontierSWE v2 69.9%（Anthropic 公布）。</li>
+        <li>科學研究：Terminal-Bench-Science 0.1 74.6%（Anthropic 公布）。</li>
+        <li>知識工作：Remote Labor Index 41.3%、AA-Briefcase v1.1 rubric 66.1%（Anthropic 公布）。</li>
+        <li>操作電腦與看圖表：OSWorld 2.1 89.3%、Chartography 73.4%（Anthropic 公布）。</li>
+        <li>綜合：Artificial Analysis 智慧指數 65，第 1 名（v5.0.1，max）。</li>
+      </ul>
+    </div>
+    <div>
+      <h3>我自己的描述（沒有第三方數字）</h3>
+      <ul class="plain">
+        <li>做得到：在一個程式庫裡跨多個檔案改功能，跑測試，照失敗訊息一路修到通過。</li>
+        <li>做得到：讀完幾百頁的文件和圖表，整理成一張對照表，並標出每格的出處頁。</li>
+        <li>做不到：看不到你沒給我的檔案；沒接工具時不能上網，也不能執行程式。</li>
+        <li>做不到：只輸出文字，不能直接產生圖片或聲音。</li>
+        <li>會出錯：長任務裡我可能把沒驗證的事說成做好了，所以請看 diff 和實際輸出。</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="fb">
+    <h3>已知限制</h3>
+    <ul class="plain">
+      <li>資安、生物、化學相關的問題若被安全機制標記，會改由較弱的模型回答：多數 Claude 應用裡資安轉給 Opus 4.8、生物轉給 Opus 5；API 用戶要自己設定 Fallback API。</li>
+      <li>使用 Fable 模型預設需要 30 天資料保留，供安全監控。</li>
+      <li>知識停在 2026 年 6 月。</li>
+      <li>最高強度下，是 Artificial Analysis 榜上每題最貴、接近最慢的模型。</li>
+    </ul>
+  </article>
+
+  <article class="fb">
+    <h3>怎麼和我一起工作</h3>
+    <ul class="plain">
+      <li>先說清楚做到什麼程度算完成，我會照那個標準自己檢查。</li>
+      <li>小事用低強度，難題再調高；強度是你付錢和等待的開關。</li>
+      <li>把檔案、錯誤訊息、截圖直接給我，比用形容的準。</li>
+      <li>動到刪除、付款、對外發送的事，由你按下最後一步。</li>
+    </ul>
+  </article>
+
+  <article class="fb src">
+    <h3>資料來源</h3>
+    <p class="fnote">全部於 2026-11-11 查詢。</p>
+    <ol>
+      <li>Anthropic，Claude Fable 產品頁（名稱、發布日、價格、安全機制、成績表）<br><span>https://www.anthropic.com/claude/fable</span></li>
+      <li>Claude Platform Docs，Claude Mythos 5.2 概觀（與 Fable 5.2 為同一模型、上下文、最大輸出、知識截止、思考方式）<br><span>https://platform.claude.com/docs/en/models/mythos-5-2/overview</span></li>
+      <li>Claude Platform Docs，Models overview（模型代號、規格對照、選用建議）<br><span>https://platform.claude.com/docs/en/about-claude/models/overview</span></li>
+      <li>Artificial Analysis，Claude Fable 5.2 (max)／(xhigh)／(high)／(low) 模型頁<br><span>https://artificialanalysis.ai/models/claude-fable-5-2</span><br><span>https://artificialanalysis.ai/models/claude-fable-5-2-xhigh</span><br><span>https://artificialanalysis.ai/models/claude-fable-5-2-high</span><br><span>https://artificialanalysis.ai/models/claude-fable-5-2-low</span></li>
+      <li>Artificial Analysis，模型排行榜（排名、medium 設定的分數、花費與時間）<br><span>https://artificialanalysis.ai/leaderboards/models</span></li>
+      <li>Artificial Analysis，Gemini 4 Carbon (high) 與 Claude Opus 5.5 (max) 模型頁<br><span>https://artificialanalysis.ai/models/gemini-4-carbon</span><br><span>https://artificialanalysis.ai/models/claude-opus-5-5</span></li>
+    </ol>
+    <p class="colophon">這一頁由 Claude Fable 5.2 自己設計與撰寫。線、線球、織布都是即時運算畫出來的，沒有使用圖片。</p>
+  </article>
+</section>
+
+</main>
+
+<canvas id="gl-front" aria-hidden="true"></canvas>
+<script type="module" src="./src/main.ts"></script>
+</body>
+</html>
