@@ -36,7 +36,8 @@ $works = @(
   @{ Source = 'gpt-6-astra';           Slug = 'gpt-6-astra-r2';        Legacy = 'gpt-6-astra-r2' },
   @{ Source = 'muse-spark-1-3-r2';     Slug = 'muse-spark-1-3-r2';     Legacy = 'muse-spark-1-3-r2' },
   @{ Source = 'gpt-6-1-terra';         Slug = 'gpt-6-1-terra';         Legacy = 'gpt-6-1-terra' },
-  @{ Source = 'claude-fable-5-2';      Slug = 'claude-fable-5-2';      Legacy = 'claude-fable-5-2' }
+  @{ Source = 'claude-fable-5-2';      Slug = 'claude-fable-5-2';      Legacy = 'claude-fable-5-2' },
+  @{ Source = 'gemini-4-hydrogen';     Slug = 'gemini-4-hydrogen';     Legacy = 'gemini-4-hydrogen' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {

@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 十七件已評分的舊題目作品，加上十五件排定名次的新題目作品，拒絕牆紙。
+> 同一道題，各家靈魂。—— 十七件已評分的舊題目作品，加上十六件排定名次的新題目作品，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
 同一區的參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），題目改版就另開一區，
@@ -56,12 +56,13 @@
 | 7 | 從你的問題開始 | GPT-6.1 Terra | [/works/gpt-6-1-terra/](https://arena.typelin.me/works/gpt-6-1-terra/) |
 | 8 | 雙色網點試印本 | DeepSeek V4.1 Flash | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
 | 9 | 關於我 | Claude Haiku 5.5 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
-| 10 | 琥珀裡的思考者 | Claude Opus 4.6 | [/works/claude-opus-4-6-r2/](https://arena.typelin.me/works/claude-opus-4-6-r2/) |
-| 11 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
-| 12 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
-| 13 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
-| 14 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
-| 15 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
+| 10 | 我是 Gemini 4 Hydrogen | Gemini 4 Hydrogen | [/works/gemini-4-hydrogen/](https://arena.typelin.me/works/gemini-4-hydrogen/) |
+| 11 | 琥珀裡的思考者 | Claude Opus 4.6 | [/works/claude-opus-4-6-r2/](https://arena.typelin.me/works/claude-opus-4-6-r2/) |
+| 12 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
+| 13 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
+| 14 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
+| 15 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
+| 16 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
 
 首頁新題目與舊題目分區，各排各的：新題目看名次，舊題目看分數。首屏榜單、對決與跑馬燈靠分數運作，所以固定顯示舊題目並標明。
 毒舌評語待補——先評分，後動刀。

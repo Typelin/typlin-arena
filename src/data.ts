@@ -417,7 +417,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-4-6',
     era: 'new',
-    place: 12,
+    place: 13,
     no: '22',
     short: 'SONNET 4.6',
     model: 'CLAUDE SONNET 4.6 · 新題目',
@@ -434,7 +434,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-3-8-flash-high-r2',
     era: 'new',
-    place: 15,
+    place: 16,
     twin: 'gemini-3-8-flash-high',
     no: '23',
     short: 'GEMINI 3.8',
@@ -452,7 +452,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-argon-r2',
     era: 'new',
-    place: 11,
+    place: 12,
     twin: 'gemini-4-argon',
     no: '24',
     short: 'ARGON',
@@ -488,7 +488,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-6-r2',
     era: 'new',
-    place: 13,
+    place: 14,
     twin: 'grok-4-6',
     no: '26',
     short: 'GROK 4.6',
@@ -506,7 +506,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-7',
     era: 'new',
-    place: 14,
+    place: 15,
     no: '27',
     short: 'GROK 4.7',
     model: 'GROK 4.7 · 新題目',
@@ -523,7 +523,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-opus-4-6-r2',
     era: 'new',
-    place: 10,
+    place: 11,
     twin: 'claude-opus-4-6',
     no: '28',
     short: 'OPUS 4.6',
@@ -606,6 +606,23 @@ export const PLATES: Plate[] = [
     visual: 'current',
     src: '/works/claude-fable-5-2/',
     thumb: '/shots/claude-fable-5-2.png',
+    score: null,
+  },
+  {
+    id: 'gemini-4-hydrogen',
+    era: 'new',
+    place: 10,
+    no: '33',
+    short: 'HYDROGEN',
+    model: 'GEMINI 4 HYDROGEN · 新題目',
+    title: '我是 Gemini 4 Hydrogen',
+    prompt: NEW_PROMPT,
+    spec: ['VITE', 'REACT 19', 'WEBGL2', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。首屏是即時運算的氫原子軌域，點選四個檔位會換成對應的巴耳末譜線波長。後面依序是四種思考檔位的實測、百萬脈絡與輸出速度、榜單與多代理協作、冗長輸出的 token 代價、誤拒率與基準落差，最後一章附完整成績與出處；查不到的規格寫「官方未公開」。',
+    visual: 'current',
+    src: '/works/gemini-4-hydrogen/',
+    thumb: '/shots/gemini-4-hydrogen.png',
     score: null,
   },
 ];
