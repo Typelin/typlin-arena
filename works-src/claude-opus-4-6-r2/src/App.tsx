@@ -26,7 +26,6 @@ function useReveal() {
 export default function App() {
   const rm = useReducedMotion()
   const [look, setLook] = useState('hero')
-  const [scrollPct, setScrollPct] = useState(0)
 
   useEffect(() => {
     const secs = document.querySelectorAll<HTMLElement>('[data-look]')
@@ -39,18 +38,12 @@ export default function App() {
       }
     }, { threshold: 0.3 })
     secs.forEach(s => obs.observe(s))
-
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight
-      setScrollPct(h > 0 ? (window.scrollY / h) * 100 : 0)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => { obs.disconnect(); window.removeEventListener('scroll', onScroll) }
+    return () => obs.disconnect()
   }, [])
 
   return (
     <>
-      <div className="progress-strip" style={{ height: `${scrollPct}%` }} aria-hidden="true" />
+{/* progress strip removed — breaks immersion */}
       <FlowCanvas currentLook={look} reducedMotion={rm} />
       <div className="content">
         <Hero rm={rm} />

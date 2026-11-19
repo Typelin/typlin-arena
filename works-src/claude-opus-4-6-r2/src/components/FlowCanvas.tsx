@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import { FlowField } from '../engine/field.ts'
 
 interface Props {
@@ -20,6 +20,14 @@ export default function FlowCanvas({ currentLook, reducedMotion }: Props) {
     const onResize = () => ff.resize()
     window.addEventListener('resize', onResize)
 
+    /* Track mouse at document level so we don't block clicks on content */
+    const onMove = (e: MouseEvent) => {
+      ff.setMouse(e.clientX, e.clientY, true)
+    }
+    const onLeave = () => ff.setMouse(-1, -1, false)
+    document.addEventListener('mousemove', onMove, { passive: true })
+    document.addEventListener('mouseleave', onLeave)
+
     lastRef.current = performance.now()
     const loop = (now: number) => {
       const dt = Math.min((now - lastRef.current) / 1000, 0.05)
@@ -37,6 +45,8 @@ export default function FlowCanvas({ currentLook, reducedMotion }: Props) {
     return () => {
       cancelAnimationFrame(frameRef.current)
       window.removeEventListener('resize', onResize)
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseleave', onLeave)
     }
   }, [reducedMotion])
 
@@ -44,21 +54,8 @@ export default function FlowCanvas({ currentLook, reducedMotion }: Props) {
     fieldRef.current?.setLook(currentLook)
   }, [currentLook])
 
-  const onMove = useCallback((e: React.MouseEvent) => {
-    const r = (e.currentTarget as HTMLElement).getBoundingClientRect()
-    fieldRef.current?.setMouse(e.clientX - r.left, e.clientY - r.top, true)
-  }, [])
-  const onLeave = useCallback(() => {
-    fieldRef.current?.setMouse(-1, -1, false)
-  }, [])
-
   return (
-    <div
-      className="flow-canvas"
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ pointerEvents: 'auto' }}
-    >
+    <div className="flow-canvas">
       <canvas ref={ref} aria-hidden="true" style={{ width: '100%', height: '100%' }} />
     </div>
   )
