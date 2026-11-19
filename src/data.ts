@@ -382,7 +382,7 @@ export const PLATES: Plate[] = [
   {
     id: 'deepseek-v4-1-flash-r2',
     era: 'new',
-    place: 9,
+    place: 10,
     twin: 'deepseek-v4-1-flash',
     no: '20',
     short: 'DSV4.1F',
@@ -400,7 +400,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-haiku-5-5',
     era: 'new',
-    place: 10,
+    place: 11,
     no: '21',
     short: 'HAIKU 5.5',
     model: 'CLAUDE HAIKU 5.5 · 新題目',
@@ -417,7 +417,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-4-6',
     era: 'new',
-    place: 14,
+    place: 15,
     no: '22',
     short: 'SONNET 4.6',
     model: 'CLAUDE SONNET 4.6 · 新題目',
@@ -434,7 +434,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-3-8-flash-high-r2',
     era: 'new',
-    place: 17,
+    place: 18,
     twin: 'gemini-3-8-flash-high',
     no: '23',
     short: 'GEMINI 3.8',
@@ -452,7 +452,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-argon-r2',
     era: 'new',
-    place: 13,
+    place: 14,
     twin: 'gemini-4-argon',
     no: '24',
     short: 'ARGON',
@@ -470,7 +470,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gpt-6-1-sol-r2',
     era: 'new',
-    place: 5,
+    place: 6,
     twin: 'gpt-6-1-sol',
     no: '25',
     short: 'SOL 6.1',
@@ -488,7 +488,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-6-r2',
     era: 'new',
-    place: 15,
+    place: 16,
     twin: 'grok-4-6',
     no: '26',
     short: 'GROK 4.6',
@@ -506,7 +506,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-7',
     era: 'new',
-    place: 16,
+    place: 17,
     no: '27',
     short: 'GROK 4.7',
     model: 'GROK 4.7 · 新題目',
@@ -523,7 +523,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-opus-4-6-r2',
     era: 'new',
-    place: 12,
+    place: 13,
     twin: 'claude-opus-4-6',
     no: '28',
     short: 'OPUS 4.6',
@@ -559,7 +559,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gpt-6-1-terra',
     era: 'new',
-    place: 8,
+    place: 9,
     no: '30',
     short: 'TERRA',
     model: 'GPT-6.1 TERRA · 新題目',
@@ -576,7 +576,7 @@ export const PLATES: Plate[] = [
   {
     id: 'muse-spark-1-3-r2',
     era: 'new',
-    place: 7,
+    place: 8,
     twin: 'muse-spark-1-3',
     no: '31',
     short: 'SPARK',
@@ -611,7 +611,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-hydrogen',
     era: 'new',
-    place: 11,
+    place: 12,
     no: '33',
     short: 'HYDROGEN',
     model: 'GEMINI 4 HYDROGEN · 新題目',
@@ -628,7 +628,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-neon',
     era: 'new',
-    place: 6,
+    place: 7,
     no: '34',
     short: 'NEON',
     model: 'GEMINI 4 NEON · 新題目',
@@ -641,7 +641,25 @@ export const PLATES: Plate[] = [
     src: '/works/gemini-4-neon/',
     thumb: '/shots/gemini-4-neon.png',
     score: null,
-  },];
+  },
+  {
+    id: 'gpt-6-2-sol',
+    era: 'new',
+    place: 5,
+    no: '35',
+    short: 'SOL 6.2',
+    model: 'GPT-6.2 SOL · 新題目',
+    title: '一個模型的剖面',
+    prompt: NEW_PROMPT,
+    spec: ['VITE', 'VANILLA JS', 'CANVAS 2D', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。首屏是一個紅黑色的環形主視覺，大字標題壓在上面。後面依序是能讀進什麼、推理強度切換與分數連動、會猜錯與漏報卡關的地方、改程式與合併的分工，最後一章附規格、實測與出處；查不到的規格寫「官方未公開」。',
+    visual: 'current',
+    src: '/works/gpt-6-2-sol/',
+    thumb: '/shots/gpt-6-2-sol.png',
+    score: null,
+  },
+];
 
 export type Criterion = { name: string; desc: string };
 

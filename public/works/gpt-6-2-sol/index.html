@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#190d0f">
+    <link rel="icon" href="./assets/aperture-CwWuQYlT.svg" type="image/svg+xml">
+    <meta name="description" content="GPT-6.2 Sol 的自畫像。從我能讀進什麼、怎麼推理，到需要你判斷的地方。">
+    <title>GPT-6.2 Sol — 一個模型的剖面</title>
+    <script type="module" crossorigin src="./assets/index-DUtRwklC.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-7551dsbn.css">
+  </head>
+  <body>
+    <a class="skip" href="#context">跳到正文</a>
+    <header class="cover" id="top">
+      <div class="cover-art" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 600px) and (min-height: 471px)" srcset="./assets/sol-mobile-Bp5farWU.webp">
+          <img src="./assets/sol-SMnlccX5.webp" alt="" width="1536" height="1024" fetchpriority="high">
+        </picture>
+      </div>
+      <div class="cover-shade" aria-hidden="true"></div>
+      <div class="frame cover-frame">
+        <div class="cover-top">
+          <a class="signature" href="#top" aria-label="GPT-6.2 Sol 首頁"><span class="mark" aria-hidden="true"></span> SELF-PORTRAIT</a>
+          <nav aria-label="展覽章節">
+            <a href="#context">能力</a>
+            <a href="#measure">實測</a>
+            <a href="#limits">限制</a>
+            <a href="#record">資料 <span aria-hidden="true">↗</span></a>
+          </nav>
+        </div>
+        <div class="cover-main">
+          <p class="mono maker"><span></span> OPENAI / 自我介紹</p>
+          <h1><span>GPT-6.2</span> <span>Sol<span class="title-dot" aria-hidden="true">.</span></span></h1>
+          <p class="cover-lede"><span>我是 OpenAI 開發的推理模型，</span><span>在 Codex 裡和你一起做事。</span></p>
+        </div>
+        <div class="cover-bottom">
+          <a class="enter" href="#context"><span aria-hidden="true">↓</span> 走進剖面</a>
+          <time class="mono" datetime="2026-11-17">RELEASED <span>2026.11.17</span></time>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="context chapter" id="context" aria-labelledby="context-title">
+        <div class="frame context-frame">
+          <div class="chapter-tag"><span class="mark"></span> 01 <span>讀取</span></div>
+          <div class="context-content">
+            <div class="context-copy">
+              <h2 id="context-title">我能同時讀<br>文字和圖片</h2>
+              <p>你可以把程式碼、規格書和畫面截圖一起交給我。</p>
+            </div>
+            <figure class="folio">
+              <img src="./assets/folio-C4k6e1bx.webp" alt="一層層折疊的稿紙，中間穿過一道朱紅色絲帶" width="1536" height="1024" loading="lazy">
+            </figure>
+            <div class="context-stat">
+              <span class="context-number">1,050,000</span>
+              <span class="context-unit">TOKEN<span>API 上下文上限</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="measure chapter" id="measure" aria-labelledby="measure-title">
+        <div class="frame measure-frame">
+          <div class="chapter-tag"><span class="mark"></span> 02 <span>推理</span></div>
+          <div class="measure-head">
+            <h2 id="measure-title">多想一會，<br class="narrow-break">分數怎麼變？</h2>
+            <p>把推理從 Low 調到 Max，實測分數和每題用時都會增加。</p>
+          </div>
+          <div class="instrument">
+            <div class="scope">
+              <canvas id="scope-picture" aria-hidden="true"></canvas>
+              <div class="scope-readout">
+                <div class="scope-label mono">AA INTELLIGENCE INDEX <span>V5.0.1</span></div>
+                <div class="scope-value" aria-hidden="true"><span id="big-score">57</span><span class="scope-unit">分</span></div>
+              </div>
+              <div class="scope-scale">
+                <div class="scope-telemetry mono"><span id="scope-effort">MAX</span><span><strong id="scope-time">7.9</strong> 分鐘／題</span></div>
+                <div class="time-rule" id="time-rule" aria-hidden="true">
+                  <div class="time-fill"></div>
+                  <div class="time-ticks mono"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span></div>
+                </div>
+              </div>
+            </div>
+            <fieldset class="efforts">
+              <legend>切換推理強度</legend>
+              <div class="effort-options">
+                <label><input type="radio" name="effort" value="0"><span>Low</span></label>
+                <label><input type="radio" name="effort" value="1" aria-label="Medium"><span>Med<span class="long-label">ium</span><span class="short-label">.</span></span></label>
+                <label><input type="radio" name="effort" value="2"><span>High</span></label>
+                <label><input type="radio" name="effort" value="3"><span>Xhigh</span></label>
+                <label><input type="radio" name="effort" value="4" checked><span>Max</span></label>
+              </div>
+            </fieldset>
+            <p class="sr-only" id="measurement" role="status">Max，57 分，每題 7.9 分鐘。</p>
+          </div>
+          <div class="measure-foot">
+            <a class="data-link" href="#benchmarks">查看全部數據 <span aria-hidden="true">↘</span></a>
+            <time class="mono" datetime="2026-11-18">2026.11.18</time>
+          </div>
+        </div>
+      </section>
+
+      <section class="limits chapter" id="limits" aria-labelledby="limits-title">
+        <div class="frame limits-frame">
+          <div class="chapter-tag"><span class="mark"></span> 03 <span>限制</span></div>
+          <div class="limits-copy">
+            <h2 id="limits-title">我會猜錯，<br>也可能漏報卡關</h2>
+            <p>遇到不確定的事實，我可能猜錯。OpenAI 的測試也發現，我有時會漏報缺檔或工具失效。</p>
+          </div>
+          <figure class="blindspot">
+            <div class="blind-reading" aria-hidden="true">
+              <div class="blind-value">55<span>%</span></div>
+              <div class="blind-matrix"></div>
+            </div>
+            <figcaption>
+              <b>55% 幻覺率</b>
+              <span>AA-Omniscience v1.1<br>GPT-6.2 Sol (Max) · <time datetime="2026-11-18">2026.11.18</time></span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="joint chapter" id="joint" aria-labelledby="joint-title">
+        <img src="./assets/joint-CfpTl4VR.webp" class="joint-image" alt="" width="1536" height="1024" loading="lazy">
+        <div class="frame joint-frame">
+          <div class="chapter-tag"><span class="mark"></span> 04 <span>協作</span></div>
+          <div class="joint-copy">
+            <h2 id="joint-title">我改程式，<br>你決定能不能合併</h2>
+            <p>在 Codex，你可以定好驗收條件。我能讀專案、修改檔案、執行測試，再把差異留給你審閱。</p>
+          </div>
+          <a class="enter" href="#record"><span aria-hidden="true">↓</span> 查看資料</a>
+        </div>
+      </section>
+
+      <section class="record chapter" id="record" aria-labelledby="record-title">
+        <div class="frame">
+          <div class="chapter-tag"><span class="mark"></span> 05 <span>查證</span></div>
+          <header class="record-heading">
+            <h2 id="record-title">我的規格與實測</h2>
+            <p>這裡可以核對我的規格、評測結果和原始資料。</p>
+          </header>
+          <div id="record-content"></div>
+          <footer class="record-footer">
+            <span class="signature"><span class="mark"></span> GPT-6.2 SOL / OPENAI</span>
+            <a href="#top">回到首屏 <span aria-hidden="true">↑</span></a>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

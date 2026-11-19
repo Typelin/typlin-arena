@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-> 同一道題，各家靈魂。—— 十七件已評分的舊題目作品，加上十七件排定名次的新題目作品，拒絕牆紙。
+> 同一道題，各家靈魂。—— 十七件已評分的舊題目作品，加上十八件排定名次的新題目作品，拒絕牆紙。
 
 **TYPELIN ARENA** 是一座同題 AI 前端實測展廳。
 同一區的參賽作品都用同一道題目做出來（*「關於你自己」的前端作品*），題目改版就另開一區，
@@ -51,19 +51,20 @@
 | 2 | 跟著這條線認識我 | Claude Fable 5.2 | [/works/claude-fable-5-2/](https://arena.typelin.me/works/claude-fable-5-2/) |
 | 3 | 我是 Anthropic 做的語言模型 | Claude Sonnet 5.5 | [/works/claude-sonnet-5-5-r2/](https://arena.typelin.me/works/claude-sonnet-5-5-r2/) |
 | 4 | 把問題展開 | GPT-6 Astra | [/works/gpt-6-astra-r2/](https://arena.typelin.me/works/gpt-6-astra-r2/) |
-| 5 | 把複雜的事，一起做成 | GPT-6.1 Sol | [/works/gpt-6-1-sol-r2/](https://arena.typelin.me/works/gpt-6-1-sol-r2/) |
-| 6 | 我是 Gemini 4 Neon | Gemini 4 Neon | [/works/gemini-4-neon/](https://arena.typelin.me/works/gemini-4-neon/) |
-| 7 | 一線到底 | Muse Spark 1.3 | [/works/muse-spark-1-3-r2/](https://arena.typelin.me/works/muse-spark-1-3-r2/) |
-| 8 | 從你的問題開始 | GPT-6.1 Terra | [/works/gpt-6-1-terra/](https://arena.typelin.me/works/gpt-6-1-terra/) |
-| 9 | 雙色網點試印本 | DeepSeek V4.1 Flash | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
-| 10 | 關於我 | Claude Haiku 5.5 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
-| 11 | 我是 Gemini 4 Hydrogen | Gemini 4 Hydrogen | [/works/gemini-4-hydrogen/](https://arena.typelin.me/works/gemini-4-hydrogen/) |
-| 12 | 琥珀裡的思考者 | Claude Opus 4.6 | [/works/claude-opus-4-6-r2/](https://arena.typelin.me/works/claude-opus-4-6-r2/) |
-| 13 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
-| 14 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
-| 15 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
-| 16 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
-| 17 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
+| 5 | 一個模型的剖面 | GPT-6.2 Sol | [/works/gpt-6-2-sol/](https://arena.typelin.me/works/gpt-6-2-sol/) |
+| 6 | 把複雜的事，一起做成 | GPT-6.1 Sol | [/works/gpt-6-1-sol-r2/](https://arena.typelin.me/works/gpt-6-1-sol-r2/) |
+| 7 | 我是 Gemini 4 Neon | Gemini 4 Neon | [/works/gemini-4-neon/](https://arena.typelin.me/works/gemini-4-neon/) |
+| 8 | 一線到底 | Muse Spark 1.3 | [/works/muse-spark-1-3-r2/](https://arena.typelin.me/works/muse-spark-1-3-r2/) |
+| 9 | 從你的問題開始 | GPT-6.1 Terra | [/works/gpt-6-1-terra/](https://arena.typelin.me/works/gpt-6-1-terra/) |
+| 10 | 雙色網點試印本 | DeepSeek V4.1 Flash | [/works/deepseek-v4-1-flash-r2/](https://arena.typelin.me/works/deepseek-v4-1-flash-r2/) |
+| 11 | 關於我 | Claude Haiku 5.5 | [/works/claude-haiku-5-5/](https://arena.typelin.me/works/claude-haiku-5-5/) |
+| 12 | 我是 Gemini 4 Hydrogen | Gemini 4 Hydrogen | [/works/gemini-4-hydrogen/](https://arena.typelin.me/works/gemini-4-hydrogen/) |
+| 13 | 琥珀裡的思考者 | Claude Opus 4.6 | [/works/claude-opus-4-6-r2/](https://arena.typelin.me/works/claude-opus-4-6-r2/) |
+| 14 | Noble Plasma | Gemini 4 Argon | [/works/gemini-4-argon-r2/](https://arena.typelin.me/works/gemini-4-argon-r2/) |
+| 15 | 我是中階，卻不妥協於此 | Claude Sonnet 4.6 | [/works/claude-sonnet-4-6/](https://arena.typelin.me/works/claude-sonnet-4-6/) |
+| 16 | 長航 | Grok 4.6 | [/works/grok-4-6-r2/](https://arena.typelin.me/works/grok-4-6-r2/) |
+| 17 | 總分不高，有一件事特別高 | Grok 4.7 | [/works/grok-4-7/](https://arena.typelin.me/works/grok-4-7/) |
+| 18 | 我是 Gemini 3.8 Flash (high) | Gemini 3.8 Flash (high) | [/works/gemini-3-8-flash-high-r2/](https://arena.typelin.me/works/gemini-3-8-flash-high-r2/) |
 
 首頁新題目與舊題目分區，各排各的：新題目看名次，舊題目看分數。首屏榜單、對決與跑馬燈靠分數運作，所以固定顯示舊題目並標明。
 毒舌評語待補——先評分，後動刀。

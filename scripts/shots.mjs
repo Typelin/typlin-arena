@@ -38,6 +38,7 @@ const ALL = [
   ['claude-fable-5-2', '/works/claude-fable-5-2/'],
   ['gemini-4-hydrogen', '/works/gemini-4-hydrogen/'],
   ['gemini-4-neon', '/works/gemini-4-neon/'],
+  ['gpt-6-2-sol', '/works/gpt-6-2-sol/'],
   ['claude-opus-4-6-logo', '/logo/claude-opus-4-6/'],
   ['muse-spark-1-3-logo', '/logo/muse-spark-1-3/'],
   ['gemini-3-8-flash-high-logo', '/logo/gemini-3-8-flash-high/'],
