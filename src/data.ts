@@ -382,7 +382,7 @@ export const PLATES: Plate[] = [
   {
     id: 'deepseek-v4-1-flash-r2',
     era: 'new',
-    place: 8,
+    place: 9,
     twin: 'deepseek-v4-1-flash',
     no: '20',
     short: 'DSV4.1F',
@@ -400,7 +400,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-haiku-5-5',
     era: 'new',
-    place: 9,
+    place: 10,
     no: '21',
     short: 'HAIKU 5.5',
     model: 'CLAUDE HAIKU 5.5 · 新題目',
@@ -417,7 +417,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-sonnet-4-6',
     era: 'new',
-    place: 13,
+    place: 14,
     no: '22',
     short: 'SONNET 4.6',
     model: 'CLAUDE SONNET 4.6 · 新題目',
@@ -434,7 +434,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-3-8-flash-high-r2',
     era: 'new',
-    place: 16,
+    place: 17,
     twin: 'gemini-3-8-flash-high',
     no: '23',
     short: 'GEMINI 3.8',
@@ -452,7 +452,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-argon-r2',
     era: 'new',
-    place: 12,
+    place: 13,
     twin: 'gemini-4-argon',
     no: '24',
     short: 'ARGON',
@@ -488,7 +488,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-6-r2',
     era: 'new',
-    place: 14,
+    place: 15,
     twin: 'grok-4-6',
     no: '26',
     short: 'GROK 4.6',
@@ -506,7 +506,7 @@ export const PLATES: Plate[] = [
   {
     id: 'grok-4-7',
     era: 'new',
-    place: 15,
+    place: 16,
     no: '27',
     short: 'GROK 4.7',
     model: 'GROK 4.7 · 新題目',
@@ -523,7 +523,7 @@ export const PLATES: Plate[] = [
   {
     id: 'claude-opus-4-6-r2',
     era: 'new',
-    place: 11,
+    place: 12,
     twin: 'claude-opus-4-6',
     no: '28',
     short: 'OPUS 4.6',
@@ -559,7 +559,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gpt-6-1-terra',
     era: 'new',
-    place: 7,
+    place: 8,
     no: '30',
     short: 'TERRA',
     model: 'GPT-6.1 TERRA · 新題目',
@@ -576,7 +576,7 @@ export const PLATES: Plate[] = [
   {
     id: 'muse-spark-1-3-r2',
     era: 'new',
-    place: 6,
+    place: 7,
     twin: 'muse-spark-1-3',
     no: '31',
     short: 'SPARK',
@@ -611,7 +611,7 @@ export const PLATES: Plate[] = [
   {
     id: 'gemini-4-hydrogen',
     era: 'new',
-    place: 10,
+    place: 11,
     no: '33',
     short: 'HYDROGEN',
     model: 'GEMINI 4 HYDROGEN · 新題目',
@@ -625,7 +625,23 @@ export const PLATES: Plate[] = [
     thumb: '/shots/gemini-4-hydrogen.png',
     score: null,
   },
-];
+  {
+    id: 'gemini-4-neon',
+    era: 'new',
+    place: 6,
+    no: '34',
+    short: 'NEON',
+    model: 'GEMINI 4 NEON · 新題目',
+    title: '我是 Gemini 4 Neon',
+    prompt: NEW_PROMPT,
+    spec: ['VITE', 'REACT 19', 'WEBGL', 'CANVAS 2D', 'WEB AUDIO', 'REDUCED MOTION'],
+    verdict:
+      '新題目作答。首屏是即時運算的氖放電光譜，可以開啟放電聲場。後面依序是百萬詞元尺度、四段思考互動、基準速度、邊界與短板，最後一章附完整規格與出處。',
+    visual: 'current',
+    src: '/works/gemini-4-neon/',
+    thumb: '/shots/gemini-4-neon.png',
+    score: null,
+  },];
 
 export type Criterion = { name: string; desc: string };
 

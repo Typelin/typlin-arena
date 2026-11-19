@@ -1,4 +1,4 @@
-﻿# 重打並同步全部 Arena 作品到 public/works。
+# 重打並同步全部 Arena 作品到 public/works。
 # Canonical 路徑使用完整模型 slug；舊短網址保留為 redirect，避免歷史文章失效。
 # 用法：在專案根目錄執行 .\scripts\sync-works.ps1
 #       只重打部分作品：.\scripts\sync-works.ps1 -Only gpt-6-1-sol,gpt-6-1-sol-logo
@@ -37,7 +37,8 @@ $works = @(
   @{ Source = 'muse-spark-1-3-r2';     Slug = 'muse-spark-1-3-r2';     Legacy = 'muse-spark-1-3-r2' },
   @{ Source = 'gpt-6-1-terra';         Slug = 'gpt-6-1-terra';         Legacy = 'gpt-6-1-terra' },
   @{ Source = 'claude-fable-5-2';      Slug = 'claude-fable-5-2';      Legacy = 'claude-fable-5-2' },
-  @{ Source = 'gemini-4-hydrogen';     Slug = 'gemini-4-hydrogen';     Legacy = 'gemini-4-hydrogen' }
+  @{ Source = 'gemini-4-hydrogen';     Slug = 'gemini-4-hydrogen';     Legacy = 'gemini-4-hydrogen' },
+  @{ Source = 'gemini-4-neon';         Slug = 'gemini-4-neon';         Legacy = 'gemini-4-neon' }
 )
 
 function Write-LegacyRedirect([string]$legacy, [string]$slug) {
