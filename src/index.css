@@ -105,7 +105,7 @@ button { font: inherit; color: inherit; }
 /* ---------- topbar ---------- */
 
 .topbar {
-  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  position: fixed; inset: 0 0 auto 0; z-index: 50; view-transition-name: topbar;
   background: color-mix(in srgb, var(--paper) 86%, transparent);
   /* 只寫標準屬性：兩者並存時 Lightning CSS 會丟掉標準版，Chrome 與 Firefox 就沒有毛玻璃；Safari 的前綴由建置補上 */
   backdrop-filter: blur(14px) saturate(1.2);
@@ -116,12 +116,15 @@ button { font: inherit; color: inherit; }
 .brand__mark { width: 22px; height: 22px; }
 .brand__name { font-family: var(--serif); font-weight: 700; font-size: 14px; letter-spacing: 0.32em; }
 .nav { display: flex; gap: 4px; margin-left: auto; }
-.nav button {
-  background: none; border: 0; cursor: pointer; padding: 8px 14px;
-  font-size: 14px; letter-spacing: 0.2em; color: var(--muted);
+.nav a {
+  display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 12px;
+  font-size: 14px; letter-spacing: 0.16em; color: var(--muted); text-decoration: none;
   transition: color 0.3s;
 }
-.nav button:hover { color: var(--red); }
+.nav a b { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; color: var(--faint-text); transition: color 0.3s; }
+.nav a:hover { color: var(--red); }
+.nav a[aria-current="page"] { color: var(--ink); }
+.nav a[aria-current="page"] b { color: var(--red); }
 .topbar__meta { padding-left: 24px; border-left: 1px solid var(--line); }
 .progress {
   position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
@@ -321,18 +324,12 @@ button { font: inherit; color: inherit; }
   box-shadow: 0 0 0 1px rgba(21, 19, 15, 0.08), 0 16px 26px -14px rgba(21, 19, 15, 0.55);
 }
 .sheet__grid:has(.sheet__tile.is-on) .sheet__tile:not(.is-on) { opacity: 0.42; }
-.sheet__tile.is-shown::after {
-  content: ""; position: absolute; inset: -3px; border: 1.5px solid var(--red); pointer-events: none;
-  animation: ring 0.6s var(--ease) both;
-}
-@keyframes ring { from { opacity: 0; transform: scale(1.18); } }
 .sheet__no {
   position: absolute; left: 3px; bottom: 3px; padding: 1px 4px;
   background: var(--ink); color: var(--paper);
   font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; line-height: 1.4;
   transition: background-color 0.3s;
 }
-.sheet__tile.is-shown .sheet__no { background: var(--red); }
 .sheet__cap { min-height: 46px; margin-top: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); overflow: hidden; }
 .sheet__cap > span { display: flex; align-items: baseline; gap: 10px; min-width: 0; white-space: nowrap; animation: swap 0.45s var(--ease) both; font-family: var(--display); font-size: 24px; line-height: 1.3; }
 .sheet__cap b { flex: none; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; color: var(--red); }
@@ -754,7 +751,196 @@ button { font: inherit; color: inherit; }
 
 /* ---------- responsive ---------- */
 
+/* ---------- 館內樓層：大廳樓層牌、樓層入口、上下樓、電梯面板 ---------- */
+/* 一層一個房間；網址 #/2f 直達。換層時整頁像電梯一樣往上或往下換場。 */
+
+main:focus { outline: none; }
+
+/* 大廳樓層牌：暗色指標牌，由上往下 5F → 1F，最底是「您在這裡」 */
+.directory {
+  --sign-fg: #f3eee3; --sign-muted: #a39b8b; --sign-line: rgba(245, 241, 232, 0.13); --sign-red: #e0583b;
+  position: relative; background: var(--ink); color: var(--sign-fg);
+  padding: clamp(20px, 2.2vw, 32px) clamp(20px, 2.2vw, 32px) clamp(10px, 1.2vw, 16px);
+  box-shadow: var(--shadow-frame);
+}
+.directory .label { color: var(--sign-muted); }
+.directory__head { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--sign-line); }
+.directory__head .label:first-child { color: var(--sign-fg); font-weight: 700; }
+.directory ol { list-style: none; margin: 0; padding: 0; }
+.dir {
+  display: grid; grid-template-columns: 72px minmax(0, 1fr) auto 22px; align-items: center; gap: 18px;
+  padding: 18px 0; border-bottom: 1px solid var(--sign-line); color: inherit; text-decoration: none;
+}
+.directory li:last-child .dir { border-bottom: 0; }
+.dir__no { font-family: var(--display); font-size: 58px; line-height: 0.8; letter-spacing: -0.02em; transition: color 0.3s; }
+.dir__no i { font-style: italic; color: var(--sign-muted); }
+.dir__id { display: grid; gap: 2px; min-width: 0; }
+.dir__id b { font-family: var(--serif); font-weight: 700; font-size: 19px; line-height: 1.35; }
+.dir__id small { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; color: var(--sign-muted); }
+.dir__id em { margin-top: 4px; font-style: normal; font-size: 13.5px; line-height: 1.6; color: #cfc8b9; }
+.dir__art { display: flex; align-items: center; }
+.dir__art img {
+  width: 92px; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top;
+  border: 3px solid #fff; box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.8);
+  transition: transform 0.5s var(--ease);
+}
+.dir__art--2 img + img { margin-left: -36px; transform: translateY(8px) rotate(3deg); }
+.dir__art--2 img:first-child { transform: rotate(-3deg); }
+.dir__go { font-size: 18px; color: var(--sign-muted); transition: transform 0.4s var(--ease), color 0.3s; }
+a.dir:hover .dir__no, a.dir:focus-visible .dir__no { color: var(--sign-red); }
+a.dir:hover .dir__go, a.dir:focus-visible .dir__go { transform: translateX(6px); color: var(--sign-fg); }
+a.dir:hover .dir__art img:first-child { transform: rotate(-3deg) translateY(-4px); }
+a.dir:hover .dir__art--1 img { transform: translateY(-4px); }
+.dir--here { grid-template-columns: 72px minmax(0, 1fr); }
+.dir--here .dir__no, .dir--here .dir__no i { color: var(--sign-red); }
+.dir--here em { display: inline-flex; align-items: center; gap: 8px; color: var(--sign-red); font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; }
+.dir--here em::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: here 2.4s ease-in-out infinite; }
+@keyframes here { 50% { box-shadow: 0 0 0 6px rgba(224, 88, 59, 0); } 0%, 100% { box-shadow: 0 0 0 0 rgba(224, 88, 59, 0.5); } }
+
+/* 樓層入口：大樓層號是指標牌，不是裝飾；下面接本層平面圖 */
+.hall__gate { padding: clamp(104px, 14vh, 150px) 0 clamp(64px, 9vh, 104px); border-bottom: 1px solid var(--line); }
+.hall__gate-in { display: grid; gap: clamp(40px, 6vw, 110px); align-items: start; }
+.hall__gate-in.has-aside { grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); }
+.hall__gate-in.has-sign { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+.hall__copy { max-width: 760px; min-width: 0; }
+.hall__en { color: var(--red); }
+.hall__no {
+  margin: 14px 0 6px; font-family: var(--display); font-size: clamp(132px, 17vw, 260px);
+  line-height: 0.8; letter-spacing: -0.045em;
+  animation: rise 1s var(--ease) both;
+}
+.hall__no i { font-style: italic; color: var(--red); }
+.hall__no--sign { margin: 0; padding-right: 0.12em; font-size: clamp(180px, 19vw, 290px); line-height: 0.74; text-align: right; }
+.hall__gate:has(.has-sign) { padding-bottom: clamp(48px, 7vh, 80px); }
+.hall__body > .duel:first-child { margin-top: 0; }
+.hall__copy .hall__en + h2 { margin-top: 18px; }
+.stage, .index__head, .room { scroll-margin-top: 72px; }
+
+/* 2F 入口海報：前三名三張疊放，No.1 在最前 */
+.hallpeek {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 11.5; padding: 0; border: 0;
+  background: none; cursor: pointer; text-align: left;
+}
+.hallpeek__card {
+  position: absolute; width: 74%; padding: clamp(6px, 0.8vw, 10px); background: #fff;
+  box-shadow: var(--shadow-frame); transition: transform 0.6s var(--ease);
+}
+.hallpeek__card img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.hallpeek__card--1 { left: 0; bottom: 8%; z-index: 3; transform: rotate(-1.5deg); }
+.hallpeek__card--2 { left: 18%; top: 4%; z-index: 2; transform: rotate(2deg); }
+.hallpeek__card--3 { right: 0; top: 0; z-index: 1; width: 62%; transform: rotate(4deg); }
+.hallpeek:hover .hallpeek__card--1 { transform: rotate(0) translateY(-6px); }
+.hallpeek:hover .hallpeek__card--2 { transform: rotate(3deg) translate(8px, -4px); }
+.hallpeek:hover .hallpeek__card--3 { transform: rotate(6deg) translate(12px, -2px); }
+.hallpeek__tag {
+  position: absolute; left: clamp(6px, 0.8vw, 10px); bottom: clamp(6px, 0.8vw, 10px);
+  display: inline-flex; align-items: baseline; gap: 8px; padding: 4px 10px;
+  background: var(--ink); color: var(--paper); font-family: var(--display); font-size: 17px; line-height: 1.3;
+}
+.hallpeek__tag b { font-style: italic; font-weight: 400; color: #e0583b; }
+.hallpeek__go { position: absolute; right: 0; bottom: 0; color: var(--ink); }
+.hallpeek:hover .hallpeek__go { color: var(--red); }
+.hall__copy h2 {
+  font-family: var(--serif); font-weight: 900; font-size: clamp(38px, 4.6vw, 68px);
+  line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance;
+}
+.hall__meta {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); margin-top: 32px;
+  border-top: 1px solid var(--ink);
+}
+.hall__meta > div { padding: 12px 16px 0 0; }
+.hall__meta dt { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; color: var(--muted); }
+.hall__meta dd { margin-top: 4px; font-family: var(--serif); font-weight: 700; font-size: 18px; }
+.hall__plan { list-style: none; margin: 30px 0 0; padding: 0; border-top: 1px solid var(--line-2); }
+.hall__plan button {
+  display: grid; grid-template-columns: 64px minmax(0, 1fr) 20px; align-items: center; gap: 12px;
+  width: 100%; padding: 14px 0; border: 0; border-bottom: 1px solid var(--line); background: none;
+  text-align: left; cursor: pointer; transition: padding 0.35s var(--ease), color 0.3s;
+}
+.hall__plan button b { font-family: var(--serif); font-weight: 700; font-size: 16px; }
+.hall__plan button i { font-style: normal; color: var(--faint-text); transition: transform 0.35s var(--ease); }
+.hall__plan button:hover { padding-left: 8px; color: var(--red); }
+.hall__plan button:hover i { transform: translateY(3px); color: var(--red); }
+.hall__body { padding-top: clamp(64px, 10vh, 112px); }
+.hall__body > .zone > .stage:first-child { margin-top: 0; }
+.room + .room { margin-top: clamp(120px, 18vh, 190px); }
+.room .how { margin-top: 0; }
+
+/* 3F 換一套照明：前三名展區偏藍黑，一進來就知道換了廳 */
+.hall--3f .stage { --paper: #10161b; --paper-2: #18212a; --card: #141c23; }
+
+/* 樓層相接：每層上緣一條粗線，像跨進另一層樓 */
+.hall { border-top: 2px solid var(--ink); }
+.hall__body { padding-bottom: clamp(110px, 16vh, 170px); }
+
+/* 電梯面板：寬螢幕常駐右側；較窄時收成底部膠囊 */
+.lift { position: fixed; z-index: 45; view-transition-name: lift; }
+.lift__floors { list-style: none; margin: 0; padding: 0; }
+.lift__floors a { text-decoration: none; color: var(--muted); }
+.lift__floors a b { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; }
+
+@media (min-width: 1240px) {
+  .lift { right: 14px; top: 50%; transform: translateY(-50%); }
+  .lift__now { display: none; }
+  .lift__floors {
+    display: grid; gap: 2px; padding: 5px;
+    background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(12px);
+    border: 1px solid var(--line-2);
+  }
+  .lift__floors a { position: relative; display: grid; place-items: center; width: 38px; height: 38px; transition: background-color 0.3s, color 0.3s; }
+  .lift__floors a span {
+    position: absolute; right: calc(100% + 12px); top: 50%; transform: translate(6px, -50%);
+    padding: 5px 10px; background: var(--ink); color: var(--paper); white-space: nowrap;
+    font-size: 12px; letter-spacing: 0.12em; opacity: 0; pointer-events: none;
+    transition: opacity 0.2s, transform 0.25s var(--ease);
+  }
+  .lift__floors a:hover, .lift__floors a:focus-visible { color: var(--red); }
+  .lift__floors a:hover span, .lift__floors a:focus-visible span { opacity: 1; transform: translate(0, -50%); }
+  .lift__floors a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+  .lift__floors a[aria-current="page"]::after {
+    content: ""; position: absolute; left: -6px; top: 50%; width: 3px; height: 14px; margin-top: -7px; background: var(--red);
+  }
+}
+@media (max-width: 1239px) {
+  .lift { left: 50%; bottom: max(16px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); }
+  .lift__now {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px 0 14px;
+    border: 0; background: var(--ink); color: var(--paper); cursor: pointer; white-space: nowrap;
+    box-shadow: 0 14px 30px -14px rgba(21, 19, 15, 0.7);
+    font-size: 14px; letter-spacing: 0.12em;
+  }
+  .lift__now b { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: #e0583b; }
+  .lift__now i { width: 7px; height: 7px; border-left: 1.5px solid currentColor; border-top: 1.5px solid currentColor; transform: translateY(2px) rotate(45deg); transition: transform 0.3s var(--ease); }
+  .lift.is-open .lift__now i { transform: translateY(-2px) rotate(225deg); }
+  .lift__floors {
+    position: absolute; left: 50%; bottom: calc(100% + 8px); min-width: 232px;
+    background: var(--card); box-shadow: var(--shadow-frame); padding: 6px;
+    opacity: 0; visibility: hidden; transform: translate(-50%, 8px);
+    transition: opacity 0.2s, transform 0.25s var(--ease), visibility 0s linear 0.25s;
+  }
+  .lift.is-open .lift__floors { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition-delay: 0s; }
+  .lift__floors a { display: grid; grid-template-columns: 40px 1fr; align-items: center; min-height: 44px; padding: 0 12px; font-size: 15px; letter-spacing: 0.08em; color: var(--ink); }
+  .lift__floors a b { color: var(--muted); }
+  .lift__floors a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+  .lift__floors a[aria-current="page"] b { color: #e0583b; }
+  .hall--5f .hall__body { padding-bottom: clamp(130px, 18vh, 180px); }
+}
+
+/* 搭電梯轉場（遠距離跳層）：上樓時畫面往上離開、新樓層從下方進來；下樓相反 */
+::view-transition-old(root) { animation: lift-out 0.24s cubic-bezier(0.4, 0, 1, 1) both; }
+::view-transition-new(root) { animation: lift-in 0.46s var(--ease) both; }
+:root[data-lift="down"]::view-transition-old(root) { animation-name: lift-out-down; }
+:root[data-lift="down"]::view-transition-new(root) { animation-name: lift-in-down; }
+@keyframes lift-out { to { opacity: 0; transform: translateY(-40px); } }
+@keyframes lift-in { from { opacity: 0; transform: translateY(56px); } }
+@keyframes lift-out-down { to { opacity: 0; transform: translateY(40px); } }
+@keyframes lift-in-down { from { opacity: 0; transform: translateY(-56px); } }
+
 @media (max-width: 1100px) {
+  .nav { display: none; }
+  .topbar__meta { margin-left: auto; }
+  .hall__gate-in.has-aside { grid-template-columns: minmax(0, 1fr); }
+  .hallpeek { max-width: 720px; }
   .hero__grid { grid-template-columns: minmax(0, 1fr); }
   .hero__copy { padding-top: 0; }
   .board { max-width: 720px; }
@@ -776,7 +962,14 @@ button { font: inherit; color: inherit; }
   .topbar__in { height: 56px; gap: 12px; }
   .brand__name { font-size: 12px; letter-spacing: 0.24em; }
   .topbar__meta { display: none; }
-  .nav button { padding: 8px 8px; font-size: 13px; letter-spacing: 0.12em; }
+  .dir { grid-template-columns: 52px minmax(0, 1fr) 18px; gap: 14px; }
+  .dir__no { font-size: 44px; }
+  .dir__art { display: none; }
+  .hall__no { font-size: clamp(120px, 38vw, 170px); }
+  .hall__gate-in.has-sign { grid-template-columns: minmax(0, 1fr); }
+  .hall__no--sign { order: -1; text-align: left; font-size: clamp(120px, 38vw, 170px); line-height: 0.8; }
+  .hallpeek__tag { font-size: 14px; }
+  .hallpeek__go { display: none; }
   .hero { padding-top: 104px; }
   .hero h1 { font-size: clamp(40px, 11.6vw, 64px); }
   .hero__sub { font-size: 16px; }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { PLATES, CRITERIA, DOSSIER, LOGO_PROMPT, type Plate } from './data';
 import { REELS } from './reels';
 
@@ -113,12 +113,11 @@ const BOARD_DWELL = 5200;
  * 首屏榜單：預覽框輪播前六名，滑過、聚焦或點刻度就換成那一件。
  * 只在卡片進入視窗、沒有被操作、且未要求減少動態時自動換。
  */
-function Board({ zone, isNewZone, total, onMore, onShow }: {
+function Board({ zone, isNewZone, total, onMore }: {
   zone: ZoneData;
   isNewZone: boolean;
   total: number;
   onMore: () => void;
-  onShow: (pl: Plate) => void;
 }) {
   const top = zone.ranked.slice(0, BOARD_SIZE);
   const n = top.length;
@@ -147,7 +146,6 @@ function Board({ zone, isNewZone, total, onMore, onShow }: {
   useEffect(() => {
     const next = (sel + 1) % n;
     setSeen((s) => (s.includes(sel) && s.includes(next) ? s : [...new Set([...s, sel, next])]));
-    if (top[sel]) onShow(top[sel]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sel, n]);
 
@@ -321,10 +319,9 @@ function PenCircle() {
  * 首屏接觸印樣：全部作品縮在一張紙上，滑過看是誰，點一下站內預覽。
  * 榜單卡正在預覽的那一件會被圈出來。
  */
-function Sheet({ works, rankOf, shownId, onOpen }: {
+function Sheet({ works, rankOf, onOpen }: {
   works: Plate[];
   rankOf: (pl: Plate) => number | null;
-  shownId: string | null;
   onOpen: (pl: Plate) => void;
 }) {
   const [cur, setCur] = useState<Plate | null>(null);
@@ -342,7 +339,7 @@ function Sheet({ works, rankOf, shownId, onOpen }: {
             <li key={w.id} style={{ '--i': i } as React.CSSProperties}>
               <button
                 type="button"
-                className={`sheet__tile${cur?.id === w.id ? ' is-on' : ''}${shownId === w.id ? ' is-shown' : ''}`}
+                className={`sheet__tile${cur?.id === w.id ? ' is-on' : ''}`}
                 aria-label={`站內預覽 ${w.model} 作品《${w.title}》，${r != null ? `${isNew(w) ? '新題目' : '舊題目'}第 ${r} 名` : '待評分'}`}
                 onPointerEnter={() => setCur(w)}
                 onFocus={() => setCur(w)}
@@ -651,11 +648,10 @@ function Row({ pl, rank, logo, scored, onPreview }: {
 type ZoneData = { ranked: Plate[]; pending: Plate[] };
 
 /** 一種題目一區：自己的前三名跨頁、索引與待評，名次只在區內計算。 */
-function Zone({ zone, tag, title, desc, logo, scored, rankOf, onPreview }: {
+function Zone({ zone, anchor, logo, scored, rankOf, onPreview }: {
   zone: ZoneData;
-  tag: string;
-  title: string;
-  desc: string;
+  /** 錨點前綴：`${anchor}-hall`、`${anchor}-wall`、`${anchor}-pending`，給樓層內的平面圖跳轉。 */
+  anchor: string;
   logo: boolean;
   /** false = 名次制（新題目），索引列不顯示分數欄。 */
   scored: boolean;
@@ -666,14 +662,8 @@ function Zone({ zone, tag, title, desc, logo, scored, rankOf, onPreview }: {
   const rest = zone.ranked.slice(3);
   return (
     <div className="zone">
-      <header className="zone__head rv">
-        <p className="label">{tag}</p>
-        <h3 className="zone__title">{title}</h3>
-        <p className="section__desc">{desc}</p>
-      </header>
-
       {podium.length > 0 && (
-        <div className="stage">
+        <div className="stage" id={`${anchor}-hall`}>
           <div className="stage__head rv">
             <p className="label">THE HALL · 前 {podium.length} 名</p>
             <p className="label stage__note">每面牆的光，取自作品本身的顏色</p>
@@ -686,7 +676,7 @@ function Zone({ zone, tag, title, desc, logo, scored, rankOf, onPreview }: {
 
       {rest.length > 0 && (
         <>
-          <div className="index__head rv">
+          <div className="index__head rv" id={`${anchor}-wall`}>
             <p className="label">THE INDEX · 第 4 名起</p>
             {scored && <p className={`label index__cols${logo ? '' : ' index__cols--nologo'}`} aria-hidden="true"><span>自我介紹</span>{logo && <span>LOGO</span>}</p>}
           </div>
@@ -698,7 +688,7 @@ function Zone({ zone, tag, title, desc, logo, scored, rankOf, onPreview }: {
 
       {zone.pending.length > 0 && (
         <>
-          <div className="index__head rv">
+          <div className="index__head rv" id={`${anchor}-pending`}>
             <p className="label">PENDING · 已收件，{scored ? '待評分' : '待排名'}</p>
             <p className="section__desc">{scored ? '作品已經可以操作，分數還沒打，所以不排名次。' : '作品已經可以操作，還沒排進名次。'}</p>
           </div>
@@ -711,12 +701,238 @@ function Zone({ zone, tag, title, desc, logo, scored, rankOf, onPreview }: {
   );
 }
 
+/** 館內樓層：網址 #/2f 直達某一層；舊錨點對應到新樓層，分享過的連結不會失效。 */
+const FLOORS = [
+  { id: '1f', name: '大廳', short: '大廳', en: 'LOBBY' },
+  { id: '2f', name: '新題目展廳', short: '新題目', en: 'NEW BRIEF HALL' },
+  { id: '3f', name: '舊題目展廳', short: '舊題目', en: 'PREVIOUS BRIEF HALL' },
+  { id: '4f', name: '盲測室', short: '盲測', en: 'BLIND TEST ROOM' },
+  { id: '5f', name: '尺規與閱覽室', short: '尺規', en: 'CRITERIA & READING ROOM' },
+] as const;
+type FloorId = (typeof FLOORS)[number]['id'];
+const LEGACY: Record<string, FloorId> = { top: '1f', works: '2f', index: '5f', how: '5f', dossier: '5f' };
+const floorOf = (id: FloorId) => FLOORS.find((f) => f.id === id)!;
+const levelOf = (id: FloorId) => FLOORS.findIndex((f) => f.id === id);
+
+/** 不認得的 hash（例如跳到本層內容的錨點）回傳 null，停在原樓層。 */
+function floorFromHash(hash: string): FloorId | null {
+  const h = hash.replace(/^#\/?/, '');
+  if (!h) return '1f';
+  if (FLOORS.some((f) => f.id === h)) return h as FloorId;
+  return LEGACY[h] ?? null;
+}
+
+/** 搭電梯：同一頁直達某一層。遠距離用一段短轉場（上樓往上滑、下樓往下滑）瞬移，近距離平滑捲動。 */
+function rideTo(id: FloorId, from: FloorId) {
+  const el = document.getElementById(`floor-${id}`);
+  if (!el) return;
+  const y = id === '1f' ? 0 : el.getBoundingClientRect().top + scrollY;
+  const far = Math.abs(y - scrollY) > innerHeight * 1.5;
+  if (reduced()) return scrollTo({ top: y, behavior: 'instant' });
+  if (!far) return scrollTo({ top: y, behavior: 'smooth' });
+  if (!document.startViewTransition) return scrollTo({ top: y, behavior: 'instant' });
+  document.documentElement.dataset.lift = levelOf(id) >= levelOf(from) ? 'up' : 'down';
+  document.startViewTransition(() => scrollTo({ top: y, behavior: 'instant' }));
+}
+
+/** 目前樓層＝視窗 40% 高度那條線落在哪一層；網址同步成 #/2f，可直接分享。 */
+function useFloor(): FloorId {
+  const [floor, setFloor] = useState<FloorId>('1f');
+  const cur = useRef<FloorId>('1f');
+  useEffect(() => {
+    let raf = 0;
+    const spy = () => {
+      raf = 0;
+      const line = innerHeight * 0.4;
+      let next: FloorId = '1f';
+      for (const f of FLOORS) {
+        const el = document.getElementById(`floor-${f.id}`);
+        if (el && el.getBoundingClientRect().top <= line) next = f.id;
+      }
+      if (next === cur.current) return;
+      cur.current = next;
+      setFloor(next);
+      history.replaceState(null, '', next === '1f' ? location.pathname + location.search : `#/${next}`);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(spy); };
+    const go = (id: FloorId) => rideTo(id, cur.current);
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const a = (e.target as Element).closest?.('a[href^="#/"]');
+      const id = a && floorFromHash(a.getAttribute('href')!);
+      if (!id) return;
+      e.preventDefault();
+      go(id);
+    };
+    const onHash = () => { const id = floorFromHash(location.hash); if (id) go(id); };
+    const first = floorFromHash(location.hash);
+    if (first && first !== '1f') {
+      const el = document.getElementById(`floor-${first}`);
+      if (el) scrollTo({ top: el.getBoundingClientRect().top + scrollY, behavior: 'instant' });
+    }
+    spy();
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll);
+    addEventListener('hashchange', onHash);
+    document.addEventListener('click', onClick);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener('scroll', onScroll);
+      removeEventListener('resize', onScroll);
+      removeEventListener('hashchange', onHash);
+      document.removeEventListener('click', onClick);
+    };
+  }, []);
+  useEffect(() => {
+    const f = floorOf(floor);
+    document.title = floor === '1f' ? 'TYPELIN ARENA —— 同題，各表。' : `${f.id.toUpperCase()} ${f.name} · TYPELIN ARENA`;
+  }, [floor]);
+  return floor;
+}
+
+const scrollToId = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+
+/** 電梯面板：桌面常駐右側，手機收成底部一顆目前樓層，點開是全部樓層；捲動時燈號跟著換層。 */
+function Lift({ floor }: { floor: FloorId }) {
+  const [open, setOpen] = useState(false);
+  const cur = floorOf(floor);
+  return (
+    <nav className={`lift${open ? ' is-open' : ''}`} aria-label="樓層導覽">
+      <button type="button" className="lift__now" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        <b>{cur.id.toUpperCase()}</b>
+        <span>{cur.name}</span>
+        <i aria-hidden="true" />
+      </button>
+      <ol className="lift__floors">
+        {[...FLOORS].reverse().map((f) => (
+          <li key={f.id}>
+            <a
+              href={`#/${f.id}`}
+              aria-current={f.id === floor ? 'page' : undefined}
+              onClick={() => setOpen(false)}
+            >
+              <b>{f.id.toUpperCase()}</b>
+              <span>{f.name}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+}
+
+type DirRow = { id: FloorId; note: string; art: Plate[] };
+
+/** 大廳的樓層牌：照真實建築由上往下列，最底下是「您在這裡」。 */
+function Directory({ rows, total }: { rows: DirRow[]; total: number }) {
+  return (
+    <nav className="directory rv" aria-label="樓層指引">
+      <div className="directory__head">
+        <span className="label">FLOOR DIRECTORY · 樓層指引</span>
+        <span className="label">館藏 {total} 件</span>
+      </div>
+      <ol>
+        {rows.map((r) => {
+          const f = floorOf(r.id);
+          return (
+            <li key={r.id}>
+              <a className="dir" href={`#/${r.id}`}>
+                <span className="dir__no">{f.id[0]}<i>F</i></span>
+                <span className="dir__id">
+                  <b>{f.name}</b>
+                  <small>{f.en}</small>
+                  <em>{r.note}</em>
+                </span>
+                <span className={`dir__art dir__art--${r.art.length}`} aria-hidden="true">
+                  {r.art.map((pl) => <img key={pl.id} src={miniOf(pl.thumb)} alt="" width={320} height={200} loading="lazy" decoding="async" />)}
+                </span>
+                <span className="dir__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+          );
+        })}
+        <li>
+          <div className="dir dir--here" aria-current="page">
+            <span className="dir__no">1<i>F</i></span>
+            <span className="dir__id">
+              <b>大廳</b>
+              <small>LOBBY</small>
+              <em>您在這裡 · YOU ARE HERE</em>
+            </span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+  );
+}
+
+/** 樓層入口旁的主展預告：本層前三名疊成一張海報，點了直接走到前三名展區。 */
+function HallPeek({ works, anchor }: { works: Plate[]; anchor: string }) {
+  return (
+    <button type="button" className="hallpeek rv" onClick={() => scrollToId(anchor)} aria-label="走到本層前三名展區">
+      {works.map((pl, k) => (
+        <span className={`hallpeek__card hallpeek__card--${k + 1}`} key={pl.id}>
+          <img src={pl.thumb} alt="" width={960} height={600} loading="eager" decoding="async" />
+          <span className="hallpeek__tag"><b>No.{k + 1}</b>{modelMain(pl.model)}</span>
+        </span>
+      ))}
+      <span className="hallpeek__go label">本層前三名 · 往下走 ↓</span>
+    </button>
+  );
+}
+
+/** 每一層的入口：大樓層號、廳名、說明，再加這一層的平面圖（點了跳到層內某一區）。各層在同一頁上下相接。 */
+function Hall({ id, desc, meta, plan, aside, children }: {
+  id: FloorId;
+  desc: string;
+  meta?: [string, string][];
+  plan?: [string, string][];
+  aside?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  const f = floorOf(id);
+  const i = levelOf(id);
+  return (
+    <section className={`hall hall--${id}`} id={`floor-${id}`} aria-labelledby={`${id}-title`}>
+      <header className="hall__gate">
+        <div className={`wrap hall__gate-in${aside ? ' has-aside' : ' has-sign'}`}>
+          <div className="hall__copy">
+            <p className="label hall__en">FLOOR {pad2(i + 1)} · {f.en}</p>
+            {aside && <p className="hall__no" aria-hidden="true">{f.id[0]}<i>F</i></p>}
+            <h2 id={`${id}-title`}>{f.name}</h2>
+            <p className="section__desc">{desc}</p>
+            {meta && (
+              <dl className="hall__meta">
+                {meta.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
+              </dl>
+            )}
+            {plan && (
+              <ol className="hall__plan" aria-label="本層平面圖">
+                {plan.map(([anchor, label], k) => (
+                  <li key={anchor}>
+                    <button type="button" onClick={() => scrollToId(anchor)}>
+                      <span className="label">{f.id.toUpperCase()}-{String.fromCharCode(65 + k)}</span>
+                      <b>{label}</b>
+                      <i aria-hidden="true">↓</i>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+          {aside ?? <p className="hall__no hall__no--sign" aria-hidden="true">{f.id[0]}<i>F</i></p>}
+        </div>
+      </header>
+      <div className="wrap hall__body">{children}</div>
+    </section>
+  );
+}
+
 export default function App() {
   const progress = useProgress();
+  const floor = useFloor();
   const [open, setOpen] = useState<Plate | null>(null);
   const [itemSel, setItemSel] = useState<'self' | 'logo'>('self');
-  const [shown, setShown] = useState<string | null>(null);
-  const showOnBoard = useCallback((pl: Plate) => setShown(pl.id), []);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -729,7 +945,7 @@ export default function App() {
     const els = root.querySelectorAll('.rv');
     const io = new IntersectionObserver(
       (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')),
-      { threshold: 0.12 }
+      { threshold: 0, rootMargin: '0px 0px -6% 0px' }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -767,180 +983,175 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, openIdx]);
 
-  const go = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
-  }, []);
-
   const logoWorks = works.filter((w) => w.logoSrc).length;
   const top = ranked[0]?.score ?? 0;
   const pct = Math.round(progress * 100);
+  const here = floorOf(floor);
+  const newCount = newZone.ranked.length + newZone.pending.length;
+  const oldCount = oldZone.ranked.length + oldZone.pending.length;
+  const dirRows: DirRow[] = [
+    { id: '5f', note: `${cnNum(CRITERIA.length)}維尺規、評測流程、${DOSSIER.length} 篇文章`, art: [] },
+    { id: '4f', note: '先不看分數，兩件作品猜哪件比較好', art: ranked.slice(0, 2) },
+    { id: '3f', note: `${oldCount} 件 · 分數制 · 最高 ${top} 分`, art: oldZone.ranked.slice(0, 1) },
+    { id: '2f', note: `${newCount} 件 · 名次制 · 最新交卷`, art: newZone.ranked.slice(0, 1) },
+  ];
+  const planOf = (anchor: string, zone: ZoneData, pendingLabel: string): [string, string][] => [
+    [`${anchor}-hall`, '前三名展區'],
+    [`${anchor}-wall`, `作品牆 · 第 4 至 ${zone.ranked.length} 名`],
+    ...(zone.pending.length ? [[`${anchor}-pending`, pendingLabel] as [string, string]] : []),
+  ];
 
   return (
     <div ref={rootRef}>
-      <a className="skip-link" href="#works">跳到作品列表</a>
+      <a className="skip-link" href="#main">跳到主要內容</a>
 
       <header className="topbar">
         <div className="wrap topbar__in">
-          <a className="brand" href="#top" onClick={(e) => { e.preventDefault(); scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' }); }}>
+          <a className="brand" href="#/1f">
             <img className="brand__mark" src="/logo.svg" alt="" width="26" height="26" aria-hidden="true" />
             <span className="brand__name">TYPELIN ARENA</span>
           </a>
           <nav className="nav" aria-label="主導航">
-            <button type="button" onClick={() => go('works')}>排名</button>
-            <button type="button" onClick={() => go('index')}>尺規</button>
-            <button type="button" onClick={() => go('dossier')}>文章</button>
+            {FLOORS.slice(1).map((f) => (
+              <a key={f.id} href={`#/${f.id}`} aria-current={f.id === floor ? 'page' : undefined}>
+                <b>{f.id.toUpperCase()}</b>{f.short}
+              </a>
+            ))}
           </nav>
-          <span className="topbar__meta label">VOL.01</span>
+          <span className="topbar__meta label">{here.id.toUpperCase()} · {here.name}</span>
         </div>
         <div className="progress" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" data-pct={pct} />
       </header>
 
-      <main id="top">
-        {/* 首屏：先說清楚這是什麼，再給出目前排名 */}
-        <section className="hero" aria-labelledby="hero-title">
-          <div className="wrap hero__grid">
-            <div className="hero__copy">
-              <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(modelCount)} MODELS · {pad2(works.length)} WORKS</span></p>
-              <h1 id="hero-title">
-                <span className="hero__line">同一道前端題，</span>
-                <span className="hero__line">哪個 <em className="hero__ai">AI<PenCircle /></em> 做得</span>
-                <span className="hero__line hero__line--accent">最好？</span>
-              </h1>
-              <p className="hero__sub">
-                TYPELIN ARENA 把前端題目交給 {modelCount} 個 AI 模型，各自獨立完成。<span className="nb">作品原樣上架</span>、每一件都能直接打開操作，再由人用{cnNum(CRITERIA.length)}維尺規親手<span className="nb">評分排名</span>。<span className="nb">題目</span>改版就另開一區，不跟舊的混排。
-              </p>
-              <div className="hero__cta">
-                <button type="button" className="btn btn--lg" onClick={() => go('works')}>看完整排名 ↓</button>
-                <button type="button" className="textbtn textbtn--lg" onClick={() => go('how')}>怎麼評的</button>
+      <Lift floor={floor} />
+
+      <main id="main" tabIndex={-1}>
+        {(
+          /* 1F 大廳：說清楚這是什麼，再用樓層牌把人帶上樓 */
+          <section className="hero" id="floor-1f" aria-labelledby="hero-title">
+            <div className="wrap hero__grid">
+              <div className="hero__copy">
+                <p className="hero__badge"><b>AI 模型前端能力評測</b><span className="label">VOL.01 · {pad2(modelCount)} MODELS · {pad2(works.length)} WORKS</span></p>
+                <h1 id="hero-title">
+                  <span className="hero__line">同一道前端題，</span>
+                  <span className="hero__line">哪個 <em className="hero__ai">AI<PenCircle /></em> 做得</span>
+                  <span className="hero__line hero__line--accent">最好？</span>
+                </h1>
+                <p className="hero__sub">
+                  TYPELIN ARENA 把前端題目交給 {modelCount} 個 AI 模型，各自獨立完成。<span className="nb">作品原樣上架</span>、每一件都能直接打開操作，再由人親手<span className="nb">評比排名</span>。<span className="nb">題目</span>改版就另開一層展廳，不跟舊的混排。
+                </p>
+                <div className="hero__cta">
+                  <a className="btn btn--lg" href="#/2f">前往 2F 新題目展廳 ↑</a>
+                  <a className="textbtn textbtn--lg" href="#/5f">怎麼評的</a>
+                </div>
+                <Sheet works={works} rankOf={rankOf} onOpen={setOpen} />
               </div>
-              <Sheet works={works} rankOf={rankOf} shownId={shown} onOpen={setOpen} />
+              <Directory rows={dirRows} total={works.length} />
             </div>
+          </section>
+        )}
 
-            <Board zone={boardZone} isNewZone={boardZone === newZone} total={works.length} onMore={() => go('works')} onShow={showOnBoard} />
-          </div>
+        {(
+          <Hall
+            id="2f"
+            desc="採名次制：把作品並排比較，只排先後、不打分。視覺表現力最重，其次是內容與寓意、工程與測試。作品要先上網查證自己的資料，查不到的參數就照實寫「官方未公開」。"
+            meta={[['本層館藏', `${newCount} 件`], ['評法', '名次制'], ['題目', '關於你自己']]}
+            plan={planOf('2f', newZone, '待排名')}
+            aside={<HallPeek works={newZone.ranked.slice(0, 3)} anchor="2f-hall" />}
+          >
+            <Zone zone={newZone} anchor="2f" logo={false} scored={false} rankOf={rankOf} onPreview={setOpen} />
+          </Hall>
+        )}
 
-          <div className="wrap">
-            <Duel pool={ranked} isNewZone={boardZone === newZone} onOpen={setOpen} />
-          </div>
+        {(
+          <Hall
+            id="3f"
+            desc="以更早的題目作答，前 16 件用舊的五維尺規評分，尚未用新題目重評。部分作品另有「LOGO 落地」第二題，兩個分數並列。"
+            meta={[['本層館藏', `${oldCount} 件`], ['評法', '分數制 / 100'], ['LOGO 落地站', `${logoWorks} 件`]]}
+            plan={planOf('3f', oldZone, '待評分')}
+            aside={<Board zone={boardZone} isNewZone={false} total={oldCount} onMore={() => scrollToId('3f-wall')} />}
+          >
+            <Zone zone={oldZone} anchor="3f" logo scored rankOf={rankOf} onPreview={setOpen} />
+          </Hall>
+        )}
 
-          {/* 怎麼評：三步說完整個評測流程 */}
-          <div className="wrap" id="how">
-            <ol className="how">
-              <li className="rv">
-                <span className="how__no">01</span>
-                <h3>同一道題</h3>
-                <p>同一區的模型拿到同一道題目：<b>用前端作品介紹自己</b>（舊題目另有<b>用同一張 LOGO 做品牌落地站</b>）。題目改版就另開一區，不混排；少數例外會在作品上標明。</p>
-              </li>
-              <li className="rv">
-                <span className="how__no">02</span>
-                <h3>獨立交卷，原樣上架</h3>
-                <p>模型自己決定技術、版面與互動。成品不經人工修改，每一件都能直接打開實際操作。</p>
-              </li>
-              <li className="rv">
-                <span className="how__no">03</span>
-                <h3>人工評分</h3>
-                <p>用{cnNum(CRITERIA.length)}維尺規逐件打分：{CRITERIA.map((c) => c.name).join('、')}，滿分 100。最看重的是第一眼的視覺表現力。</p>
-              </li>
-            </ol>
-          </div>
+        {(
+          <Hall id="4f" desc="兩件舊題目作品並排，分數先遮起來。點你覺得比較好的那件，再看評審怎麼打。同一道題、同一把尺。">
+            <Duel pool={ranked} isNewZone={false} onOpen={setOpen} />
+          </Hall>
+        )}
 
-          <div className="wrap">
-            <dl className="stats">
-              <div><dt>參賽模型</dt><dd>{pad2(modelCount)}</dd></div>
-              <div><dt>已評分作品</dt><dd>{pad2(scoredCount)}</dd></div>
-              <div><dt>LOGO 落地站</dt><dd>{pad2(logoWorks)}</dd></div>
-              <div><dt>{boardZone === newZone ? '新題目最高分' : '舊題目最高分'}</dt><dd>{top}</dd></div>
-            </dl>
-          </div>
-
-          <div className="ticker" aria-hidden="true">
-            <div className="ticker__track">
-              {[0, 1].map((k) => (
-                <span className="ticker__set" key={k}>
-                  {ranked.map((w, i) => (
-                    <span key={w.id}><b>{pad2(i + 1)}</b>{modelMain(w.model)}<em>{w.score}</em></span>
-                  ))}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 作品排名 */}
-        <section className="section" id="works" aria-labelledby="works-title">
-          <div className="wrap">
-            <header className="section__head rv">
-              <p className="label section__no">01 — RANKING</p>
-              <h2 id="works-title">題目不同，<em>分開排名。</em></h2>
-              <p className="section__desc">作品名稱與題型按鈕直達獨立分頁；「站內預覽」在 Arena 內展開互動視窗，可左右切換。新題目只排名次、舊題目看分數，兩區不能直接比較，所以各排各的。</p>
-            </header>
-
-            <Zone
-              zone={newZone}
-              tag="NEW BRIEF · 新題目"
-              title="新題目"
-              desc="採名次制：把作品並排比較，只排先後、不打分。視覺表現力最重，其次是內容與寓意、工程與測試。作品要先上網查證自己的資料，查不到的參數就照實寫「官方未公開」。"
-              logo={false}
-              scored={false}
-              rankOf={rankOf}
-              onPreview={setOpen}
-            />
-            <Zone
-              zone={oldZone}
-              tag="PREVIOUS BRIEF · 舊題目"
-              title="舊題目"
-              desc="以更早的題目作答，前 16 件用舊的五維尺規評分，尚未用新題目重評。"
-              logo
-              scored
-              rankOf={rankOf}
-              onPreview={setOpen}
-            />
-          </div>
-        </section>
-
-        {/* 尺規 */}
-        <section className="section section--tint" id="index" aria-labelledby="index-title">
-          <div className="wrap">
-            <header className="section__head rv">
-              <p className="label section__no">02 — CRITERIA</p>
-              <h2 id="index-title">{cnNum(CRITERIA.length)}維尺規，<em>逐件衡量。</em></h2>
-              <p className="section__desc">{cnNum(CRITERIA.length)}個維度共用同一把尺，分數直接回到作品本身。第一把尺是視覺表現力，因為作品先要被看見，才有人想點開。</p>
-            </header>
-            <ol className="criteria">
-              {CRITERIA.map((c, ci) => (
-                <li className="criterion rv" key={c.name} style={{ '--i': ci } as React.CSSProperties}>
-                  <span className="criterion__no" aria-hidden="true">{ROMAN[ci]}</span>
-                  <h3>{c.name}</h3>
-                  <p>{c.desc}</p>
+        {(
+          <Hall
+            id="5f"
+            desc="評測怎麼進行、用哪一把尺，以及兩篇評測後記。"
+            plan={[['how', '評測流程'], ['index', `${cnNum(CRITERIA.length)}維尺規`], ['dossier', '閱覽室']]}
+          >
+            <div className="room" id="how">
+              <ol className="how">
+                <li className="rv">
+                  <span className="how__no">01</span>
+                  <h3>同一道題</h3>
+                  <p>同一層的模型拿到同一道題目：<b>用前端作品介紹自己</b>（舊題目另有<b>用同一張 LOGO 做品牌落地站</b>）。題目改版就另開一層，不混排；少數例外會在作品上標明。</p>
                 </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        {/* 相關文章 */}
-        <section className="section" id="dossier" aria-labelledby="dossier-title">
-          <div className="wrap">
-            <header className="section__head rv">
-              <p className="label section__no">03 — ESSAYS</p>
-              <h2 id="dossier-title">先讀這兩篇，<em>再看展。</em></h2>
-            </header>
-            <div className="essays">
-              {DOSSIER.map((a) => (
-                <a className="essay rv" key={a.no} href={a.url} target="_blank" rel="noreferrer">
-                  <span className="label">{a.no} · TYPELIN 部落格</span>
-                  <h3>{a.title}</h3>
-                  <p className="essay__body">{a.body}</p>
-                  <blockquote className="essay__quote">
-                    <span className="label">核心洞察</span>
-                    <p>{a.insight}</p>
-                  </blockquote>
-                  <span className="essay__more">閱讀原文 ↗</span>
-                </a>
-              ))}
+                <li className="rv">
+                  <span className="how__no">02</span>
+                  <h3>獨立交卷，原樣上架</h3>
+                  <p>模型自己決定技術、版面與互動。成品不經人工修改，每一件都能直接打開實際操作。</p>
+                </li>
+                <li className="rv">
+                  <span className="how__no">03</span>
+                  <h3>人工評比</h3>
+                  <p>舊題目用{cnNum(CRITERIA.length)}維尺規逐件打分，滿分 100；新題目把作品並排比較，只排名次。兩邊最看重的都是第一眼的視覺表現力。</p>
+                </li>
+              </ol>
+              <dl className="stats">
+                <div><dt>參賽模型</dt><dd>{pad2(modelCount)}</dd></div>
+                <div><dt>已評分作品</dt><dd>{pad2(scoredCount)}</dd></div>
+                <div><dt>LOGO 落地站</dt><dd>{pad2(logoWorks)}</dd></div>
+                <div><dt>舊題目最高分</dt><dd>{top}</dd></div>
+              </dl>
             </div>
-          </div>
-        </section>
+
+            <div className="room" id="index">
+              <header className="section__head rv">
+                <p className="label section__no">5F-B — CRITERIA</p>
+                <h2>{cnNum(CRITERIA.length)}維尺規，<em>逐件衡量。</em></h2>
+                <p className="section__desc">{cnNum(CRITERIA.length)}個維度共用同一把尺，分數直接回到作品本身。第一把尺是視覺表現力，因為作品先要被看見，才有人想點開。</p>
+              </header>
+              <ol className="criteria">
+                {CRITERIA.map((c, ci) => (
+                  <li className="criterion rv" key={c.name} style={{ '--i': ci } as React.CSSProperties}>
+                    <span className="criterion__no" aria-hidden="true">{ROMAN[ci]}</span>
+                    <h3>{c.name}</h3>
+                    <p>{c.desc}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="room" id="dossier">
+              <header className="section__head rv">
+                <p className="label section__no">5F-C — ESSAYS</p>
+                <h2>先讀這兩篇，<em>再看展。</em></h2>
+              </header>
+              <div className="essays">
+                {DOSSIER.map((a) => (
+                  <a className="essay rv" key={a.no} href={a.url} target="_blank" rel="noreferrer">
+                    <span className="label">{a.no} · TYPELIN 部落格</span>
+                    <h3>{a.title}</h3>
+                    <p className="essay__body">{a.body}</p>
+                    <blockquote className="essay__quote">
+                      <span className="label">核心洞察</span>
+                      <p>{a.insight}</p>
+                    </blockquote>
+                    <span className="essay__more">閱讀原文 ↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </Hall>
+        )}
       </main>
 
       {/* 站內預覽 */}
